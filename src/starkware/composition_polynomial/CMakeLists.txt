@@ -1,0 +1,23 @@
+add_library(breaker breaker.cc)
+
+add_library(periodic_column INTERFACE)
+target_link_libraries(periodic_column INTERFACE lde)
+
+add_executable(periodic_column_test periodic_column_test.cc)
+target_link_libraries(periodic_column_test periodic_column algebra starkware_gtest)
+add_test(periodic_column_test periodic_column_test)
+
+add_executable(multiplicative_neighbors_test multiplicative_neighbors_test.cc)
+target_link_libraries(multiplicative_neighbors_test algebra starkware_gtest)
+add_test(multiplicative_neighbors_test multiplicative_neighbors_test)
+
+add_library(composition_polynomial INTERFACE)
+target_link_libraries(composition_polynomial INTERFACE profiling periodic_column)
+
+add_executable(composition_polynomial_test composition_polynomial_test.cc)
+target_link_libraries(composition_polynomial_test composition_polynomial algebra task_manager starkware_gtest)
+add_test(composition_polynomial_test composition_polynomial_test)
+
+add_executable(breaker_test breaker_test.cc)
+target_link_libraries(breaker_test algebra lde breaker starkware_gtest)
+add_test(breaker_test breaker_test)

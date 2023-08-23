@@ -1,0 +1,2 @@
+add_library(pedersen_hash_context pedersen_hash_context.cc)
+target_link_libraries(pedersen_hash_context prime_field_element)

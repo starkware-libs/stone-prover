@@ -1,0 +1,10 @@
+add_library(channel channel.cc noninteractive_prover_channel.cc prover_channel.cc noninteractive_verifier_channel.cc verifier_channel.cc noninteractive_channel_utils.cc)
+target_link_libraries(channel algebra prng profiling third_party)
+
+add_executable(channel_test channel_test.cc noninteractive_channel_test.cc noninteractive_prover_channel_test.cc annotation_scope_test.cc)
+target_link_libraries(channel_test channel starkware_gtest)
+add_test(channel_test channel_test)
+
+add_executable(proof_of_work_test proof_of_work_test.cc)
+target_link_libraries(proof_of_work_test channel profiling starkware_gtest)
+add_test(proof_of_work_test proof_of_work_test)

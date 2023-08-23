@@ -1,0 +1,10 @@
+add_executable(invoke_template_version_test invoke_template_version_test.cc)
+target_link_libraries(invoke_template_version_test algebra starkware_gtest)
+add_test(invoke_template_version_test invoke_template_version_test)
+
+add_library(name_to_field name_to_field.cc)
+target_link_libraries(name_to_field polymorphic_algebra)
+
+add_executable(name_to_field_test name_to_field_test.cc)
+target_link_libraries(name_to_field_test algebra name_to_field starkware_gtest)
+add_test(name_to_field_test name_to_field_test)

@@ -1,0 +1,13 @@
+add_library(verifier_main_helper_impl verifier_main_helper_impl.cc)
+target_link_libraries(verifier_main_helper_impl commitment_scheme_builder proof_system json channel stark stark_utils pedersen_hash_context)
+
+add_library(prover_main_helper_impl prover_main_helper_impl.cc)
+target_link_libraries(prover_main_helper_impl json channel stark stark_utils pedersen_hash_context profiling)
+
+add_library(prover_main_helper prover_main_helper.cc)
+target_link_libraries(prover_main_helper prover_main_helper_impl flag_validators)
+
+add_library(verifier_main_helper verifier_main_helper.cc)
+target_link_libraries(verifier_main_helper verifier_main_helper_impl flag_validators)
+
+add_subdirectory(cpu)

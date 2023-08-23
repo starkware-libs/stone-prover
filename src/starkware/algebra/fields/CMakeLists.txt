@@ -1,0 +1,36 @@
+if (DEFINED TARGET_WEBASM)  # Converted to Bazel.
+  add_library(prime_field_element prime_field_element.cc)
+else()
+  add_library(prime_field_element prime_field_element.cc prime_field_element.S)
+endif()
+add_dependencies(prime_field_element field_operations)
+set_target_properties(prime_field_element PROPERTIES COMPILE_FLAGS "${CC_OPTIMIZE}")
+
+add_library(fields test_field_element.cc long_field_element.cc)
+target_link_libraries(fields prime_field_element to_from_string prng)
+
+add_executable(test_field_element_test test_field_element_test.cc)
+target_link_libraries(test_field_element_test fields starkware_gtest)
+add_test(test_field_element_test test_field_element_test)
+
+add_executable(long_field_element_test long_field_element_test.cc)
+target_link_libraries(long_field_element_test fields starkware_gtest)
+add_test(long_field_element_test long_field_element_test)
+
+add_executable(prime_field_element_test prime_field_element_test.cc)
+target_link_libraries(prime_field_element_test algebra starkware_gtest)
+add_test(prime_field_element_test prime_field_element_test)
+
+add_executable(fraction_field_element_test fraction_field_element_test.cc)
+target_link_libraries(fraction_field_element_test fields starkware_gtest)
+add_test(fraction_field_element_test fraction_field_element_test)
+
+add_executable(extension_field_element_test extension_field_element_test.cc)
+target_link_libraries(extension_field_element_test fields starkware_gtest)
+add_test(extension_field_element_test extension_field_element_test)
+
+add_executable(field_operations_helper_test field_operations_helper_test.cc)
+target_link_libraries(field_operations_helper_test fields starkware_gtest polymorphic_algebra)
+add_test(field_operations_helper_test field_operations_helper_test)
+
+

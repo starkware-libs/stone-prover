@@ -1,0 +1,38 @@
+add_library(algebra INTERFACE)
+target_link_libraries(algebra INTERFACE domains fields polymorphic_algebra prng name_to_field)
+
+# Included files: field_operations.h, field_operations.inl.
+add_library(field_operations INTERFACE)
+add_dependencies(field_operations INTERFACE third_party)
+
+add_executable(field_operations_test field_operations_test.cc)
+target_link_libraries(field_operations_test algebra starkware_gtest)
+add_test(field_operations_test field_operations_test)
+
+add_executable(field_operations_axioms_test field_operations_axioms_test.cc)
+target_link_libraries(field_operations_axioms_test algebra starkware_gtest)
+add_test(field_operations_axioms_test field_operations_axioms_test)
+
+add_executable(field_element_base_test field_element_base_test.cc)
+target_link_libraries(field_element_base_test algebra starkware_gtest)
+add_test(field_element_base_test field_element_base_test)
+
+add_executable(big_int_test big_int_test.cc)
+target_link_libraries(big_int_test starkware_gtest)
+add_test(big_int_test big_int_test)
+
+add_executable(polynomials_test polynomials_test.cc)
+target_link_libraries(polynomials_test algebra starkware_gtest)
+add_test(polynomials_test polynomials_test)
+
+add_executable(field_to_int_test field_to_int_test.cc)
+target_link_libraries(field_to_int_test algebra starkware_gtest)
+add_test(field_to_int_test field_to_int_test)
+
+add_subdirectory(domains)
+add_subdirectory(elliptic_curve)
+add_subdirectory(fft)
+add_subdirectory(fields)
+add_subdirectory(lde)
+add_subdirectory(polymorphic)
+add_subdirectory(utils)

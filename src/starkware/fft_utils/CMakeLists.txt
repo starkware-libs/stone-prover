@@ -1,0 +1,7 @@
+add_executable(fft_domain_test fft_domain_test.cc)
+target_link_libraries(fft_domain_test algebra starkware_gtest)
+add_test(fft_domain_test fft_domain_test)
+
+add_executable(fft_bases_test fft_bases_test.cc)
+target_link_libraries(fft_bases_test algebra starkware_gtest)
+add_test(fft_bases_test fft_bases_test)

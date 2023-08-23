@@ -1,0 +1,18 @@
+add_library(polymorphic_algebra field_element.cc field.cc field_element_vector.cc field_element_span.cc)
+target_link_libraries(polymorphic_algebra fields)
+
+add_executable(field_element_test field_element_test.cc)
+target_link_libraries(field_element_test algebra starkware_gtest)
+add_test(field_element_test field_element_test)
+
+add_executable(field_test field_test.cc)
+target_link_libraries(field_test algebra starkware_gtest)
+add_test(field_test field_test)
+
+add_executable(field_element_vector_test field_element_vector_test.cc)
+target_link_libraries(field_element_vector_test algebra starkware_gtest)
+add_test(field_element_vector_test field_element_vector_test)
+
+add_executable(field_element_span_test field_element_span_test.cc)
+target_link_libraries(field_element_span_test algebra starkware_gtest)
+add_test(field_element_span_test field_element_span_test)

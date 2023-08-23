@@ -1,0 +1,2 @@
+add_library(cpu_air_statement cpu_air_statement.cc)
+target_link_libraries(cpu_air_statement cpu_air json cpu_decoder)

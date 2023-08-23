@@ -1,0 +1,5 @@
+add_executable(cpu_air_prover cpu_air_prover_main.cc)
+target_link_libraries(cpu_air_prover cpu_air_statement prover_main_helper starkware_common)
+
+add_executable(cpu_air_verifier cpu_air_verifier_main.cc)
+target_link_libraries(cpu_air_verifier cpu_air_statement verifier_main_helper starkware_common)

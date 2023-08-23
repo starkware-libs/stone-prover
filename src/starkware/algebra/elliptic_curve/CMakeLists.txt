@@ -1,0 +1,3 @@
+add_executable(elliptic_curve_test elliptic_curve_test.cc)
+target_link_libraries(elliptic_curve_test algebra starkware_gtest)
+add_test(elliptic_curve_test elliptic_curve_test)

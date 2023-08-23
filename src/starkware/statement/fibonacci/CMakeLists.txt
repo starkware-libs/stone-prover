@@ -1,0 +1,3 @@
+add_executable(fibonacci_statement_test fibonacci_statement_test.cc)
+target_link_libraries(fibonacci_statement_test fibonacci_air json starkware_gtest)
+add_test(fibonacci_statement_test fibonacci_statement_test)

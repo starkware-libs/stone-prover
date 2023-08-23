@@ -1,0 +1,6 @@
+add_library(proof_system proof_system.cc)
+target_link_libraries(proof_system third_party)
+
+add_executable(proof_system_test proof_system_test.cc)
+target_link_libraries(proof_system_test proof_system starkware_gtest)
+add_test(proof_system_test proof_system_test)

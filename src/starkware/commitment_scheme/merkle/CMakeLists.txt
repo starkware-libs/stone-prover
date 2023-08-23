@@ -1,0 +1,9 @@
+add_library(merkle_tree merkle.cc)
+target_link_libraries(merkle_tree crypto_utils third_party channel)
+
+add_library(merkle_commitment_scheme merkle_commitment_scheme.cc)
+target_link_libraries(merkle_commitment_scheme merkle_tree channel)
+
+add_executable(merkle_test merkle_test.cc)
+target_link_libraries(merkle_test merkle_tree starkware_gtest)
+add_test(merkle_test merkle_test)
