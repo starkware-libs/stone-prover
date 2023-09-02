@@ -91,7 +91,7 @@ TEST(BoundaryAir, Correctness) {
   Similar to above test, only the boundary conditions are wrong, which means the resulting
   composition polynomial should be of high degree.
 */
-TEST(BoundaryAir, Soundeness) {
+TEST(BoundaryAir, Soundness) {
   Prng prng;
 
   const size_t n_columns = 10;
