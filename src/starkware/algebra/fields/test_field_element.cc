@@ -46,8 +46,9 @@ TestFieldElement TestFieldElement::FromBytes(
       bytes.size() == SizeInBytes(), "Source span size mismatches field element size, expected " +
                                          std::to_string(SizeInBytes()) + ", got " +
                                          std::to_string(bytes.size()));
-
-  return TestFieldElement(Deserialize<uint32_t>(bytes, use_big_endian));
+  uint32_t element = Deserialize<uint32_t>(bytes, use_big_endian);
+  ASSERT_RELEASE(element < kModulus, "The input must be smaller than the field prime.");
+  return TestFieldElement(element);
 }
 
 TestFieldElement TestFieldElement::FromString(const std::string& s) {

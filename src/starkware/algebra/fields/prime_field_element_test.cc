@@ -21,10 +21,13 @@
 
 #include "gtest/gtest.h"
 #include "starkware/algebra/field_operations.h"
+#include "starkware/error_handling/test_utils.h"
 #include "starkware/stl_utils/containers.h"
 
 namespace starkware {
 namespace {
+
+using testing::HasSubstr;
 
 template <typename T>
 class PrimeFieldElementTest : public ::testing::Test {};
@@ -111,6 +114,21 @@ TEST(PrimeField, Random) {
     auto b = PrimeFieldElement<252, 0>::RandomElement(&prng);
     EXPECT_NE(a, b);
   }
+}
+
+TYPED_TEST(PrimeFieldElementTest, FromBytes) {
+  std::array<std::byte, TypeParam::SizeInBytes()> modulus_as_bytes{};
+  Serialize(TypeParam::GetModulus(), modulus_as_bytes);
+  EXPECT_ASSERT(
+      TypeParam::FromBytes(modulus_as_bytes),
+      HasSubstr("The input must be smaller than the field prime."));
+
+  std::array<std::byte, TypeParam::SizeInBytes()> field_max_as_bytes{};
+  Serialize(TypeParam::GetModulus() - TypeParam::ValueType::One(), field_max_as_bytes);
+
+  std::array<std::byte, TypeParam::SizeInBytes()> to_bytes_buffer{};
+  TypeParam::FromBytes(field_max_as_bytes).ToBytes(to_bytes_buffer);
+  EXPECT_EQ(TypeParam::FromBytes(field_max_as_bytes), TypeParam::FromBytes(to_bytes_buffer));
 }
 
 }  // namespace

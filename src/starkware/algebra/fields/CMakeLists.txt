@@ -1,4 +1,4 @@
-if (DEFINED TARGET_WEBASM)  # Converted to Bazel.
+if (DEFINED NO_AVX)
   add_library(prime_field_element prime_field_element.cc)
 else()
   add_library(prime_field_element prime_field_element.cc prime_field_element.S)

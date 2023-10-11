@@ -24,6 +24,7 @@ git clone https://github.com/starkware-libs/stone-prover.git
 Build the docker image:
 
 ```bash
+cd stone-prover
 docker build --tag prover .
 ```
 
@@ -96,3 +97,35 @@ The public input section itself is not checked.
 For example, the verifier does not check what CairoZero program is being proved,
 or that the builtins memory segments are of valid size.
 These things need to be checked externally.
+
+## Configuration for other input sizes
+
+The number of steps affects the size of the trace.
+Such changes may require modification of `cpu_air_params.json`.
+Specifically, the following equation must be satisfied.
+```
+log₂(last_layer_degree_bound) + ∑fri_step_list = log₂(#steps) + 4
+```
+For instance, assuming a fixed `last_layer_degree_bound`,
+a larger number of steps requires changes to the `fri_step_list`
+to maintain the equality.
+
+FRI steps should typically be in the range 2-4;
+the degree bound should be in the range 4-7.
+
+The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
+
+## For Mac users
+
+To build the docker, run:
+
+```bash
+docker build --tag prover . --build-arg CMAKE_ARGS=-DNO_AVX=1
+```
+
+To freely use the `cairo-run`, `cpu_air_prover`, and `cpu_air_verifier` commands,
+work inside the docker using:
+
+```bash
+docker run -it prover bash
+```

@@ -15,9 +15,12 @@
 #include "starkware/algebra/fields/long_field_element.h"
 
 #include "gtest/gtest.h"
+#include "starkware/error_handling/test_utils.h"
 
 namespace starkware {
 namespace {
+
+using testing::HasSubstr;
 
 TEST(LongFieldElement, ToStandardForm) {
   ASSERT_EQ(LongFieldElement::FromUint(0).ToStandardForm(), BigInt<1>(0));
@@ -49,6 +52,23 @@ TEST(LongFieldElement, FromInt) {
   EXPECT_EQ(
       LongFieldElement::FromInt(-0x8000000000000000l),
       LongFieldElement::FromUint(0) - LongFieldElement::FromUint(0x8000000000000000l));
+}
+
+TEST(LongFieldElement, FromBytes) {
+  std::array<std::byte, LongFieldElement::SizeInBytes()> modulus_as_bytes{};
+  Serialize<uint64_t>(LongFieldElement::kModulus, modulus_as_bytes, /*use_big_endian=*/true);
+  EXPECT_ASSERT(
+      LongFieldElement::FromBytes(modulus_as_bytes),
+      HasSubstr("The input must be smaller than the field prime."));
+
+  std::array<std::byte, LongFieldElement::SizeInBytes()> field_max_as_bytes{};
+  Serialize<uint64_t>(LongFieldElement::kModulus - 1, field_max_as_bytes, /*use_big_endian=*/true);
+
+  std::array<std::byte, LongFieldElement::SizeInBytes()> to_bytes_buffer{};
+  LongFieldElement::FromBytes(field_max_as_bytes).ToBytes(to_bytes_buffer);
+  EXPECT_EQ(
+      LongFieldElement::FromBytes(field_max_as_bytes),
+      LongFieldElement::FromBytes(to_bytes_buffer));
 }
 
 }  // namespace

@@ -16,7 +16,7 @@
 
 namespace starkware {
 
-#ifndef __EMSCRIPTEN__
+#ifndef NO_AVX
 /*
   This function is implemented in assembly, in prime_field_elements.S .
 */

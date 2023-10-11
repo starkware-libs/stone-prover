@@ -25,9 +25,9 @@ void PrimeFieldElement<NBits, Index>::ToBytes(
 template <int NBits, int Index>
 PrimeFieldElement<NBits, Index> PrimeFieldElement<NBits, Index>::FromBytes(
     gsl::span<const std::byte> bytes, bool use_big_endian) {
-  // OneLimbMontgomeryReduction has the side effect of dividing by 2^64 and MontgomeryMul divides by
-  // 2^(64N), so we need to multiply by k_unique_to_montgomery == 2^(64N+1) here.
-  return PrimeFieldElement(ValueType::FromBytes(bytes, use_big_endian));
+  ValueType element = ValueType::FromBytes(bytes, use_big_endian);
+  ASSERT_RELEASE(element < GetModulus(), "The input must be smaller than the field prime.");
+  return PrimeFieldElement(element);
 }
 
 template <int NBits, int Index>

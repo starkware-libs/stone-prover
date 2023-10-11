@@ -33,7 +33,9 @@ LongFieldElement LongFieldElement::FromBytes(
       bytes.size() == SizeInBytes(), "Source span size mismatches field element size, expected " +
                                          std::to_string(SizeInBytes()) + ", got " +
                                          std::to_string(bytes.size()));
-  return LongFieldElement(BigInt<1>::FromBytes(bytes, use_big_endian)[0]);
+  uint64_t element = BigInt<1>::FromBytes(bytes, use_big_endian).AsUint();
+  ASSERT_RELEASE(element < kModulus, "The input must be smaller than the field prime.");
+  return LongFieldElement(element);
 }
 
 LongFieldElement LongFieldElement::FromString(const std::string& s) {

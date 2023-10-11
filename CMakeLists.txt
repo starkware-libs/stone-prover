@@ -26,7 +26,7 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
 endif()
 
 # Clang specific flags.
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Use absolute-paths for diagnostics to make them clickable in vscode.
   add_compile_options("-fdiagnostics-absolute-paths")
 
@@ -37,6 +37,12 @@ endif()
 # Force colored output.
 add_compile_options ("-fdiagnostics-color=always")
 
+if (DEFINED NO_AVX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNO_AVX=1")
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mpclmul -maes")
+endif()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Wno-mismatched-tags -fno-strict-aliasing -fPIC")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
@@ -45,7 +51,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${CC_OPTIMIZE} -g -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CC_OPTIMIZE}")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -mpclmul -maes")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 # USE_REGISTER_HINTS enables a trick based on GCC's extended asm to improve the generated code.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_REGISTER_HINTS")
 

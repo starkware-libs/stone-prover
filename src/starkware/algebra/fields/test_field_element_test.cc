@@ -15,9 +15,12 @@
 #include "starkware/algebra/fields/test_field_element.h"
 
 #include "gtest/gtest.h"
+#include "starkware/error_handling/test_utils.h"
 
 namespace starkware {
 namespace {
+
+using testing::HasSubstr;
 
 TEST(TestFieldElement, Basic) {
   TestFieldElement a = TestFieldElement::FromUint(5), b = TestFieldElement::FromBigInt(0x6_Z);
@@ -63,6 +66,23 @@ TEST(TestFieldElement, ConstexprFromInt) {
   EXPECT_EQ(kOneFromUint, kOne);
   static constexpr TestFieldElement kOneFromBigInt = TestFieldElement::FromBigInt(BigInt<1>::One());
   EXPECT_EQ(kOneFromBigInt, kOne);
+}
+
+TEST(TestFieldElement, FromBytes) {
+  std::array<std::byte, TestFieldElement::SizeInBytes()> modulus_as_bytes{};
+  Serialize<uint32_t>(TestFieldElement::kModulus, modulus_as_bytes, /*use_big_endian=*/true);
+  EXPECT_ASSERT(
+      TestFieldElement::FromBytes(modulus_as_bytes),
+      HasSubstr("The input must be smaller than the field prime."));
+
+  std::array<std::byte, TestFieldElement::SizeInBytes()> field_max_as_bytes{};
+  Serialize<uint32_t>(TestFieldElement::kModulus - 1, field_max_as_bytes, /*use_big_endian=*/true);
+
+  std::array<std::byte, TestFieldElement::SizeInBytes()> to_bytes_buffer{};
+  TestFieldElement::FromBytes(field_max_as_bytes).ToBytes(to_bytes_buffer);
+  EXPECT_EQ(
+      TestFieldElement::FromBytes(field_max_as_bytes),
+      TestFieldElement::FromBytes(to_bytes_buffer));
 }
 
 }  // namespace

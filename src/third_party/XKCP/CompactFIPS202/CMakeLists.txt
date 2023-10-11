@@ -1,0 +1,1 @@
+add_library(Keccak1600F Keccak-readable-and-compact.c)

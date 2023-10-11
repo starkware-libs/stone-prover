@@ -347,7 +347,7 @@ ALWAYS_INLINE void FftNaturalToReverseLoop(
   }
 }
 
-#ifndef __EMSCRIPTEN__
+#ifndef NO_AVX
 
 template <>
 inline void FftNaturalToReverseLoop<PrimeFieldElement<252, 0>>(

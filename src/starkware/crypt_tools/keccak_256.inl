@@ -21,9 +21,8 @@
 
 namespace starkware {
 
-// On x86 we use an optimized implemenation based AVX2 extensions.
-// The current convention in the code is to assume !__EMSCRIPTEN__ => x86.
-#ifndef __EMSCRIPTEN__
+// On x86 we use an optimized implementation based on AVX2.
+#ifndef NO_AVX
 #define USE_AVX2
 #endif
 
