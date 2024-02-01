@@ -3,7 +3,7 @@ name: Task - Build stone prover
 on:
   push:
     branches:
-      - main
+      - fix-endian-mmintrin-install_deps
 
 jobs:
   build:
