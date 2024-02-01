@@ -2,15 +2,15 @@
 
 #find the package manager
 declare -A osInfo;
-osInfo[/etc/redhat-release]=yum
-osInfo[/etc/arch-release]=pacman
-osInfo[/etc/debian_version]=apt
-osInfo[/etc/alpine-release]=apk
+os_info[/etc/redhat-release]=yum
+os_info[/etc/arch-release]=pacman
+os_info[/etc/debian_version]=apt
+os_info[/etc/alpine-release]=apk
 
-for f in ${!osInfo[@]}
+for f in ${!os_info[@]}
 do
     if [[ -f $f ]];then
-        package_manager=${osInfo[$f]}
+        package_manager=${os_info[$f]}
     fi
 done
 
