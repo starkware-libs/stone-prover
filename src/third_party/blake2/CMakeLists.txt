@@ -1,1 +1,7 @@
-add_library(blake2s blake2s.c)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+    add_subdirectory(neon)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
+    add_subdirectory(sse)
+else()
+    message(FATAL_ERROR "architecture not supported")
+endif()
