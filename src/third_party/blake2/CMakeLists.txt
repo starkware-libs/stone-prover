@@ -1,4 +1,6 @@
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+if (DEFINED NO_AVX)
+    add_subdirectory(ref)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     add_subdirectory(neon)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     add_subdirectory(sse)
