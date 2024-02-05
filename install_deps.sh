@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #find the package manager
-declare -A osInfo;
-os_info[/etc/redhat-release]=yum
-os_info[/etc/arch-release]=pacman
-os_info[/etc/debian_version]=apt
-os_info[/etc/alpine-release]=apk
+declare -A os_info
+os_info['/etc/redhat-release']='yum'
+os_info['/etc/arch-release']='pacman'
+os_info['/etc/debian_version']='apt'
+os_info['/etc/alpine-release']='apk'
 
-for f in ${!os_info[@]}
-do
-    if [[ -f $f ]];then
-        package_manager=${os_info[$f]}
+for f in "${!os_info[@]}"; do
+    if [ -f "$f" ]; then
+        package_manager="${os_info[$f]}"
+        break
     fi
 done
 

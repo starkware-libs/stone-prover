@@ -18,7 +18,13 @@ WORKDIR /app/build/Release
 # and other AVX optimizations.
 ARG CMAKE_ARGS
 RUN cmake ../.. -DCMAKE_BUILD_TYPE=Release ${CMAKE_ARGS}
-RUN make -j8
+
+RUN if [ $(nproc) -lt 4 ]; then \
+        echo "Insufficient number of CPU cores (< 4). Exiting..." >&2; \
+        exit 1; \
+    fi
+
+RUN make -j $($(nproc) - 2)
 
 RUN ctest -V
 
