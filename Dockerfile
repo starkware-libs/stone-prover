@@ -24,7 +24,7 @@ RUN if [ $(nproc) -lt 4 ]; then \
         exit 1; \
     fi
 
-RUN make -j $($(nproc) - 2)
+RUN make -j$($(nproc) - 2)
 
 RUN ctest -V
 

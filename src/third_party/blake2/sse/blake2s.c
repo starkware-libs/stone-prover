@@ -17,8 +17,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "blake2.h"
-#include "blake2-impl.h"
+#include "../blake2.h"
+#include "../blake2-impl.h"
 
 #include "blake2-config.h"
 
@@ -150,7 +150,7 @@ int blake2s_init_key( blake2s_state *S, size_t outlen, const void *key, size_t k
 }
 
 
-static void blake2s_compress( blake2s_state *S, const uint8_t block[BLAKE2S_BLOCKBYTES] )
+void blake2s_compress( blake2s_state *S, const uint8_t block[BLAKE2S_BLOCKBYTES] )
 {
   __m128i row1, row2, row3, row4;
   __m128i buf1, buf2, buf3, buf4;

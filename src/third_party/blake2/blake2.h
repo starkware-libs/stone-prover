@@ -142,6 +142,7 @@ extern "C" {
   };
 
   /* Streaming API */
+  void blake2s_compress(blake2s_state* S, const uint8_t in[BLAKE2S_BLOCKBYTES]);
   int blake2s_init( blake2s_state *S, size_t outlen );
   int blake2s_init_key( blake2s_state *S, size_t outlen, const void *key, size_t keylen );
   int blake2s_init_param( blake2s_state *S, const blake2s_param *P );
