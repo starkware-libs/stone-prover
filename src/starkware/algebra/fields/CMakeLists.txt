@@ -1,4 +1,4 @@
-if (DEFINED NO_AVX)
+if (DEFINED NO_AVX OR CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
   add_library(prime_field_element prime_field_element.cc)
 else()
   add_library(prime_field_element prime_field_element.cc prime_field_element.S)

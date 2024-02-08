@@ -497,7 +497,7 @@ int blake2s_init_key( blake2s_state *S, size_t outlen, const void *key, size_t k
     UNDIAGONALIZE(row1, row2, row3, row4);				\
   } while(0)
     
-static void blake2s_compress( blake2s_state *S, 
+void blake2s_compress( blake2s_state *S, 
 		              const uint8_t in[BLAKE2S_BLOCKBYTES] )
 {
   uint32x4_t row1, row2, row3, row4, e1234;
