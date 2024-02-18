@@ -149,7 +149,7 @@ void MemoryCellTest::FinalizeTestFunc(
   const auto unused_addresses_num =
       std::count(orig_address_set.begin(), orig_address_set.end(), false);
   int64_t extra_slots = unused_addresses_num + spare_slots_num;
-//BALISE : MODIF DANGEREUSE
+
   const uint64_t data_length = std::max(used_slots_num, (uint64_t)(used_slots_num + extra_slots));
   ASSERT_GE(data_length, used_slots_num);
 
