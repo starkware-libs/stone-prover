@@ -13,18 +13,18 @@ underlying the CairoZero programming language.
 
 ### Native build on MacOS
 
-'''bash
+```bash
 chmod +x install_deps.sh build.sh
 ./install_deps.sh
 ./build.sh
-'''
+```
 
 ### Linux
 
-'''bash
+```bash
 chmod +x build.sh
 ./build.sh
-'''
+```
 
 ## Building using the dockerfile
 
