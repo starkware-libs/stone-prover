@@ -9,6 +9,23 @@ underlying the CairoZero programming language.
 
 # Installation instructions
 
+## building using build.sh
+
+### Native build on MacOS
+
+'''bash
+chmod +x install_deps.sh build.sh
+./install_deps.sh
+./build.sh
+'''
+
+### Linux
+
+'''bash
+chmod +x build.sh
+./build.sh
+'''
+
 ## Building using the dockerfile
 
 The root directory contains a dedicated Dockerfile which automatically builds the package and
@@ -114,7 +131,3 @@ FRI steps should typically be in the range 2-4;
 the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
-
-## Native build on MacOS
-
-
