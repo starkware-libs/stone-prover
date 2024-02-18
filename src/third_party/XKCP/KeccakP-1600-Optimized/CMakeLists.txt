@@ -1,7 +1,5 @@
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     add_subdirectory(neon)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
-    add_subdirectory(AVX2)
 else()
-    message(FATAL_ERROR "architecture not supported")
+    add_subdirectory(AVX2)
 endif()

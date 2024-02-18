@@ -1,4 +1,4 @@
-if (DEFINED NO_AVX)
+if (DEFINED NO_AVX OR CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
   add_subdirectory(CompactFIPS202)
 else()
   add_subdirectory(KeccakP-1600-Optimized)

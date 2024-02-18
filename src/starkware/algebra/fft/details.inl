@@ -347,7 +347,7 @@ ALWAYS_INLINE void FftNaturalToReverseLoop(
   }
 }
 
-#ifndef NO_AVX
+#if !defined(NO_AVX) && !defined(AARCH64)
 
 template <>
 inline void FftNaturalToReverseLoop<PrimeFieldElement<252, 0>>(

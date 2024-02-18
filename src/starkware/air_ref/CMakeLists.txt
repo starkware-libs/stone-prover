@@ -1,0 +1,21 @@
+add_executable(trace_test trace_test.cc)
+target_link_libraries(trace_test algebra starkware_gtest)
+add_test(trace_test trace_test)
+
+add_library(air_test_utils test_utils.cc)
+target_link_libraries(air_test_utils starkware_gtest algebra fields lde composition_polynomial)
+
+add_executable(air_test_utils_test test_utils_test.cc)
+target_link_libraries(air_test_utils_test air_test_utils algebra starkware_gtest)
+add_test(air_test_utils_test air_test_utils_test)
+
+add_executable(compile_time_optional_test compile_time_optional_test.cc)
+target_link_libraries(compile_time_optional_test algebra starkware_gtest)
+add_test(compile_time_optional_test compile_time_optional_test)
+
+add_subdirectory(boundary)
+add_subdirectory(boundary_constraints)
+add_subdirectory(cpu/board)
+add_subdirectory(components)
+add_subdirectory(degree_three_example)
+add_subdirectory(fibonacci)
