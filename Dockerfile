@@ -32,7 +32,7 @@ RUN ctest -V
 RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
 RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
 
-# End to end test.
+# End to end test
 WORKDIR /app/e2e_test
 
 RUN cairo-compile fibonacci.cairo --output fibonacci_compiled.json --proof_mode

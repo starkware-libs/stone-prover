@@ -71,7 +71,6 @@ if [ "$os" == "Darwin" ]; then
     cmake CMakeLists.txt -DCMAKE_BUILD_TYPE=Release && make -j && sudo make install
     cd -
 
-    # Modifier les permissions pour les répertoires d'installation
     sudo chown -R $(whoami) /usr/local/include /usr/local/lib /usr/local/lib64 /usr/local/bin
 else
     export DEBIAN_FRONTEND=noninteractive
