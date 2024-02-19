@@ -9,23 +9,6 @@ underlying the CairoZero programming language.
 
 # Installation instructions
 
-## building using build.sh
-
-### Native build on MacOS
-
-```bash
-chmod +x install_deps.sh build.sh
-./install_deps.sh
-./build.sh
-```
-
-### Linux
-
-```bash
-chmod +x build.sh
-./build.sh
-```
-
 ## Building using the dockerfile
 
 The root directory contains a dedicated Dockerfile which automatically builds the package and
@@ -52,6 +35,30 @@ Once the docker image is built, you can fetch the prover and verifier executable
 container_id=$(docker create prover)
 docker cp -L ${container_id}:/bin/cpu_air_prover .
 docker cp -L ${container_id}:/bin/cpu_air_verifier .
+```
+
+## Building on MacOS
+
+Manual native build:
+
+```bash
+chmod +x install_deps.sh
+./install_deps.sh
+dwarf_version=$(brew info dwarfutils | grep -o 'stable [0-9.]*' | cut -d ' ' -f 2) 
+export LIBRARY_PATH=/usr/local/lib:/usr/lib/:/opt/homebrew/Cellar/dwarfutils/$dwarf_version/lib/:$LIBRARY_PATH
+mkdir -p build/Release
+cd build/Release
+cmake ../.. -DCMAKE_BUILD_TYPE=Release
+make -j$($(sysctl -n hw.ncpu) - 2)
+mkdir -p ../../targets/release
+cp src/starkware/main/cpu/cpu_air_prover src/starkware/main/cpu/cpu_air_verifier ../../targets/release
+```
+Or using `build.sh`:
+
+```bash
+chmod +x install_deps.sh build.sh
+./install_deps.sh
+./build.sh
 ```
 
 ## Creating and verifying a proof of a CairoZero program
