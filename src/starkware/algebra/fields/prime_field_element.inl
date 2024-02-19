@@ -16,7 +16,7 @@
 
 namespace starkware {
 
-#ifndef NO_AVX
+#if !defined(NO_AVX) && !defined(AARCH64)
 /*
   This function is implemented in assembly, in prime_field_elements.S .
 */

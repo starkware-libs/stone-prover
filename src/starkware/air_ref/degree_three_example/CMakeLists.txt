@@ -1,0 +1,6 @@
+add_library(degree_three_example_air degree_three_example_air.h)
+target_link_libraries(degree_three_example_air trace_generation_context composition_polynomial)
+
+add_executable(degree_three_example_air_test degree_three_example_air_test.cc)
+target_link_libraries(degree_three_example_air_test degree_three_example_air air_test_utils algebra lde starkware_gtest)
+add_test(degree_three_example_air_test degree_three_example_air_test)

@@ -1,6 +1,10 @@
 add_library(error_handling error_handling.cc)
-target_link_libraries(error_handling third_party dw)
 
+if(APPLE)
+	target_link_libraries(error_handling third_party dwarf)
+else()
+	target_link_libraries(error_handling third_party dw)
+endif()
 
 # Same as error_handling but doesn't try to unwind the stack.
 add_library(error_handling_no_stacktrace error_handling.cc)

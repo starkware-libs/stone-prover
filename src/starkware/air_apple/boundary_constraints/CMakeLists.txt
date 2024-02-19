@@ -1,0 +1,3 @@
+add_executable(boundary_periodic_column_test boundary_periodic_column_test.cc)
+target_link_libraries(boundary_periodic_column_test algebra periodic_column starkware_gtest)
+add_test(boundary_periodic_column_test boundary_periodic_column_test)

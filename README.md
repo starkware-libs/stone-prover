@@ -37,6 +37,30 @@ docker cp -L ${container_id}:/bin/cpu_air_prover .
 docker cp -L ${container_id}:/bin/cpu_air_verifier .
 ```
 
+## Building on MacOS
+
+Manual native build:
+
+```bash
+chmod +x install_deps.sh
+./install_deps.sh
+dwarf_version=$(brew info dwarfutils | grep -o 'stable [0-9.]*' | cut -d ' ' -f 2) 
+export LIBRARY_PATH=/usr/local/lib:/usr/lib/:/opt/homebrew/Cellar/dwarfutils/$dwarf_version/lib/:$LIBRARY_PATH
+mkdir -p build/Release
+cd build/Release
+cmake ../.. -DCMAKE_BUILD_TYPE=Release
+make -j$($(sysctl -n hw.ncpu) - 2)
+mkdir -p ../../targets/release
+cp src/starkware/main/cpu/cpu_air_prover src/starkware/main/cpu/cpu_air_verifier ../../targets/release
+```
+Or using `build.sh`:
+
+```bash
+chmod +x install_deps.sh build.sh
+./install_deps.sh
+./build.sh
+```
+
 ## Creating and verifying a proof of a CairoZero program
 
 To run and prove the example program `fibonacci.cairo`,
@@ -114,18 +138,3 @@ FRI steps should typically be in the range 2-4;
 the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
-
-## For Mac users
-
-To build the docker, run:
-
-```bash
-docker build --tag prover . --build-arg CMAKE_ARGS=-DNO_AVX=1
-```
-
-To freely use the `cairo-run`, `cpu_air_prover`, and `cpu_air_verifier` commands,
-work inside the docker using:
-
-```bash
-docker run -it prover bash
-```

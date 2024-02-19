@@ -22,14 +22,14 @@
 namespace starkware {
 
 // On x86 we use an optimized implementation based on AVX2.
-#ifndef NO_AVX
-#define USE_AVX2
+#if !defined(NO_AVX) && !defined(AARCH64)
+    #define USE_AVX2
 #endif
 
 #ifdef USE_AVX2
-extern "C" void KeccakP1600_Permute_24rounds(std::byte* state);  // NOLINT
+  extern "C" void KeccakP1600_Permute_24rounds(std::byte* state);  // NOLINT
 #else
-extern "C" void KeccakF1600_StatePermute(std::byte* state);  // NOLINT
+  extern "C" void KeccakF1600_StatePermute(std::byte* state);  // NOLINT
 #endif
 
 /*

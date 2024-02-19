@@ -1,0 +1,5 @@
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+    add_subdirectory(neon)
+else()
+    add_subdirectory(AVX2)
+endif()

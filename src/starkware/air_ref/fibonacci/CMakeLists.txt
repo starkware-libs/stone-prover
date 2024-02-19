@@ -1,0 +1,6 @@
+add_library(fibonacci_air fibonacci_air.h)
+target_link_libraries(fibonacci_air trace_generation_context composition_polynomial)
+
+add_executable(fibonacci_air_test fibonacci_air_test.cc)
+target_link_libraries(fibonacci_air_test fibonacci_air air_test_utils algebra lde starkware_gtest)
+add_test(fibonacci_air_test fibonacci_air_test)
