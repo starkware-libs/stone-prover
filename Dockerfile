@@ -1,4 +1,6 @@
+#to ensure compatibility with different architectures
 FROM ubuntu:20.04 as base_image
+#ciimage/python:3.9 as base_image
 
 COPY install_deps.sh /app/
 RUN /app/install_deps.sh
