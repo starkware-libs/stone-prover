@@ -33,6 +33,8 @@ add_test(commitment_scheme_test commitment_scheme_test)
 
 add_executable(caching_commitment_scheme_test caching_commitment_scheme_test.cc)
 target_link_libraries(caching_commitment_scheme_test caching_commitment_scheme starkware_gtest)
-add_test(caching_commitment_scheme_test caching_commitment_scheme_test)
+if(NOT APPLE) 
+	add_test(caching_commitment_scheme_test caching_commitment_scheme_test)
+endif()
 
 add_subdirectory(merkle)

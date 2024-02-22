@@ -1,4 +1,6 @@
-FROM ciimage/python:3.9 as base_image
+#to ensure compatibility with different architectures
+FROM ubuntu:20.04 as base_image
+#ciimage/python:3.9 as base_image
 
 COPY install_deps.sh /app/
 RUN /app/install_deps.sh
@@ -18,7 +20,13 @@ WORKDIR /app/build/Release
 # and other AVX optimizations.
 ARG CMAKE_ARGS
 RUN cmake ../.. -DCMAKE_BUILD_TYPE=Release ${CMAKE_ARGS}
-RUN make -j8
+
+RUN if [ $(nproc) -lt 4 ]; then \
+        echo "Insufficient number of CPU cores (< 4). Exiting..." >&2; \
+        exit 1; \
+    fi
+
+RUN make -j$($(nproc) - 2)
 
 RUN ctest -V
 
@@ -26,7 +34,7 @@ RUN ctest -V
 RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
 RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
 
-# End to end test.
+# End to end test
 WORKDIR /app/e2e_test
 
 RUN cairo-compile fibonacci.cairo --output fibonacci_compiled.json --proof_mode

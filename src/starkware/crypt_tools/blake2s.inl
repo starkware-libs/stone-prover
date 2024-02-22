@@ -16,13 +16,8 @@
 #include "starkware/error_handling/error_handling.h"
 #include "starkware/utils/to_from_string.h"
 
-#ifndef NO_AVX
 #include "third_party/blake2/blake2-impl.h"
 #include "third_party/blake2/blake2.h"
-#else
-#include "third_party/blake2_ref/blake2-impl.h"
-#include "third_party/blake2_ref/blake2.h"
-#endif
 
 namespace starkware {
 

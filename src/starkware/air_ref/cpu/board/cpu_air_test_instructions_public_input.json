@@ -1,0 +1,69 @@
+{
+    "layout": "plain",
+    "layout_params": null,
+    "rc_min": 32758,
+    "rc_max": 32769,
+    "n_steps": 32,
+    "memory_segments": {
+        "program": {
+            "begin_addr": 1,
+            "stop_ptr": 7
+        },
+        "execution": {
+            "begin_addr": 11,
+            "stop_ptr": 22
+        }
+    },
+    "public_memory": [
+        {
+            "address": 1,
+            "value": "0x480680017fff8000",
+            "page": 0
+        },
+        {
+            "address": 2,
+            "value": "0x11",
+            "page": 0
+        },
+        {
+            "address": 3,
+            "value": "0x40780017fff7fff",
+            "page": 0
+        },
+        {
+            "address": 4,
+            "value": "0xa",
+            "page": 0
+        },
+        {
+            "address": 5,
+            "value": "0x400680017fff7ff6",
+            "page": 0
+        },
+        {
+            "address": 6,
+            "value": "0x0",
+            "page": 0
+        },
+        {
+            "address": 7,
+            "value": "0x10780017fff7fff",
+            "page": 0
+        },
+        {
+            "address": 8,
+            "value": "0x0",
+            "page": 0
+        },
+        {
+            "address": 9,
+            "value": "0xb",
+            "page": 0
+        },
+        {
+            "address": 10,
+            "value": "0x0",
+            "page": 0
+        }
+    ]
+}

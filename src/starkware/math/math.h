@@ -84,9 +84,15 @@ constexpr uint64_t SafeSub(const uint64_t minuend, const uint64_t subtrahend) {
 */
 inline int64_t SafeSignedAdd(const int64_t a, const int64_t b) {
   int64_t res;
+#ifndef __APPLE__
   ASSERT_RELEASE(
       !__builtin_saddl_overflow(a, b, &res),
       "Got overflow/underflow in " + std::to_string(a) + " + " + std::to_string(b));
+#else
+ ASSERT_RELEASE(
+      !__builtin_saddll_overflow(a, b, &res),
+      "Got overflow/underflow in " + std::to_string(a) + " + " + std::to_string(b));
+#endif
   return res;
 }
 

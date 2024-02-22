@@ -1,0 +1,3 @@
+add_executable(boundary_air_test boundary_air_test.cc)
+target_link_libraries(boundary_air_test starkware_gtest algebra lde air_test_utils)
+add_test(boundary_air_test boundary_air_test)

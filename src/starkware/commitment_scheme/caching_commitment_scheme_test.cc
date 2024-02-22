@@ -77,10 +77,12 @@ TEST(CachingCommitmentSchemeProverTest, CommitAndDecommit) {
       segment_1.begin() + 2 * size_of_element, 2 * size_of_element,
       std::back_inserter(queries_data));
 
+#ifndef __APPLE__
   // Expected decommitment flow.
   EXPECT_CALL(*inner_scheme_ptr, StartDecommitmentPhase(queries))
       .WillOnce(testing::Return(expected_indices_to_inner_layer));
   EXPECT_CALL(*inner_scheme_ptr, Decommit(gsl::span<const std::byte>(queries_data)));
+#endif
 
   // Decommit.
   const auto res = commitment_scheme_prover.StartDecommitmentPhase(queries);

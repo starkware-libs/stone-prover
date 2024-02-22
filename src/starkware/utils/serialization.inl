@@ -14,7 +14,12 @@
 
 #include "starkware/utils/serialization.h"
 
-#include <endian.h>
+#ifdef __APPLE__
+  #include "apple_endian.h"
+#else
+  #include <endian.h>
+#endif /* __APPLE__*/
+
 #include <algorithm>
 #include <utility>
 

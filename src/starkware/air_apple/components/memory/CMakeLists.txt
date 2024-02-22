@@ -1,0 +1,3 @@
+add_executable(memory_cell_test memory_cell_test.cc)
+target_link_libraries(memory_cell_test starkware_gtest algebra trace_generation_context)
+add_test(memory_cell_test memory_cell_test)
