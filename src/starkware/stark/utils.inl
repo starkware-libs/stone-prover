@@ -51,12 +51,14 @@ TableProverFactory GetTableProverFactory(
       use_parallel_prover = true;
     }
 
-    auto packaging_commitment_scheme = MakeCommitmentSchemeProver<HashT>(
+    auto packaging_commitment_scheme = MakeCommitmentSchemeProver(
         field_element_size_in_bytes * n_columns, n_rows_per_segment, n_segments, channel,
-        n_verifier_friendly_commitment_layers, commitment_hashes, n_out_of_memory_merkle_layers);
+        n_verifier_friendly_commitment_layers, commitment_hashes, n_columns,
+        n_out_of_memory_merkle_layers);
 
     auto table_prover = std::make_unique<TableProverImpl>(
-        n_columns, UseMovedValue(std::move(packaging_commitment_scheme)), channel);
+        n_columns,
+        TakeOwnershipFrom<CommitmentSchemeProver>(std::move(packaging_commitment_scheme)), channel);
 
     if (!use_parallel_prover) {
       return table_prover;

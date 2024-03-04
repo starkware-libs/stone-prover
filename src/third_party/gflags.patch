@@ -1,0 +1,11 @@
+--- bazel/gflags.bzl	2022-11-15 14:34:48.847722308 +0200
++++ bazel/gflags.bzl	2022-11-15 14:29:16.415184176 +0200
+@@ -77,6 +77,8 @@
+         "-DHAVE_STRTOLL",
+         "-DHAVE_STRTOQ",
+         "-DHAVE_RWLOCK",
++        "-Wno-unused-parameter",
++        "-Wno-cast-function-type",
+     ] + select({
+         "//:x64_windows": [
+             "-DOS_WINDOWS",

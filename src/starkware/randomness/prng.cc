@@ -20,6 +20,7 @@
 #include "glog/logging.h"
 
 #include "starkware/crypt_tools/blake2s.h"
+#include "starkware/crypt_tools/poseidon.h"
 #include "starkware/error_handling/error_handling.h"
 #include "starkware/utils/serialization.h"
 #include "starkware/utils/to_from_string.h"
@@ -78,5 +79,6 @@ std::vector<bool> PrngImpl<HashT>::UniformBoolVector(size_t n_elements) {
 
 template class PrngImpl<Keccak256>;
 template class PrngImpl<Blake2s256>;
+template class PrngImpl<Poseidon3>;
 
 }  // namespace starkware

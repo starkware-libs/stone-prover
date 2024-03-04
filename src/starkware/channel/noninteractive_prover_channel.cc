@@ -44,6 +44,23 @@ void NoninteractiveProverChannel::SendBytes(const gsl::span<const std::byte> raw
   proof_statistics_.byte_count += raw_bytes.size();
 }
 
+void NoninteractiveProverChannel::SendFieldElementSpanImpl(const ConstFieldElementSpan& values) {
+  const size_t size_in_bytes = values.GetField().ElementSizeInBytes();
+  std::vector<std::byte> raw_bytes(values.Size() * size_in_bytes);
+  auto raw_bytes_span = gsl::make_span(raw_bytes);
+
+  InvokeFieldTemplateVersion(
+      [&](auto field_tag) {
+        using FieldElementT = typename decltype(field_tag)::type;
+        auto felt_span = values.As<FieldElementT>();
+        for (size_t i = 0; i < felt_span.size(); i++) {
+          felt_span.at(i).ToBytes(raw_bytes_span.subspan(i * size_in_bytes, size_in_bytes));
+        }
+      },
+      values.GetField());
+  SendBytes(raw_bytes);
+}
+
 std::vector<std::byte> NoninteractiveProverChannel::ReceiveBytes(const size_t num_bytes) {
   ASSERT_RELEASE(!in_query_phase_, "Prover can't receive randomness after query phase has begun.");
   std::vector<std::byte> bytes(num_bytes);

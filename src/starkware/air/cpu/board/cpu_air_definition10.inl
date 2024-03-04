@@ -29,11 +29,11 @@ CpuAirDefinition<FieldElementT, 10>::CreateCompositionPolynomial(
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
   const std::vector<uint64_t> point_exponents = {
-      trace_length_, SafeDiv(trace_length_, 2), SafeDiv(trace_length_, 8),
-      SafeDiv(trace_length_, 16)};
+      uint64_t(trace_length_), uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 8)), uint64_t(SafeDiv(trace_length_, 16))};
   const std::vector<uint64_t> gen_exponents = {
-      SafeDiv((15) * (trace_length_), 16), (trace_length_) - (1),
-      (16) * ((SafeDiv(trace_length_, 16)) - (1)), (2) * ((SafeDiv(trace_length_, 2)) - (1))};
+      uint64_t(SafeDiv((15) * (trace_length_), 16)), uint64_t((trace_length_) - (1)),
+      uint64_t((trace_length_) - (16)), uint64_t((trace_length_) - (2))};
 
   BuildPeriodicColumns(gen, &builder);
 
@@ -47,7 +47,7 @@ std::vector<std::vector<FieldElementT>>
 CpuAirDefinition<FieldElementT, 10>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -55,19 +55,21 @@ CpuAirDefinition<FieldElementT, 10>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
     }
   }
 
-  TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  [[maybe_unused]] TaskManager& task_manager = TaskManager::GetInstance();
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -137,30 +139,31 @@ CpuAirDefinition<FieldElementT, 10>::PrecomputeDomainEvalsOnCoset(
 template <typename FieldElementT>
 FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 4, "shifts should contain 4 elements.");
 
   // domain0 = point^trace_length - 1.
-  const FieldElementT& domain0 = precomp_domains[0];
+  [[maybe_unused]] const FieldElementT& domain0 = precomp_domains[0];
   // domain1 = point^(trace_length / 2) - 1.
-  const FieldElementT& domain1 = precomp_domains[1];
+  [[maybe_unused]] const FieldElementT& domain1 = precomp_domains[1];
   // domain2 = point^(trace_length / 8) - 1.
-  const FieldElementT& domain2 = precomp_domains[2];
+  [[maybe_unused]] const FieldElementT& domain2 = precomp_domains[2];
   // domain3 = point^(trace_length / 16) - gen^(15 * trace_length / 16).
-  const FieldElementT& domain3 = precomp_domains[3];
+  [[maybe_unused]] const FieldElementT& domain3 = precomp_domains[3];
   // domain4 = point^(trace_length / 16) - 1.
-  const FieldElementT& domain4 = precomp_domains[4];
+  [[maybe_unused]] const FieldElementT& domain4 = precomp_domains[4];
   // domain5 = point - gen^(trace_length - 1).
   const FieldElementT& domain5 = (point) - (shifts[1]);
-  // domain6 = point - gen^(16 * (trace_length / 16 - 1)).
+  // domain6 = point - gen^(trace_length - 16).
   const FieldElementT& domain6 = (point) - (shifts[2]);
   // domain7 = point - 1.
   const FieldElementT& domain7 = (point) - (FieldElementT::One());
-  // domain8 = point - gen^(2 * (trace_length / 2 - 1)).
+  // domain8 = point - gen^(trace_length - 2).
   const FieldElementT& domain8 = (point) - (shifts[3]);
 
-  ASSERT_VERIFIER(neighbors.size() == 49, "Neighbors must contain 49 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 49, "neighbors should contain 49 elements.");
+
   const FieldElementT& column0_row0 = neighbors[kColumn0Row0Neighbor];
   const FieldElementT& column0_row1 = neighbors[kColumn0Row1Neighbor];
   const FieldElementT& column0_row4 = neighbors[kColumn0Row4Neighbor];
@@ -213,55 +216,55 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
 
   ASSERT_VERIFIER(periodic_columns.empty(), "periodic_columns should be empty.");
 
-  const FieldElementT cpu__decode__opcode_rc__bit_0 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_0 =
       (column1_row0) - ((column1_row1) + (column1_row1));
-  const FieldElementT cpu__decode__opcode_rc__bit_2 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_2 =
       (column1_row2) - ((column1_row3) + (column1_row3));
-  const FieldElementT cpu__decode__opcode_rc__bit_4 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_4 =
       (column1_row4) - ((column1_row5) + (column1_row5));
-  const FieldElementT cpu__decode__opcode_rc__bit_3 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_3 =
       (column1_row3) - ((column1_row4) + (column1_row4));
   const FieldElementT cpu__decode__flag_op1_base_op0_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_2) + (cpu__decode__opcode_rc__bit_4)) +
-       (cpu__decode__opcode_rc__bit_3));
-  const FieldElementT cpu__decode__opcode_rc__bit_5 =
+      (((cpu__decode__opcode_range_check__bit_2) + (cpu__decode__opcode_range_check__bit_4)) +
+       (cpu__decode__opcode_range_check__bit_3));
+  const FieldElementT cpu__decode__opcode_range_check__bit_5 =
       (column1_row5) - ((column1_row6) + (column1_row6));
-  const FieldElementT cpu__decode__opcode_rc__bit_6 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_6 =
       (column1_row6) - ((column1_row7) + (column1_row7));
-  const FieldElementT cpu__decode__opcode_rc__bit_9 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_9 =
       (column1_row9) - ((column1_row10) + (column1_row10));
   const FieldElementT cpu__decode__flag_res_op1_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_5) + (cpu__decode__opcode_rc__bit_6)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_7 =
+      (((cpu__decode__opcode_range_check__bit_5) + (cpu__decode__opcode_range_check__bit_6)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_7 =
       (column1_row7) - ((column1_row8) + (column1_row8));
-  const FieldElementT cpu__decode__opcode_rc__bit_8 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_8 =
       (column1_row8) - ((column1_row9) + (column1_row9));
   const FieldElementT cpu__decode__flag_pc_update_regular_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_8)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_12 =
+      (((cpu__decode__opcode_range_check__bit_7) + (cpu__decode__opcode_range_check__bit_8)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_12 =
       (column1_row12) - ((column1_row13) + (column1_row13));
-  const FieldElementT cpu__decode__opcode_rc__bit_13 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_13 =
       (column1_row13) - ((column1_row14) + (column1_row14));
   const FieldElementT cpu__decode__fp_update_regular_0 =
       (FieldElementT::One()) -
-      ((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_13));
-  const FieldElementT cpu__decode__opcode_rc__bit_1 =
+      ((cpu__decode__opcode_range_check__bit_12) + (cpu__decode__opcode_range_check__bit_13));
+  const FieldElementT cpu__decode__opcode_range_check__bit_1 =
       (column1_row1) - ((column1_row2) + (column1_row2));
   const FieldElementT npc_reg_0 =
-      ((column3_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One());
-  const FieldElementT cpu__decode__opcode_rc__bit_10 =
+      ((column3_row0) + (cpu__decode__opcode_range_check__bit_2)) + (FieldElementT::One());
+  const FieldElementT cpu__decode__opcode_range_check__bit_10 =
       (column1_row10) - ((column1_row11) + (column1_row11));
-  const FieldElementT cpu__decode__opcode_rc__bit_11 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_11 =
       (column1_row11) - ((column1_row12) + (column1_row12));
-  const FieldElementT cpu__decode__opcode_rc__bit_14 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_14 =
       (column1_row14) - ((column1_row15) + (column1_row15));
   const FieldElementT memory__address_diff_0 = (column4_row2) - (column4_row0);
-  const FieldElementT rc16__diff_0 = (column2_row1) - (column2_row0);
+  const FieldElementT range_check16__diff_0 = (column2_row1) - (column2_row0);
   FractionFieldElement<FieldElementT> res(FieldElementT::Zero());
   {
     // Compute a sum of constraints with denominator = domain0.
@@ -271,10 +274,10 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       // Compute a sum of constraints with numerator = domain3.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/bit:
+        // Constraint expression for cpu/decode/opcode_range_check/bit:
         const FieldElementT constraint =
-            ((cpu__decode__opcode_rc__bit_0) * (cpu__decode__opcode_rc__bit_0)) -
-            (cpu__decode__opcode_rc__bit_0);
+            ((cpu__decode__opcode_range_check__bit_0) * (cpu__decode__opcode_range_check__bit_0)) -
+            (cpu__decode__opcode_range_check__bit_0);
         inner_sum += random_coefficients[0] * constraint;
       }
       outer_sum += inner_sum * domain3;
@@ -284,15 +287,16 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       // Compute a sum of constraints with numerator = domain5.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/step0:
+        // Constraint expression for range_check16/perm/step0:
         const FieldElementT constraint =
-            (((rc16__perm__interaction_elm_) - (column2_row1)) * (column6_inter1_row1)) -
-            (((rc16__perm__interaction_elm_) - (column0_row1)) * (column6_inter1_row0));
+            (((range_check16__perm__interaction_elm_) - (column2_row1)) * (column6_inter1_row1)) -
+            (((range_check16__perm__interaction_elm_) - (column0_row1)) * (column6_inter1_row0));
         inner_sum += random_coefficients[42] * constraint;
       }
       {
-        // Constraint expression for rc16/diff_is_bit:
-        const FieldElementT constraint = ((rc16__diff_0) * (rc16__diff_0)) - (rc16__diff_0);
+        // Constraint expression for range_check16/diff_is_bit:
+        const FieldElementT constraint =
+            ((range_check16__diff_0) * (range_check16__diff_0)) - (range_check16__diff_0);
         inner_sum += random_coefficients[44] * constraint;
       }
       outer_sum += inner_sum * domain5;
@@ -308,7 +312,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/zero:
+        // Constraint expression for cpu/decode/opcode_range_check/zero:
         const FieldElementT constraint = column1_row0;
         inner_sum += random_coefficients[1] * constraint;
       }
@@ -325,7 +329,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc_input:
+        // Constraint expression for cpu/decode/opcode_range_check_input:
         const FieldElementT constraint =
             (column3_row1) -
             (((((((column1_row0) * (offset_size_)) + (column0_row4)) * (offset_size_)) +
@@ -366,8 +370,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
         // Constraint expression for cpu/operands/mem_dst_addr:
         const FieldElementT constraint =
             ((column3_row8) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_0) * (column5_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_0)) * (column5_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_0) * (column5_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_0)) *
+               (column5_row0))) +
              (column0_row0));
         inner_sum += random_coefficients[7] * constraint;
       }
@@ -375,19 +380,21 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
         // Constraint expression for cpu/operands/mem0_addr:
         const FieldElementT constraint =
             ((column3_row4) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_1) * (column5_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_1)) * (column5_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_1) * (column5_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_1)) *
+               (column5_row0))) +
              (column0_row8));
         inner_sum += random_coefficients[8] * constraint;
       }
       {
         // Constraint expression for cpu/operands/mem1_addr:
-        const FieldElementT constraint = ((column3_row12) + (half_offset_size_)) -
-                                         ((((((cpu__decode__opcode_rc__bit_2) * (column3_row0)) +
-                                             ((cpu__decode__opcode_rc__bit_4) * (column5_row0))) +
-                                            ((cpu__decode__opcode_rc__bit_3) * (column5_row8))) +
-                                           ((cpu__decode__flag_op1_base_op0_0) * (column3_row5))) +
-                                          (column0_row4));
+        const FieldElementT constraint =
+            ((column3_row12) + (half_offset_size_)) -
+            ((((((cpu__decode__opcode_range_check__bit_2) * (column3_row0)) +
+                ((cpu__decode__opcode_range_check__bit_4) * (column5_row0))) +
+               ((cpu__decode__opcode_range_check__bit_3) * (column5_row8))) +
+              ((cpu__decode__flag_op1_base_op0_0) * (column3_row5))) +
+             (column0_row4));
         inner_sum += random_coefficients[9] * constraint;
       }
       {
@@ -398,78 +405,80 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       {
         // Constraint expression for cpu/operands/res:
         const FieldElementT constraint =
-            (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column5_row12)) -
-            ((((cpu__decode__opcode_rc__bit_5) * ((column3_row5) + (column3_row13))) +
-              ((cpu__decode__opcode_rc__bit_6) * (column5_row4))) +
+            (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+             (column5_row12)) -
+            ((((cpu__decode__opcode_range_check__bit_5) * ((column3_row5) + (column3_row13))) +
+              ((cpu__decode__opcode_range_check__bit_6) * (column5_row4))) +
              ((cpu__decode__flag_res_op1_0) * (column3_row13)));
         inner_sum += random_coefficients[11] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_fp:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column3_row9) - (column5_row8));
+            (cpu__decode__opcode_range_check__bit_12) * ((column3_row9) - (column5_row8));
         inner_sum += random_coefficients[18] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_pc:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            ((column3_row5) -
-             (((column3_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One())));
+            (cpu__decode__opcode_range_check__bit_12) *
+            ((column3_row5) - (((column3_row0) + (cpu__decode__opcode_range_check__bit_2)) +
+                               (FieldElementT::One())));
         inner_sum += random_coefficients[19] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column0_row0) - (half_offset_size_));
+            (cpu__decode__opcode_range_check__bit_12) * ((column0_row0) - (half_offset_size_));
         inner_sum += random_coefficients[20] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off1:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
+            (cpu__decode__opcode_range_check__bit_12) *
             ((column0_row8) - ((half_offset_size_) + (FieldElementT::One())));
         inner_sum += random_coefficients[21] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            (((((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_12)) +
-               (FieldElementT::One())) +
-              (FieldElementT::One())) -
-             (((cpu__decode__opcode_rc__bit_0) + (cpu__decode__opcode_rc__bit_1)) +
-              (FieldElementT::ConstexprFromBigInt(0x4_Z))));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_12) *
+                                         (((((cpu__decode__opcode_range_check__bit_12) +
+                                             (cpu__decode__opcode_range_check__bit_12)) +
+                                            (FieldElementT::One())) +
+                                           (FieldElementT::One())) -
+                                          (((cpu__decode__opcode_range_check__bit_0) +
+                                            (cpu__decode__opcode_range_check__bit_1)) +
+                                           (FieldElementT::ConstexprFromBigInt(0x4_Z))));
         inner_sum += random_coefficients[22] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column0_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z))) - (half_offset_size_));
         inner_sum += random_coefficients[23] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off2:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column0_row4) + (FieldElementT::One())) - (half_offset_size_));
         inner_sum += random_coefficients[24] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
-            (((((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_0)) +
-               (cpu__decode__opcode_rc__bit_3)) +
-              (cpu__decode__flag_res_op1_0)) -
-             (FieldElementT::ConstexprFromBigInt(0x4_Z)));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_13) *
+                                         (((((cpu__decode__opcode_range_check__bit_7) +
+                                             (cpu__decode__opcode_range_check__bit_0)) +
+                                            (cpu__decode__opcode_range_check__bit_3)) +
+                                           (cpu__decode__flag_res_op1_0)) -
+                                          (FieldElementT::ConstexprFromBigInt(0x4_Z)));
         inner_sum += random_coefficients[25] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/assert_eq/assert_eq:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_14) * ((column3_row9) - (column5_row12));
+            (cpu__decode__opcode_range_check__bit_14) * ((column3_row9) - (column5_row12));
         inner_sum += random_coefficients[26] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -481,7 +490,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       {
         // Constraint expression for cpu/update_registers/update_pc/tmp0:
         const FieldElementT constraint =
-            (column5_row2) - ((cpu__decode__opcode_rc__bit_9) * (column3_row9));
+            (column5_row2) - ((cpu__decode__opcode_range_check__bit_9) * (column3_row9));
         inner_sum += random_coefficients[12] * constraint;
       }
       {
@@ -492,34 +501,37 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_negative:
         const FieldElementT constraint =
-            ((((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column3_row16)) +
+            ((((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+              (column3_row16)) +
              ((column5_row2) * ((column3_row16) - ((column3_row0) + (column3_row13))))) -
             ((((cpu__decode__flag_pc_update_regular_0) * (npc_reg_0)) +
-              ((cpu__decode__opcode_rc__bit_7) * (column5_row12))) +
-             ((cpu__decode__opcode_rc__bit_8) * ((column3_row0) + (column5_row12))));
+              ((cpu__decode__opcode_range_check__bit_7) * (column5_row12))) +
+             ((cpu__decode__opcode_range_check__bit_8) * ((column3_row0) + (column5_row12))));
         inner_sum += random_coefficients[14] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_positive:
         const FieldElementT constraint =
-            ((column5_row10) - (cpu__decode__opcode_rc__bit_9)) * ((column3_row16) - (npc_reg_0));
+            ((column5_row10) - (cpu__decode__opcode_range_check__bit_9)) *
+            ((column3_row16) - (npc_reg_0));
         inner_sum += random_coefficients[15] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_ap/ap_update:
         const FieldElementT constraint =
             (column5_row16) -
-            ((((column5_row0) + ((cpu__decode__opcode_rc__bit_10) * (column5_row12))) +
-              (cpu__decode__opcode_rc__bit_11)) +
-             ((cpu__decode__opcode_rc__bit_12) * (FieldElementT::ConstexprFromBigInt(0x2_Z))));
+            ((((column5_row0) + ((cpu__decode__opcode_range_check__bit_10) * (column5_row12))) +
+              (cpu__decode__opcode_range_check__bit_11)) +
+             ((cpu__decode__opcode_range_check__bit_12) *
+              (FieldElementT::ConstexprFromBigInt(0x2_Z))));
         inner_sum += random_coefficients[16] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_fp/fp_update:
         const FieldElementT constraint =
             (column5_row24) - ((((cpu__decode__fp_update_regular_0) * (column5_row8)) +
-                                ((cpu__decode__opcode_rc__bit_13) * (column3_row9))) +
-                               ((cpu__decode__opcode_rc__bit_12) *
+                                ((cpu__decode__opcode_range_check__bit_13) * (column3_row9))) +
+                               ((cpu__decode__opcode_range_check__bit_12) *
                                 ((column5_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z)))));
         inner_sum += random_coefficients[17] * constraint;
       }
@@ -568,16 +580,16 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
         inner_sum += random_coefficients[38] * constraint;
       }
       {
-        // Constraint expression for rc16/perm/init0:
+        // Constraint expression for range_check16/perm/init0:
         const FieldElementT constraint =
-            ((((rc16__perm__interaction_elm_) - (column2_row0)) * (column6_inter1_row0)) +
+            ((((range_check16__perm__interaction_elm_) - (column2_row0)) * (column6_inter1_row0)) +
              (column0_row0)) -
-            (rc16__perm__interaction_elm_);
+            (range_check16__perm__interaction_elm_);
         inner_sum += random_coefficients[41] * constraint;
       }
       {
-        // Constraint expression for rc16/minimum:
-        const FieldElementT constraint = (column2_row0) - (rc_min_);
+        // Constraint expression for range_check16/minimum:
+        const FieldElementT constraint = (column2_row0) - (range_check_min_);
         inner_sum += random_coefficients[45] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -697,13 +709,14 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/last:
-        const FieldElementT constraint = (column6_inter1_row0) - (rc16__perm__public_memory_prod_);
+        // Constraint expression for range_check16/perm/last:
+        const FieldElementT constraint =
+            (column6_inter1_row0) - (range_check16__perm__public_memory_prod_);
         inner_sum += random_coefficients[43] * constraint;
       }
       {
-        // Constraint expression for rc16/maximum:
-        const FieldElementT constraint = (column2_row0) - (rc_max_);
+        // Constraint expression for range_check16/maximum:
+        const FieldElementT constraint = (column2_row0) - (range_check_max_);
         inner_sum += random_coefficients[46] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -716,7 +729,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 10>::Constra
 template <typename FieldElementT>
 std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 10>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+  [[maybe_unused]] const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   const FieldElementT& domain1 = (point_powers[2]) - (FieldElementT::One());
   const FieldElementT& domain2 = (point_powers[3]) - (FieldElementT::One());
@@ -728,26 +742,24 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 10>::DomainEvalsAtPoi
 }
 
 template <typename FieldElementT>
+std::vector<uint64_t> CpuAirDefinition<FieldElementT, 10>::ParseDynamicParams(
+    [[maybe_unused]] const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
+}
+
+template <typename FieldElementT>
 TraceGenerationContext CpuAirDefinition<FieldElementT, 10>::GetTraceGenerationContext() const {
   TraceGenerationContext ctx;
 
-  ASSERT_RELEASE(((trace_length_) + (-1)) < (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(
+      IsPowerOfTwo(trace_length_),
+      "Coset step (MemberExpression(trace_length)) must be a power of two");
 
-  ASSERT_RELEASE(((trace_length_) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (trace_length_), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((trace_length_) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((trace_length_) <= (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((trace_length_) >= (0), "Index should be non negative.");
 
@@ -755,92 +767,34 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 10>::GetTraceGenerationCo
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 2)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 2)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 2)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 2)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) - (1)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 2)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) + (-1)) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) + (-1)) >= (0), "Index should be non negative.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) + (-1)) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) + (-1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index out of range.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (2)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16)), "step must not exceed dimension.");
+  ASSERT_RELEASE(((trace_length_) - (9)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (5)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (13)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) - (1)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (3)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (11)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16)) - (1)), "start must not exceed stop.");
-
-  ctx.AddVirtualColumn(
-      "rc16_pool", VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "cpu/decode/opcode_rc/column",
-      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/sorted", VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "mem_pool/addr", VirtualColumn(/*column=*/kColumn3Column, /*step=*/2, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "mem_pool/value", VirtualColumn(/*column=*/kColumn3Column, /*step=*/2, /*row_offset=*/1));
   ctx.AddVirtualColumn(
-      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn4Column, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/sorted/value",
-      VirtualColumn(/*column=*/kColumn4Column, /*step=*/2, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/8));
-  ctx.AddVirtualColumn(
-      "cpu/operands/ops_mul",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/4));
-  ctx.AddVirtualColumn(
-      "cpu/operands/res", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/12));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp0",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp1",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/10));
-  ctx.AddVirtualColumn(
-      "rc16/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn6Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/multi_column_perm/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn7Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
+      "range_check16_pool", VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/mem_inst/addr",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/16, /*row_offset=*/0));
@@ -853,11 +807,18 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 10>::GetTraceGenerationCo
       "cpu/decode/instruction",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/16, /*row_offset=*/1));
   ctx.AddVirtualColumn(
+      "cpu/decode/opcode_range_check/column",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "cpu/decode/off0", VirtualColumn(/*column=*/kColumn0Column, /*step=*/16, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/off1", VirtualColumn(/*column=*/kColumn0Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/decode/off2", VirtualColumn(/*column=*/kColumn0Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/operands/mem_dst/addr",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/16, /*row_offset=*/8));
@@ -877,11 +838,38 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 10>::GetTraceGenerationCo
       "cpu/operands/mem_op1/value",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/16, /*row_offset=*/13));
   ctx.AddVirtualColumn(
+      "cpu/operands/ops_mul",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/operands/res", VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/12));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp0",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp1",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/10));
+  ctx.AddVirtualColumn(
+      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn4Column, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "memory/sorted/value",
+      VirtualColumn(/*column=*/kColumn4Column, /*step=*/2, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "memory/multi_column_perm/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn7Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "orig/public_memory/addr",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/8, /*row_offset=*/2));
   ctx.AddVirtualColumn(
       "orig/public_memory/value",
       VirtualColumn(/*column=*/kColumn3Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "range_check16/sorted",
+      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "range_check16/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn6Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
 
   return ctx;
 }

@@ -37,6 +37,8 @@ class ProverChannelMock : public ProverChannel {
   MOCK_METHOD1(SendBytes, void(gsl::span<const std::byte> raw_bytes));
   MOCK_METHOD1(ReceiveBytes, std::vector<std::byte>(const size_t num_bytes));
   MOCK_METHOD1(ApplyProofOfWork, void(size_t));
+
+  MOCK_CONST_METHOD0(GetProof, std::vector<std::byte>());
 };
 
 }  // namespace starkware

@@ -18,28 +18,26 @@
 #include "starkware/algebra/utils/invoke_template_version.h"
 
 namespace starkware {
+
 namespace cpu {
 
 using CpuAirDefinitionInvokedLayoutTypes = InvokedTypes<
     std::integral_constant<int, 0>, std::integral_constant<int, 1>, std::integral_constant<int, 2>,
     std::integral_constant<int, 3>, std::integral_constant<int, 4>, std::integral_constant<int, 5>,
     std::integral_constant<int, 6>, std::integral_constant<int, 7>, std::integral_constant<int, 8>,
-    std::integral_constant<int, 9>, std::integral_constant<int, 10>>;
-
-template <typename FieldElementT, int LayoutId = 0>
-class CpuAirDefinition {
-  // Workaround for static_assert(false).
-  static_assert(
-      sizeof(FieldElementT) == 0,
-      "CpuAirDefinition is not implemented for the given field and layout.");
-};
+    std::integral_constant<int, 9>, std::integral_constant<int, 10>,
+    std::integral_constant<int, 11>, std::integral_constant<int, 12>>;
 
 }  // namespace cpu
 }  // namespace starkware
 
+#include "starkware/air/cpu/board/cpu_air_definition_class.h"
+
 #include "starkware/air/cpu/board/cpu_air_definition0.h"
 #include "starkware/air/cpu/board/cpu_air_definition1.h"
 #include "starkware/air/cpu/board/cpu_air_definition10.h"
+#include "starkware/air/cpu/board/cpu_air_definition11.h"
+#include "starkware/air/cpu/board/cpu_air_definition12.h"
 #include "starkware/air/cpu/board/cpu_air_definition2.h"
 #include "starkware/air/cpu/board/cpu_air_definition3.h"
 #include "starkware/air/cpu/board/cpu_air_definition4.h"

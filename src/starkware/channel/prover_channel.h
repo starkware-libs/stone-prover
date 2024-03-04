@@ -118,13 +118,15 @@ class ProverChannel : public Channel {
     return ReceiveNumber(upper_bound, annotation);
   }
 
+  // Returns the current proof. Must be implemented by sub-class.
+  virtual std::vector<std::byte> GetProof() const = 0;
+
  protected:
   // ===============================================================================================
   // The following methods should not be overridden by the subclass, they are defined as virtual to
   // allow writing expectations on them using gmock.
   // ===============================================================================================
   virtual void SendFieldElementImpl(const FieldElement& value);
-  virtual void SendFieldElementSpanImpl(const ConstFieldElementSpan& values);
   // ===============================================================================================
   // True pure virtual methods:
   // ===============================================================================================
@@ -132,6 +134,7 @@ class ProverChannel : public Channel {
   virtual uint64_t ReceiveNumberImpl(uint64_t upper_bound) = 0;
   virtual void SendBytes(gsl::span<const std::byte> raw_bytes) = 0;
   virtual std::vector<std::byte> ReceiveBytes(size_t num_bytes) = 0;
+  virtual void SendFieldElementSpanImpl(const ConstFieldElementSpan& values) = 0;
 };
 
 }  // namespace starkware

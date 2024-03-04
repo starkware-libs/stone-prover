@@ -63,8 +63,6 @@ class DegreeThreeExampleAir<FieldElementT, 0> : public Air {
 
   uint64_t NumRandomCoefficients() const override { return kNumConstraints; }
 
-  uint64_t NumColumns() const override { return kNumColumns; }
-
   std::vector<std::vector<FieldElementT>> PrecomputeDomainEvalsOnCoset(
       const FieldElementT& point, const FieldElementT& generator,
       gsl::span<const uint64_t> point_exponents, gsl::span<const FieldElementT> shifts) const;
@@ -77,10 +75,14 @@ class DegreeThreeExampleAir<FieldElementT, 0> : public Air {
   std::vector<FieldElementT> DomainEvalsAtPoint(
       gsl::span<const FieldElementT> point_powers, gsl::span<const FieldElementT> shifts) const;
 
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& params) const override;
+
   TraceGenerationContext GetTraceGenerationContext() const;
 
   void BuildPeriodicColumns(const FieldElementT& gen, Builder* builder) const;
 
+  uint64_t NumColumns() const override { return kNumColumns; }
   std::optional<InteractionParams> GetInteractionParams() const override { return std::nullopt; }
 
   static constexpr uint64_t kConstraintDegree = 4;
@@ -97,12 +99,20 @@ class DegreeThreeExampleAir<FieldElementT, 0> : public Air {
     kNumPeriodicColumns,
   };
 
+  enum DynamicParams {
+    // Number of dynamic params.
+    kNumDynamicParams,
+  };
+
   enum Neighbors {
     kXRow0Neighbor,
     kXRow1Neighbor,
     // Number of neighbors.
     kNumNeighbors,
   };
+
+  static constexpr std::array<FieldElementT, 1> kTrivialPeriodicColumnData = {
+      FieldElementT::Zero()};
 
   enum Constraints {
     kStepCond,        // Constraint 0.

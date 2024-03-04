@@ -37,26 +37,27 @@ class PoseidonComponent {
   */
   PoseidonComponent(
       const std::string& name, const TraceGenerationContext& ctx, size_t m, size_t rounds_full,
-      size_t rounds_partial, gsl::span<const size_t> r_p_partition,
+      size_t rounds_partial, gsl::span<const size_t> partial_rounds_partition,
       const ConstSpanAdapter<FieldElementT>& mds, const ConstSpanAdapter<FieldElementT>& ark)
       : m_(m),
         rounds_full_(rounds_full),
         rounds_full_capacity_(Pow2(Log2Ceil(rounds_full))),
         rounds_full_half_capacity_(Pow2(Log2Ceil(rounds_full) - 1)),
-        r_p_partition_(r_p_partition.begin(), r_p_partition.end()),
-        r_p_capacities_(InitRPCapacities(r_p_partition)),
+        partial_rounds_partition_(partial_rounds_partition.begin(), partial_rounds_partition.end()),
+        r_p_capacities_(InitRPCapacities(partial_rounds_partition)),
         full_rounds_state_(GetStateColumns(name + "/full_rounds_state", ctx, "", m)),
         full_rounds_state_squared_(
             GetStateColumns(name + "/full_rounds_state", ctx, "_squared", m)),
-        partial_rounds_state_(
-            GetStateColumns(name + "/partial_rounds_state", ctx, "", r_p_partition.size())),
-        partial_rounds_state_squared_(
-            GetStateColumns(name + "/partial_rounds_state", ctx, "_squared", r_p_partition.size())),
+        partial_rounds_state_(GetStateColumns(
+            name + "/partial_rounds_state", ctx, "", partial_rounds_partition.size())),
+        partial_rounds_state_squared_(GetStateColumns(
+            name + "/partial_rounds_state", ctx, "_squared", partial_rounds_partition.size())),
         mds_(mds),
         ark_(ark) {
     ASSERT_RELEASE(
-        std::accumulate(r_p_partition.begin(), r_p_partition.end(), size_t(0)) ==
-            rounds_partial + m * (r_p_partition.size() - 1),
+        std::accumulate(
+            partial_rounds_partition.begin(), partial_rounds_partition.end(), size_t(0)) ==
+            rounds_partial + m * (partial_rounds_partition.size() - 1),
         "Incompatible partial rounds partition.");
     ASSERT_RELEASE(mds.Size() == m, "Incompatible MDS dimensions.");
     for (size_t i = 0; i < m; ++i) {
@@ -78,10 +79,11 @@ class PoseidonComponent {
       gsl::span<const gsl::span<FieldElementT>> trace) const;
 
  private:
-  static const std::vector<size_t> InitRPCapacities(gsl::span<const size_t> r_p_partition) {
+  static const std::vector<size_t> InitRPCapacities(
+      gsl::span<const size_t> partial_rounds_partition) {
     std::vector<size_t> capacities;
-    capacities.reserve(r_p_partition.size());
-    for (size_t size : r_p_partition) {
+    capacities.reserve(partial_rounds_partition.size());
+    for (size_t size : partial_rounds_partition) {
       capacities.push_back(Pow2(Log2Ceil(size)));
     }
     return capacities;
@@ -102,7 +104,7 @@ class PoseidonComponent {
   const size_t rounds_full_;
   const size_t rounds_full_capacity_;
   const size_t rounds_full_half_capacity_;
-  const std::vector<size_t> r_p_partition_;
+  const std::vector<size_t> partial_rounds_partition_;
   const std::vector<size_t> r_p_capacities_;
 
   /*

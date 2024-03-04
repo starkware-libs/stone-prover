@@ -62,12 +62,13 @@ std::string SaveStats(std::string name) {
   std::istringstream iss(str);
   size_t resident_memory_usage_pages, allocated_memory_usage_pages;
   iss >> allocated_memory_usage_pages >> resident_memory_usage_pages;
-  PerformanceStats stats{/*duration=*/now - program_start,
-                         /*resident_memory_usage_mb=*/resident_memory_usage_pages *
-                             sysconf(_SC_PAGE_SIZE) / (1024 * 1024),
-                         /*allocated_memory_usage_mb=*/allocated_memory_usage_pages *
-                             sysconf(_SC_PAGE_SIZE) / (1024 * 1024),
-                         /*name=*/std::move(name)};
+  PerformanceStats stats{
+      /*duration=*/now - program_start,
+      /*resident_memory_usage_mb=*/resident_memory_usage_pages * sysconf(_SC_PAGE_SIZE) /
+          (1024 * 1024),
+      /*allocated_memory_usage_mb=*/allocated_memory_usage_pages * sysconf(_SC_PAGE_SIZE) /
+          (1024 * 1024),
+      /*name=*/std::move(name)};
   stats_vector.push_back(stats);
   return GetLineToPrint(stats);
 }

@@ -23,6 +23,12 @@ void PrimeFieldElement<NBits, Index>::ToBytes(
 }
 
 template <int NBits, int Index>
+void PrimeFieldElement<NBits, Index>::ToBytesStandardForm(
+    gsl::span<std::byte> span_out, bool use_big_endian) const {
+  ToStandardForm().ToBytes(span_out, use_big_endian);
+}
+
+template <int NBits, int Index>
 PrimeFieldElement<NBits, Index> PrimeFieldElement<NBits, Index>::FromBytes(
     gsl::span<const std::byte> bytes, bool use_big_endian) {
   ValueType element = ValueType::FromBytes(bytes, use_big_endian);

@@ -344,8 +344,9 @@ CompositionOracleProver StarkProver::OutOfDomainSamplingProve(
   // Lde and Commit on Broken.
   auto broken_trace = CommitOnTrace(
       std::move(broken_uncommitted_trace), *broken_bases, false, "Commit on composition");
-  auto boundary_conditions =
-      oods::ProveOods(channel_.get(), original_oracle, broken_trace, params_->use_extension_field);
+  auto boundary_conditions = oods::ProveOods(
+      channel_.get(), original_oracle, broken_trace, params_->use_extension_field,
+      this->verifier_friendly_channel_updates_);
   auto boundary_air = oods::CreateBoundaryAir(
       field, params_->evaluation_domain.Group().Size(), original_oracle.Width() + n_breaks,
       std::move(boundary_conditions));
@@ -416,14 +417,15 @@ void StarkProver::ProveStark(std::unique_ptr<TraceContext> trace_context) {
     trace_context->SetInteractionElements(starkware::GetInteractionElements(
         interaction_params->n_interaction_elements, params_->field, channel_.get()));
     auto interaction_trace = trace_context->GetInteractionTrace();
+    const size_t interaction_trace_width = interaction_trace.Width();
     ASSERT_RELEASE(
-        interaction_params->n_columns_second == interaction_trace.Width(),
+        interaction_params->n_columns_second == interaction_trace_width,
         "Number of columns in interaction trace is wrong.");
-    const size_t trace_width = first_trace_width + interaction_trace.Width();
+    const size_t trace_width = first_trace_width + interaction_trace_width;
     VLOG(0) << "Trace cells count:\nLog number of rows: " + std::to_string(SafeLog2(trace_length)) +
-                   "\nNumber of first trace columns: " + std::to_string(first_trace_width) +
-                   "\nNumber of interaction columns: " + std::to_string(interaction_trace.Width()) +
-                   "\nTotal trace cells: " + std::to_string(trace_length * trace_width)
+                   ", first trace n_cols: " + std::to_string(first_trace_width) +
+                   ", interaction trace n_cols: " + std::to_string(interaction_trace_width) +
+                   ", Total trace cells: " + std::to_string(trace_length * trace_width)
             << std::endl;
 
     // Add interaction committed trace.
@@ -514,7 +516,7 @@ CompositionOracleVerifier StarkVerifier::OutOfDomainSamplingVerify(
   }
   auto boundary_conditions = oods::VerifyOods(
       params_->evaluation_domain, channel_.get(), original_oracle, *params_->composition_eval_bases,
-      params_->use_extension_field);
+      params_->use_extension_field, this->verifier_friendly_channel_updates_);
 
   auto boundary_air = oods::CreateBoundaryAir(
       params_->evaluation_domain.GetField(), params_->evaluation_domain.Group().Size(),

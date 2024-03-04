@@ -41,6 +41,11 @@ class NoninteractiveProverChannel : public ProverChannel {
   void SendBytes(gsl::span<const std::byte> raw_bytes) override;
 
   /*
+    Writes field elements to the proof, hashes these elements with the current state_.
+  */
+  void SendFieldElementSpanImpl(const ConstFieldElementSpan& values) override;
+
+  /*
     ReceiveBytes is a method that uses a hash chain and every time it is called the requested number
     of random bytes are returned and the hash chain is updated.
   */
@@ -61,7 +66,7 @@ class NoninteractiveProverChannel : public ProverChannel {
   */
   void ApplyProofOfWork(size_t security_bits) override;
 
-  std::vector<std::byte> GetProof() const;
+  std::vector<std::byte> GetProof() const override;
 
  private:
   std::unique_ptr<PrngBase> prng_;

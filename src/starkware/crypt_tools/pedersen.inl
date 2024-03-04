@@ -60,7 +60,6 @@ inline Pedersen Pedersen::HashBytesWithLength(
 
   ASSERT_RELEASE(bytes_to_hash == 0, "Pedersen hash currently does not support partial blocks.");
   state = ctx.Hash(state, FieldElementT::FromUint(SafeDiv(bytes.size(), kDigestNumBytes)));
-
   return Pedersen(state);
 }
 

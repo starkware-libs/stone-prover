@@ -246,7 +246,9 @@ void CompositionPolynomialImpl<AirT>::EvalOnCosetBitReversedOutput(
           }
           for (size_t i = 0; i < all_precomp_domain_evals.size(); ++i) {
             wm.precomp_domain_evals[i] =
-                all_precomp_domain_evals[i][point_idx & precomp_domain_masks[i]];
+                all_precomp_domain_evals[i].size() > 0
+                    ? all_precomp_domain_evals[i][point_idx & precomp_domain_masks[i]]
+                    : FieldElementT::Zero();
           }
           wm.batch_inverse_input[point_idx - initial_point_idx] = air_->ConstraintsEval(
               neighbors, wm.periodic_column_vals, coefficients_, point, shifts_,

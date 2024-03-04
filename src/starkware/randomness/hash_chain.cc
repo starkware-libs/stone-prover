@@ -120,7 +120,8 @@ HashT HashChain<HashT>::HashWithCounter(const HashT& hash, uint64_t counter) {
       sizeof(uint64_t) <= HashT::kDigestNumBytes,
       "Digest size must be larger than sizeof(uint64_t).");
 
-  std::copy(hash.GetDigest().begin(), hash.GetDigest().end(), data.begin());
+  auto digest = hash.GetDigest();
+  std::copy(digest.begin(), digest.end(), data.begin());
   // Copy the counter's serialized 64bit onto the MSB end of the buffer (PR #875 decision).
   std::copy(bytes.begin(), bytes.end(), data.end() - sizeof(uint64_t));
   return HashT::HashBytesWithLength(data);

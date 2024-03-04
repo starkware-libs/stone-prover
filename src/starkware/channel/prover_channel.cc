@@ -30,14 +30,4 @@ void ProverChannel::SendFieldElementImpl(const FieldElement& value) {
   SendBytes(raw_bytes);
 }
 
-void ProverChannel::SendFieldElementSpanImpl(const ConstFieldElementSpan& values) {
-  const size_t size_in_bytes = values.GetField().ElementSizeInBytes();
-  std::vector<std::byte> raw_bytes(values.Size() * size_in_bytes);
-  auto raw_bytes_span = gsl::make_span(raw_bytes);
-  for (size_t i = 0; i < values.Size(); i++) {
-    values[i].ToBytes(raw_bytes_span.subspan(i * size_in_bytes, size_in_bytes));
-  }
-  SendBytes(raw_bytes);
-}
-
 }  // namespace starkware

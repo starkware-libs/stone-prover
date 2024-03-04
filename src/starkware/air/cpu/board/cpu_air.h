@@ -88,10 +88,10 @@ class CpuAir : public CpuAirDefinition<FieldElementT, LayoutId> {
   */
   explicit CpuAir(
       const uint64_t n_steps, std::vector<MemoryAccessUnitData<FieldElementT>> public_memory,
-      const uint64_t rc_min, const uint64_t rc_max,
-      const MemSegmentAddresses& mem_segment_addresses)
+      const std::map<std::string, uint64_t>& dynamic_params, const uint64_t rc_min,
+      const uint64_t rc_max, const MemSegmentAddresses& mem_segment_addresses)
       : CpuAirDefinition<FieldElementT, LayoutId>(
-            n_steps * this->kCpuComponentHeight, FieldElementT::FromUint(rc_min),
+            n_steps, dynamic_params, FieldElementT::FromUint(rc_min),
             FieldElementT::FromUint(rc_max), mem_segment_addresses,
             GetStandardPedersenHashContext()),
         n_steps_(n_steps),
@@ -139,9 +139,20 @@ class CpuAir : public CpuAirDefinition<FieldElementT, LayoutId> {
  private:
   constexpr uint64_t PedersenRatio() const;
   constexpr uint64_t RangeCheckRatio() const;
+  constexpr uint64_t RangeCheck96Ratio() const;
   constexpr uint64_t EcdsaRatio() const;
   constexpr uint64_t BitwiseRatio() const;
   constexpr uint64_t EcOpRatio() const;
+  constexpr uint64_t KeccakRatio() const;
+  constexpr uint64_t PoseidonRatio() const;
+  constexpr bool UsesPedersenBuiltin() const;
+  constexpr bool UsesRangeCheckBuiltin() const;
+  constexpr bool UsesRangeCheck96Builtin() const;
+  constexpr bool UsesEcdsaBuiltin() const;
+  constexpr bool UsesBitwiseBuiltin() const;
+  constexpr bool UsesEcOpBuiltin() const;
+  constexpr bool UsesKeccakBuiltin() const;
+  constexpr bool UsesPoseidonBuiltin() const;
 
   /*
     Writes public_memory virtual column in the trace.

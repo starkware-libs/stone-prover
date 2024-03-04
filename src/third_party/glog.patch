@@ -1,0 +1,10 @@
+--- bazel/glog.bzl	2022-11-15 14:38:16.178580411 +0200
++++ bazel/glog.bzl	2022-11-15 14:38:04.698421767 +0200
+@@ -53,6 +53,7 @@
+             '-Wno-unused-function',
+             '-Wno-unused-local-typedefs',
+             '-Wno-unused-variable',
++            "-Wno-unused-parameter",
+             "-DGLOG_BAZEL_BUILD",
+             # Inject a C++ namespace.
+             "-DGOOGLE_NAMESPACE='%s'" % namespace,

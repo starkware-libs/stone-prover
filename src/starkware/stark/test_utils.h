@@ -30,12 +30,13 @@ std::unique_ptr<TableVerifier> MakeTableVerifier(
     const Field& field, uint64_t n_rows, uint64_t n_columns, VerifierChannel* channel,
     size_t n_verifier_friendly_commitment_layers = 0,
     CommitmentHashes commitment_hashes = CommitmentHashes(HashT::HashName())) {
-  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier<HashT>(
+  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier(
       n_columns * FieldElementT::SizeInBytes(), n_rows, channel,
-      n_verifier_friendly_commitment_layers, commitment_hashes);
+      n_verifier_friendly_commitment_layers, commitment_hashes, n_columns);
 
   return std::make_unique<TableVerifierImpl>(
-      field, n_columns, UseMovedValue(std::move(commitment_scheme_verifier)), channel);
+      field, n_columns,
+      TakeOwnershipFrom<CommitmentSchemeVerifier>(std::move(commitment_scheme_verifier)), channel);
 }
 
 }  // namespace starkware

@@ -26,6 +26,7 @@
 #include "starkware/air/compile_time_optional.h"
 #include "starkware/air/components/ecdsa/ecdsa.h"
 #include "starkware/air/components/trace_generation_context.h"
+#include "starkware/air/cpu/board/cpu_air_definition_class.h"
 #include "starkware/air/cpu/board/memory_segment.h"
 #include "starkware/air/cpu/component/cpu_component.h"
 #include "starkware/air/trace.h"
@@ -57,8 +58,6 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
 
   uint64_t NumRandomCoefficients() const override { return kNumConstraints; }
 
-  uint64_t NumColumns() const override { return kNumColumns; }
-
   std::vector<std::vector<FieldElementT>> PrecomputeDomainEvalsOnCoset(
       const FieldElementT& point, const FieldElementT& generator,
       gsl::span<const uint64_t> point_exponents, gsl::span<const FieldElementT> shifts) const;
@@ -71,43 +70,53 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   std::vector<FieldElementT> DomainEvalsAtPoint(
       gsl::span<const FieldElementT> point_powers, gsl::span<const FieldElementT> shifts) const;
 
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& params) const override;
+
   TraceGenerationContext GetTraceGenerationContext() const;
 
   void BuildAutoPeriodicColumns(const FieldElementT& gen, Builder* builder) const;
 
   virtual void BuildPeriodicColumns(const FieldElementT& gen, Builder* builder) const = 0;
 
+  uint64_t NumColumns() const override { return kNumColumns; }
   std::optional<InteractionParams> GetInteractionParams() const override {
     InteractionParams interaction_params{kNumColumnsFirst, kNumColumnsSecond, 6};
     return interaction_params;
   }
 
-  static constexpr uint64_t kNumColumnsFirst = 8;
-  static constexpr uint64_t kNumColumnsSecond = 3;
-
+  static constexpr uint64_t kCpuComponentStep = 1;
+  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kPublicMemoryStep = 16;
   static constexpr bool kHasDilutedPool = true;
   static constexpr uint64_t kDilutedSpacing = 4;
   static constexpr uint64_t kDilutedNBits = 16;
   static constexpr uint64_t kPedersenBuiltinRatio = 256;
+  static constexpr uint64_t kPedersenBuiltinRowRatio = 4096;
   static constexpr uint64_t kPedersenBuiltinRepetitions = 1;
-  static constexpr uint64_t kRcBuiltinRatio = 8;
-  static constexpr uint64_t kRcNParts = 8;
+  static constexpr uint64_t kRangeCheckBuiltinRatio = 8;
+  static constexpr uint64_t kRangeCheckBuiltinRowRatio = 128;
+  static constexpr uint64_t kRangeCheckNParts = 8;
   static constexpr uint64_t kEcdsaBuiltinRatio = 2048;
+  static constexpr uint64_t kEcdsaBuiltinRowRatio = 32768;
   static constexpr uint64_t kEcdsaBuiltinRepetitions = 1;
   static constexpr uint64_t kEcdsaElementBits = 251;
   static constexpr uint64_t kEcdsaElementHeight = 256;
   static constexpr uint64_t kBitwiseRatio = 16;
+  static constexpr uint64_t kBitwiseRowRatio = 256;
   static constexpr uint64_t kBitwiseTotalNBits = 251;
   static constexpr uint64_t kEcOpBuiltinRatio = 1024;
+  static constexpr uint64_t kEcOpBuiltinRowRatio = 16384;
   static constexpr uint64_t kEcOpScalarHeight = 256;
   static constexpr uint64_t kEcOpNBits = 252;
   static constexpr uint64_t kKeccakRatio = 2048;
+  static constexpr uint64_t kKeccakRowRatio = 32768;
   static constexpr uint64_t kPoseidonRatio = 256;
+  static constexpr uint64_t kPoseidonRowRatio = 4096;
   static constexpr uint64_t kPoseidonM = 3;
   static constexpr uint64_t kPoseidonRoundsFull = 8;
   static constexpr uint64_t kPoseidonRoundsPartial = 83;
-  static constexpr std::array<uint64_t, 2> kPoseidonRPPartition = {64, 22};
+  static constexpr std::array<uint64_t, 2> kPoseidonPartialRoundsPartition = {64, 22};
   static constexpr std::array<std::array<FieldElementT, 3>, 3> kPoseidonMds = {
       std::array<FieldElementT, 3>{
           FieldElementT::ConstexprFromBigInt(0x3_Z), FieldElementT::ConstexprFromBigInt(0x1_Z),
@@ -756,6 +765,9 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
               0x51274d092db5099f180b1a8a13b7f2c7606836eabd8af54bf1d9ac2dc5717a5_Z),
           FieldElementT::ConstexprFromBigInt(
               0x61fc552b8eb75e17ad0fb7aaa4ca528f415e14f0d9cdbed861a8db0bfff0c5b_Z)}};
+  static constexpr uint64_t kRangeCheck96BuiltinRatio = 8;
+  static constexpr uint64_t kRangeCheck96BuiltinRowRatio = 128;
+  static constexpr uint64_t kRangeCheck96NParts = 6;
   static constexpr bool kHasOutputBuiltin = true;
   static constexpr bool kHasPedersenBuiltin = true;
   static constexpr bool kHasRangeCheckBuiltin = true;
@@ -764,15 +776,18 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   static constexpr bool kHasEcOpBuiltin = true;
   static constexpr bool kHasKeccakBuiltin = true;
   static constexpr bool kHasPoseidonBuiltin = true;
+  static constexpr bool kHasRangeCheck96Builtin = true;
+  static constexpr bool kHasAddModBuiltin = false;
   static constexpr char kLayoutName[] = "all_cairo";
   static constexpr BigInt<4> kLayoutCode = 0x616c6c5f636169726f_Z;
   static constexpr uint64_t kConstraintDegree = 2;
-  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kLogCpuComponentHeight = 4;
-  static constexpr uint64_t kMemoryStep = 2;
-  static constexpr std::array<std::string_view, 10> kSegmentNames = {
-      "program", "execution", "output", "pedersen", "range_check",
-      "ecdsa",   "bitwise",   "ec_op",  "keccak",   "poseidon"};
+  static constexpr std::array<std::string_view, 11> kSegmentNames = {
+      "program", "execution", "output", "pedersen", "range_check",  "ecdsa",
+      "bitwise", "ec_op",     "keccak", "poseidon", "range_check96"};
+  static constexpr uint64_t kNumColumnsFirst = 9;
+  static constexpr uint64_t kNumColumnsSecond = 3;
+  static constexpr bool kIsDynamicAir = false;
 
   enum Columns {
     kColumn0Column,
@@ -783,9 +798,10 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn5Column,
     kColumn6Column,
     kColumn7Column,
-    kColumn8Inter1Column,
+    kColumn8Column,
     kColumn9Inter1Column,
     kColumn10Inter1Column,
+    kColumn11Inter1Column,
     // Number of columns.
     kNumColumns,
   };
@@ -809,6 +825,11 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kPoseidonPoseidonPartialRoundKey1PeriodicColumn,
     // Number of periodic columns.
     kNumPeriodicColumns,
+  };
+
+  enum DynamicParams {
+    // Number of dynamic params.
+    kNumDynamicParams,
   };
 
   enum Neighbors {
@@ -1179,38 +1200,6 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn3Row13Neighbor,
     kColumn3Row14Neighbor,
     kColumn3Row15Neighbor,
-    kColumn3Row16Neighbor,
-    kColumn3Row32Neighbor,
-    kColumn3Row256Neighbor,
-    kColumn3Row264Neighbor,
-    kColumn3Row272Neighbor,
-    kColumn3Row288Neighbor,
-    kColumn3Row512Neighbor,
-    kColumn3Row520Neighbor,
-    kColumn3Row1876Neighbor,
-    kColumn3Row1940Neighbor,
-    kColumn3Row2004Neighbor,
-    kColumn3Row3924Neighbor,
-    kColumn3Row3988Neighbor,
-    kColumn3Row4052Neighbor,
-    kColumn3Row5972Neighbor,
-    kColumn3Row6036Neighbor,
-    kColumn3Row6100Neighbor,
-    kColumn3Row6416Neighbor,
-    kColumn3Row6432Neighbor,
-    kColumn3Row7568Neighbor,
-    kColumn3Row7760Neighbor,
-    kColumn3Row7824Neighbor,
-    kColumn3Row7888Neighbor,
-    kColumn3Row8208Neighbor,
-    kColumn3Row8224Neighbor,
-    kColumn3Row8448Neighbor,
-    kColumn3Row8456Neighbor,
-    kColumn3Row10068Neighbor,
-    kColumn3Row12116Neighbor,
-    kColumn3Row14164Neighbor,
-    kColumn3Row15760Neighbor,
-    kColumn3Row15952Neighbor,
     kColumn3Row16144Neighbor,
     kColumn3Row16145Neighbor,
     kColumn3Row16146Neighbor,
@@ -1241,71 +1230,21 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn3Row16352Neighbor,
     kColumn3Row16368Neighbor,
     kColumn3Row16384Neighbor,
-    kColumn3Row23952Neighbor,
-    kColumn3Row32144Neighbor,
     kColumn3Row32768Neighbor,
     kColumn3Row65536Neighbor,
-    kColumn3Row66320Neighbor,
-    kColumn3Row66336Neighbor,
-    kColumn3Row71508Neighbor,
-    kColumn3Row79700Neighbor,
-    kColumn3Row79764Neighbor,
-    kColumn3Row79828Neighbor,
     kColumn3Row98304Neighbor,
     kColumn3Row131072Neighbor,
-    kColumn3Row132624Neighbor,
-    kColumn3Row132640Neighbor,
-    kColumn3Row157524Neighbor,
     kColumn3Row163840Neighbor,
-    kColumn3Row165716Neighbor,
-    kColumn3Row179600Neighbor,
-    kColumn3Row196176Neighbor,
-    kColumn3Row196240Neighbor,
-    kColumn3Row196304Neighbor,
     kColumn3Row196608Neighbor,
-    kColumn3Row198928Neighbor,
-    kColumn3Row198944Neighbor,
-    kColumn3Row208724Neighbor,
-    kColumn3Row208788Neighbor,
-    kColumn3Row208852Neighbor,
     kColumn3Row229376Neighbor,
-    kColumn3Row237136Neighbor,
     kColumn3Row262144Neighbor,
-    kColumn3Row265232Neighbor,
-    kColumn3Row265248Neighbor,
     kColumn3Row294912Neighbor,
-    kColumn3Row300884Neighbor,
-    kColumn3Row307028Neighbor,
-    kColumn3Row325460Neighbor,
     kColumn3Row327680Neighbor,
-    kColumn3Row331536Neighbor,
-    kColumn3Row331552Neighbor,
-    kColumn3Row358228Neighbor,
     kColumn3Row360448Neighbor,
-    kColumn3Row364372Neighbor,
-    kColumn3Row384592Neighbor,
     kColumn3Row393216Neighbor,
-    kColumn3Row397840Neighbor,
-    kColumn3Row397856Neighbor,
-    kColumn3Row408976Neighbor,
-    kColumn3Row413524Neighbor,
     kColumn3Row425984Neighbor,
-    kColumn3Row444244Neighbor,
     kColumn3Row458752Neighbor,
-    kColumn3Row462676Neighbor,
-    kColumn3Row464144Neighbor,
-    kColumn3Row464160Neighbor,
-    kColumn3Row482704Neighbor,
     kColumn3Row491520Neighbor,
-    kColumn3Row507472Neighbor,
-    kColumn3Row509780Neighbor,
-    kColumn3Row509844Neighbor,
-    kColumn3Row509908Neighbor,
-    kColumn3Row516112Neighbor,
-    kColumn3Row516128Neighbor,
-    kColumn3Row516352Neighbor,
-    kColumn3Row516360Neighbor,
-    kColumn3Row517972Neighbor,
     kColumn4Row0Neighbor,
     kColumn4Row1Neighbor,
     kColumn4Row2Neighbor,
@@ -1319,6 +1258,8 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn4Row12Neighbor,
     kColumn4Row13Neighbor,
     kColumn4Row16Neighbor,
+    kColumn4Row26Neighbor,
+    kColumn4Row27Neighbor,
     kColumn4Row42Neighbor,
     kColumn4Row43Neighbor,
     kColumn4Row74Neighbor,
@@ -1326,6 +1267,7 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn4Row106Neighbor,
     kColumn4Row138Neighbor,
     kColumn4Row139Neighbor,
+    kColumn4Row154Neighbor,
     kColumn4Row171Neighbor,
     kColumn4Row202Neighbor,
     kColumn4Row234Neighbor,
@@ -1339,21 +1281,23 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn4Row779Neighbor,
     kColumn4Row1034Neighbor,
     kColumn4Row1035Neighbor,
+    kColumn4Row1290Neighbor,
     kColumn4Row1291Neighbor,
     kColumn4Row1546Neighbor,
     kColumn4Row1547Neighbor,
-    kColumn4Row1803Neighbor,
     kColumn4Row2058Neighbor,
     kColumn4Row2059Neighbor,
+    kColumn4Row2314Neighbor,
     kColumn4Row2315Neighbor,
     kColumn4Row2826Neighbor,
     kColumn4Row2827Neighbor,
     kColumn4Row3082Neighbor,
     kColumn4Row3083Neighbor,
+    kColumn4Row3338Neighbor,
+    kColumn4Row3339Neighbor,
     kColumn4Row3594Neighbor,
     kColumn4Row3595Neighbor,
     kColumn4Row4106Neighbor,
-    kColumn4Row4362Neighbor,
     kColumn4Row4618Neighbor,
     kColumn4Row4619Neighbor,
     kColumn4Row5643Neighbor,
@@ -1388,162 +1332,250 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn5Row1Neighbor,
     kColumn5Row2Neighbor,
     kColumn5Row3Neighbor,
+    kColumn5Row4Neighbor,
+    kColumn5Row8Neighbor,
+    kColumn5Row12Neighbor,
+    kColumn5Row18Neighbor,
+    kColumn5Row28Neighbor,
+    kColumn5Row34Neighbor,
+    kColumn5Row44Neighbor,
+    kColumn5Row60Neighbor,
+    kColumn5Row66Neighbor,
+    kColumn5Row76Neighbor,
+    kColumn5Row82Neighbor,
+    kColumn5Row92Neighbor,
+    kColumn5Row98Neighbor,
+    kColumn5Row108Neighbor,
+    kColumn5Row124Neighbor,
     kColumn6Row0Neighbor,
     kColumn6Row1Neighbor,
     kColumn6Row2Neighbor,
     kColumn6Row3Neighbor,
-    kColumn6Row4Neighbor,
-    kColumn6Row5Neighbor,
-    kColumn6Row6Neighbor,
-    kColumn6Row7Neighbor,
-    kColumn6Row8Neighbor,
-    kColumn6Row9Neighbor,
-    kColumn6Row11Neighbor,
-    kColumn6Row12Neighbor,
-    kColumn6Row13Neighbor,
-    kColumn6Row28Neighbor,
-    kColumn6Row44Neighbor,
-    kColumn6Row60Neighbor,
-    kColumn6Row76Neighbor,
-    kColumn6Row92Neighbor,
-    kColumn6Row108Neighbor,
-    kColumn6Row124Neighbor,
-    kColumn6Row1539Neighbor,
-    kColumn6Row1547Neighbor,
-    kColumn6Row1571Neighbor,
-    kColumn6Row1579Neighbor,
-    kColumn6Row2011Neighbor,
-    kColumn6Row2019Neighbor,
-    kColumn6Row2041Neighbor,
-    kColumn6Row2045Neighbor,
-    kColumn6Row2047Neighbor,
-    kColumn6Row2049Neighbor,
-    kColumn6Row2051Neighbor,
-    kColumn6Row2053Neighbor,
-    kColumn6Row4089Neighbor,
     kColumn7Row0Neighbor,
     kColumn7Row1Neighbor,
     kColumn7Row2Neighbor,
+    kColumn7Row3Neighbor,
     kColumn7Row4Neighbor,
     kColumn7Row5Neighbor,
     kColumn7Row6Neighbor,
+    kColumn7Row7Neighbor,
     kColumn7Row8Neighbor,
-    kColumn7Row9Neighbor,
     kColumn7Row10Neighbor,
+    kColumn7Row11Neighbor,
     kColumn7Row12Neighbor,
-    kColumn7Row13Neighbor,
-    kColumn7Row14Neighbor,
-    kColumn7Row16Neighbor,
+    kColumn7Row15Neighbor,
     kColumn7Row17Neighbor,
-    kColumn7Row21Neighbor,
-    kColumn7Row22Neighbor,
-    kColumn7Row24Neighbor,
-    kColumn7Row25Neighbor,
-    kColumn7Row29Neighbor,
-    kColumn7Row30Neighbor,
-    kColumn7Row33Neighbor,
-    kColumn7Row37Neighbor,
-    kColumn7Row38Neighbor,
-    kColumn7Row41Neighbor,
-    kColumn7Row45Neighbor,
-    kColumn7Row46Neighbor,
-    kColumn7Row49Neighbor,
-    kColumn7Row53Neighbor,
-    kColumn7Row54Neighbor,
-    kColumn7Row57Neighbor,
-    kColumn7Row62Neighbor,
-    kColumn7Row65Neighbor,
-    kColumn7Row70Neighbor,
-    kColumn7Row73Neighbor,
-    kColumn7Row77Neighbor,
-    kColumn7Row78Neighbor,
-    kColumn7Row81Neighbor,
-    kColumn7Row85Neighbor,
-    kColumn7Row86Neighbor,
-    kColumn7Row94Neighbor,
-    kColumn7Row97Neighbor,
-    kColumn7Row102Neighbor,
-    kColumn7Row109Neighbor,
-    kColumn7Row110Neighbor,
-    kColumn7Row113Neighbor,
-    kColumn7Row117Neighbor,
-    kColumn7Row118Neighbor,
-    kColumn7Row137Neighbor,
-    kColumn7Row149Neighbor,
-    kColumn7Row157Neighbor,
-    kColumn7Row173Neighbor,
-    kColumn7Row177Neighbor,
-    kColumn7Row181Neighbor,
-    kColumn7Row205Neighbor,
-    kColumn7Row213Neighbor,
-    kColumn7Row237Neighbor,
+    kColumn7Row19Neighbor,
+    kColumn7Row27Neighbor,
+    kColumn7Row69Neighbor,
+    kColumn7Row133Neighbor,
     kColumn7Row241Neighbor,
-    kColumn7Row285Neighbor,
-    kColumn7Row301Neighbor,
-    kColumn7Row333Neighbor,
-    kColumn7Row365Neighbor,
-    kColumn7Row461Neighbor,
-    kColumn7Row493Neighbor,
-    kColumn7Row621Neighbor,
-    kColumn7Row749Neighbor,
-    kColumn7Row877Neighbor,
-    kColumn7Row1565Neighbor,
-    kColumn7Row1645Neighbor,
-    kColumn7Row1773Neighbor,
-    kColumn7Row1821Neighbor,
-    kColumn7Row1901Neighbor,
-    kColumn7Row2029Neighbor,
-    kColumn7Row2157Neighbor,
-    kColumn7Row2285Neighbor,
-    kColumn7Row2413Neighbor,
-    kColumn7Row2477Neighbor,
-    kColumn7Row2509Neighbor,
-    kColumn7Row2605Neighbor,
-    kColumn7Row2637Neighbor,
-    kColumn7Row2733Neighbor,
-    kColumn7Row2765Neighbor,
-    kColumn7Row3613Neighbor,
-    kColumn7Row3693Neighbor,
-    kColumn7Row3821Neighbor,
-    kColumn7Row3869Neighbor,
-    kColumn7Row3949Neighbor,
-    kColumn7Row3953Neighbor,
-    kColumn7Row4017Neighbor,
-    kColumn7Row4077Neighbor,
-    kColumn7Row4081Neighbor,
-    kColumn7Row12305Neighbor,
-    kColumn7Row12369Neighbor,
-    kColumn7Row12561Neighbor,
-    kColumn7Row12625Neighbor,
-    kColumn7Row16081Neighbor,
-    kColumn7Row16145Neighbor,
-    kColumn7Row16321Neighbor,
-    kColumn7Row16325Neighbor,
-    kColumn7Row16342Neighbor,
-    kColumn7Row16345Neighbor,
-    kColumn7Row16353Neighbor,
-    kColumn7Row16357Neighbor,
-    kColumn7Row16361Neighbor,
-    kColumn7Row16374Neighbor,
-    kColumn7Row16377Neighbor,
-    kColumn7Row16390Neighbor,
-    kColumn7Row16422Neighbor,
-    kColumn7Row32653Neighbor,
-    kColumn7Row32661Neighbor,
-    kColumn7Row32709Neighbor,
-    kColumn7Row32725Neighbor,
-    kColumn7Row32726Neighbor,
-    kColumn7Row32741Neighbor,
-    kColumn7Row32757Neighbor,
-    kColumn7Row32758Neighbor,
-    kColumn8Inter1Row0Neighbor,
-    kColumn8Inter1Row1Neighbor,
+    kColumn7Row249Neighbor,
+    kColumn7Row257Neighbor,
+    kColumn7Row273Neighbor,
+    kColumn7Row497Neighbor,
+    kColumn7Row505Neighbor,
+    kColumn7Row1538Neighbor,
+    kColumn7Row1546Neighbor,
+    kColumn7Row1570Neighbor,
+    kColumn7Row1578Neighbor,
+    kColumn7Row2010Neighbor,
+    kColumn7Row2018Neighbor,
+    kColumn7Row2040Neighbor,
+    kColumn7Row2044Neighbor,
+    kColumn7Row2046Neighbor,
+    kColumn7Row2048Neighbor,
+    kColumn7Row2050Neighbor,
+    kColumn7Row2052Neighbor,
+    kColumn7Row2053Neighbor,
+    kColumn7Row2117Neighbor,
+    kColumn7Row2181Neighbor,
+    kColumn7Row4088Neighbor,
+    kColumn7Row4101Neighbor,
+    kColumn7Row4165Neighbor,
+    kColumn7Row4229Neighbor,
+    kColumn7Row6401Neighbor,
+    kColumn7Row6417Neighbor,
+    kColumn7Row7809Neighbor,
+    kColumn7Row8001Neighbor,
+    kColumn7Row8065Neighbor,
+    kColumn7Row8129Neighbor,
+    kColumn7Row8193Neighbor,
+    kColumn7Row8197Neighbor,
+    kColumn7Row8209Neighbor,
+    kColumn7Row8433Neighbor,
+    kColumn7Row8441Neighbor,
+    kColumn7Row10245Neighbor,
+    kColumn7Row12293Neighbor,
+    kColumn7Row16001Neighbor,
+    kColumn7Row16193Neighbor,
+    kColumn7Row24193Neighbor,
+    kColumn7Row32385Neighbor,
+    kColumn7Row66305Neighbor,
+    kColumn7Row66321Neighbor,
+    kColumn7Row67589Neighbor,
+    kColumn7Row75781Neighbor,
+    kColumn7Row75845Neighbor,
+    kColumn7Row75909Neighbor,
+    kColumn7Row132609Neighbor,
+    kColumn7Row132625Neighbor,
+    kColumn7Row159749Neighbor,
+    kColumn7Row167941Neighbor,
+    kColumn7Row179841Neighbor,
+    kColumn7Row196417Neighbor,
+    kColumn7Row196481Neighbor,
+    kColumn7Row196545Neighbor,
+    kColumn7Row198913Neighbor,
+    kColumn7Row198929Neighbor,
+    kColumn7Row204805Neighbor,
+    kColumn7Row204869Neighbor,
+    kColumn7Row204933Neighbor,
+    kColumn7Row237377Neighbor,
+    kColumn7Row265217Neighbor,
+    kColumn7Row265233Neighbor,
+    kColumn7Row296965Neighbor,
+    kColumn7Row303109Neighbor,
+    kColumn7Row321541Neighbor,
+    kColumn7Row331521Neighbor,
+    kColumn7Row331537Neighbor,
+    kColumn7Row354309Neighbor,
+    kColumn7Row360453Neighbor,
+    kColumn7Row384833Neighbor,
+    kColumn7Row397825Neighbor,
+    kColumn7Row397841Neighbor,
+    kColumn7Row409217Neighbor,
+    kColumn7Row409605Neighbor,
+    kColumn7Row446469Neighbor,
+    kColumn7Row458757Neighbor,
+    kColumn7Row464129Neighbor,
+    kColumn7Row464145Neighbor,
+    kColumn7Row482945Neighbor,
+    kColumn7Row507713Neighbor,
+    kColumn7Row512005Neighbor,
+    kColumn7Row512069Neighbor,
+    kColumn7Row512133Neighbor,
+    kColumn7Row516097Neighbor,
+    kColumn7Row516113Neighbor,
+    kColumn7Row516337Neighbor,
+    kColumn7Row516345Neighbor,
+    kColumn7Row520197Neighbor,
+    kColumn8Row0Neighbor,
+    kColumn8Row2Neighbor,
+    kColumn8Row4Neighbor,
+    kColumn8Row6Neighbor,
+    kColumn8Row8Neighbor,
+    kColumn8Row10Neighbor,
+    kColumn8Row12Neighbor,
+    kColumn8Row14Neighbor,
+    kColumn8Row18Neighbor,
+    kColumn8Row20Neighbor,
+    kColumn8Row22Neighbor,
+    kColumn8Row26Neighbor,
+    kColumn8Row28Neighbor,
+    kColumn8Row30Neighbor,
+    kColumn8Row34Neighbor,
+    kColumn8Row36Neighbor,
+    kColumn8Row38Neighbor,
+    kColumn8Row42Neighbor,
+    kColumn8Row44Neighbor,
+    kColumn8Row46Neighbor,
+    kColumn8Row50Neighbor,
+    kColumn8Row52Neighbor,
+    kColumn8Row54Neighbor,
+    kColumn8Row58Neighbor,
+    kColumn8Row60Neighbor,
+    kColumn8Row66Neighbor,
+    kColumn8Row68Neighbor,
+    kColumn8Row74Neighbor,
+    kColumn8Row76Neighbor,
+    kColumn8Row78Neighbor,
+    kColumn8Row82Neighbor,
+    kColumn8Row84Neighbor,
+    kColumn8Row86Neighbor,
+    kColumn8Row92Neighbor,
+    kColumn8Row98Neighbor,
+    kColumn8Row100Neighbor,
+    kColumn8Row108Neighbor,
+    kColumn8Row110Neighbor,
+    kColumn8Row114Neighbor,
+    kColumn8Row116Neighbor,
+    kColumn8Row118Neighbor,
+    kColumn8Row138Neighbor,
+    kColumn8Row150Neighbor,
+    kColumn8Row158Neighbor,
+    kColumn8Row174Neighbor,
+    kColumn8Row178Neighbor,
+    kColumn8Row182Neighbor,
+    kColumn8Row206Neighbor,
+    kColumn8Row214Neighbor,
+    kColumn8Row238Neighbor,
+    kColumn8Row242Neighbor,
+    kColumn8Row286Neighbor,
+    kColumn8Row302Neighbor,
+    kColumn8Row334Neighbor,
+    kColumn8Row366Neighbor,
+    kColumn8Row462Neighbor,
+    kColumn8Row494Neighbor,
+    kColumn8Row622Neighbor,
+    kColumn8Row750Neighbor,
+    kColumn8Row878Neighbor,
+    kColumn8Row1566Neighbor,
+    kColumn8Row1646Neighbor,
+    kColumn8Row1774Neighbor,
+    kColumn8Row1822Neighbor,
+    kColumn8Row1902Neighbor,
+    kColumn8Row2030Neighbor,
+    kColumn8Row2158Neighbor,
+    kColumn8Row2286Neighbor,
+    kColumn8Row2414Neighbor,
+    kColumn8Row2478Neighbor,
+    kColumn8Row2510Neighbor,
+    kColumn8Row2606Neighbor,
+    kColumn8Row2638Neighbor,
+    kColumn8Row2734Neighbor,
+    kColumn8Row2766Neighbor,
+    kColumn8Row3614Neighbor,
+    kColumn8Row3694Neighbor,
+    kColumn8Row3822Neighbor,
+    kColumn8Row3870Neighbor,
+    kColumn8Row3950Neighbor,
+    kColumn8Row3954Neighbor,
+    kColumn8Row4018Neighbor,
+    kColumn8Row4078Neighbor,
+    kColumn8Row4082Neighbor,
+    kColumn8Row12306Neighbor,
+    kColumn8Row12370Neighbor,
+    kColumn8Row12562Neighbor,
+    kColumn8Row12626Neighbor,
+    kColumn8Row16082Neighbor,
+    kColumn8Row16146Neighbor,
+    kColumn8Row16322Neighbor,
+    kColumn8Row16326Neighbor,
+    kColumn8Row16340Neighbor,
+    kColumn8Row16346Neighbor,
+    kColumn8Row16354Neighbor,
+    kColumn8Row16358Neighbor,
+    kColumn8Row16362Neighbor,
+    kColumn8Row16372Neighbor,
+    kColumn8Row16378Neighbor,
+    kColumn8Row16388Neighbor,
+    kColumn8Row16420Neighbor,
+    kColumn8Row32654Neighbor,
+    kColumn8Row32662Neighbor,
+    kColumn8Row32710Neighbor,
+    kColumn8Row32724Neighbor,
+    kColumn8Row32726Neighbor,
+    kColumn8Row32742Neighbor,
+    kColumn8Row32756Neighbor,
+    kColumn8Row32758Neighbor,
     kColumn9Inter1Row0Neighbor,
     kColumn9Inter1Row1Neighbor,
     kColumn10Inter1Row0Neighbor,
     kColumn10Inter1Row1Neighbor,
-    kColumn10Inter1Row2Neighbor,
-    kColumn10Inter1Row5Neighbor,
+    kColumn11Inter1Row0Neighbor,
+    kColumn11Inter1Row1Neighbor,
+    kColumn11Inter1Row2Neighbor,
+    kColumn11Inter1Row3Neighbor,
     // Number of neighbors.
     kNumNeighbors,
   };
@@ -2016,11 +2048,13 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
           FieldElementT::Zero(),
           FieldElementT::Zero(),
       };
+  static constexpr std::array<FieldElementT, 1> kTrivialPeriodicColumnData = {
+      FieldElementT::Zero()};
 
   enum Constraints {
-    kCpuDecodeOpcodeRcBitCond,                                      // Constraint 0.
-    kCpuDecodeOpcodeRcZeroCond,                                     // Constraint 1.
-    kCpuDecodeOpcodeRcInputCond,                                    // Constraint 2.
+    kCpuDecodeOpcodeRangeCheckBitCond,                              // Constraint 0.
+    kCpuDecodeOpcodeRangeCheckZeroCond,                             // Constraint 1.
+    kCpuDecodeOpcodeRangeCheckInputCond,                            // Constraint 2.
     kCpuDecodeFlagOp1BaseOp0BitCond,                                // Constraint 3.
     kCpuDecodeFlagResOp1BitCond,                                    // Constraint 4.
     kCpuDecodeFlagPcUpdateRegularBitCond,                           // Constraint 5.
@@ -2059,12 +2093,12 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kMemoryInitialAddrCond,                                         // Constraint 38.
     kPublicMemoryAddrZeroCond,                                      // Constraint 39.
     kPublicMemoryValueZeroCond,                                     // Constraint 40.
-    kRc16PermInit0Cond,                                             // Constraint 41.
-    kRc16PermStep0Cond,                                             // Constraint 42.
-    kRc16PermLastCond,                                              // Constraint 43.
-    kRc16DiffIsBitCond,                                             // Constraint 44.
-    kRc16MinimumCond,                                               // Constraint 45.
-    kRc16MaximumCond,                                               // Constraint 46.
+    kRangeCheck16PermInit0Cond,                                     // Constraint 41.
+    kRangeCheck16PermStep0Cond,                                     // Constraint 42.
+    kRangeCheck16PermLastCond,                                      // Constraint 43.
+    kRangeCheck16DiffIsBitCond,                                     // Constraint 44.
+    kRangeCheck16MinimumCond,                                       // Constraint 45.
+    kRangeCheck16MaximumCond,                                       // Constraint 46.
     kDilutedCheckPermutationInit0Cond,                              // Constraint 47.
     kDilutedCheckPermutationStep0Cond,                              // Constraint 48.
     kDilutedCheckPermutationLastCond,                               // Constraint 49.
@@ -2097,9 +2131,9 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kPedersenInput1AddrCond,                                        // Constraint 76.
     kPedersenOutputValue0Cond,                                      // Constraint 77.
     kPedersenOutputAddrCond,                                        // Constraint 78.
-    kRcBuiltinValueCond,                                            // Constraint 79.
-    kRcBuiltinAddrStepCond,                                         // Constraint 80.
-    kRcBuiltinInitAddrCond,                                         // Constraint 81.
+    kRangeCheckBuiltinValueCond,                                    // Constraint 79.
+    kRangeCheckBuiltinAddrStepCond,                                 // Constraint 80.
+    kRangeCheckBuiltinInitAddrCond,                                 // Constraint 81.
     kEcdsaSignature0DoublingKeySlopeCond,                           // Constraint 82.
     kEcdsaSignature0DoublingKeyXCond,                               // Constraint 83.
     kEcdsaSignature0DoublingKeyYCond,                               // Constraint 84.
@@ -2334,34 +2368,40 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kKeccakKeccakChi0Cond,                                          // Constraint 313.
     kKeccakKeccakChi1Cond,                                          // Constraint 314.
     kKeccakKeccakChi2Cond,                                          // Constraint 315.
-    kPoseidonInitInputOutputAddrCond,                               // Constraint 316.
-    kPoseidonAddrInputOutputStepInnerCond,                          // Constraint 317.
-    kPoseidonAddrInputOutputStepOutterCond,                         // Constraint 318.
-    kPoseidonPoseidonFullRoundsState0SquaringCond,                  // Constraint 319.
-    kPoseidonPoseidonFullRoundsState1SquaringCond,                  // Constraint 320.
-    kPoseidonPoseidonFullRoundsState2SquaringCond,                  // Constraint 321.
-    kPoseidonPoseidonPartialRoundsState0SquaringCond,               // Constraint 322.
-    kPoseidonPoseidonPartialRoundsState1SquaringCond,               // Constraint 323.
-    kPoseidonPoseidonAddFirstRoundKey0Cond,                         // Constraint 324.
-    kPoseidonPoseidonAddFirstRoundKey1Cond,                         // Constraint 325.
-    kPoseidonPoseidonAddFirstRoundKey2Cond,                         // Constraint 326.
-    kPoseidonPoseidonFullRound0Cond,                                // Constraint 327.
-    kPoseidonPoseidonFullRound1Cond,                                // Constraint 328.
-    kPoseidonPoseidonFullRound2Cond,                                // Constraint 329.
-    kPoseidonPoseidonLastFullRound0Cond,                            // Constraint 330.
-    kPoseidonPoseidonLastFullRound1Cond,                            // Constraint 331.
-    kPoseidonPoseidonLastFullRound2Cond,                            // Constraint 332.
-    kPoseidonPoseidonCopyPartialRounds0I0Cond,                      // Constraint 333.
-    kPoseidonPoseidonCopyPartialRounds0I1Cond,                      // Constraint 334.
-    kPoseidonPoseidonCopyPartialRounds0I2Cond,                      // Constraint 335.
-    kPoseidonPoseidonMarginFullToPartial0Cond,                      // Constraint 336.
-    kPoseidonPoseidonMarginFullToPartial1Cond,                      // Constraint 337.
-    kPoseidonPoseidonMarginFullToPartial2Cond,                      // Constraint 338.
-    kPoseidonPoseidonPartialRound0Cond,                             // Constraint 339.
-    kPoseidonPoseidonPartialRound1Cond,                             // Constraint 340.
-    kPoseidonPoseidonMarginPartialToFull0Cond,                      // Constraint 341.
-    kPoseidonPoseidonMarginPartialToFull1Cond,                      // Constraint 342.
-    kPoseidonPoseidonMarginPartialToFull2Cond,                      // Constraint 343.
+    kPoseidonParam_0InitInputOutputAddrCond,                        // Constraint 316.
+    kPoseidonParam_0AddrInputOutputStepCond,                        // Constraint 317.
+    kPoseidonParam_1InitInputOutputAddrCond,                        // Constraint 318.
+    kPoseidonParam_1AddrInputOutputStepCond,                        // Constraint 319.
+    kPoseidonParam_2InitInputOutputAddrCond,                        // Constraint 320.
+    kPoseidonParam_2AddrInputOutputStepCond,                        // Constraint 321.
+    kPoseidonPoseidonFullRoundsState0SquaringCond,                  // Constraint 322.
+    kPoseidonPoseidonFullRoundsState1SquaringCond,                  // Constraint 323.
+    kPoseidonPoseidonFullRoundsState2SquaringCond,                  // Constraint 324.
+    kPoseidonPoseidonPartialRoundsState0SquaringCond,               // Constraint 325.
+    kPoseidonPoseidonPartialRoundsState1SquaringCond,               // Constraint 326.
+    kPoseidonPoseidonAddFirstRoundKey0Cond,                         // Constraint 327.
+    kPoseidonPoseidonAddFirstRoundKey1Cond,                         // Constraint 328.
+    kPoseidonPoseidonAddFirstRoundKey2Cond,                         // Constraint 329.
+    kPoseidonPoseidonFullRound0Cond,                                // Constraint 330.
+    kPoseidonPoseidonFullRound1Cond,                                // Constraint 331.
+    kPoseidonPoseidonFullRound2Cond,                                // Constraint 332.
+    kPoseidonPoseidonLastFullRound0Cond,                            // Constraint 333.
+    kPoseidonPoseidonLastFullRound1Cond,                            // Constraint 334.
+    kPoseidonPoseidonLastFullRound2Cond,                            // Constraint 335.
+    kPoseidonPoseidonCopyPartialRounds0I0Cond,                      // Constraint 336.
+    kPoseidonPoseidonCopyPartialRounds0I1Cond,                      // Constraint 337.
+    kPoseidonPoseidonCopyPartialRounds0I2Cond,                      // Constraint 338.
+    kPoseidonPoseidonMarginFullToPartial0Cond,                      // Constraint 339.
+    kPoseidonPoseidonMarginFullToPartial1Cond,                      // Constraint 340.
+    kPoseidonPoseidonMarginFullToPartial2Cond,                      // Constraint 341.
+    kPoseidonPoseidonPartialRound0Cond,                             // Constraint 342.
+    kPoseidonPoseidonPartialRound1Cond,                             // Constraint 343.
+    kPoseidonPoseidonMarginPartialToFull0Cond,                      // Constraint 344.
+    kPoseidonPoseidonMarginPartialToFull1Cond,                      // Constraint 345.
+    kPoseidonPoseidonMarginPartialToFull2Cond,                      // Constraint 346.
+    kRangeCheck96BuiltinValueCond,                                  // Constraint 347.
+    kRangeCheck96BuiltinAddrStepCond,                               // Constraint 348.
+    kRangeCheck96BuiltinInitAddrCond,                               // Constraint 349.
     kNumConstraints,                                                // Number of constraints.
   };
 
@@ -2372,10 +2412,10 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   using EcOpCurveConfigT = typename EllipticCurveConstants<FieldElementT>::CurveConfig;
 
   explicit CpuAirDefinition(
-      uint64_t trace_length, const FieldElementT& rc_min, const FieldElementT& rc_max,
-      const MemSegmentAddresses& mem_segment_addresses,
-      const HashContextT& hash_context)
-      : Air(trace_length),
+      uint64_t n_steps, const std::map<std::string, uint64_t>& dynamic_params,
+      const FieldElementT& rc_min, const FieldElementT& rc_max,
+      const MemSegmentAddresses& mem_segment_addresses, const HashContextT& hash_context)
+      : Air(n_steps * this->kCpuComponentHeight * this->kCpuComponentStep),
         initial_ap_(
             FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").begin_addr)),
         final_ap_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").stop_ptr)),
@@ -2384,9 +2424,12 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
         final_pc_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "program").stop_ptr)),
         pedersen_begin_addr_(
             kHasPedersenBuiltin ? GetSegment(mem_segment_addresses, "pedersen").begin_addr : 0),
-        rc_begin_addr_(
+        range_check_begin_addr_(
             kHasRangeCheckBuiltin ? GetSegment(mem_segment_addresses, "range_check").begin_addr
                                   : 0),
+        range_check96_begin_addr_(
+            kHasRangeCheck96Builtin ? GetSegment(mem_segment_addresses, "range_check96").begin_addr
+                                    : 0),
         ecdsa_begin_addr_(
             kHasEcdsaBuiltin ? GetSegment(mem_segment_addresses, "ecdsa").begin_addr : 0),
         bitwise_begin_addr_(
@@ -2397,8 +2440,10 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
-        rc_min_(rc_min),
-        rc_max_(rc_max),
+        dynamic_params_(ParseDynamicParams(dynamic_params)),
+
+        range_check_min_(rc_min),
+        range_check_max_(rc_max),
         pedersen__shift_point_(hash_context.shift_point),
         ecdsa__sig_config_(EcdsaComponent<FieldElementT>::GetSigConfig()),
         ec_op__curve_config_{
@@ -2418,9 +2463,13 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPedersenBuiltin> initial_pedersen_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(pedersen_begin_addr_));
 
-  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> rc_begin_addr_;
-  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_rc_addr_ =
-      FieldElementT::FromUint(ExtractHiddenMemberValue(rc_begin_addr_));
+  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> range_check_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_range_check_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasRangeCheck96Builtin> range_check96_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheck96Builtin> initial_range_check96_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check96_begin_addr_));
 
   const CompileTimeOptional<uint64_t, kHasEcdsaBuiltin> ecdsa_begin_addr_;
   const CompileTimeOptional<FieldElementT, kHasEcdsaBuiltin> initial_ecdsa_addr_ =
@@ -2442,8 +2491,12 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
-  const FieldElementT rc_min_;
-  const FieldElementT rc_max_;
+  // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
+  // See ParseDynamicParams.
+  CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
+
+  const FieldElementT range_check_min_;
+  const FieldElementT range_check_max_;
   const EcPointT pedersen__shift_point_;
   const SigConfigT ecdsa__sig_config_;
   const EcOpCurveConfigT ec_op__curve_config_;
@@ -2451,7 +2504,7 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   // Interaction elements.
   FieldElementT memory__multi_column_perm__perm__interaction_elm_ = FieldElementT::Uninitialized();
   FieldElementT memory__multi_column_perm__hash_interaction_elm0_ = FieldElementT::Uninitialized();
-  FieldElementT rc16__perm__interaction_elm_ = FieldElementT::Uninitialized();
+  FieldElementT range_check16__perm__interaction_elm_ = FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__permutation__interaction_elm_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
@@ -2461,7 +2514,7 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =
       FieldElementT::Uninitialized();
-  const FieldElementT rc16__perm__public_memory_prod_ = FieldElementT::One();
+  const FieldElementT range_check16__perm__public_memory_prod_ = FieldElementT::One();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__first_elm_ =
       FieldElementT::Zero();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool>
@@ -2472,7 +2525,5 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
 
 }  // namespace cpu
 }  // namespace starkware
-
-#include "starkware/air/cpu/board/cpu_air_definition9.inl"
 
 #endif  // STARKWARE_AIR_CPU_BOARD_CPU_AIR9_H_

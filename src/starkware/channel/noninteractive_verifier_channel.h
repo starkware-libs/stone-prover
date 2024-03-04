@@ -45,6 +45,8 @@ class NoninteractiveVerifierChannel : public VerifierChannel {
   */
   std::vector<std::byte> ReceiveBytes(size_t num_bytes) override;
 
+  void ReceiveFieldElementSpanImpl(const Field& field, const FieldElementSpan& span) override;
+
   uint64_t GetRandomNumber(uint64_t upper_bound) override;
 
   FieldElement GetRandomFieldElement(const Field& field) override;

@@ -59,8 +59,9 @@ PedersenHashFactory<FieldElementT>::ComputePeriodicColumnValues() const {
   }
 
   ASSERT_RELEASE(idx == hash_ctx_.points.size(), "Number of points mismatch.");
-  return {{this->name_ + "/x", std::move(padded_points_x)},
-          {this->name_ + "/y", std::move(padded_points_y)}};
+  return {
+      {this->name_ + "/x", std::move(padded_points_x)},
+      {this->name_ + "/y", std::move(padded_points_y)}};
 }
 
 }  // namespace starkware

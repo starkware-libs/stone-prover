@@ -29,27 +29,28 @@ CpuAirDefinition<FieldElementT, 1>::CreateCompositionPolynomial(
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
   const std::vector<uint64_t> point_exponents = {
-      trace_length_,
-      SafeDiv(trace_length_, 2),
-      SafeDiv(trace_length_, 4),
-      SafeDiv(trace_length_, 8),
-      SafeDiv(trace_length_, 16),
-      SafeDiv(trace_length_, 32),
-      SafeDiv(trace_length_, 128),
-      SafeDiv(trace_length_, 256),
-      SafeDiv(trace_length_, 512),
-      SafeDiv(trace_length_, 4096),
-      SafeDiv(trace_length_, 8192)};
-  const std::vector<uint64_t> gen_exponents = {SafeDiv((15) * (trace_length_), 16),
-                                               SafeDiv((255) * (trace_length_), 256),
-                                               SafeDiv((63) * (trace_length_), 64),
-                                               SafeDiv(trace_length_, 2),
-                                               SafeDiv((251) * (trace_length_), 256),
-                                               (16) * ((SafeDiv(trace_length_, 16)) - (1)),
-                                               (2) * ((SafeDiv(trace_length_, 2)) - (1)),
-                                               (4) * ((SafeDiv(trace_length_, 4)) - (1)),
-                                               (128) * ((SafeDiv(trace_length_, 128)) - (1)),
-                                               (8192) * ((SafeDiv(trace_length_, 8192)) - (1))};
+      uint64_t(trace_length_),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 4)),
+      uint64_t(SafeDiv(trace_length_, 8)),
+      uint64_t(SafeDiv(trace_length_, 16)),
+      uint64_t(SafeDiv(trace_length_, 32)),
+      uint64_t(SafeDiv(trace_length_, 128)),
+      uint64_t(SafeDiv(trace_length_, 256)),
+      uint64_t(SafeDiv(trace_length_, 512)),
+      uint64_t(SafeDiv(trace_length_, 4096)),
+      uint64_t(SafeDiv(trace_length_, 8192))};
+  const std::vector<uint64_t> gen_exponents = {
+      uint64_t(SafeDiv((15) * (trace_length_), 16)),
+      uint64_t(SafeDiv((255) * (trace_length_), 256)),
+      uint64_t(SafeDiv((63) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv((251) * (trace_length_), 256)),
+      uint64_t((trace_length_) - (16)),
+      uint64_t((trace_length_) - (2)),
+      uint64_t((trace_length_) - (4)),
+      uint64_t((trace_length_) - (128)),
+      uint64_t((trace_length_) - (8192))};
 
   BuildPeriodicColumns(gen, &builder);
 
@@ -63,7 +64,7 @@ std::vector<std::vector<FieldElementT>>
 CpuAirDefinition<FieldElementT, 1>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -71,19 +72,21 @@ CpuAirDefinition<FieldElementT, 1>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
     }
   }
 
-  TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  [[maybe_unused]] TaskManager& task_manager = TaskManager::GetInstance();
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -314,62 +317,63 @@ CpuAirDefinition<FieldElementT, 1>::PrecomputeDomainEvalsOnCoset(
 template <typename FieldElementT>
 FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 10, "shifts should contain 10 elements.");
 
   // domain0 = point^trace_length - 1.
-  const FieldElementT& domain0 = precomp_domains[0];
+  [[maybe_unused]] const FieldElementT& domain0 = precomp_domains[0];
   // domain1 = point^(trace_length / 2) - 1.
-  const FieldElementT& domain1 = precomp_domains[1];
+  [[maybe_unused]] const FieldElementT& domain1 = precomp_domains[1];
   // domain2 = point^(trace_length / 4) - 1.
-  const FieldElementT& domain2 = precomp_domains[2];
+  [[maybe_unused]] const FieldElementT& domain2 = precomp_domains[2];
   // domain3 = point^(trace_length / 8) - 1.
-  const FieldElementT& domain3 = precomp_domains[3];
+  [[maybe_unused]] const FieldElementT& domain3 = precomp_domains[3];
   // domain4 = point^(trace_length / 16) - gen^(15 * trace_length / 16).
-  const FieldElementT& domain4 = precomp_domains[4];
+  [[maybe_unused]] const FieldElementT& domain4 = precomp_domains[4];
   // domain5 = point^(trace_length / 16) - 1.
-  const FieldElementT& domain5 = precomp_domains[5];
+  [[maybe_unused]] const FieldElementT& domain5 = precomp_domains[5];
   // domain6 = point^(trace_length / 32) - 1.
-  const FieldElementT& domain6 = precomp_domains[6];
+  [[maybe_unused]] const FieldElementT& domain6 = precomp_domains[6];
   // domain7 = point^(trace_length / 128) - 1.
-  const FieldElementT& domain7 = precomp_domains[7];
+  [[maybe_unused]] const FieldElementT& domain7 = precomp_domains[7];
   // domain8 = point^(trace_length / 256) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain8 = precomp_domains[8];
+  [[maybe_unused]] const FieldElementT& domain8 = precomp_domains[8];
   // domain9 = point^(trace_length / 256) - 1.
-  const FieldElementT& domain9 = precomp_domains[9];
+  [[maybe_unused]] const FieldElementT& domain9 = precomp_domains[9];
   // domain10 = point^(trace_length / 256) - gen^(63 * trace_length / 64).
-  const FieldElementT& domain10 = precomp_domains[10];
+  [[maybe_unused]] const FieldElementT& domain10 = precomp_domains[10];
   // domain11 = point^(trace_length / 512) - gen^(trace_length / 2).
-  const FieldElementT& domain11 = precomp_domains[11];
+  [[maybe_unused]] const FieldElementT& domain11 = precomp_domains[11];
   // domain12 = point^(trace_length / 512) - 1.
-  const FieldElementT& domain12 = precomp_domains[12];
+  [[maybe_unused]] const FieldElementT& domain12 = precomp_domains[12];
   // domain13 = point^(trace_length / 4096) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain13 = precomp_domains[13];
+  [[maybe_unused]] const FieldElementT& domain13 = precomp_domains[13];
   // domain14 = point^(trace_length / 4096) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain14 = precomp_domains[14];
+  [[maybe_unused]] const FieldElementT& domain14 = precomp_domains[14];
   // domain15 = point^(trace_length / 4096) - 1.
-  const FieldElementT& domain15 = precomp_domains[15];
+  [[maybe_unused]] const FieldElementT& domain15 = precomp_domains[15];
   // domain16 = point^(trace_length / 8192) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain16 = precomp_domains[16];
+  [[maybe_unused]] const FieldElementT& domain16 = precomp_domains[16];
   // domain17 = point^(trace_length / 8192) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain17 = precomp_domains[17];
+  [[maybe_unused]] const FieldElementT& domain17 = precomp_domains[17];
   // domain18 = point^(trace_length / 8192) - 1.
-  const FieldElementT& domain18 = precomp_domains[18];
-  // domain19 = point - gen^(16 * (trace_length / 16 - 1)).
+  [[maybe_unused]] const FieldElementT& domain18 = precomp_domains[18];
+  // domain19 = point - gen^(trace_length - 16).
   const FieldElementT& domain19 = (point) - (shifts[5]);
   // domain20 = point - 1.
   const FieldElementT& domain20 = (point) - (FieldElementT::One());
-  // domain21 = point - gen^(2 * (trace_length / 2 - 1)).
+  // domain21 = point - gen^(trace_length - 2).
   const FieldElementT& domain21 = (point) - (shifts[6]);
-  // domain22 = point - gen^(4 * (trace_length / 4 - 1)).
+  // domain22 = point - gen^(trace_length - 4).
   const FieldElementT& domain22 = (point) - (shifts[7]);
-  // domain23 = point - gen^(128 * (trace_length / 128 - 1)).
+  // domain23 = point - gen^(trace_length - 128).
   const FieldElementT& domain23 = (point) - (shifts[8]);
-  // domain24 = point - gen^(8192 * (trace_length / 8192 - 1)).
+  // domain24 = point - gen^(trace_length - 8192).
   const FieldElementT& domain24 = (point) - (shifts[9]);
 
-  ASSERT_VERIFIER(neighbors.size() == 200, "Neighbors must contain 200 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 200, "neighbors should contain 200 elements.");
+
   const FieldElementT& column0_row0 = neighbors[kColumn0Row0Neighbor];
   const FieldElementT& column0_row1 = neighbors[kColumn0Row1Neighbor];
   const FieldElementT& column0_row2 = neighbors[kColumn0Row2Neighbor];
@@ -579,55 +583,55 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
   const FieldElementT& ecdsa__generator_points__y =
       periodic_columns[kEcdsaGeneratorPointsYPeriodicColumn];
 
-  const FieldElementT cpu__decode__opcode_rc__bit_0 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_0 =
       (column0_row0) - ((column0_row1) + (column0_row1));
-  const FieldElementT cpu__decode__opcode_rc__bit_2 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_2 =
       (column0_row2) - ((column0_row3) + (column0_row3));
-  const FieldElementT cpu__decode__opcode_rc__bit_4 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_4 =
       (column0_row4) - ((column0_row5) + (column0_row5));
-  const FieldElementT cpu__decode__opcode_rc__bit_3 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_3 =
       (column0_row3) - ((column0_row4) + (column0_row4));
   const FieldElementT cpu__decode__flag_op1_base_op0_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_2) + (cpu__decode__opcode_rc__bit_4)) +
-       (cpu__decode__opcode_rc__bit_3));
-  const FieldElementT cpu__decode__opcode_rc__bit_5 =
+      (((cpu__decode__opcode_range_check__bit_2) + (cpu__decode__opcode_range_check__bit_4)) +
+       (cpu__decode__opcode_range_check__bit_3));
+  const FieldElementT cpu__decode__opcode_range_check__bit_5 =
       (column0_row5) - ((column0_row6) + (column0_row6));
-  const FieldElementT cpu__decode__opcode_rc__bit_6 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_6 =
       (column0_row6) - ((column0_row7) + (column0_row7));
-  const FieldElementT cpu__decode__opcode_rc__bit_9 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_9 =
       (column0_row9) - ((column0_row10) + (column0_row10));
   const FieldElementT cpu__decode__flag_res_op1_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_5) + (cpu__decode__opcode_rc__bit_6)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_7 =
+      (((cpu__decode__opcode_range_check__bit_5) + (cpu__decode__opcode_range_check__bit_6)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_7 =
       (column0_row7) - ((column0_row8) + (column0_row8));
-  const FieldElementT cpu__decode__opcode_rc__bit_8 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_8 =
       (column0_row8) - ((column0_row9) + (column0_row9));
   const FieldElementT cpu__decode__flag_pc_update_regular_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_8)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_12 =
+      (((cpu__decode__opcode_range_check__bit_7) + (cpu__decode__opcode_range_check__bit_8)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_12 =
       (column0_row12) - ((column0_row13) + (column0_row13));
-  const FieldElementT cpu__decode__opcode_rc__bit_13 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_13 =
       (column0_row13) - ((column0_row14) + (column0_row14));
   const FieldElementT cpu__decode__fp_update_regular_0 =
       (FieldElementT::One()) -
-      ((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_13));
-  const FieldElementT cpu__decode__opcode_rc__bit_1 =
+      ((cpu__decode__opcode_range_check__bit_12) + (cpu__decode__opcode_range_check__bit_13));
+  const FieldElementT cpu__decode__opcode_range_check__bit_1 =
       (column0_row1) - ((column0_row2) + (column0_row2));
   const FieldElementT npc_reg_0 =
-      ((column17_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One());
-  const FieldElementT cpu__decode__opcode_rc__bit_10 =
+      ((column17_row0) + (cpu__decode__opcode_range_check__bit_2)) + (FieldElementT::One());
+  const FieldElementT cpu__decode__opcode_range_check__bit_10 =
       (column0_row10) - ((column0_row11) + (column0_row11));
-  const FieldElementT cpu__decode__opcode_rc__bit_11 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_11 =
       (column0_row11) - ((column0_row12) + (column0_row12));
-  const FieldElementT cpu__decode__opcode_rc__bit_14 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_14 =
       (column0_row14) - ((column0_row15) + (column0_row15));
   const FieldElementT memory__address_diff_0 = (column18_row2) - (column18_row0);
-  const FieldElementT rc16__diff_0 = (column19_row6) - (column19_row2);
+  const FieldElementT range_check16__diff_0 = (column19_row6) - (column19_row2);
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_0 =
       (column3_row0) - ((column3_row1) + (column3_row1));
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_neg_0 =
@@ -644,21 +648,21 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       (column12_row0) - ((column12_row1) + (column12_row1));
   const FieldElementT pedersen__hash3__ec_subset_sum__bit_neg_0 =
       (FieldElementT::One()) - (pedersen__hash3__ec_subset_sum__bit_0);
-  const FieldElementT rc_builtin__value0_0 = column19_row12;
-  const FieldElementT rc_builtin__value1_0 =
-      ((rc_builtin__value0_0) * (offset_size_)) + (column19_row28);
-  const FieldElementT rc_builtin__value2_0 =
-      ((rc_builtin__value1_0) * (offset_size_)) + (column19_row44);
-  const FieldElementT rc_builtin__value3_0 =
-      ((rc_builtin__value2_0) * (offset_size_)) + (column19_row60);
-  const FieldElementT rc_builtin__value4_0 =
-      ((rc_builtin__value3_0) * (offset_size_)) + (column19_row76);
-  const FieldElementT rc_builtin__value5_0 =
-      ((rc_builtin__value4_0) * (offset_size_)) + (column19_row92);
-  const FieldElementT rc_builtin__value6_0 =
-      ((rc_builtin__value5_0) * (offset_size_)) + (column19_row108);
-  const FieldElementT rc_builtin__value7_0 =
-      ((rc_builtin__value6_0) * (offset_size_)) + (column19_row124);
+  const FieldElementT range_check_builtin__value0_0 = column19_row12;
+  const FieldElementT range_check_builtin__value1_0 =
+      ((range_check_builtin__value0_0) * (offset_size_)) + (column19_row28);
+  const FieldElementT range_check_builtin__value2_0 =
+      ((range_check_builtin__value1_0) * (offset_size_)) + (column19_row44);
+  const FieldElementT range_check_builtin__value3_0 =
+      ((range_check_builtin__value2_0) * (offset_size_)) + (column19_row60);
+  const FieldElementT range_check_builtin__value4_0 =
+      ((range_check_builtin__value3_0) * (offset_size_)) + (column19_row76);
+  const FieldElementT range_check_builtin__value5_0 =
+      ((range_check_builtin__value4_0) * (offset_size_)) + (column19_row92);
+  const FieldElementT range_check_builtin__value6_0 =
+      ((range_check_builtin__value5_0) * (offset_size_)) + (column19_row108);
+  const FieldElementT range_check_builtin__value7_0 =
+      ((range_check_builtin__value6_0) * (offset_size_)) + (column19_row124);
   const FieldElementT ecdsa__signature0__doubling_key__x_squared =
       (column19_row7) * (column19_row7);
   const FieldElementT ecdsa__signature0__exponentiate_generator__bit_0 =
@@ -678,10 +682,10 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       // Compute a sum of constraints with numerator = domain4.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/bit:
+        // Constraint expression for cpu/decode/opcode_range_check/bit:
         const FieldElementT constraint =
-            ((cpu__decode__opcode_rc__bit_0) * (cpu__decode__opcode_rc__bit_0)) -
-            (cpu__decode__opcode_rc__bit_0);
+            ((cpu__decode__opcode_range_check__bit_0) * (cpu__decode__opcode_range_check__bit_0)) -
+            (cpu__decode__opcode_range_check__bit_0);
         inner_sum += random_coefficients[0] * constraint;
       }
       outer_sum += inner_sum * domain4;
@@ -867,7 +871,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/zero:
+        // Constraint expression for cpu/decode/opcode_range_check/zero:
         const FieldElementT constraint = column0_row0;
         inner_sum += random_coefficients[1] * constraint;
       }
@@ -884,7 +888,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc_input:
+        // Constraint expression for cpu/decode/opcode_range_check_input:
         const FieldElementT constraint =
             (column17_row1) -
             (((((((column0_row0) * (offset_size_)) + (column19_row4)) * (offset_size_)) +
@@ -925,8 +929,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         // Constraint expression for cpu/operands/mem_dst_addr:
         const FieldElementT constraint =
             ((column17_row8) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_0) * (column19_row9)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_0)) * (column19_row1))) +
+            ((((cpu__decode__opcode_range_check__bit_0) * (column19_row9)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_0)) *
+               (column19_row1))) +
              (column19_row0));
         inner_sum += random_coefficients[7] * constraint;
       }
@@ -934,19 +939,21 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         // Constraint expression for cpu/operands/mem0_addr:
         const FieldElementT constraint =
             ((column17_row4) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_1) * (column19_row9)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_1)) * (column19_row1))) +
+            ((((cpu__decode__opcode_range_check__bit_1) * (column19_row9)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_1)) *
+               (column19_row1))) +
              (column19_row8));
         inner_sum += random_coefficients[8] * constraint;
       }
       {
         // Constraint expression for cpu/operands/mem1_addr:
-        const FieldElementT constraint = ((column17_row12) + (half_offset_size_)) -
-                                         ((((((cpu__decode__opcode_rc__bit_2) * (column17_row0)) +
-                                             ((cpu__decode__opcode_rc__bit_4) * (column19_row1))) +
-                                            ((cpu__decode__opcode_rc__bit_3) * (column19_row9))) +
-                                           ((cpu__decode__flag_op1_base_op0_0) * (column17_row5))) +
-                                          (column19_row4));
+        const FieldElementT constraint =
+            ((column17_row12) + (half_offset_size_)) -
+            ((((((cpu__decode__opcode_range_check__bit_2) * (column17_row0)) +
+                ((cpu__decode__opcode_range_check__bit_4) * (column19_row1))) +
+               ((cpu__decode__opcode_range_check__bit_3) * (column19_row9))) +
+              ((cpu__decode__flag_op1_base_op0_0) * (column17_row5))) +
+             (column19_row4));
         inner_sum += random_coefficients[9] * constraint;
       }
       {
@@ -957,78 +964,80 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       {
         // Constraint expression for cpu/operands/res:
         const FieldElementT constraint =
-            (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column19_row13)) -
-            ((((cpu__decode__opcode_rc__bit_5) * ((column17_row5) + (column17_row13))) +
-              ((cpu__decode__opcode_rc__bit_6) * (column19_row5))) +
+            (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+             (column19_row13)) -
+            ((((cpu__decode__opcode_range_check__bit_5) * ((column17_row5) + (column17_row13))) +
+              ((cpu__decode__opcode_range_check__bit_6) * (column19_row5))) +
              ((cpu__decode__flag_res_op1_0) * (column17_row13)));
         inner_sum += random_coefficients[11] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_fp:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column17_row9) - (column19_row9));
+            (cpu__decode__opcode_range_check__bit_12) * ((column17_row9) - (column19_row9));
         inner_sum += random_coefficients[18] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_pc:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            ((column17_row5) -
-             (((column17_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One())));
+            (cpu__decode__opcode_range_check__bit_12) *
+            ((column17_row5) - (((column17_row0) + (cpu__decode__opcode_range_check__bit_2)) +
+                                (FieldElementT::One())));
         inner_sum += random_coefficients[19] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column19_row0) - (half_offset_size_));
+            (cpu__decode__opcode_range_check__bit_12) * ((column19_row0) - (half_offset_size_));
         inner_sum += random_coefficients[20] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off1:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
+            (cpu__decode__opcode_range_check__bit_12) *
             ((column19_row8) - ((half_offset_size_) + (FieldElementT::One())));
         inner_sum += random_coefficients[21] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            (((((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_12)) +
-               (FieldElementT::One())) +
-              (FieldElementT::One())) -
-             (((cpu__decode__opcode_rc__bit_0) + (cpu__decode__opcode_rc__bit_1)) +
-              (FieldElementT::ConstexprFromBigInt(0x4_Z))));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_12) *
+                                         (((((cpu__decode__opcode_range_check__bit_12) +
+                                             (cpu__decode__opcode_range_check__bit_12)) +
+                                            (FieldElementT::One())) +
+                                           (FieldElementT::One())) -
+                                          (((cpu__decode__opcode_range_check__bit_0) +
+                                            (cpu__decode__opcode_range_check__bit_1)) +
+                                           (FieldElementT::ConstexprFromBigInt(0x4_Z))));
         inner_sum += random_coefficients[22] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column19_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z))) - (half_offset_size_));
         inner_sum += random_coefficients[23] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off2:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column19_row4) + (FieldElementT::One())) - (half_offset_size_));
         inner_sum += random_coefficients[24] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
-            (((((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_0)) +
-               (cpu__decode__opcode_rc__bit_3)) +
-              (cpu__decode__flag_res_op1_0)) -
-             (FieldElementT::ConstexprFromBigInt(0x4_Z)));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_13) *
+                                         (((((cpu__decode__opcode_range_check__bit_7) +
+                                             (cpu__decode__opcode_range_check__bit_0)) +
+                                            (cpu__decode__opcode_range_check__bit_3)) +
+                                           (cpu__decode__flag_res_op1_0)) -
+                                          (FieldElementT::ConstexprFromBigInt(0x4_Z)));
         inner_sum += random_coefficients[25] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/assert_eq/assert_eq:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_14) * ((column17_row9) - (column19_row13));
+            (cpu__decode__opcode_range_check__bit_14) * ((column17_row9) - (column19_row13));
         inner_sum += random_coefficients[26] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -1040,7 +1049,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       {
         // Constraint expression for cpu/update_registers/update_pc/tmp0:
         const FieldElementT constraint =
-            (column19_row3) - ((cpu__decode__opcode_rc__bit_9) * (column17_row9));
+            (column19_row3) - ((cpu__decode__opcode_range_check__bit_9) * (column17_row9));
         inner_sum += random_coefficients[12] * constraint;
       }
       {
@@ -1051,34 +1060,37 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_negative:
         const FieldElementT constraint =
-            ((((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column17_row16)) +
+            ((((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+              (column17_row16)) +
              ((column19_row3) * ((column17_row16) - ((column17_row0) + (column17_row13))))) -
             ((((cpu__decode__flag_pc_update_regular_0) * (npc_reg_0)) +
-              ((cpu__decode__opcode_rc__bit_7) * (column19_row13))) +
-             ((cpu__decode__opcode_rc__bit_8) * ((column17_row0) + (column19_row13))));
+              ((cpu__decode__opcode_range_check__bit_7) * (column19_row13))) +
+             ((cpu__decode__opcode_range_check__bit_8) * ((column17_row0) + (column19_row13))));
         inner_sum += random_coefficients[14] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_positive:
         const FieldElementT constraint =
-            ((column19_row11) - (cpu__decode__opcode_rc__bit_9)) * ((column17_row16) - (npc_reg_0));
+            ((column19_row11) - (cpu__decode__opcode_range_check__bit_9)) *
+            ((column17_row16) - (npc_reg_0));
         inner_sum += random_coefficients[15] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_ap/ap_update:
         const FieldElementT constraint =
             (column19_row17) -
-            ((((column19_row1) + ((cpu__decode__opcode_rc__bit_10) * (column19_row13))) +
-              (cpu__decode__opcode_rc__bit_11)) +
-             ((cpu__decode__opcode_rc__bit_12) * (FieldElementT::ConstexprFromBigInt(0x2_Z))));
+            ((((column19_row1) + ((cpu__decode__opcode_range_check__bit_10) * (column19_row13))) +
+              (cpu__decode__opcode_range_check__bit_11)) +
+             ((cpu__decode__opcode_range_check__bit_12) *
+              (FieldElementT::ConstexprFromBigInt(0x2_Z))));
         inner_sum += random_coefficients[16] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_fp/fp_update:
         const FieldElementT constraint =
             (column19_row25) - ((((cpu__decode__fp_update_regular_0) * (column19_row9)) +
-                                 ((cpu__decode__opcode_rc__bit_13) * (column17_row9))) +
-                                ((cpu__decode__opcode_rc__bit_12) *
+                                 ((cpu__decode__opcode_range_check__bit_13) * (column17_row9))) +
+                                ((cpu__decode__opcode_range_check__bit_12) *
                                  ((column19_row1) + (FieldElementT::ConstexprFromBigInt(0x2_Z)))));
         inner_sum += random_coefficients[17] * constraint;
       }
@@ -1200,16 +1212,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         inner_sum += random_coefficients[38] * constraint;
       }
       {
-        // Constraint expression for rc16/perm/init0:
+        // Constraint expression for range_check16/perm/init0:
         const FieldElementT constraint =
-            ((((rc16__perm__interaction_elm_) - (column19_row2)) * (column21_inter1_row1)) +
+            ((((range_check16__perm__interaction_elm_) - (column19_row2)) *
+              (column21_inter1_row1)) +
              (column19_row0)) -
-            (rc16__perm__interaction_elm_);
+            (range_check16__perm__interaction_elm_);
         inner_sum += random_coefficients[41] * constraint;
       }
       {
-        // Constraint expression for rc16/minimum:
-        const FieldElementT constraint = (column19_row2) - (rc_min_);
+        // Constraint expression for range_check16/minimum:
+        const FieldElementT constraint = (column19_row2) - (range_check_min_);
         inner_sum += random_coefficients[45] * constraint;
       }
       {
@@ -1218,8 +1231,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         inner_sum += random_coefficients[124] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/init_addr:
-        const FieldElementT constraint = (column17_row102) - (initial_rc_addr_);
+        // Constraint expression for range_check_builtin/init_addr:
+        const FieldElementT constraint = (column17_row102) - (initial_range_check_addr_);
         inner_sum += random_coefficients[137] * constraint;
       }
       {
@@ -1344,15 +1357,16 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       // Compute a sum of constraints with numerator = domain22.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/step0:
+        // Constraint expression for range_check16/perm/step0:
         const FieldElementT constraint =
-            (((rc16__perm__interaction_elm_) - (column19_row6)) * (column21_inter1_row5)) -
-            (((rc16__perm__interaction_elm_) - (column19_row4)) * (column21_inter1_row1));
+            (((range_check16__perm__interaction_elm_) - (column19_row6)) * (column21_inter1_row5)) -
+            (((range_check16__perm__interaction_elm_) - (column19_row4)) * (column21_inter1_row1));
         inner_sum += random_coefficients[42] * constraint;
       }
       {
-        // Constraint expression for rc16/diff_is_bit:
-        const FieldElementT constraint = ((rc16__diff_0) * (rc16__diff_0)) - (rc16__diff_0);
+        // Constraint expression for range_check16/diff_is_bit:
+        const FieldElementT constraint =
+            ((range_check16__diff_0) * (range_check16__diff_0)) - (range_check16__diff_0);
         inner_sum += random_coefficients[44] * constraint;
       }
       outer_sum += inner_sum * domain22;
@@ -1368,13 +1382,14 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/last:
-        const FieldElementT constraint = (column21_inter1_row1) - (rc16__perm__public_memory_prod_);
+        // Constraint expression for range_check16/perm/last:
+        const FieldElementT constraint =
+            (column21_inter1_row1) - (range_check16__perm__public_memory_prod_);
         inner_sum += random_coefficients[43] * constraint;
       }
       {
-        // Constraint expression for rc16/maximum:
-        const FieldElementT constraint = (column19_row2) - (rc_max_);
+        // Constraint expression for range_check16/maximum:
+        const FieldElementT constraint = (column19_row2) - (range_check_max_);
         inner_sum += random_coefficients[46] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -1818,7 +1833,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         inner_sum += random_coefficients[123] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/addr_step:
+        // Constraint expression for range_check_builtin/addr_step:
         const FieldElementT constraint =
             (column17_row230) - ((column17_row102) + (FieldElementT::One()));
         inner_sum += random_coefficients[136] * constraint;
@@ -1842,8 +1857,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
         inner_sum += random_coefficients[134] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/value:
-        const FieldElementT constraint = (rc_builtin__value7_0) - (column17_row103);
+        // Constraint expression for range_check_builtin/value:
+        const FieldElementT constraint = (range_check_builtin__value7_0) - (column17_row103);
         inner_sum += random_coefficients[135] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
@@ -2131,7 +2146,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 1>::Constrai
 template <typename FieldElementT>
 std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 1>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+  [[maybe_unused]] const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   const FieldElementT& domain1 = (point_powers[2]) - (FieldElementT::One());
   const FieldElementT& domain2 = (point_powers[3]) - (FieldElementT::One());
@@ -2159,80 +2175,46 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 1>::DomainEvalsAtPoin
 }
 
 template <typename FieldElementT>
+std::vector<uint64_t> CpuAirDefinition<FieldElementT, 1>::ParseDynamicParams(
+    [[maybe_unused]] const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
+}
+
+template <typename FieldElementT>
 TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationContext() const {
   TraceGenerationContext ctx;
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 8192)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 8192)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 8192)) <= (SafeDiv(trace_length_, 8192)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 8192)) - (1)) >= (0), "step must not exceed dimension.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 8192)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 8192)), "Index out of range.");
-
   ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 8192)) - (1)) <= (SafeDiv(trace_length_, 8192)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 8192)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 8192)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 8192)), "Index out of range.");
+      IsPowerOfTwo(trace_length_),
+      "Coset step (MemberExpression(trace_length)) must be a power of two");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 128)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 128)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 128)), "Index out of range.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 128)) - (1)) <= (SafeDiv(trace_length_, 128)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 128)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 128)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 128)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 128)) <= (SafeDiv(trace_length_, 128)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 128)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 128)) >= (0), "Index should be non negative.");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 512)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((4) <= (SafeDiv(trace_length_, 128)), "step must not exceed dimension.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 128)) - (4)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE((3) <= (SafeDiv(trace_length_, 128)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 128)) - (3)) >= (0), "Index out of range.");
 
-  ASSERT_RELEASE((2) <= (SafeDiv(trace_length_, 128)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 128)) - (2)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 4)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) + (-1)) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 4)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) - (1)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 4)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 4)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 4)) >= (0), "Index should be non negative.");
 
@@ -2240,226 +2222,83 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationCon
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 2)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 2)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 2)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 2)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) - (1)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 2)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) + (-1)) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) + (-1)) >= (0), "Index should be non negative.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) + (-1)) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) + (-1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index out of range.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16)), "step must not exceed dimension.");
+  ASSERT_RELEASE(((trace_length_) - (2)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (3)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (10)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) - (1)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (6)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (14)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (4)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16)) - (1)), "start must not exceed stop.");
+  ASSERT_RELEASE(((trace_length_) - (12)) >= (0), "Offset must be smaller than trace length.");
 
-  ctx.AddVirtualColumn(
-      "cpu/decode/opcode_rc/column",
-      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn6Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn9Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn12Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn13Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn14Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn15Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn16Column, /*step=*/1, /*row_offset=*/0));
+  ASSERT_RELEASE(((trace_length_) - (8)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (9)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (5)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (13)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (11)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (7)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (23)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (15)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (31)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (256)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (18)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (146)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (82)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (210)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (4093)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (8191)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (8162)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (4083)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (8179)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (4091)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (8187)) >= (0), "Offset must be smaller than trace length.");
+
   ctx.AddVirtualColumn(
       "mem_pool/addr", VirtualColumn(/*column=*/kColumn17Column, /*step=*/2, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "mem_pool/value", VirtualColumn(/*column=*/kColumn17Column, /*step=*/2, /*row_offset=*/1));
   ctx.AddVirtualColumn(
-      "memory/sorted/addr",
-      VirtualColumn(/*column=*/kColumn18Column, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/sorted/value",
-      VirtualColumn(/*column=*/kColumn18Column, /*step=*/2, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "rc16_pool", VirtualColumn(/*column=*/kColumn19Column, /*step=*/4, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/sorted", VirtualColumn(/*column=*/kColumn19Column, /*step=*/4, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/9));
-  ctx.AddVirtualColumn(
-      "cpu/operands/ops_mul",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/5));
-  ctx.AddVirtualColumn(
-      "cpu/operands/res",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/13));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp0",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp1",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/11));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/x",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/7));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/y",
-      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/15));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/8));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/selector",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/4));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/doubling_slope",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/12));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/slope",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/10));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/6));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/22));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/selector",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/14));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/slope",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/30));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn13Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn14Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn15Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash1/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn16Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/17));
-  ctx.AddVirtualColumn(
-      "pedersen/hash2/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/145));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/81));
-  ctx.AddVirtualColumn(
-      "pedersen/hash3/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/209));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/r_w_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/4096, /*row_offset=*/4092));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_slope",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8190));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8161));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_slope",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/4082));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8178));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/z_inv",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/4090));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/q_x_squared",
-      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8186));
-  ctx.AddVirtualColumn(
-      "memory/multi_column_perm/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn21Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn21Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
+      "range_check16_pool",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/4, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/mem_inst/addr",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/16, /*row_offset=*/0));
@@ -2472,11 +2311,18 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationCon
       "cpu/decode/instruction",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/16, /*row_offset=*/1));
   ctx.AddVirtualColumn(
+      "cpu/decode/opcode_range_check/column",
+      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "cpu/decode/off0", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/off1", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/decode/off2", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/9));
   ctx.AddVirtualColumn(
       "cpu/operands/mem_dst/addr",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/16, /*row_offset=*/8));
@@ -2496,11 +2342,40 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationCon
       "cpu/operands/mem_op1/value",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/16, /*row_offset=*/13));
   ctx.AddVirtualColumn(
+      "cpu/operands/ops_mul",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/5));
+  ctx.AddVirtualColumn(
+      "cpu/operands/res",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/13));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp0",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp1",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/11));
+  ctx.AddVirtualColumn(
+      "memory/sorted/addr",
+      VirtualColumn(/*column=*/kColumn18Column, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "memory/sorted/value",
+      VirtualColumn(/*column=*/kColumn18Column, /*step=*/2, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "memory/multi_column_perm/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn21Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "orig/public_memory/addr",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/8, /*row_offset=*/2));
   ctx.AddVirtualColumn(
       "orig/public_memory/value",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "range_check16/sorted",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/4, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "range_check16/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn21Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
   ctx.AddVirtualColumn(
       "pedersen/input0/addr",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/128, /*row_offset=*/6));
@@ -2520,13 +2395,85 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationCon
       "pedersen/output/value",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/128, /*row_offset=*/39));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/addr",
+      "pedersen/hash0/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn13Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn13Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn14Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn14Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn6Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn15Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash1/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn16Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn15Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn9Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/17));
+  ctx.AddVirtualColumn(
+      "pedersen/hash2/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/145));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn16Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn12Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/81));
+  ctx.AddVirtualColumn(
+      "pedersen/hash3/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/256, /*row_offset=*/209));
+  ctx.AddVirtualColumn(
+      "range_check_builtin/mem/addr",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/128, /*row_offset=*/102));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/value",
+      "range_check_builtin/mem/value",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/128, /*row_offset=*/103));
   ctx.AddVirtualColumn(
-      "rc_builtin/inner_rc",
+      "range_check_builtin/inner_range_check",
       VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/12));
   ctx.AddVirtualColumn(
       "ecdsa/pubkey/addr",
@@ -2540,6 +2487,66 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 1>::GetTraceGenerationCon
   ctx.AddVirtualColumn(
       "ecdsa/message/value",
       VirtualColumn(/*column=*/kColumn17Column, /*step=*/8192, /*row_offset=*/4119));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/x",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/7));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/y",
+      VirtualColumn(/*column=*/kColumn19Column, /*step=*/16, /*row_offset=*/15));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/doubling_slope",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/12));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/6));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/22));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/slope",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/30));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/selector",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/14));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/32, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/8));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/slope",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/selector",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/16, /*row_offset=*/10));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_slope",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8190));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8161));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_slope",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/4082));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8178));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/z_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/4090));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/r_w_inv",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/4096, /*row_offset=*/4092));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/q_x_squared",
+      VirtualColumn(/*column=*/kColumn20Column, /*step=*/8192, /*row_offset=*/8186));
 
   ctx.AddPeriodicColumn(
       "pedersen/points/x",

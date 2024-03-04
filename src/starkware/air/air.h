@@ -15,8 +15,10 @@
 #ifndef STARKWARE_AIR_AIR_H_
 #define STARKWARE_AIR_AIR_H_
 
+#include <map>
 #include <memory>
 #include <optional>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -66,6 +68,9 @@ class Air {
   virtual std::vector<std::pair<int64_t, uint64_t>> GetMask() const = 0;
 
   virtual uint64_t NumColumns() const = 0;
+
+  virtual std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& params) const = 0;
 
   /*
     When the AIR has interaction, clones the AIR and updates its interaction elements. Returns the

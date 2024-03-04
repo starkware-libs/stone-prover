@@ -1,6 +1,5 @@
 {
     "layout": "plain",
-    "layout_params": null,
     "rc_min": 32758,
     "rc_max": 32769,
     "n_steps": 32,
@@ -65,5 +64,6 @@
             "value": "0x0",
             "page": 0
         }
-    ]
+    ],
+    "dynamic_params": null
 }

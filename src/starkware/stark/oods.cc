@@ -50,9 +50,28 @@ std::unique_ptr<Air> CreateBoundaryAir(
   return boundary_air;
 }
 
+/*
+  Sends values to channel. If verifier_friendly_channel_updates is true, we hash them using Poseidon
+  and send only the result to the channel, otherwise sends them one by one.
+*/
+void SendElementsToChannel(
+    ProverChannel* channel, const ConstFieldElementSpan& values,
+    const bool verifier_friendly_channel_updates) {
+  if (verifier_friendly_channel_updates) {
+    // Send all the elements as a single span.
+    channel->SendFieldElementSpan(values);
+  } else {
+    // Sending each element separately to the channel.
+    for (size_t i = 0; i < values.Size(); ++i) {
+      channel->SendFieldElement(values[i], std::to_string(i));
+    }
+  }
+}
+
 std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
     ProverChannel* channel, const CompositionOracleProver& original_oracle,
-    const CommittedTraceProverBase& broken_trace, const bool use_extension_field) {
+    const CommittedTraceProverBase& broken_trace, const bool use_extension_field,
+    const bool verifier_friendly_channel_updates) {
   AnnotationScope scope(channel, "OODS values");
   const Field& field = original_oracle.EvaluationDomain().GetField();
   const FieldElement& trace_gen = original_oracle.EvaluationDomain().TraceGenerator();
@@ -66,18 +85,21 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
 
   ProfilingBlock profiling_block("Eval at OODS point");
 
+  const auto& mask = original_oracle.GetMask();
+  const size_t mask_size = mask.size();
+  const size_t n_breaks = broken_trace.NumColumns();
+  FieldElementVector elements_to_send =
+      FieldElementVector::MakeUninitialized(field, mask_size + n_breaks);
+
   // OODS trace side.
   {
     // Compute mask at point.
-    const auto& mask = original_oracle.GetMask();
-    FieldElementVector trace_evaluation_at_mask =
-        FieldElementVector::MakeUninitialized(field, mask.size());
+    FieldElementSpan trace_evaluation_at_mask = elements_to_send.AsSpan().SubSpan(0, mask_size);
     original_oracle.EvalMaskAtPoint(point, trace_evaluation_at_mask);
     std::vector<bool> cols_seen(original_oracle.Width(), false);
-    // Send values. This loop also creates the LHS of the boundary constraints to be returned.
+    // Creates the LHS of the boundary constraints to be returned.
     for (size_t i = 0; i < trace_evaluation_at_mask.Size(); ++i) {
-      const auto& trace_eval_at_idx = trace_evaluation_at_mask.At(i);
-      channel->SendFieldElement(trace_eval_at_idx, std::to_string(i));
+      const auto& trace_eval_at_idx = trace_evaluation_at_mask[i];
       const auto& [row_offset, column_index] = mask[i];
       const auto& row_element = trace_gen.Pow(row_offset);
       boundary_constraints.emplace_back(column_index, point * row_element, trace_eval_at_idx);
@@ -97,8 +119,6 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
   // OODS broken side.
   {
     // Compute a simple mask consisting of one row for broken side.
-    const size_t n_breaks = broken_trace.NumColumns();
-    const size_t trace_mask_size = original_oracle.GetMask().size();
     std::vector<std::pair<int64_t, uint64_t>> broken_eval_mask;
     broken_eval_mask.reserve(n_breaks);
 
@@ -108,26 +128,46 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
 
     // Compute at point.
     const FieldElement point_transformed = point.Pow(n_breaks);
-    FieldElementVector broken_evaluation = FieldElementVector::MakeUninitialized(field, n_breaks);
+    FieldElementSpan broken_evaluation = elements_to_send.AsSpan().SubSpan(mask_size);
     broken_trace.EvalMaskAtPoint(broken_eval_mask, point_transformed, broken_evaluation);
 
-    // Send values. This loops also creates the RHS of the boundary constraints.
+    // Creates the RHS of the boundary constraints.
     for (size_t i = 0; i < broken_evaluation.Size(); ++i) {
-      channel->SendFieldElement(broken_evaluation.At(i), std::to_string(trace_mask_size + i));
-
       // Assuming all broken_column appear right after trace columns.
       boundary_constraints.emplace_back(
-          original_oracle.Width() + i, point_transformed, broken_evaluation.At(i));
+          original_oracle.Width() + i, point_transformed, broken_evaluation[i]);
     }
   }
+  SendElementsToChannel(channel, elements_to_send, verifier_friendly_channel_updates);
 
   return boundary_constraints;
+}
+
+/*
+  Receives n_values from the channel. Flag verifier_friendly_channel_updates defined if we update
+  the channel using Pedersen hash chain on the elements or not. For more info, see
+  SendElementsToChannel function.
+*/
+FieldElementVector ReceiveElementsFromChannel(
+    VerifierChannel* channel, const size_t n_values, Field field,
+    const bool verifier_friendly_channel_updates) {
+  FieldElementVector values_from_prover = FieldElementVector::MakeUninitialized(field, n_values);
+  if (verifier_friendly_channel_updates) {
+    channel->ReceiveFieldElementSpan(field, values_from_prover.AsSpan());
+  } else {
+    // Receiving each element separately.
+    for (size_t i = 0; i < n_values; ++i) {
+      const FieldElement value = channel->ReceiveFieldElement(field, std::to_string(i));
+      values_from_prover.Set(i, value);
+    }
+  }
+  return values_from_prover;
 }
 
 std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
     const ListOfCosets& evaluation_domain, VerifierChannel* channel,
     const CompositionOracleVerifier& original_oracle, const FftBases& composition_eval_bases,
-    const bool use_extension_field) {
+    const bool use_extension_field, const bool verifier_friendly_channel_updates) {
   AnnotationScope scope(channel, "OODS values");
   const Field& field = evaluation_domain.GetField();
   const FieldElement& trace_gen = evaluation_domain.TraceGenerator();
@@ -139,19 +179,27 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
   const std::optional<FieldElement> conj_point =
       use_extension_field ? std::make_optional(GetFrobenius(point)) : std::nullopt;
 
-  // OODS trace side.
-  // Receive values. This loop also creates the LHS of the boundary constraints to be returned.
   const auto& mask = original_oracle.GetMask();
   const size_t trace_mask_size = mask.size();
-  FieldElementVector original_oracle_mask_evaluation = FieldElementVector::Make(field);
-  original_oracle_mask_evaluation.Reserve(mask.size());
-  std::vector<bool> cols_seen(original_oracle.Width(), false);
+  const size_t n_breaks = original_oracle.ConstraintsDegreeBound();
 
-  for (size_t i = 0; i < mask.size(); ++i) {
-    const FieldElement value = channel->ReceiveFieldElement(field, std::to_string(i));
+  // Receive values.
+  const size_t n_values_from_prover = trace_mask_size + n_breaks;
+  FieldElementVector values_from_prover = ReceiveElementsFromChannel(
+      channel, n_values_from_prover, field, verifier_friendly_channel_updates);
+
+  // OODS trace side.
+  // This loop creates the LHS of the boundary constraints to be returned.
+  std::vector<bool> cols_seen(original_oracle.Width(), false);
+  // Get first trace_mask_size elements from prover to compute boundary constraints of the trace
+  // polynomials.
+  auto original_oracle_mask_evaluation =
+      ConstFieldElementSpan(values_from_prover).SubSpan(0, trace_mask_size);
+  for (size_t i = 0; i < trace_mask_size; ++i) {
     const auto& [row_offset, column_index] = mask[i];
-    original_oracle_mask_evaluation.PushBack(value);
+    const FieldElement value = original_oracle_mask_evaluation[i];
     boundary_constraints.emplace_back(column_index, point * trace_gen.Pow(row_offset), value);
+
     if (use_extension_field && !cols_seen[column_index]) {
       cols_seen[column_index] = true;
       const auto conj_trace_eval_at_idx_value = GetFrobenius(value);
@@ -165,27 +213,24 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
       point, original_oracle_mask_evaluation);
 
   // PolynomialBreaker.
-  const size_t n_breaks = original_oracle.ConstraintsDegreeBound();
   auto poly_break = MakePolynomialBreak(composition_eval_bases, SafeLog2(n_breaks));
 
   // OODS broken side.
-  // Receive values. This loop also creates the RHS of the boundary constraints to be returned.
+  // This loop creates the RHS of the boundary constraints to be returned.
   const FieldElement point_transformed = point.Pow(n_breaks);
-  FieldElementVector broken_evaluation = FieldElementVector::Make(field);
-  broken_evaluation.Reserve(n_breaks);
+
+  // Get last n_breaks elements from prover to compute boundary constraints of broken trace
+  // polynomials.
+  auto broken_evaluation =
+      ConstFieldElementSpan(values_from_prover).SubSpan(trace_mask_size, n_breaks);
   for (size_t i = 0; i < n_breaks; ++i) {
-    const FieldElement value =
-        channel->ReceiveFieldElement(field, std::to_string(trace_mask_size + i));
-    broken_evaluation.PushBack(value);
     boundary_constraints.emplace_back(
-        original_oracle.Width() + i, point_transformed, broken_evaluation.At(i));
+        original_oracle.Width() + i, point_transformed, broken_evaluation[i]);
   }
 
   const FieldElement broken_side_value = poly_break->EvalFromSamples(broken_evaluation, point);
-
   ASSERT_RELEASE(
       trace_side_value == broken_side_value, "Out of domain sampling verification failed");
-
   return boundary_constraints;
 }
 

@@ -125,11 +125,13 @@ class StarkProver {
  public:
   StarkProver(
       MaybeOwnedPtr<ProverChannel> channel, MaybeOwnedPtr<TableProverFactory> table_prover_factory,
-      MaybeOwnedPtr<const StarkParameters> params, MaybeOwnedPtr<const StarkProverConfig> config)
+      MaybeOwnedPtr<const StarkParameters> params, MaybeOwnedPtr<const StarkProverConfig> config,
+      bool verifier_friendly_channel_updates)
       : channel_(std::move(channel)),
         table_prover_factory_(std::move(table_prover_factory)),
         params_(std::move(params)),
-        config_(std::move(config)) {}
+        config_(std::move(config)),
+        verifier_friendly_channel_updates_(verifier_friendly_channel_updates) {}
 
   /*
     Implements the STARK prover side of the protocol given a trace context which stores parameters
@@ -183,6 +185,7 @@ class StarkProver {
   MaybeOwnedPtr<TableProverFactory> table_prover_factory_;
   MaybeOwnedPtr<const StarkParameters> params_;
   MaybeOwnedPtr<const StarkProverConfig> config_;
+  bool verifier_friendly_channel_updates_;
 };
 
 class StarkVerifier {
@@ -190,10 +193,11 @@ class StarkVerifier {
   StarkVerifier(
       MaybeOwnedPtr<VerifierChannel> channel,
       MaybeOwnedPtr<const TableVerifierFactory> table_verifier_factory,
-      MaybeOwnedPtr<const StarkParameters> params)
+      MaybeOwnedPtr<const StarkParameters> params, bool verifier_friendly_channel_updates)
       : channel_(std::move(channel)),
         table_verifier_factory_(std::move(table_verifier_factory)),
-        params_(std::move(params)) {}
+        params_(std::move(params)),
+        verifier_friendly_channel_updates_(verifier_friendly_channel_updates) {}
 
   /*
     Implements the STARK verifier side of the protocol given constraint system defined in an AIR (to
@@ -240,6 +244,8 @@ class StarkVerifier {
   MaybeOwnedPtr<const StarkParameters> params_;
 
   std::unique_ptr<CompositionPolynomial> composition_polynomial_;
+
+  bool verifier_friendly_channel_updates_;
 
   /*
     For tests only, relevant when using extension fields. When true, the verifier skips on checking

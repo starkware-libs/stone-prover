@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "starkware/air/components/memory/memory.h"
 #include "starkware/air/components/perm_range_check/range_check_cell.h"
@@ -42,7 +43,7 @@ class RangeCheckBuiltinProverContext {
         shift_bits_(shift_bits),
         inputs_(std::move(inputs)),
         mem_input_(memory_pool, name + "/mem", ctx),
-        rc_value_(rc_pool, name + "/inner_rc", ctx) {
+        rc_value_(InitRCValue(name, ctx, rc_pool, n_parts)) {
     ASSERT_RELEASE(shift_bits_ < 64, "Range check builtin's shift must be at most 64.");
   }
 
@@ -66,6 +67,21 @@ class RangeCheckBuiltinProverContext {
   static std::map<uint64_t, ValueType> ParsePrivateInput(const JsonValue& private_input);
 
  private:
+  static constexpr std::vector<TableCheckCellView<FieldElementT>> InitRCValue(
+      const std::string& name, const TraceGenerationContext& ctx,
+      RangeCheckCell<FieldElementT>* rc_pool, const uint64_t n_parts) {
+    if (IsPowerOfTwo(n_parts)) {
+      return {TableCheckCellView<FieldElementT>(rc_pool, name + "/inner_range_check", ctx)};
+    }
+    std::vector<TableCheckCellView<FieldElementT>> res;
+    res.reserve(n_parts);
+    for (size_t i = 0; i < n_parts; ++i) {
+      res.push_back(TableCheckCellView<FieldElementT>(
+          rc_pool, name + "/inner_range_check" + std::to_string(i), ctx));
+    }
+    return res;
+  }
+
   const uint64_t begin_addr_;
   const uint64_t n_instances_;
   const uint64_t n_parts_;
@@ -73,7 +89,7 @@ class RangeCheckBuiltinProverContext {
   const std::map<uint64_t, ValueType> inputs_;
 
   const MemoryCellView<FieldElementT> mem_input_;
-  const TableCheckCellView<FieldElementT> rc_value_;
+  const std::vector<TableCheckCellView<FieldElementT>> rc_value_;
 };
 
 }  // namespace cpu

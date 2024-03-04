@@ -36,14 +36,15 @@ class PoseidonBuiltinProverContext {
       const std::string& name, const TraceGenerationContext& ctx,
       MemoryCell<FieldElementT>* memory_pool, const uint64_t begin_addr,
       uint64_t n_component_instances, std::map<uint64_t, Input> inputs, size_t rounds_full,
-      size_t rounds_partial, gsl::span<const size_t> r_p_partition,
+      size_t rounds_partial, gsl::span<const size_t> partial_rounds_partition,
       const ConstSpanAdapter<FieldElementT>& mds, const ConstSpanAdapter<FieldElementT>& ark)
       : begin_addr_(begin_addr),
         n_component_instances_(n_component_instances),
         inputs_(std::move(inputs)),
-        mem_input_output_(memory_pool, name + "/input_output", ctx),
+        mem_input_output_(InitMemInputOutput(name, ctx, memory_pool)),
         poseidon_component_(
-            name + "/poseidon", ctx, M, rounds_full, rounds_partial, r_p_partition, mds, ark) {}
+            name + "/poseidon", ctx, M, rounds_full, rounds_partial, partial_rounds_partition, mds,
+            ark) {}
 
   /*
     Writes the trace cells for the builtin.
@@ -67,14 +68,24 @@ class PoseidonBuiltinProverContext {
     return res;
   }
 
-  static constexpr size_t kMCapacity = Pow2(Log2Ceil(M));
+  static constexpr std::vector<MemoryCellView<FieldElementT>> InitMemInputOutput(
+      const std::string& name, const TraceGenerationContext& ctx,
+      MemoryCell<FieldElementT>* memory_pool) {
+    std::vector<MemoryCellView<FieldElementT>> res;
+    res.reserve(M);
+    for (size_t i = 0; i < M; ++i) {
+      res.push_back(MemoryCellView<FieldElementT>(
+          memory_pool, name + "/param_" + std::to_string(i) + "/input_output", ctx));
+    }
+    return res;
+  }
 
   const uint64_t begin_addr_;
   const uint64_t n_component_instances_;
 
   const std::map<uint64_t, Input> inputs_;
 
-  const MemoryCellView<FieldElementT> mem_input_output_;
+  const std::vector<MemoryCellView<FieldElementT>> mem_input_output_;
   const PoseidonComponent<FieldElementT> poseidon_component_;
 };
 

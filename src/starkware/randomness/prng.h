@@ -105,6 +105,11 @@ class PrngImpl : public PrngBase {
   explicit PrngImpl(gsl::span<const std::byte> bytes) : hash_chain_(HashChain<HashT>(bytes)) {}
 
   /*
+    Construct a new instance based on a specific HashChain.
+  */
+  explicit PrngImpl(HashChain<HashT> init_state) : hash_chain_(init_state) {}
+
+  /*
     Expects a string with same format used to print the seed when the PRNG is initialized from
     system-time (using the default constructor). More specifically, the format is a string of
     hexadecimal digits in little endian, with a leading "0x" prefix. For example, if the string is

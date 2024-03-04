@@ -114,8 +114,9 @@ TEST(OutOfDomainSampling, ProveOods) {
       .WillOnce(SetEvaluation(expected_broken_values));
 
   // Calls ProveOods().
-  const auto boundary_constraints =
-      oods::ProveOods(&prover_channel, oracle, broken_trace, /*use_extension_field=*/false);
+  const auto boundary_constraints = oods::ProveOods(
+      &prover_channel, oracle, broken_trace, /*use_extension_field=*/false,
+      /*verifier_friendly_channel_updates=*/false);
   EXPECT_EQ(boundary_constraints.size(), mask_size + n_breaks);
 
   // Tests the sent_data seems right.
@@ -209,14 +210,16 @@ TEST(OutOfDomainSampling, VerifyOods) {
   // Calls VerifyOods().
   const auto boundary_constraints = oods::VerifyOods(
       evaluation_domain, &verifier_channel, oracle, composition_eval_bases,
-      /*use_extension_field=*/false);
+      /*use_extension_field=*/false, /*verifier_friendly_channel_updates=*/false);
   EXPECT_EQ(boundary_constraints.size(), mask_size + n_breaks);
 }
 
 #endif
 
 template <typename FieldElementT>
-void FibonacciOodsEndToEnd(bool use_extension_field, const FieldElementT& secret, Prng* prng) {
+void FibonacciOodsEndToEnd(
+    bool use_extension_field, const FieldElementT& secret, Prng* prng,
+    bool verifier_friendly_channel_updates) {
   const size_t trace_length = 16;
   const size_t fibonacci_claim_index = 12;
   const size_t n_cosets = 8;
@@ -280,8 +283,9 @@ void FibonacciOodsEndToEnd(bool use_extension_field, const FieldElementT& secret
   }
 
   // ProveOods.
-  const auto prover_boundary_constraints =
-      oods::ProveOods(&prover_channel, oracle_prover, broken_prover, use_extension_field);
+  const auto prover_boundary_constraints = oods::ProveOods(
+      &prover_channel, oracle_prover, broken_prover, use_extension_field,
+      verifier_friendly_channel_updates);
 
   // Verifier.
   NoninteractiveVerifierChannel verifier_channel(channel_prng.Clone(), prover_channel.GetProof());
@@ -310,7 +314,7 @@ void FibonacciOodsEndToEnd(bool use_extension_field, const FieldElementT& secret
   // VerifyOods.
   const auto verifier_boundary_constraints = oods::VerifyOods(
       evaluation_domain, &verifier_channel, oracle_verifier, composition_eval_bases,
-      use_extension_field);
+      use_extension_field, verifier_friendly_channel_updates);
 
   // Test same constraints.
   EXPECT_EQ(prover_boundary_constraints, verifier_boundary_constraints);
@@ -318,11 +322,14 @@ void FibonacciOodsEndToEnd(bool use_extension_field, const FieldElementT& secret
 
 TEST(OutOfDomainSampling, EndToEnd) {
   Prng prng;
-  FibonacciOodsEndToEnd<TestFieldElement>(false, TestFieldElement::RandomElement(&prng), &prng);
+  FibonacciOodsEndToEnd<TestFieldElement>(
+      false, TestFieldElement::RandomElement(&prng), &prng, false);
+  FibonacciOodsEndToEnd<PrimeFieldElement<252, 0>>(
+      false, PrimeFieldElement<252, 0>::RandomElement(&prng), &prng, true);
   FibonacciOodsEndToEnd<ExtensionFieldElement<TestFieldElement>>(
-      true, ExtensionFieldElement<TestFieldElement>::RandomBaseElement(&prng), &prng);
+      true, ExtensionFieldElement<TestFieldElement>::RandomBaseElement(&prng), &prng, false);
   FibonacciOodsEndToEnd<ExtensionFieldElement<TestFieldElement>>(
-      false, ExtensionFieldElement<TestFieldElement>::RandomBaseElement(&prng), &prng);
+      false, ExtensionFieldElement<TestFieldElement>::RandomBaseElement(&prng), &prng, false);
 }
 
 }  // namespace

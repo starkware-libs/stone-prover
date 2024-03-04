@@ -112,8 +112,9 @@ class CachedLdeManagerTest : public ::testing::Test {
 };
 
 void CachedLdeManagerTest::StartTest(bool store_full_lde, bool use_fft_for_eval) {
-  CachedLdeManager::Config config{/*store_full_lde=*/store_full_lde,
-                                  /*use_fft_for_eval=*/use_fft_for_eval};
+  CachedLdeManager::Config config{
+      /*store_full_lde=*/store_full_lde,
+      /*use_fft_for_eval=*/use_fft_for_eval};
   cached_lde_manager_.emplace(
       config,
       /*lde_manager=*/UseOwned(&lde_manager_),
@@ -161,8 +162,9 @@ void CachedLdeManagerTest::StartTest(bool store_full_lde, bool use_fft_for_eval)
   Tests the correct AddEvaluation version is called.
 */
 TEST_F(CachedLdeManagerTest, AddEvaluationVariations) {
-  CachedLdeManager::Config config{/*store_full_lde=*/false,
-                                  /*use_fft_for_eval=*/false};
+  CachedLdeManager::Config config{
+      /*store_full_lde=*/false,
+      /*use_fft_for_eval=*/false};
   cached_lde_manager_.emplace(
       config,
       /*lde_manager=*/UseOwned(&lde_manager_),
@@ -356,8 +358,9 @@ TEST_F(CachedLdeManagerTest, AddAfterEvalOnCoset) {
 }
 
 TEST_F(CachedLdeManagerTest, AddAfterEvalAtPoints) {
-  CachedLdeManager::Config config{/*store_full_lde=*/false,
-                                  /*use_fft_for_eval=*/false};
+  CachedLdeManager::Config config{
+      /*store_full_lde=*/false,
+      /*use_fft_for_eval=*/false};
   cached_lde_manager_.emplace(
       config,
       /*lde_manager=*/UseOwned(&lde_manager_),

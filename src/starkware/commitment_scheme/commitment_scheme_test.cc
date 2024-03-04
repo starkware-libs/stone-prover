@@ -32,6 +32,7 @@
 #include "starkware/crypt_tools/keccak_256.h"
 #include "starkware/crypt_tools/masked_hash.h"
 #include "starkware/crypt_tools/pedersen.h"
+#include "starkware/crypt_tools/poseidon.h"
 #include "starkware/error_handling/error_handling.h"
 #include "starkware/error_handling/test_utils.h"
 #include "starkware/math/math.h"
@@ -51,9 +52,10 @@ using testing::HasSubstr;
 
 template <typename HashParam>
 struct MerkleCommitmentSchemePairT {
-  using ProverT = MerkleCommitmentSchemeProver<HashParam>;
-  using VerifierT = MerkleCommitmentSchemeVerifier<HashParam>;
+  using ProverT = std::unique_ptr<CommitmentSchemeProver>;
+  using VerifierT = std::unique_ptr<CommitmentSchemeVerifier>;
   using HashT = HashParam;
+  using ProverCommitmentT = MerkleCommitmentSchemeProver<HashT>;
 
   static ProverT CreateProver(
       NoninteractiveProverChannel* prover_channel, size_t /*size_of_element*/,
@@ -64,13 +66,16 @@ struct MerkleCommitmentSchemePairT {
         "Wrong number of elements in segment in Merkle commitment scheme prover initialization. "
         "Should be 1, but actually: " +
             std::to_string(n_elements_in_segment));
-    return ProverT(n_segments, prover_channel);
+    auto commitment_scheme = std::make_unique<ProverCommitmentT>(n_segments, prover_channel);
+    return ProverT(std::move(commitment_scheme));
   }
 
   static VerifierT CreateVerifier(
       NoninteractiveVerifierChannel* verifier_channel, size_t /*size_of_element*/,
       size_t n_elements, size_t /*n_verifier_friendly_commitment_layers*/) {
-    return VerifierT(n_elements, verifier_channel);
+    auto commitment_scheme =
+        std::make_unique<MerkleCommitmentSchemeVerifier<HashT>>(n_elements, verifier_channel);
+    return VerifierT(std::move(commitment_scheme));
   }
 
   static size_t DrawSizeOfElement(Prng* /*prng*/) { return HashT::kDigestNumBytes; }
@@ -97,9 +102,10 @@ struct PackagingCommitmentSchemePairT {
 
 template <typename HashParam>
 struct PackagingCommitmentSchemePairSingleHashT : public PackagingCommitmentSchemePairT<HashParam> {
-  using ProverT = PackagingCommitmentSchemeProver<HashParam>;
-  using VerifierT = PackagingCommitmentSchemeVerifier<HashParam>;
+  using ProverT = std::unique_ptr<CommitmentSchemeProver>;
+  using VerifierT = std::unique_ptr<CommitmentSchemeVerifier>;
   using HashT = HashParam;
+  using ProverCommitmentT = PackagingCommitmentSchemeProver<HashT>;
 
   static ProverT CreateProver(
       NoninteractiveProverChannel* prover_channel, size_t size_of_element,
@@ -110,9 +116,10 @@ struct PackagingCommitmentSchemePairSingleHashT : public PackagingCommitmentSche
         "n_verifier_friendly_commitment_layers should be 0, but it is: " +
             std::to_string(n_verifier_friendly_commitment_layers));
 
-    return MakeCommitmentSchemeProver<HashT>(
+    return MakeCommitmentSchemeProver(
         size_of_element, n_elements_in_segment, n_segments, prover_channel,
-        /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(HashT::HashName()), n_layers);
+        /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(HashT::HashName()),
+        /*n_columns*/ 1, n_layers);
   }
 
   static VerifierT CreateVerifier(
@@ -123,9 +130,10 @@ struct PackagingCommitmentSchemePairSingleHashT : public PackagingCommitmentSche
         "n_verifier_friendly_commitment_layers should be 0, but it is: " +
             std::to_string(n_verifier_friendly_commitment_layers));
 
-    return MakeCommitmentSchemeVerifier<HashT>(
+    return MakeCommitmentSchemeVerifier(
         size_of_element, n_elements, verifier_channel,
-        /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(HashT::HashName()));
+        /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(HashT::HashName()),
+        /*n_columns*/ 1);
   }
 
   static constexpr size_t kMinElementSize = 1;
@@ -136,10 +144,11 @@ struct PackagingCommitmentSchemePairSingleHashT : public PackagingCommitmentSche
 */
 template <typename TopHash, typename BottomHash>
 struct PackagingCommitmentSchemePairTwoHashesT : public PackagingCommitmentSchemePairT<BottomHash> {
-  using ProverT = PackagingCommitmentSchemeProver<BottomHash>;
-  using VerifierT = PackagingCommitmentSchemeVerifier<BottomHash>;
+  using ProverT = std::unique_ptr<CommitmentSchemeProver>;
+  using VerifierT = std::unique_ptr<CommitmentSchemeVerifier>;
   using TopHashT = TopHash;
   using BottomHashT = BottomHash;
+  using ProverCommitmentT = PackagingCommitmentSchemeProver<BottomHashT>;
 
   // Note: we assume here that the largest layer of the Merkle tree uses the bottom hash (see the
   // return types of CreateProver and CreateVerifier).
@@ -150,9 +159,9 @@ struct PackagingCommitmentSchemePairTwoHashesT : public PackagingCommitmentSchem
       size_t n_verifier_friendly_commitment_layers) {
     CommitmentHashes commitment_hashes =
         CommitmentHashes(TopHashT::HashName(), BottomHash::HashName());
-    return MakeCommitmentSchemeProver<BottomHashT>(
+    return MakeCommitmentSchemeProver(
         size_of_element, n_elements_in_segment, n_segments, prover_channel,
-        n_verifier_friendly_commitment_layers, commitment_hashes, n_layers);
+        n_verifier_friendly_commitment_layers, commitment_hashes, /*n_columns*/ 1, n_layers);
   }
 
   static VerifierT CreateVerifier(
@@ -160,9 +169,9 @@ struct PackagingCommitmentSchemePairTwoHashesT : public PackagingCommitmentSchem
       size_t n_verifier_friendly_commitment_layers) {
     CommitmentHashes commitment_hashes =
         CommitmentHashes(TopHashT::HashName(), BottomHash::HashName());
-    return MakeCommitmentSchemeVerifier<BottomHashT>(
+    return MakeCommitmentSchemeVerifier(
         size_of_element, n_elements, verifier_channel, n_verifier_friendly_commitment_layers,
-        commitment_hashes);
+        commitment_hashes, /*n_columns*/ 1);
   }
 };
 
@@ -175,7 +184,8 @@ using TestTypesTwoHashes = ::testing::Types<
         MaskedHash<Blake2s256, 20, true>, MaskedHash<Keccak256, 20, true>>,
     PackagingCommitmentSchemePairTwoHashesT<
         MaskedHash<Keccak256, 20, false>, MaskedHash<Blake2s256, 20, false>>,
-    PackagingCommitmentSchemePairTwoHashesT<Pedersen, MaskedHash<Blake2s256, 20, false>>>;
+    PackagingCommitmentSchemePairTwoHashesT<Pedersen, MaskedHash<Blake2s256, 20, false>>,
+    PackagingCommitmentSchemePairTwoHashesT<Poseidon3, MaskedHash<Blake2s256, 20, false>>>;
 
 /*
   Returns number of segments to use, N, such that:
@@ -204,7 +214,8 @@ size_t DrawNumSegments(
 template <typename T>
 class CommitmentScheme : public ::testing::Test {
  public:
-  using CommitmentProver = typename T::ProverT;
+  using CommitmentProver = typename T::ProverCommitmentT;
+  using FieldElementT = PrimeFieldElement<252, 0>;
 
   CommitmentScheme()
       : size_of_element_(T::DrawSizeOfElement(&prng_)),
@@ -212,8 +223,20 @@ class CommitmentScheme : public ::testing::Test {
         n_segments_(DrawNumSegments(
             size_of_element_, n_elements_, CommitmentProver::kMinSegmentBytes, &prng_,
             T::kIsMerkle)),
-        data_(prng_.RandomByteVector(size_of_element_ * n_elements_)),
-        queries_(DrawQueries()) {}
+        queries_(DrawQueries()) {
+    if (size_of_element_ == FieldElementT::SizeInBytes()) {
+      auto random_felts = prng_.RandomFieldElementVector<FieldElementT>(n_elements_);
+
+      data_ = std::vector<std::byte>(size_of_element_ * n_elements_, std::byte(0x00));
+      auto data_span = gsl::make_span(data_);
+      for (int idx = 0; idx < n_elements_; idx += size_of_element_) {
+        random_felts[idx].ToBytesStandardForm(
+            data_span.subspan(idx * size_of_element_, size_of_element_));
+      }
+    } else {
+      data_ = prng_.RandomByteVector(size_of_element_ * n_elements_);
+    }
+  }
 
   CommitmentScheme(
       size_t n_elements, size_t n_segments, size_t n_verifier_layers_lower_bound,
@@ -221,10 +244,22 @@ class CommitmentScheme : public ::testing::Test {
       : size_of_element_(T::HashT::kDigestNumBytes),
         n_elements_(n_elements),
         n_segments_(n_segments),
-        data_(prng_.RandomByteVector(size_of_element_ * n_elements_)),
         queries_(DrawQueries()),
         n_verifier_friendly_commitment_layers_(prng_.UniformInt<size_t>(
-            n_verifier_layers_lower_bound, n_verifier_layers_upper_bound)) {}
+            n_verifier_layers_lower_bound, n_verifier_layers_upper_bound)) {
+    if (size_of_element_ == FieldElementT::SizeInBytes()) {
+      auto random_felts = prng_.RandomFieldElementVector<FieldElementT>(n_elements_);
+
+      data_ = std::vector<std::byte>(size_of_element_ * n_elements_, std::byte(0x00));
+      auto data_span = gsl::make_span(data_);
+      for (int idx = 0; idx < n_elements_; idx += size_of_element_) {
+        random_felts[idx].ToBytesStandardForm(
+            data_span.subspan(idx * size_of_element_, size_of_element_));
+      }
+    } else {
+      data_ = prng_.RandomByteVector(size_of_element_ * n_elements_);
+    }
+  }
 
  protected:
   Prng prng_;
@@ -290,19 +325,19 @@ class CommitmentScheme : public ::testing::Test {
     // Commit on the data_.
     for (size_t i = 0; i < GetNumSegments(); ++i) {
       const auto segment = GetSegment(i);
-      committer.AddSegmentForCommitment(segment, i);
+      committer->AddSegmentForCommitment(segment, i);
     }
-    committer.Commit();
+    committer->Commit();
 
     if (include_decommitment) {
       // Generate decommitment for queries_ already drawn.
-      const vector<uint64_t> element_idxs = committer.StartDecommitmentPhase(queries_);
+      const vector<uint64_t> element_idxs = committer->StartDecommitmentPhase(queries_);
       vector<std::byte> elements_data;
       for (const uint64_t index : element_idxs) {
         const auto element = GetElement(index);
         std::copy(element.begin(), element.end(), std::back_inserter(elements_data));
       }
-      committer.Decommit(elements_data);
+      committer->Decommit(elements_data);
     }
 
     // Return proof.
@@ -321,10 +356,10 @@ class CommitmentScheme : public ::testing::Test {
         &verifier_channel, size_of_element_, n_elements_, n_verifier_friendly_commitment_layers_);
 
     // Read commitment.
-    verifier.ReadCommitment();
+    verifier->ReadCommitment();
 
     // Verify consistency of data_ with commitment.
-    return verifier.VerifyIntegrity(elements_to_verify);
+    return verifier->VerifyIntegrity(elements_to_verify);
   }
 };
 
@@ -421,6 +456,28 @@ TYPED_TEST(CommitmentSchemeTwoHashes, TreeCheck) {
   const auto actual_root = this->FromProofToRoot(proof);
   const auto expected_root = this->CalculateTreeRoot();
   EXPECT_EQ(actual_root, expected_root);
+}
+
+TYPED_TEST(CommitmentSchemeTwoHashes, ButtomLayerIsVerifierFriendly) {
+  const size_t n_out_of_memory_layers = this->prng_.template UniformInt<size_t>(0, 6);
+
+  // As the tree height is 6=log(64), get proof with bottom layers hash.
+  this->n_verifier_friendly_commitment_layers_ = 5;
+  const auto proof_bottom_layer_non_verifier_friendly =
+      this->GenerateProof(n_out_of_memory_layers, false);
+
+  // Get proof where all layers are verifier friendly.
+  this->n_verifier_friendly_commitment_layers_ = 6;
+  const auto proof_only_verifier_friendly_hash = this->GenerateProof(n_out_of_memory_layers, false);
+
+  // Get proof where all layers are verifier friendly, even with extra layers defined.
+  this->n_verifier_friendly_commitment_layers_ = 7;
+  const auto proof_only_verifier_friendly_hash_extra_layer =
+      this->GenerateProof(n_out_of_memory_layers, false);
+
+  // Make sure the first is different than the similar latters.
+  EXPECT_EQ(proof_only_verifier_friendly_hash, proof_only_verifier_friendly_hash_extra_layer);
+  EXPECT_NE(proof_only_verifier_friendly_hash, proof_bottom_layer_non_verifier_friendly);
 }
 
 TYPED_TEST(CommitmentSchemeSingleHash, Completeness) {

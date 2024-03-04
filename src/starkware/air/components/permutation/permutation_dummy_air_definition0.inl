@@ -27,8 +27,8 @@ PermutationDummyAirDefinition<FieldElementT, 0>::CreateCompositionPolynomial(
   Builder builder(kNumPeriodicColumns);
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
-  const std::vector<uint64_t> point_exponents = {trace_length_};
-  const std::vector<uint64_t> gen_exponents = {(trace_length_) - (1)};
+  const std::vector<uint64_t> point_exponents = {uint64_t(trace_length_)};
+  const std::vector<uint64_t> gen_exponents = {uint64_t((trace_length_) - (1))};
 
   return builder.BuildUniquePtr(
       UseOwned(this), gen, trace_length_, random_coefficients.As<FieldElementT>(), point_exponents,
@@ -40,7 +40,7 @@ std::vector<std::vector<FieldElementT>>
 PermutationDummyAirDefinition<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+    gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -48,11 +48,13 @@ PermutationDummyAirDefinition<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
@@ -60,7 +62,7 @@ PermutationDummyAirDefinition<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   }
 
   TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -85,7 +87,7 @@ template <typename FieldElementT>
 FractionFieldElement<FieldElementT>
 PermutationDummyAirDefinition<FieldElementT, 0>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 1, "shifts should contain 1 elements.");
 
@@ -96,7 +98,8 @@ PermutationDummyAirDefinition<FieldElementT, 0>::ConstraintsEval(
   // domain2 = point - gen^(trace_length - 1).
   const FieldElementT& domain2 = (point) - (shifts[0]);
 
-  ASSERT_VERIFIER(neighbors.size() == 14, "Neighbors must contain 14 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 14, "neighbors should contain 14 elements.");
+
   const FieldElementT& column0_row0 = neighbors[kColumn0Row0Neighbor];
   const FieldElementT& column0_row1 = neighbors[kColumn0Row1Neighbor];
   const FieldElementT& column1_row0 = neighbors[kColumn1Row0Neighbor];
@@ -189,7 +192,8 @@ PermutationDummyAirDefinition<FieldElementT, 0>::ConstraintsEval(
 template <typename FieldElementT>
 std::vector<FieldElementT> PermutationDummyAirDefinition<FieldElementT, 0>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+    gsl::span<const FieldElementT> shifts) const {
+  const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   return {
       domain0,
@@ -197,29 +201,25 @@ std::vector<FieldElementT> PermutationDummyAirDefinition<FieldElementT, 0>::Doma
 }
 
 template <typename FieldElementT>
+std::vector<uint64_t> PermutationDummyAirDefinition<FieldElementT, 0>::ParseDynamicParams(
+    const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
+}
+
+template <typename FieldElementT>
 TraceGenerationContext PermutationDummyAirDefinition<FieldElementT, 0>::GetTraceGenerationContext()
     const {
   TraceGenerationContext ctx;
 
-  ASSERT_RELEASE(((trace_length_) + (-1)) < (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(IsPowerOfTwo(trace_length_), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(((trace_length_) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((1) <= (trace_length_), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((trace_length_) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((trace_length_) <= (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((trace_length_) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (trace_length_), "Index out of range.");
 
   ctx.AddVirtualColumn(
       "original0", VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));

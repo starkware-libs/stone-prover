@@ -20,8 +20,8 @@ namespace cpu {
 template <typename FieldElementT>
 void EcOpBuiltinProverContext<FieldElementT>::WriteTrace(
     gsl::span<const gsl::span<FieldElementT>> trace) const {
-  const Input dummy_input{kPrimeFieldEc0.k_points[0], kPrimeFieldEc0.k_points[1],
-                          FieldElementT::FromUint(0)};
+  const Input dummy_input{
+      kPrimeFieldEc0.k_points[0], kPrimeFieldEc0.k_points[1], FieldElementT::FromUint(0)};
 
   for (uint64_t idx = 0; idx < n_instances_; ++idx) {
     const uint64_t mem_addr = begin_addr_ + 7 * idx;
@@ -67,13 +67,15 @@ auto EcOpBuiltinProverContext<FieldElementT>::ParsePrivateInput(const JsonValue&
   for (size_t i = 0; i < private_input.ArrayLength(); ++i) {
     const auto& input = private_input[i];
     res.emplace(
-        input["index"].AsUint64(),
-        Input{/*p=*/EcPointT{input["p_x"].AsFieldElement<FieldElementT>(),
-                             input["p_y"].AsFieldElement<FieldElementT>()},
-              /*q=*/
-              EcPointT{input["q_x"].AsFieldElement<FieldElementT>(),
-                       input["q_y"].AsFieldElement<FieldElementT>()},
-              /*m=*/input["m"].AsFieldElement<FieldElementT>()});
+        input["index"].AsUint64(), Input{
+                                       /*p=*/EcPointT{
+                                           input["p_x"].AsFieldElement<FieldElementT>(),
+                                           input["p_y"].AsFieldElement<FieldElementT>()},
+                                       /*q=*/
+                                       EcPointT{
+                                           input["q_x"].AsFieldElement<FieldElementT>(),
+                                           input["q_y"].AsFieldElement<FieldElementT>()},
+                                       /*m=*/input["m"].AsFieldElement<FieldElementT>()});
   }
 
   return res;

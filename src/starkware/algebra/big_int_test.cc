@@ -224,8 +224,9 @@ TEST(BigInt, Multiplication) {
   static_assert(
       0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff_Z *
           0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff_Z ==
-      BigInt<8>({0x1, 0x0, 0x0, 0x0, 0xfffffffffffffffe, 0xffffffffffffffff, 0xffffffffffffffff,
-                 0xffffffffffffffff}));
+      BigInt<8>(
+          {0x1, 0x0, 0x0, 0x0, 0xfffffffffffffffe, 0xffffffffffffffff, 0xffffffffffffffff,
+           0xffffffffffffffff}));
 }
 
 TEST(BigInt, AddMod) {

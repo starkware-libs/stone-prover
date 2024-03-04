@@ -68,14 +68,15 @@ auto KeccakBuiltinProverContext<FieldElementT>::ParsePrivateInput(const JsonValu
   for (size_t i = 0; i < private_input.ArrayLength(); ++i) {
     const auto& input = private_input[i];
     res.emplace(
-        input["index"].AsUint64(), Input{ValueType::FromString(input["input_s0"].AsString()),
-                                         ValueType::FromString(input["input_s1"].AsString()),
-                                         ValueType::FromString(input["input_s2"].AsString()),
-                                         ValueType::FromString(input["input_s3"].AsString()),
-                                         ValueType::FromString(input["input_s4"].AsString()),
-                                         ValueType::FromString(input["input_s5"].AsString()),
-                                         ValueType::FromString(input["input_s6"].AsString()),
-                                         ValueType::FromString(input["input_s7"].AsString())});
+        input["index"].AsUint64(), Input{
+                                       ValueType::FromString(input["input_s0"].AsString()),
+                                       ValueType::FromString(input["input_s1"].AsString()),
+                                       ValueType::FromString(input["input_s2"].AsString()),
+                                       ValueType::FromString(input["input_s3"].AsString()),
+                                       ValueType::FromString(input["input_s4"].AsString()),
+                                       ValueType::FromString(input["input_s5"].AsString()),
+                                       ValueType::FromString(input["input_s6"].AsString()),
+                                       ValueType::FromString(input["input_s7"].AsString())});
   }
 
   return res;

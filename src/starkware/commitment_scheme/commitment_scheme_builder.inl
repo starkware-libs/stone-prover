@@ -71,9 +71,9 @@ inline std::unique_ptr<CommitmentSchemeProver> CreateAllCommitmentSchemeLayers(
   // Creates the innermost layer which holds the Merkle Tree.
   // If it is bigger then 0 the innermost layer definitely uses the top hash (the entire segment
   // tree uses a single hash).
-  const bool is_top_hash_layer = n_verifier_friendly_commitment_layers > 0;
+  const bool is_verifier_friendly_layer = n_verifier_friendly_commitment_layers > 0;
   std::unique_ptr<CommitmentSchemeProver> next_inner_layer =
-      commitment_hashes.Invoke(is_top_hash_layer, [n_segments, channel](auto hash_tag) {
+      commitment_hashes.Invoke(is_verifier_friendly_layer, [n_segments, channel](auto hash_tag) {
         using hash_t = typename decltype(hash_tag)::type;
         auto commitment_scheme =
             std::make_unique<MerkleCommitmentSchemeProver<hash_t>>(n_segments, channel);
@@ -104,9 +104,9 @@ inline std::unique_ptr<CommitmentSchemeProver> CreateAllCommitmentSchemeLayers(
             ". Should be at most: " + std::to_string(n_elements_in_segment));
 
     // Packaging commitment scheme layer.
-    const bool is_top_hash_layer = (layer < n_verifier_friendly_layers_in_segment);
+    const bool is_verifier_friendly_layer = (layer < n_verifier_friendly_layers_in_segment);
     next_inner_layer = commitment_hashes.Invoke(
-        is_top_hash_layer,
+        is_verifier_friendly_layer,
         [cur_n_elements_in_segment, n_segments, channel, &next_inner_layer](auto hash_tag) {
           using hash_t = typename decltype(hash_tag)::type;
 
@@ -174,41 +174,66 @@ inline std::unique_ptr<CommitmentSchemeVerifier> CreateCommitmentSchemeVerifierL
 }  // namespace details
 }  // namespace commitment_scheme_builder
 
-template <typename HashT>
-PackagingCommitmentSchemeProver<HashT> MakeCommitmentSchemeProver(
+inline std::unique_ptr<CommitmentSchemeProver> MakeCommitmentSchemeProver(
     size_t size_of_element, size_t n_elements_in_segment, size_t n_segments, ProverChannel* channel,
     size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes,
-    size_t n_out_of_memory_merkle_layers) {
+    size_t n_columns, size_t n_out_of_memory_merkle_layers) {
   // Create a chain of in-memory layers and then out-of-memory layers. The smallest most inner
-  // layer is a Merkle commitment scheme which holds a Merkle tree. For the outermost layer
-  // is_merkle_layer == false, and it is not one of the out-of-memory Merkle layers.
-  PackagingCommitmentSchemeProver<HashT> outer_layer(
-      size_of_element, n_elements_in_segment, n_segments, channel,
-      [n_out_of_memory_merkle_layers, n_segments, channel, n_verifier_friendly_commitment_layers,
-       commitment_hashes](size_t n_elements_inner_layer) {
-        return commitment_scheme_builder::details::CreateAllCommitmentSchemeLayers(
-            n_out_of_memory_merkle_layers, SafeDiv(n_elements_inner_layer, n_segments), n_segments,
-            channel, n_verifier_friendly_commitment_layers, commitment_hashes);
-      });
+  // layer is a Merkle commitment scheme which holds a Merkle tree. The outermost layer is not one
+  // of the out-of-memory Merkle layers.
 
-  return outer_layer;
+  // If the outmost layer has one column, then there is one less layer.
+  const size_t n_layers_in_segment = SafeLog2(n_elements_in_segment) - (n_columns == 1 ? 1 : 0);
+  const size_t segment_tree_height = SafeLog2(n_segments);
+  const size_t total_height = n_layers_in_segment + segment_tree_height;
+  const bool is_verifier_friendly_layer = (total_height < n_verifier_friendly_commitment_layers);
+
+  // Two lambda functions are used here. The outer one is used to determine a hash function during
+  // run time. The second creates 'inner_commitment_scheme_factory' variable for the
+  //  PackagingCommitmentSchemeProver constructor.
+  return commitment_hashes.Invoke(is_verifier_friendly_layer, [&](auto hash_tag) {
+    using hash_t = typename decltype(hash_tag)::type;
+    auto commitment_scheme = std::make_unique<PackagingCommitmentSchemeProver<hash_t>>(
+        size_of_element, n_elements_in_segment, n_segments, channel,
+        [n_out_of_memory_merkle_layers, n_segments, channel, n_verifier_friendly_commitment_layers,
+         commitment_hashes](size_t n_elements_inner_layer) {
+          return commitment_scheme_builder::details::CreateAllCommitmentSchemeLayers(
+              n_out_of_memory_merkle_layers, SafeDiv(n_elements_inner_layer, n_segments),
+              n_segments, channel, n_verifier_friendly_commitment_layers, commitment_hashes);
+        });
+
+    return std::unique_ptr<CommitmentSchemeProver>(std::move(commitment_scheme));
+  });
 }
 
-template <typename HashT>
-PackagingCommitmentSchemeVerifier<HashT> MakeCommitmentSchemeVerifier(
+inline std::unique_ptr<CommitmentSchemeVerifier> MakeCommitmentSchemeVerifier(
     size_t size_of_element, uint64_t n_elements, VerifierChannel* channel,
-    size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes) {
+    size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes,
+    size_t n_columns) {
   // Create a chain of commitment scheme layers. The smallest most inner is a Merkle commitment
-  // scheme which holds a Merkle tree. For the outermost layer is_merkle_layer == false.
-  return PackagingCommitmentSchemeVerifier<HashT>(
-      size_of_element, n_elements, channel,
-      [channel, n_verifier_friendly_commitment_layers,
-       commitment_hashes](size_t n_elements_inner_layer) {
-        return commitment_scheme_builder::details::CreateCommitmentSchemeVerifierLayers(
-            n_elements_inner_layer, channel, n_verifier_friendly_commitment_layers,
-            commitment_hashes);
-      },
-      false);
+  // scheme which holds a Merkle tree. For the outermost layer is_merkle_layer == false, unless
+  // there is only one column, then it is true.
+
+  // If the outmost layer has one column, then there is one less layer.
+  const size_t n_layers = SafeLog2(n_elements) - (n_columns == 1 ? 1 : 0);
+  bool is_verifier_friendly_layer = (n_layers < n_verifier_friendly_commitment_layers);
+
+  // Two lambda functions are used here. The outer one is used to determine a hash function during
+  // run time. The second creates 'inner_commitment_scheme_factory' variable for the
+  //  PackagingCommitmentSchemeVerifier constructor.
+  return commitment_hashes.Invoke(is_verifier_friendly_layer, [&](auto hash_tag) {
+    using hash_t = typename decltype(hash_tag)::type;
+    auto commitment_scheme = std::make_unique<PackagingCommitmentSchemeVerifier<hash_t>>(
+        size_of_element, n_elements, channel,
+        [channel, n_verifier_friendly_commitment_layers,
+         commitment_hashes](size_t n_elements_inner_layer) {
+          return commitment_scheme_builder::details::CreateCommitmentSchemeVerifierLayers(
+              n_elements_inner_layer, channel, n_verifier_friendly_commitment_layers,
+              commitment_hashes);
+        },
+        false);
+    return std::unique_ptr<CommitmentSchemeVerifier>(std::move(commitment_scheme));
+  });
 }
 
 }  // namespace starkware

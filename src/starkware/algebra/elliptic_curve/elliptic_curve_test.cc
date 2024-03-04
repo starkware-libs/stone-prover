@@ -91,8 +91,8 @@ TEST(EllipticCurve, IsOnCurveTest) {
   Prng prng;
 
   for (size_t i = 0; i < 100; ++i) {
-    const EcPoint<FieldElementT> point{FieldElementT::RandomElement(&prng),
-                                       FieldElementT::RandomElement(&prng)};
+    const EcPoint<FieldElementT> point{
+        FieldElementT::RandomElement(&prng), FieldElementT::RandomElement(&prng)};
     FieldElementT beta0 = Pow(point.y, 2) - Pow(point.x, 3);
     FieldElementT beta1 = Pow(point.y, 2) - Pow(point.x, 3) - point.x;
     ASSERT_TRUE(point.IsOnCurve(FieldElementT::Zero(), beta0));
@@ -115,8 +115,8 @@ TEST(EllipticCurve, DoublePointTest) {
 TEST(EllipticCurve, MulByScalarTest) {
   Prng prng;
 
-  const EcPoint<FieldElementT> point = {FieldElementT::RandomElement(&prng),
-                                        FieldElementT::RandomElement(&prng)};
+  const EcPoint<FieldElementT> point = {
+      FieldElementT::RandomElement(&prng), FieldElementT::RandomElement(&prng)};
   const FieldElementT alpha = FieldElementT::RandomElement(&prng);
   // There is always a beta such that {x,y} is a point on the curve y^2 = x^3 + alpha * x + beta.
 
@@ -126,8 +126,8 @@ TEST(EllipticCurve, MulByScalarTest) {
 
 TEST(EllipticCurve, MulByZeroTest) {
   Prng prng;
-  const EcPoint<FieldElementT> point = {FieldElementT::RandomElement(&prng),
-                                        FieldElementT::RandomElement(&prng)};
+  const EcPoint<FieldElementT> point = {
+      FieldElementT::RandomElement(&prng), FieldElementT::RandomElement(&prng)};
   const FieldElementT alpha = FieldElementT::RandomElement(&prng);
   // There is always a beta such that {x,y} is a point on the curve y^2 = x^3 + alpha * x + beta.
 
@@ -153,8 +153,8 @@ TEST(EllipticCurve, MulByCurveOrderTest) {
 TEST(EllipticCurve, MulPowerBecomesZeroTest) {
   Prng prng;
   // Start with a point P such that P+P = zero.
-  const EcPoint<FieldElementT> point = {FieldElementT::RandomElement(&prng),
-                                        FieldElementT::FromUint(0)};
+  const EcPoint<FieldElementT> point = {
+      FieldElementT::RandomElement(&prng), FieldElementT::FromUint(0)};
   const FieldElementT alpha = FieldElementT::FromUint(1);
 
   // Check that multiplying P by an odd scalar gives back P.

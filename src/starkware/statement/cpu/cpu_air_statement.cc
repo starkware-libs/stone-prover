@@ -33,6 +33,16 @@ namespace {
 using FieldElementT = CpuAirStatement::FieldElementT;
 using HashTypes = InvokedTypes<Keccak256, Pedersen>;
 
+std::map<std::string, uint64_t> ReadDynamicParams(const JsonValue& json) {
+  std::map<std::string, uint64_t> res;
+  if (json.HasValue()) {
+    for (const auto& name : json.Keys()) {
+      res[name] = json[name].AsUint64();
+    }
+  }
+  return res;
+}
+
 std::vector<MemoryAccessUnitData<FieldElementT>> ParsePublicMemory(const JsonValue& public_memory) {
   std::vector<MemoryAccessUnitData<FieldElementT>> res;
   res.reserve(public_memory.ArrayLength());
@@ -82,6 +92,7 @@ CpuAirStatement::CpuAirStatement(
               : "keccak256"),
       layout_name_(public_input["layout"].AsString()),
       n_steps_(public_input["n_steps"].AsUint64()),
+      dynamic_params_(ReadDynamicParams(public_input["dynamic_params"])),
       rc_min_(public_input["rc_min"].AsUint64()),
       rc_max_(public_input["rc_max"].AsUint64()),
       mem_segment_addresses_(ReadMemorySegments(public_input["memory_segments"])),
@@ -91,7 +102,7 @@ const Air& CpuAirStatement::GetAir() {
   air_ = InvokeByLayout(layout_name_, [&](auto layout_tag) -> std::unique_ptr<Air> {
     constexpr int kLayoutId = decltype(layout_tag)::type::value;
     return std::make_unique<CpuAir<FieldElementT, kLayoutId>>(
-        n_steps_, public_memory_, rc_min_, rc_max_, mem_segment_addresses_);
+        n_steps_, public_memory_, dynamic_params_, rc_min_, rc_max_, mem_segment_addresses_);
   });
   return *air_;
 }
@@ -126,6 +137,7 @@ const std::vector<std::byte> CpuAirStatement::GetInitialHashChainSeed() const {
 
   PublicInputSerializer serializer(
       (/*n_steps, rc_min, rc_max, layout_name*/ 4) * sizeof(BigInt<4>) +
+      (/*dynamic_params*/ dynamic_params_.size()) * sizeof(BigInt<4>) +
       segment_names.size() * (/*begin_addr, stop_ptr*/ 2) * sizeof(BigInt<4>) +
       (/*padding_address*/ sizeof(BigInt<4>) + /*padding_value*/ sizeof(FieldElementT)) +
       /*n_pages*/ sizeof(BigInt<4>) +
@@ -140,6 +152,10 @@ const std::vector<std::byte> CpuAirStatement::GetInitialHashChainSeed() const {
 
   // Layout.
   serializer.Append(EncodeStringAsBigInt<4>(layout_name_));
+
+  for (const auto& param : air_->ParseDynamicParams(dynamic_params_)) {
+    serializer.Append(BigInt<4>(param));
+  }
 
   // Serialize segment addresses.
   for (const auto& name : segment_names) {

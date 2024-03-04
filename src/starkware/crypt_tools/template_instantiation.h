@@ -20,6 +20,7 @@
 #include "starkware/crypt_tools/keccak_256.h"
 #include "starkware/crypt_tools/masked_hash.h"
 #include "starkware/crypt_tools/pedersen.h"
+#include "starkware/crypt_tools/poseidon.h"
 
 #define INSTANTIATE_FOR_ALL_HASH_FUNCTIONS(ClassName)                     \
   /* NOLINTNEXTLINE */                                                    \
@@ -28,6 +29,8 @@
   template class ClassName<starkware::Keccak256>;                         \
   /* NOLINTNEXTLINE */                                                    \
   template class ClassName<starkware::Pedersen>;                          \
+  /* NOLINTNEXTLINE */                                                    \
+  template class ClassName<starkware::Poseidon3>;                         \
   /* NOLINTNEXTLINE */                                                    \
   template class ClassName<starkware::MaskedHash<Blake2s256, 20, true>>;  \
   /* NOLINTNEXTLINE */                                                    \

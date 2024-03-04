@@ -153,7 +153,6 @@ class VerifierChannel : public Channel {
   virtual uint64_t GetAndSendRandomNumberImpl(uint64_t upper_bound);
   virtual FieldElement GetAndSendRandomFieldElementImpl(const Field& field);
   virtual FieldElement ReceiveFieldElementImpl(const Field& field);
-  virtual void ReceiveFieldElementSpanImpl(const Field& field, const FieldElementSpan& span);
 
   // ===============================================================================================
   // True pure virtual methods:
@@ -161,9 +160,11 @@ class VerifierChannel : public Channel {
   // Communication channel.
   virtual void SendBytes(gsl::span<const std::byte> raw_bytes) = 0;
   virtual std::vector<std::byte> ReceiveBytes(size_t num_bytes) = 0;
+
   // Randomness generator.
   virtual uint64_t GetRandomNumber(uint64_t upper_bound) = 0;
   virtual FieldElement GetRandomFieldElement(const Field& field) = 0;
+  virtual void ReceiveFieldElementSpanImpl(const Field& field, const FieldElementSpan& span) = 0;
 
  private:
   /*

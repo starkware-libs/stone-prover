@@ -6,25 +6,28 @@ RUN /app/install_deps.sh
 # Install Cairo0 for end-to-end test.
 RUN pip install cairo-lang==0.12.0
 
-COPY CMakeLists.txt /app/
+COPY docker_common_deps.sh /app/
+WORKDIR /app/
+RUN ./docker_common_deps.sh
+RUN chown -R starkware:starkware /app
+
+COPY WORKSPACE /app/
+COPY .bazelrc /app/
 COPY src /app/src
 COPY e2e_test /app/e2e_test
+COPY bazel_utils /app/bazel_utils
 
-RUN mkdir -p /app/build/Release
+# Build.
+RUN bazel build //...
 
-WORKDIR /app/build/Release
+FROM base_image
 
-# Use `--build-arg CMAKE_ARGS=-DNO_AVX=1` to disable the field multiplication optimization
-# and other AVX optimizations.
-ARG CMAKE_ARGS
-RUN cmake ../.. -DCMAKE_BUILD_TYPE=Release ${CMAKE_ARGS}
-RUN make -j8
-
-RUN ctest -V
+# Run tests.
+RUN bazel test //...
 
 # Copy cpu_air_prover and cpu_air_verifier.
-RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
-RUN ln -s /app/build/Release/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
+RUN ln -s /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
+RUN ln -s /app/build/bazelbin/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
 
 # End to end test.
 WORKDIR /app/e2e_test

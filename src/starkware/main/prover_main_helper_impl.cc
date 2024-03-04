@@ -26,6 +26,8 @@
 #include "starkware/algebra/fields/field_operations_helper.h"
 #include "starkware/channel/annotation_scope.h"
 #include "starkware/channel/noninteractive_prover_channel.h"
+#include "starkware/channel/noninteractive_prover_felt_channel.h"
+#include "starkware/channel/prover_channel.h"
 #include "starkware/crypt_tools/invoke.h"
 #include "starkware/crypt_tools/masked_hash.h"
 #include "starkware/stark/stark.h"
@@ -91,20 +93,6 @@ std::vector<std::byte> ProverMainHelperImpl(
   StarkParameters stark_params =
       StarkParameters::FromJson(parameters["stark"], field, UseOwned(&air), use_extension_field);
 
-  const std::string channel_hash =
-      parameters["channel_hash"].HasValue() ? parameters["channel_hash"].AsString() : "keccak256";
-
-  std::unique_ptr<PrngBase> prng = InvokeByHashFunc(channel_hash, [&](auto hash_tag) {
-    using HashT = typename decltype(hash_tag)::type;
-    PrngImpl<HashT> prng(statement->GetInitialHashChainSeed());
-    return prng.Clone();
-  });
-
-  NoninteractiveProverChannel channel(std::move(prng));
-  if (!generate_annotations) {
-    channel.DisableAnnotations();
-  }
-
   const std::string commitment_hash = parameters["commitment_hash"].HasValue()
                                           ? parameters["commitment_hash"].AsString()
                                           : "keccak256_masked160_msb";
@@ -123,38 +111,82 @@ std::vector<std::byte> ProverMainHelperImpl(
           ? parameters["n_verifier_friendly_commitment_layers"].AsUint64()
           : 0;
 
+  const bool verifier_friendly_channel_updates =
+      parameters["verifier_friendly_channel_updates"].HasValue()
+          ? parameters["verifier_friendly_channel_updates"].AsBool()
+          : false;
+
+  const std::string channel_hash =
+      parameters["channel_hash"].HasValue() ? parameters["channel_hash"].AsString() : "keccak256";
+
+  const std::string public_input_hash =
+      verifier_friendly_channel_updates ? verifier_friendly_commitment_hash : channel_hash;
+
+  const std::vector<std::byte> public_input_initial_hash =
+      InvokeByHashFunc(public_input_hash, [&](auto hash_tag) {
+        using HashT = typename decltype(hash_tag)::type;
+        std::array<std::byte, HashT::kDigestNumBytes> public_input_initial_hash_array =
+            HashT::HashBytesWithLength(statement->GetInitialHashChainSeed()).GetDigest();
+        return std::vector<std::byte>(
+            public_input_initial_hash_array.begin(), public_input_initial_hash_array.end());
+      });
+
+  ProverChannel* channel;
+  if (channel_hash == "poseidon3") {
+    const std::string pow_hash =
+        parameters["pow_hash"].HasValue() ? parameters["pow_hash"].AsString() : "blake256";
+
+    using FieldElementT = PrimeFieldElement<252, 0>;
+    FieldElementT initial_state =
+        FieldElementT::FromBigInt(FieldElementT::ValueType::FromBytes(public_input_initial_hash));
+
+    channel = new NoninteractiveProverFeltChannel(initial_state, pow_hash);
+  } else {
+    std::unique_ptr<PrngBase> prng = InvokeByHashFunc(channel_hash, [&](auto hash_tag) {
+      using HashT = typename decltype(hash_tag)::type;
+      return PrngImpl<HashT>(HashChain<HashT>(HashT::InitDigestTo(public_input_initial_hash)))
+          .Clone();
+    });
+    channel = new NoninteractiveProverChannel(std::move(prng));
+  }
+
+  if (!generate_annotations) {
+    channel->DisableAnnotations();
+  }
+
   TableProverFactory table_prover_factory = InvokeByHashFunc(commitment_hash, [&](auto hash_tag) {
     using HashT = typename decltype(hash_tag)::type;
     return GetTableProverFactory<HashT>(
-        &channel, stark_params.field.ElementSizeInBytes(),
+        channel, stark_params.field.ElementSizeInBytes(),
         stark_config.table_prover_n_tasks_per_segment, stark_config.n_out_of_memory_merkle_layers,
         n_verifier_friendly_commitment_layers,
         CommitmentHashes(
             /*top_hash=*/verifier_friendly_commitment_hash, /*bottom_hash=*/commitment_hash));
   });
 
-  AnnotationScope scope(&channel, statement->GetName());
+  AnnotationScope scope(channel, statement->GetName());
   StarkProver prover(
-      UseOwned(&channel), UseOwned(&table_prover_factory), UseOwned(&stark_params),
-      UseOwned(&stark_config));
+      UseOwned(channel), UseOwned(&table_prover_factory), UseOwned(&stark_params),
+      UseOwned(&stark_config), verifier_friendly_channel_updates);
   // Note that in case there is an interaction, ProveStark creates a new Air with interaction
   // elements, which is destroyed when the function ends.
   prover.ProveStark(statement->GetTraceContext());
 
-  std::vector<std::byte> proof_bytes = channel.GetProof();
+  std::vector<std::byte> proof_bytes = channel->GetProof();
 
   // Print statistics.
-  LOG(INFO) << channel.GetStatistics().ToString();
+  LOG(INFO) << channel->GetStatistics().ToString();
 
   if (!out_file_name.empty()) {
     std::ostringstream annotations;
     if (generate_annotations) {
-      annotations << channel;
+      annotations << *channel;
     }
     SaveUnitedProverOutput(
         out_file_name, statement->GetPrivateInput(), public_input, parameters, stark_config_json,
         BytesToHexString(proof_bytes, false), annotations.str(), prover_version);
   }
+
   return proof_bytes;
 }
 

@@ -27,8 +27,9 @@ DegreeThreeExampleAir<FieldElementT, 0>::CreateCompositionPolynomial(
   Builder builder(kNumPeriodicColumns);
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
-  const std::vector<uint64_t> point_exponents = {trace_length_};
-  const std::vector<uint64_t> gen_exponents = {(trace_length_) - (1), res_claim_index_};
+  const std::vector<uint64_t> point_exponents = {uint64_t(trace_length_)};
+  const std::vector<uint64_t> gen_exponents = {
+      uint64_t((trace_length_) - (1)), uint64_t(res_claim_index_)};
 
   BuildPeriodicColumns(gen, &builder);
 
@@ -42,7 +43,7 @@ std::vector<std::vector<FieldElementT>>
 DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+    gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -50,11 +51,13 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
@@ -62,7 +65,7 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   }
 
   TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -86,7 +89,7 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
 template <typename FieldElementT>
 FractionFieldElement<FieldElementT> DegreeThreeExampleAir<FieldElementT, 0>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 2, "shifts should contain 2 elements.");
 
@@ -97,7 +100,8 @@ FractionFieldElement<FieldElementT> DegreeThreeExampleAir<FieldElementT, 0>::Con
   // domain2 = point - gen^res_claim_index.
   const FieldElementT& domain2 = (point) - (shifts[1]);
 
-  ASSERT_VERIFIER(neighbors.size() == 2, "Neighbors must contain 2 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 2, "neighbors should contain 2 elements.");
+
   const FieldElementT& x_row0 = neighbors[kXRow0Neighbor];
   const FieldElementT& x_row1 = neighbors[kXRow1Neighbor];
 
@@ -147,7 +151,8 @@ FractionFieldElement<FieldElementT> DegreeThreeExampleAir<FieldElementT, 0>::Con
 template <typename FieldElementT>
 std::vector<FieldElementT> DegreeThreeExampleAir<FieldElementT, 0>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+    gsl::span<const FieldElementT> shifts) const {
+  const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   return {
       domain0,
@@ -155,12 +160,22 @@ std::vector<FieldElementT> DegreeThreeExampleAir<FieldElementT, 0>::DomainEvalsA
 }
 
 template <typename FieldElementT>
+std::vector<uint64_t> DegreeThreeExampleAir<FieldElementT, 0>::ParseDynamicParams(
+    const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
+}
+
+template <typename FieldElementT>
 TraceGenerationContext DegreeThreeExampleAir<FieldElementT, 0>::GetTraceGenerationContext() const {
   TraceGenerationContext ctx;
 
-  ASSERT_RELEASE((1) <= (trace_length_), "step must not exceed dimension.");
+  ASSERT_RELEASE(IsPowerOfTwo(trace_length_), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((trace_length_) <= (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Offset must be smaller than trace length.");
 
   ASSERT_RELEASE((trace_length_) >= (0), "Index should be non negative.");
 

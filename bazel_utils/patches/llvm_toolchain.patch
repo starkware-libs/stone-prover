@@ -1,0 +1,12 @@
+diff --git a/toolchain/BUILD.llvm_repo b/toolchain/BUILD.llvm_repo
+index 4158551..48567e6 100644
+--- a/toolchain/BUILD.llvm_repo
++++ b/toolchain/BUILD.llvm_repo
+@@ -59,6 +59,7 @@ filegroup(
+             "lib/clang/*/lib/**/*.a",
+             # clang_rt.*.o supply crtbegin and crtend sections.
+             "lib/**/clang_rt.*.o",
++            "lib/**/libclang*.so",
+         ],
+         exclude = [
+             "lib/libLLVM*.a",

@@ -53,7 +53,8 @@ std::unique_ptr<Air> CreateBoundaryAir(
 */
 std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
     ProverChannel* channel, const CompositionOracleProver& original_oracle,
-    const CommittedTraceProverBase& broken_trace, bool use_extension_field);
+    const CommittedTraceProverBase& broken_trace, bool use_extension_field,
+    bool verifier_friendly_channel_updates);
 
 /*
   Sends a random point to the prover, z, and receives from the prover the necessary values we need
@@ -68,7 +69,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
 std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
     const ListOfCosets& evaluation_domain, VerifierChannel* channel,
     const CompositionOracleVerifier& original_oracle, const FftBases& composition_eval_bases,
-    bool use_extension_field);
+    bool use_extension_field, bool verifier_friendly_channel_updates);
 
 }  // namespace oods
 }  // namespace starkware

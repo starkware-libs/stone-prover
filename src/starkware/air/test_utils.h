@@ -17,9 +17,11 @@
 
 #include <algorithm>
 #include <functional>
+#include <map>
 #include <memory>
 #include <optional>
 #include <set>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -128,6 +130,11 @@ class DummyAir : public Air {
   }
 
   std::vector<std::pair<int64_t, uint64_t>> GetMask() const override { return mask; }
+
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& /* params */) const override {
+    return {};
+  };
 
   size_t n_constraints = 0;
   size_t n_columns = 0;

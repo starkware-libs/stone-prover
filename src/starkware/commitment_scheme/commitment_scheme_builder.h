@@ -32,16 +32,15 @@ namespace starkware {
   Creates a chain of commitment scheme layers that handle the commitment. Returns the outermost
   layer (which is a packaging commitment scheme prover layer).
 */
-template <typename HashT>
-PackagingCommitmentSchemeProver<HashT> MakeCommitmentSchemeProver(
+std::unique_ptr<CommitmentSchemeProver> MakeCommitmentSchemeProver(
     size_t size_of_element, size_t n_elements_in_segment, size_t n_segments, ProverChannel* channel,
     size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes,
-    size_t n_out_of_memory_merkle_layers = 0);
+    size_t n_columns, size_t n_out_of_memory_merkle_layers = 0);
 
-template <typename HashT>
-PackagingCommitmentSchemeVerifier<HashT> MakeCommitmentSchemeVerifier(
+std::unique_ptr<CommitmentSchemeVerifier> MakeCommitmentSchemeVerifier(
     size_t size_of_element, uint64_t n_elements, VerifierChannel* channel,
-    size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes);
+    size_t n_verifier_friendly_commitment_layers, const CommitmentHashes& commitment_hashes,
+    size_t n_columns);
 
 }  // namespace starkware
 

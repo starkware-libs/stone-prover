@@ -41,8 +41,9 @@ ALWAYS_INLINE ExtensionFieldElement<FieldElementT> ExtensionFieldElement<FieldEl
   if (coef1_ == FieldElementT::Zero()) {
     return {coef0_ * rhs.coef0_, coef0_ * rhs.coef1_};
   }
-  return {coef0_ * rhs.coef0_ + coef1_ * rhs.coef1_ * FieldElementT::Generator(),
-          coef0_ * rhs.coef1_ + coef1_ * rhs.coef0_};
+  return {
+      coef0_ * rhs.coef0_ + coef1_ * rhs.coef1_ * FieldElementT::Generator(),
+      coef0_ * rhs.coef1_ + coef1_ * rhs.coef0_};
 }
 
 template <typename FieldElementT>
@@ -137,17 +138,18 @@ constexpr auto ExtensionFieldElement<TestFieldElement>::PrimeFactors() {
 
 template <>
 constexpr auto ExtensionFieldElement<PrimeFieldElement<252, 0>>::PrimeFactors() {
-  return std::array<BigInt<3>, 11>{0x2_Z,
-                                   0x3_Z,
-                                   0x5_Z,
-                                   0x7_Z,
-                                   0xd_Z,
-                                   0x17_Z,
-                                   0x1d7ae1_Z,
-                                   0x5e2430d_Z,
-                                   0x9f1e667_Z,
-                                   0xaaf5b07_Z,
-                                   0xed8329a1355f01889da81e879a9d4afdb4b13e60463e5817_Z};
+  return std::array<BigInt<3>, 11>{
+      0x2_Z,
+      0x3_Z,
+      0x5_Z,
+      0x7_Z,
+      0xd_Z,
+      0x17_Z,
+      0x1d7ae1_Z,
+      0x5e2430d_Z,
+      0x9f1e667_Z,
+      0xaaf5b07_Z,
+      0xed8329a1355f01889da81e879a9d4afdb4b13e60463e5817_Z};
 }
 
 template <>

@@ -19,6 +19,7 @@
 
 #include "glog/logging.h"
 
+#include "starkware/algebra/utils/invoke_template_version.h"
 #include "starkware/channel/annotation_scope.h"
 #include "starkware/channel/noninteractive_channel_utils.h"
 #include "starkware/channel/proof_of_work.h"
@@ -35,6 +36,25 @@ void NoninteractiveVerifierChannel::SendBytes(const gsl::span<const std::byte> /
   // For the non-interactive verifier implementation this function does nothing.
   // Any updates to the hash chain are the responsibility of functions requiring randomness.
   ASSERT_RELEASE(!in_query_phase_, "Verifier can't send randomness after query phase has begun.");
+}
+
+void NoninteractiveVerifierChannel::ReceiveFieldElementSpanImpl(
+    const Field& field, const FieldElementSpan& span) {
+  const size_t size_in_bytes = field.ElementSizeInBytes();
+  const size_t n_elements = span.Size();
+  std::vector<std::byte> field_element_vector_bytes = ReceiveBytes(size_in_bytes * n_elements);
+  auto span_bytes = gsl::make_span(field_element_vector_bytes);
+
+  InvokeFieldTemplateVersion(
+      [&](auto field_tag) {
+        using FieldElementT = typename decltype(field_tag)::type;
+        auto felt_span = span.As<FieldElementT>();
+        for (size_t i = 0; i < n_elements; i++) {
+          felt_span.at(i) =
+              FieldElementT::FromBytes(span_bytes.subspan(i * size_in_bytes, size_in_bytes));
+        }
+      },
+      field);
 }
 
 std::vector<std::byte> NoninteractiveVerifierChannel::ReceiveBytes(const size_t num_bytes) {

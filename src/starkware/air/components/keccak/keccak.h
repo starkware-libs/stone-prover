@@ -59,11 +59,12 @@ class KeccakComponent {
         state_begin_column_(diluted_pools[0], name + "/state_begin", ctx),
         state_end_column_(diluted_pools[0], name + "/state_end", ctx),
         parity_columns_{InitParityColumns(name, ctx, diluted_pools)},
-        rotated_parity_columns_{ctx.GetVirtualColumn(name + "/rotated_parity0"),
-                                ctx.GetVirtualColumn(name + "/rotated_parity1"),
-                                ctx.GetVirtualColumn(name + "/rotated_parity2"),
-                                ctx.GetVirtualColumn(name + "/rotated_parity3"),
-                                ctx.GetVirtualColumn(name + "/rotated_parity4")},
+        rotated_parity_columns_{
+            ctx.GetVirtualColumn(name + "/rotated_parity0"),
+            ctx.GetVirtualColumn(name + "/rotated_parity1"),
+            ctx.GetVirtualColumn(name + "/rotated_parity2"),
+            ctx.GetVirtualColumn(name + "/rotated_parity3"),
+            ctx.GetVirtualColumn(name + "/rotated_parity4")},
         after_theta_rho_pi_column_(diluted_pools[3], name + "/after_theta_rho_pi", ctx),
         theta_aux_columns_{InitThetaAuxColumns(name, ctx, diluted_pools)},
         chi_iota_aux0_column_(diluted_pools[1], name + "/chi_iota_aux0", ctx),
@@ -113,11 +114,12 @@ class KeccakComponent {
        {false, false, true, true, false, false, true,  true, false, false, false, false,
         false, true,  true, true, true,  true,  false, true, true,  true,  false, true}}};
 
-  static constexpr std::array<std::array<size_t, 5>, 5> kOffsets{{{0, 1, 62, 28, 27},
-                                                                  {36, 44, 6, 55, 20},
-                                                                  {3, 10, 43, 25, 39},
-                                                                  {41, 45, 15, 21, 8},
-                                                                  {18, 2, 61, 56, 14}}};
+  static constexpr std::array<std::array<size_t, 5>, 5> kOffsets{
+      {{0, 1, 62, 28, 27},
+       {36, 44, 6, 55, 20},
+       {3, 10, 43, 25, 39},
+       {41, 45, 15, 21, 8},
+       {18, 2, 61, 56, 14}}};
 
   static constexpr std::vector<std::vector<TableCheckCellView<FieldElementT>>> InitParityColumns(
       const std::string& name, const TraceGenerationContext& ctx,

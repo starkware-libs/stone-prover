@@ -65,7 +65,7 @@ class CpuComponent {
   CpuComponent(const std::string& name, const TraceGenerationContext& ctx)
       : name_(name),
         ctx_(ctx),
-        opcode_rc_(name + "/decode/opcode_rc", ctx, kOffsetBits),
+        opcode_rc_(name + "/decode/opcode_range_check", ctx, kOffsetBits),
         mul_column_(ctx.GetVirtualColumn(name + "/operands/ops_mul")),
         res_column_(ctx.GetVirtualColumn(name + "/operands/res")),
         ap_column_(ctx.GetVirtualColumn(name + "/registers/ap")),

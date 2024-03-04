@@ -21,15 +21,9 @@ namespace starkware {
 
 using DegreeThreeExampleAirInvokedLayoutTypes = InvokedTypes<std::integral_constant<int, 0>>;
 
-template <typename FieldElementT, int LayoutId = 0>
-class DegreeThreeExampleAir {
-  // Workaround for static_assert(false).
-  static_assert(
-      sizeof(FieldElementT) == 0,
-      "DegreeThreeExampleAir is not implemented for the given field and layout.");
-};
+}
 
-}  // namespace starkware
+#include "starkware/air/degree_three_example/degree_three_example_air_class.h"
 
 #include "starkware/air/degree_three_example/degree_three_example_air0.h"
 

@@ -37,8 +37,8 @@ void EcSubsetSumComponent<FieldElementT, LimitLimbs>::GetFractionFieldTraceInsta
   for (uint64_t j = 0; j < component_height_ - 1; j++) {
     const bool selector_bit = j < selector_bits.size() && selector_bits[j];
     const size_t point_index = j < points.size() ? j : n_points_ - 1;
-    EcPoint<FractionFieldElementT> cur_point{FractionFieldElementT(points[point_index].x),
-                                             FractionFieldElementT(points[point_index].y)};
+    EcPoint<FractionFieldElementT> cur_point{
+        FractionFieldElementT(points[point_index].x), FractionFieldElementT(points[point_index].y)};
 
     // Set x_diff_inv.
     ASSERT_RELEASE(

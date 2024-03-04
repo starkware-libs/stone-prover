@@ -22,15 +22,9 @@ namespace starkware {
 using PermutationDummyAirDefinitionInvokedLayoutTypes =
     InvokedTypes<std::integral_constant<int, 0>>;
 
-template <typename FieldElementT, int LayoutId = 0>
-class PermutationDummyAirDefinition {
-  // Workaround for static_assert(false).
-  static_assert(
-      sizeof(FieldElementT) == 0,
-      "PermutationDummyAirDefinition is not implemented for the given field and layout.");
-};
+}
 
-}  // namespace starkware
+#include "starkware/air/components/permutation/permutation_dummy_air_definition_class.h"
 
 #include "starkware/air/components/permutation/permutation_dummy_air_definition0.h"
 

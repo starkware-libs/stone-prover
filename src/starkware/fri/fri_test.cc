@@ -465,13 +465,15 @@ class FriEndToEndTest : public testing::Test {
     const size_t n_out_of_memory_merkle_layers = 0;
     TableProverFactory table_prover_factory = [&](size_t n_segments, uint64_t n_rows_per_segment,
                                                   size_t n_columns) {
-      auto packaging_commitment_scheme = MakeCommitmentSchemeProver<Blake2s256>(
+      auto packaging_commitment_scheme = MakeCommitmentSchemeProver(
           FieldElementT::SizeInBytes() * n_columns, n_rows_per_segment, n_segments, &p_channel,
           /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(Blake2s256::HashName()),
-          n_out_of_memory_merkle_layers);
+          n_columns, n_out_of_memory_merkle_layers);
 
       return std::make_unique<TableProverImpl>(
-          n_columns, UseMovedValue(std::move(packaging_commitment_scheme)), &p_channel);
+          n_columns,
+          TakeOwnershipFrom<CommitmentSchemeProver>(std::move(packaging_commitment_scheme)),
+          &p_channel);
     };
 
     FriProver::FirstLayerCallback first_layer_queries_callback =
@@ -498,12 +500,15 @@ class FriEndToEndTest : public testing::Test {
 
     TableVerifierFactory table_verifier_factory = [&](const Field& field, uint64_t n_rows,
                                                       size_t n_columns) {
-      auto packaging_commitment_scheme = MakeCommitmentSchemeVerifier<Blake2s256>(
+      auto packaging_commitment_scheme = MakeCommitmentSchemeVerifier(
           field.ElementSizeInBytes() * n_columns, n_rows, &v_channel,
-          /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(Blake2s256::HashName()));
+          /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(Blake2s256::HashName()),
+          n_columns);
 
       return std::make_unique<TableVerifierImpl>(
-          field, n_columns, UseMovedValue(std::move(packaging_commitment_scheme)), &v_channel);
+          field, n_columns,
+          TakeOwnershipFrom<CommitmentSchemeVerifier>(std::move(packaging_commitment_scheme)),
+          &v_channel);
     };
 
     FriVerifier::FirstLayerCallback first_layer_queries_callback =

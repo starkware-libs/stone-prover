@@ -21,14 +21,20 @@ void RangeCheckBuiltinProverContext<FieldElementT>::WriteTrace(
   // shift_bits_ is guaranteed to be less than 64.
   const uint64_t mask = (uint64_t(1) << shift_bits_) - 1;
 
+  const bool split_rc_cols = IsPowerOfTwo(n_parts_);
   for (auto input_itr = inputs_.cbegin(); input_itr != inputs_.cend(); ++input_itr) {
     ValueType input = input_itr->second;
     // Split value to n_parts;
     for (size_t part = 0; part < n_parts_; ++part) {
-      rc_value_.WriteTrace(
-          input_itr->first * n_parts_ + n_parts_ - part - 1, input[0] & mask, trace);
+      if (split_rc_cols) {
+        rc_value_[0].WriteTrace(
+            input_itr->first * n_parts_ + n_parts_ - part - 1, input[0] & mask, trace);
+      } else {
+        rc_value_[n_parts_ - part - 1].WriteTrace(input_itr->first, input[0] & mask, trace);
+      }
       input >>= shift_bits_;
     }
+
     ASSERT_RELEASE(
         input == ValueType::Zero(),
         "Too large value encountered in the range check builtin private input.");
@@ -38,11 +44,16 @@ void RangeCheckBuiltinProverContext<FieldElementT>::WriteTrace(
 template <typename FieldElementT>
 void RangeCheckBuiltinProverContext<FieldElementT>::Finalize(
     gsl::span<const gsl::span<FieldElementT>> trace) const {
+  const bool split_rc_cols = IsPowerOfTwo(n_parts_);
   for (size_t i = 0; i < n_instances_; ++i) {
     auto value = FieldElementT::ValueType::Zero();
     for (size_t part = 0; part < n_parts_; part++) {
       value <<= shift_bits_;
-      value[0] |= rc_value_.Get(i * n_parts_ + part);
+      if (split_rc_cols) {
+        value[0] |= rc_value_[0].Get(i * n_parts_ + part);
+      } else {
+        value[0] |= rc_value_[part].Get(i);
+      }
     }
     mem_input_.WriteTrace(i, begin_addr_ + i, FieldElementT::FromBigInt(value), trace);
   }

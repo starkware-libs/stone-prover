@@ -37,6 +37,9 @@ class VerifierChannelMock : public VerifierChannel {
 
   MOCK_METHOD1(SendBytes, void(const gsl::span<const std::byte> raw_bytes));
   MOCK_METHOD1(ReceiveBytes, std::vector<std::byte>(const size_t num_bytes));
+  MOCK_METHOD3(
+      ReceiveFieldElementsSingleHash,
+      void(const Field& field, const FieldElementSpan& span, const size_t n_elements));
   MOCK_METHOD1(GetRandomNumber, uint64_t(uint64_t upper_bound));
   MOCK_METHOD1(GetRandomFieldElement, FieldElement(const Field& field));
   MOCK_METHOD1(ApplyProofOfWork, void(size_t));

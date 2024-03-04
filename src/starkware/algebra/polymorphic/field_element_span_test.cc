@@ -26,8 +26,8 @@ namespace {
 using testing::ElementsAre;
 
 TEST(FieldElementSpan, BasicTest) {
-  std::vector<TestFieldElement> vec = {TestFieldElement::FromUint(1), TestFieldElement::FromUint(3),
-                                       TestFieldElement::FromUint(5)};
+  std::vector<TestFieldElement> vec = {
+      TestFieldElement::FromUint(1), TestFieldElement::FromUint(3), TestFieldElement::FromUint(5)};
   gsl::span<TestFieldElement> vec_span(vec);
   FieldElementSpan polymorphic_span(vec_span);
 
@@ -60,12 +60,12 @@ TEST(FieldElementSpan, GetField) {
 }
 
 TEST(FieldElementSpan, Eq) {
-  std::vector<TestFieldElement> vec1 = {TestFieldElement::FromUint(4),
-                                        TestFieldElement::FromUint(6)};
-  std::vector<TestFieldElement> vec2 = {TestFieldElement::FromUint(4),
-                                        TestFieldElement::FromUint(6)};
-  std::vector<TestFieldElement> vec3 = {TestFieldElement::FromUint(4),
-                                        TestFieldElement::FromUint(20)};
+  std::vector<TestFieldElement> vec1 = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(6)};
+  std::vector<TestFieldElement> vec2 = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(6)};
+  std::vector<TestFieldElement> vec3 = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(20)};
 
   FieldElementSpan span1(gsl::make_span(vec1));
   FieldElementSpan span2(gsl::make_span(vec2));
@@ -78,8 +78,8 @@ TEST(FieldElementSpan, Eq) {
 }
 
 TEST(FieldElementSpan, Assignment) {
-  std::vector<TestFieldElement> vec = {TestFieldElement::FromUint(4),
-                                       TestFieldElement::FromUint(6)};
+  std::vector<TestFieldElement> vec = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(6)};
   FieldElementSpan span(gsl::make_span(vec));
 
   span.Set(0, span[1] + span[1]);
@@ -89,8 +89,8 @@ TEST(FieldElementSpan, Assignment) {
 }
 
 TEST(FieldElementSpan, CopyConstructor) {
-  std::vector<TestFieldElement> vec = {TestFieldElement::FromUint(4),
-                                       TestFieldElement::FromUint(6)};
+  std::vector<TestFieldElement> vec = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(6)};
   FieldElementSpan span1(gsl::make_span(vec));
   FieldElementSpan span2(span1);  // NOLINT: clang-tidy warns that local copy is never modified.
 
@@ -98,8 +98,8 @@ TEST(FieldElementSpan, CopyConstructor) {
 }
 
 TEST(FieldElementSpan, AssignmentOperator) {
-  std::vector<TestFieldElement> vec1 = {TestFieldElement::FromUint(4),
-                                        TestFieldElement::FromUint(6)};
+  std::vector<TestFieldElement> vec1 = {
+      TestFieldElement::FromUint(4), TestFieldElement::FromUint(6)};
   std::vector<TestFieldElement> vec2;
   FieldElementSpan span1(gsl::make_span(vec1));
   FieldElementSpan span2(gsl::make_span(vec2));

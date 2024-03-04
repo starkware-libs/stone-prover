@@ -36,6 +36,11 @@ class HashChain {
 
   void InitHashChain(gsl::span<const std::byte> bytes);
 
+  /*
+    Construct a new instance based on a specific digest.
+  */
+  explicit HashChain(HashT init_hash) : hash_(init_hash) {}
+
   void GetRandomBytes(gsl::span<std::byte> random_bytes_out);
 
   /*

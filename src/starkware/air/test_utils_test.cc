@@ -45,10 +45,11 @@ TEST(AirTestUtils, ComputeCompositionDegree) {
   air.composition_polynomial_degree_bound = 2 * trace_length;
   uint64_t constraint_degrees = 2 * trace_length - 2;
 
-  air.point_exponents = {trace_length,  // Used to compute everywhere.
-                         (*air.composition_polynomial_degree_bound - 1) -
-                             (constraint_degrees +
-                              /* nowhere */ 0 - /* everywhere */ trace_length)};
+  air.point_exponents = {
+      trace_length,  // Used to compute everywhere.
+      (*air.composition_polynomial_degree_bound - 1) -
+          (constraint_degrees +
+           /* nowhere */ 0 - /* everywhere */ trace_length)};
   air.constraints = {[](gsl::span<const FieldElementT> neighbors,
                         gsl::span<const FieldElementT> /*periodic_columns*/,
                         gsl::span<const FieldElementT> random_coefficients,
@@ -133,10 +134,11 @@ TEST(AirTestUtils, FailingConstraintsTesting) {
   air.composition_polynomial_degree_bound = 2 * trace_length;
   uint64_t constraint_degrees = 2 * trace_length - 2;
 
-  air.point_exponents = {trace_length,  // Used to compute everywhere.
-                         (*air.composition_polynomial_degree_bound - 1) -
-                             (constraint_degrees +
-                              /* nowhere */ 0 - /* everywhere */ trace_length)};
+  air.point_exponents = {
+      trace_length,  // Used to compute everywhere.
+      (*air.composition_polynomial_degree_bound - 1) -
+          (constraint_degrees +
+           /* nowhere */ 0 - /* everywhere */ trace_length)};
   air.constraints = {
       // Random constraint unlikely to be satisfied.
       [&prng](
@@ -222,9 +224,9 @@ TEST(AirTestUtils, TestAirConstraint) {
   air.composition_polynomial_degree_bound = trace_length;
   uint64_t constraint_degrees = trace_length - 1;
 
-  air.point_exponents = {(*air.composition_polynomial_degree_bound - 1) -
-                         (constraint_degrees +
-                          /* nowhere */ 0 - /* first_line */ 1)};
+  air.point_exponents = {
+      (*air.composition_polynomial_degree_bound - 1) - (constraint_degrees +
+                                                        /* nowhere */ 0 - /* first_line */ 1)};
 
   air.constraints = {
       // A function that is high degree unless random_coefficients[0] === random_coefficients[1]

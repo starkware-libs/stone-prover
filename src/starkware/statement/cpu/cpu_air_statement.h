@@ -107,6 +107,7 @@ class CpuAirStatement : public Statement {
   const std::string page_hash_;
   const std::string layout_name_;
   const uint64_t n_steps_;
+  const std::map<std::string, uint64_t> dynamic_params_;
   const uint64_t rc_min_;
   const uint64_t rc_max_;
   const MemSegmentAddresses mem_segment_addresses_;

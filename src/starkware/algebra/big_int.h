@@ -215,6 +215,7 @@ class BigInt {
     Bitwise SHIFT-LEFT operation.
   */
   constexpr BigInt& operator<<=(size_t shift);
+  constexpr BigInt operator<<(size_t shift) const { return BigInt(*this) <<= shift; }
 
   static constexpr size_t LimbCount() { return N; }
   static constexpr size_t SizeInBytes() { return N * sizeof(uint64_t); }

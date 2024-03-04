@@ -79,6 +79,32 @@ TYPED_TEST(NoninteractiveChannelTest, ConstantKeccakChannelTest) {
   }
 }
 
+TYPED_TEST(NoninteractiveChannelTest, SendingElementsSpanConsistentWithReceiving) {
+  // Sends a random n_elements vector using SendFieldElementSpan and make sure the verifier
+  // gets the expected vector and that the seed was updated correctly.
+  using FieldElementT = PrimeFieldElement<252, 0>;
+  Field field = Field::Create<FieldElementT>();
+  const size_t n_elements = 20;
+
+  // Prover.
+  NoninteractiveProverChannel prover_channel(this->channel_prng.Clone());
+  const auto random_vec = FieldElementVector::Make(
+      this->prng.template RandomFieldElementVector<FieldElementT>(n_elements));
+  auto span = ConstFieldElementSpan(random_vec);
+  prover_channel.SendFieldElementSpan(span);
+  uint64_t random_num_p = prover_channel.ReceiveNumber(1000);
+
+  // Verifier.
+  const auto proof = prover_channel.GetProof();
+  NoninteractiveVerifierChannel verifier_channel(this->channel_prng.Clone(), proof);
+  FieldElementVector verifier_output = FieldElementVector::Make(n_elements, field.Zero());
+  verifier_channel.ReceiveFieldElementSpan(field, verifier_output.AsSpan());
+  uint64_t random_num_v = verifier_channel.GetAndSendRandomNumber(1000);
+
+  EXPECT_EQ(random_vec, verifier_output);
+  EXPECT_EQ(random_num_p, random_num_v);
+}
+
 TYPED_TEST(NoninteractiveChannelTest, SendingConsistentWithReceivingBytes) {
   NoninteractiveProverChannel prover_channel(this->channel_prng.Clone());
 

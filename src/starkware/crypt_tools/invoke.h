@@ -25,11 +25,12 @@
 #include "starkware/crypt_tools/keccak_256.h"
 #include "starkware/crypt_tools/masked_hash.h"
 #include "starkware/crypt_tools/pedersen.h"
+#include "starkware/crypt_tools/poseidon.h"
 
 namespace starkware {
 
 using HashTypes = InvokedTypes<
-    Blake2s256, Keccak256, Pedersen, MaskedHash<Keccak256, 20, true>,
+    Blake2s256, Keccak256, Pedersen, Poseidon3, MaskedHash<Keccak256, 20, true>,
     MaskedHash<Blake2s256, 20, true>, MaskedHash<Blake2s256, 20, false>,
     MaskedHash<Keccak256, 20, false>>;
 

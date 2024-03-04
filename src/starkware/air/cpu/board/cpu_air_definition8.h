@@ -26,6 +26,7 @@
 #include "starkware/air/compile_time_optional.h"
 #include "starkware/air/components/ecdsa/ecdsa.h"
 #include "starkware/air/components/trace_generation_context.h"
+#include "starkware/air/cpu/board/cpu_air_definition_class.h"
 #include "starkware/air/cpu/board/memory_segment.h"
 #include "starkware/air/cpu/component/cpu_component.h"
 #include "starkware/air/trace.h"
@@ -57,8 +58,6 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
 
   uint64_t NumRandomCoefficients() const override { return kNumConstraints; }
 
-  uint64_t NumColumns() const override { return kNumColumns; }
-
   std::vector<std::vector<FieldElementT>> PrecomputeDomainEvalsOnCoset(
       const FieldElementT& point, const FieldElementT& generator,
       gsl::span<const uint64_t> point_exponents, gsl::span<const FieldElementT> shifts) const;
@@ -71,43 +70,53 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   std::vector<FieldElementT> DomainEvalsAtPoint(
       gsl::span<const FieldElementT> point_powers, gsl::span<const FieldElementT> shifts) const;
 
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& params) const override;
+
   TraceGenerationContext GetTraceGenerationContext() const;
 
   void BuildAutoPeriodicColumns(const FieldElementT& gen, Builder* builder) const;
 
   virtual void BuildPeriodicColumns(const FieldElementT& gen, Builder* builder) const = 0;
 
+  uint64_t NumColumns() const override { return kNumColumns; }
   std::optional<InteractionParams> GetInteractionParams() const override {
     InteractionParams interaction_params{kNumColumnsFirst, kNumColumnsSecond, 6};
     return interaction_params;
   }
 
-  static constexpr uint64_t kNumColumnsFirst = 12;
-  static constexpr uint64_t kNumColumnsSecond = 3;
-
+  static constexpr uint64_t kCpuComponentStep = 1;
+  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kPublicMemoryStep = 8;
   static constexpr bool kHasDilutedPool = true;
   static constexpr uint64_t kDilutedSpacing = 4;
   static constexpr uint64_t kDilutedNBits = 16;
   static constexpr uint64_t kPedersenBuiltinRatio = 32;
+  static constexpr uint64_t kPedersenBuiltinRowRatio = 512;
   static constexpr uint64_t kPedersenBuiltinRepetitions = 1;
-  static constexpr uint64_t kRcBuiltinRatio = 16;
-  static constexpr uint64_t kRcNParts = 8;
+  static constexpr uint64_t kRangeCheckBuiltinRatio = 16;
+  static constexpr uint64_t kRangeCheckBuiltinRowRatio = 256;
+  static constexpr uint64_t kRangeCheckNParts = 8;
   static constexpr uint64_t kEcdsaBuiltinRatio = 2048;
+  static constexpr uint64_t kEcdsaBuiltinRowRatio = 32768;
   static constexpr uint64_t kEcdsaBuiltinRepetitions = 1;
   static constexpr uint64_t kEcdsaElementBits = 251;
   static constexpr uint64_t kEcdsaElementHeight = 256;
   static constexpr uint64_t kBitwiseRatio = 64;
+  static constexpr uint64_t kBitwiseRowRatio = 1024;
   static constexpr uint64_t kBitwiseTotalNBits = 251;
   static constexpr uint64_t kEcOpBuiltinRatio = 1024;
+  static constexpr uint64_t kEcOpBuiltinRowRatio = 16384;
   static constexpr uint64_t kEcOpScalarHeight = 256;
   static constexpr uint64_t kEcOpNBits = 252;
   static constexpr uint64_t kKeccakRatio = 2048;
+  static constexpr uint64_t kKeccakRowRatio = 32768;
   static constexpr uint64_t kPoseidonRatio = 32;
+  static constexpr uint64_t kPoseidonRowRatio = 512;
   static constexpr uint64_t kPoseidonM = 3;
   static constexpr uint64_t kPoseidonRoundsFull = 8;
   static constexpr uint64_t kPoseidonRoundsPartial = 83;
-  static constexpr std::array<uint64_t, 2> kPoseidonRPPartition = {64, 22};
+  static constexpr std::array<uint64_t, 2> kPoseidonPartialRoundsPartition = {64, 22};
   static constexpr std::array<std::array<FieldElementT, 3>, 3> kPoseidonMds = {
       std::array<FieldElementT, 3>{
           FieldElementT::ConstexprFromBigInt(0x3_Z), FieldElementT::ConstexprFromBigInt(0x1_Z),
@@ -764,15 +773,18 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   static constexpr bool kHasEcOpBuiltin = true;
   static constexpr bool kHasKeccakBuiltin = true;
   static constexpr bool kHasPoseidonBuiltin = true;
+  static constexpr bool kHasRangeCheck96Builtin = false;
+  static constexpr bool kHasAddModBuiltin = false;
   static constexpr char kLayoutName[] = "starknet_with_keccak";
   static constexpr BigInt<4> kLayoutCode = 0x737461726b6e65745f776974685f6b656363616b_Z;
   static constexpr uint64_t kConstraintDegree = 2;
-  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kLogCpuComponentHeight = 4;
-  static constexpr uint64_t kMemoryStep = 2;
   static constexpr std::array<std::string_view, 10> kSegmentNames = {
       "program", "execution", "output", "pedersen", "range_check",
       "ecdsa",   "bitwise",   "ec_op",  "keccak",   "poseidon"};
+  static constexpr uint64_t kNumColumnsFirst = 12;
+  static constexpr uint64_t kNumColumnsSecond = 3;
+  static constexpr bool kIsDynamicAir = false;
 
   enum Columns {
     kColumn0Column,
@@ -813,6 +825,11 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
     kPoseidonPoseidonPartialRoundKey1PeriodicColumn,
     // Number of periodic columns.
     kNumPeriodicColumns,
+  };
+
+  enum DynamicParams {
+    // Number of dynamic params.
+    kNumDynamicParams,
   };
 
   enum Neighbors {
@@ -1269,21 +1286,23 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
     kColumn8Row103Neighbor,
     kColumn8Row134Neighbor,
     kColumn8Row135Neighbor,
+    kColumn8Row166Neighbor,
     kColumn8Row167Neighbor,
     kColumn8Row198Neighbor,
     kColumn8Row199Neighbor,
-    kColumn8Row231Neighbor,
     kColumn8Row262Neighbor,
     kColumn8Row263Neighbor,
+    kColumn8Row294Neighbor,
     kColumn8Row295Neighbor,
     kColumn8Row326Neighbor,
     kColumn8Row358Neighbor,
     kColumn8Row359Neighbor,
     kColumn8Row390Neighbor,
     kColumn8Row391Neighbor,
+    kColumn8Row422Neighbor,
+    kColumn8Row423Neighbor,
     kColumn8Row454Neighbor,
     kColumn8Row518Neighbor,
-    kColumn8Row550Neighbor,
     kColumn8Row711Neighbor,
     kColumn8Row902Neighbor,
     kColumn8Row903Neighbor,
@@ -2020,11 +2039,13 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
           FieldElementT::Zero(),
           FieldElementT::Zero(),
       };
+  static constexpr std::array<FieldElementT, 1> kTrivialPeriodicColumnData = {
+      FieldElementT::Zero()};
 
   enum Constraints {
-    kCpuDecodeOpcodeRcBitCond,                                      // Constraint 0.
-    kCpuDecodeOpcodeRcZeroCond,                                     // Constraint 1.
-    kCpuDecodeOpcodeRcInputCond,                                    // Constraint 2.
+    kCpuDecodeOpcodeRangeCheckBitCond,                              // Constraint 0.
+    kCpuDecodeOpcodeRangeCheckZeroCond,                             // Constraint 1.
+    kCpuDecodeOpcodeRangeCheckInputCond,                            // Constraint 2.
     kCpuDecodeFlagOp1BaseOp0BitCond,                                // Constraint 3.
     kCpuDecodeFlagResOp1BitCond,                                    // Constraint 4.
     kCpuDecodeFlagPcUpdateRegularBitCond,                           // Constraint 5.
@@ -2063,12 +2084,12 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
     kMemoryInitialAddrCond,                                         // Constraint 38.
     kPublicMemoryAddrZeroCond,                                      // Constraint 39.
     kPublicMemoryValueZeroCond,                                     // Constraint 40.
-    kRc16PermInit0Cond,                                             // Constraint 41.
-    kRc16PermStep0Cond,                                             // Constraint 42.
-    kRc16PermLastCond,                                              // Constraint 43.
-    kRc16DiffIsBitCond,                                             // Constraint 44.
-    kRc16MinimumCond,                                               // Constraint 45.
-    kRc16MaximumCond,                                               // Constraint 46.
+    kRangeCheck16PermInit0Cond,                                     // Constraint 41.
+    kRangeCheck16PermStep0Cond,                                     // Constraint 42.
+    kRangeCheck16PermLastCond,                                      // Constraint 43.
+    kRangeCheck16DiffIsBitCond,                                     // Constraint 44.
+    kRangeCheck16MinimumCond,                                       // Constraint 45.
+    kRangeCheck16MaximumCond,                                       // Constraint 46.
     kDilutedCheckPermutationInit0Cond,                              // Constraint 47.
     kDilutedCheckPermutationStep0Cond,                              // Constraint 48.
     kDilutedCheckPermutationLastCond,                               // Constraint 49.
@@ -2101,9 +2122,9 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
     kPedersenInput1AddrCond,                                        // Constraint 76.
     kPedersenOutputValue0Cond,                                      // Constraint 77.
     kPedersenOutputAddrCond,                                        // Constraint 78.
-    kRcBuiltinValueCond,                                            // Constraint 79.
-    kRcBuiltinAddrStepCond,                                         // Constraint 80.
-    kRcBuiltinInitAddrCond,                                         // Constraint 81.
+    kRangeCheckBuiltinValueCond,                                    // Constraint 79.
+    kRangeCheckBuiltinAddrStepCond,                                 // Constraint 80.
+    kRangeCheckBuiltinInitAddrCond,                                 // Constraint 81.
     kEcdsaSignature0DoublingKeySlopeCond,                           // Constraint 82.
     kEcdsaSignature0DoublingKeyXCond,                               // Constraint 83.
     kEcdsaSignature0DoublingKeyYCond,                               // Constraint 84.
@@ -2338,34 +2359,37 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
     kKeccakKeccakChi0Cond,                                          // Constraint 313.
     kKeccakKeccakChi1Cond,                                          // Constraint 314.
     kKeccakKeccakChi2Cond,                                          // Constraint 315.
-    kPoseidonInitInputOutputAddrCond,                               // Constraint 316.
-    kPoseidonAddrInputOutputStepInnerCond,                          // Constraint 317.
-    kPoseidonAddrInputOutputStepOutterCond,                         // Constraint 318.
-    kPoseidonPoseidonFullRoundsState0SquaringCond,                  // Constraint 319.
-    kPoseidonPoseidonFullRoundsState1SquaringCond,                  // Constraint 320.
-    kPoseidonPoseidonFullRoundsState2SquaringCond,                  // Constraint 321.
-    kPoseidonPoseidonPartialRoundsState0SquaringCond,               // Constraint 322.
-    kPoseidonPoseidonPartialRoundsState1SquaringCond,               // Constraint 323.
-    kPoseidonPoseidonAddFirstRoundKey0Cond,                         // Constraint 324.
-    kPoseidonPoseidonAddFirstRoundKey1Cond,                         // Constraint 325.
-    kPoseidonPoseidonAddFirstRoundKey2Cond,                         // Constraint 326.
-    kPoseidonPoseidonFullRound0Cond,                                // Constraint 327.
-    kPoseidonPoseidonFullRound1Cond,                                // Constraint 328.
-    kPoseidonPoseidonFullRound2Cond,                                // Constraint 329.
-    kPoseidonPoseidonLastFullRound0Cond,                            // Constraint 330.
-    kPoseidonPoseidonLastFullRound1Cond,                            // Constraint 331.
-    kPoseidonPoseidonLastFullRound2Cond,                            // Constraint 332.
-    kPoseidonPoseidonCopyPartialRounds0I0Cond,                      // Constraint 333.
-    kPoseidonPoseidonCopyPartialRounds0I1Cond,                      // Constraint 334.
-    kPoseidonPoseidonCopyPartialRounds0I2Cond,                      // Constraint 335.
-    kPoseidonPoseidonMarginFullToPartial0Cond,                      // Constraint 336.
-    kPoseidonPoseidonMarginFullToPartial1Cond,                      // Constraint 337.
-    kPoseidonPoseidonMarginFullToPartial2Cond,                      // Constraint 338.
-    kPoseidonPoseidonPartialRound0Cond,                             // Constraint 339.
-    kPoseidonPoseidonPartialRound1Cond,                             // Constraint 340.
-    kPoseidonPoseidonMarginPartialToFull0Cond,                      // Constraint 341.
-    kPoseidonPoseidonMarginPartialToFull1Cond,                      // Constraint 342.
-    kPoseidonPoseidonMarginPartialToFull2Cond,                      // Constraint 343.
+    kPoseidonParam_0InitInputOutputAddrCond,                        // Constraint 316.
+    kPoseidonParam_0AddrInputOutputStepCond,                        // Constraint 317.
+    kPoseidonParam_1InitInputOutputAddrCond,                        // Constraint 318.
+    kPoseidonParam_1AddrInputOutputStepCond,                        // Constraint 319.
+    kPoseidonParam_2InitInputOutputAddrCond,                        // Constraint 320.
+    kPoseidonParam_2AddrInputOutputStepCond,                        // Constraint 321.
+    kPoseidonPoseidonFullRoundsState0SquaringCond,                  // Constraint 322.
+    kPoseidonPoseidonFullRoundsState1SquaringCond,                  // Constraint 323.
+    kPoseidonPoseidonFullRoundsState2SquaringCond,                  // Constraint 324.
+    kPoseidonPoseidonPartialRoundsState0SquaringCond,               // Constraint 325.
+    kPoseidonPoseidonPartialRoundsState1SquaringCond,               // Constraint 326.
+    kPoseidonPoseidonAddFirstRoundKey0Cond,                         // Constraint 327.
+    kPoseidonPoseidonAddFirstRoundKey1Cond,                         // Constraint 328.
+    kPoseidonPoseidonAddFirstRoundKey2Cond,                         // Constraint 329.
+    kPoseidonPoseidonFullRound0Cond,                                // Constraint 330.
+    kPoseidonPoseidonFullRound1Cond,                                // Constraint 331.
+    kPoseidonPoseidonFullRound2Cond,                                // Constraint 332.
+    kPoseidonPoseidonLastFullRound0Cond,                            // Constraint 333.
+    kPoseidonPoseidonLastFullRound1Cond,                            // Constraint 334.
+    kPoseidonPoseidonLastFullRound2Cond,                            // Constraint 335.
+    kPoseidonPoseidonCopyPartialRounds0I0Cond,                      // Constraint 336.
+    kPoseidonPoseidonCopyPartialRounds0I1Cond,                      // Constraint 337.
+    kPoseidonPoseidonCopyPartialRounds0I2Cond,                      // Constraint 338.
+    kPoseidonPoseidonMarginFullToPartial0Cond,                      // Constraint 339.
+    kPoseidonPoseidonMarginFullToPartial1Cond,                      // Constraint 340.
+    kPoseidonPoseidonMarginFullToPartial2Cond,                      // Constraint 341.
+    kPoseidonPoseidonPartialRound0Cond,                             // Constraint 342.
+    kPoseidonPoseidonPartialRound1Cond,                             // Constraint 343.
+    kPoseidonPoseidonMarginPartialToFull0Cond,                      // Constraint 344.
+    kPoseidonPoseidonMarginPartialToFull1Cond,                      // Constraint 345.
+    kPoseidonPoseidonMarginPartialToFull2Cond,                      // Constraint 346.
     kNumConstraints,                                                // Number of constraints.
   };
 
@@ -2376,10 +2400,10 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   using EcOpCurveConfigT = typename EllipticCurveConstants<FieldElementT>::CurveConfig;
 
   explicit CpuAirDefinition(
-      uint64_t trace_length, const FieldElementT& rc_min, const FieldElementT& rc_max,
-      const MemSegmentAddresses& mem_segment_addresses,
-      const HashContextT& hash_context)
-      : Air(trace_length),
+      uint64_t n_steps, const std::map<std::string, uint64_t>& dynamic_params,
+      const FieldElementT& rc_min, const FieldElementT& rc_max,
+      const MemSegmentAddresses& mem_segment_addresses, const HashContextT& hash_context)
+      : Air(n_steps * this->kCpuComponentHeight * this->kCpuComponentStep),
         initial_ap_(
             FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").begin_addr)),
         final_ap_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").stop_ptr)),
@@ -2388,9 +2412,12 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
         final_pc_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "program").stop_ptr)),
         pedersen_begin_addr_(
             kHasPedersenBuiltin ? GetSegment(mem_segment_addresses, "pedersen").begin_addr : 0),
-        rc_begin_addr_(
+        range_check_begin_addr_(
             kHasRangeCheckBuiltin ? GetSegment(mem_segment_addresses, "range_check").begin_addr
                                   : 0),
+        range_check96_begin_addr_(
+            kHasRangeCheck96Builtin ? GetSegment(mem_segment_addresses, "range_check96").begin_addr
+                                    : 0),
         ecdsa_begin_addr_(
             kHasEcdsaBuiltin ? GetSegment(mem_segment_addresses, "ecdsa").begin_addr : 0),
         bitwise_begin_addr_(
@@ -2401,8 +2428,10 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
-        rc_min_(rc_min),
-        rc_max_(rc_max),
+        dynamic_params_(ParseDynamicParams(dynamic_params)),
+
+        range_check_min_(rc_min),
+        range_check_max_(rc_max),
         pedersen__shift_point_(hash_context.shift_point),
         ecdsa__sig_config_(EcdsaComponent<FieldElementT>::GetSigConfig()),
         ec_op__curve_config_{
@@ -2422,9 +2451,13 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPedersenBuiltin> initial_pedersen_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(pedersen_begin_addr_));
 
-  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> rc_begin_addr_;
-  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_rc_addr_ =
-      FieldElementT::FromUint(ExtractHiddenMemberValue(rc_begin_addr_));
+  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> range_check_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_range_check_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasRangeCheck96Builtin> range_check96_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheck96Builtin> initial_range_check96_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check96_begin_addr_));
 
   const CompileTimeOptional<uint64_t, kHasEcdsaBuiltin> ecdsa_begin_addr_;
   const CompileTimeOptional<FieldElementT, kHasEcdsaBuiltin> initial_ecdsa_addr_ =
@@ -2446,8 +2479,12 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
-  const FieldElementT rc_min_;
-  const FieldElementT rc_max_;
+  // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
+  // See ParseDynamicParams.
+  CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
+
+  const FieldElementT range_check_min_;
+  const FieldElementT range_check_max_;
   const EcPointT pedersen__shift_point_;
   const SigConfigT ecdsa__sig_config_;
   const EcOpCurveConfigT ec_op__curve_config_;
@@ -2455,7 +2492,7 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
   // Interaction elements.
   FieldElementT memory__multi_column_perm__perm__interaction_elm_ = FieldElementT::Uninitialized();
   FieldElementT memory__multi_column_perm__hash_interaction_elm0_ = FieldElementT::Uninitialized();
-  FieldElementT rc16__perm__interaction_elm_ = FieldElementT::Uninitialized();
+  FieldElementT range_check16__perm__interaction_elm_ = FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__permutation__interaction_elm_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
@@ -2465,7 +2502,7 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =
       FieldElementT::Uninitialized();
-  const FieldElementT rc16__perm__public_memory_prod_ = FieldElementT::One();
+  const FieldElementT range_check16__perm__public_memory_prod_ = FieldElementT::One();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__first_elm_ =
       FieldElementT::Zero();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool>
@@ -2476,7 +2513,5 @@ class CpuAirDefinition<FieldElementT, 8> : public Air {
 
 }  // namespace cpu
 }  // namespace starkware
-
-#include "starkware/air/cpu/board/cpu_air_definition8.inl"
 
 #endif  // STARKWARE_AIR_CPU_BOARD_CPU_AIR8_H_

@@ -114,18 +114,3 @@ FRI steps should typically be in the range 2-4;
 the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
-
-## For Mac users
-
-To build the docker, run:
-
-```bash
-docker build --tag prover . --build-arg CMAKE_ARGS=-DNO_AVX=1
-```
-
-To freely use the `cairo-run`, `cpu_air_prover`, and `cpu_air_verifier` commands,
-work inside the docker using:
-
-```bash
-docker run -it prover bash
-```

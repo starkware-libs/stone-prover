@@ -100,8 +100,9 @@ auto BitwiseBuiltinProverContext<FieldElementT>::ParsePrivateInput(const JsonVal
   for (size_t i = 0; i < private_input.ArrayLength(); ++i) {
     const auto& input = private_input[i];
     res.emplace(
-        input["index"].AsUint64(), Input{/*x=*/ValueType::FromString(input["x"].AsString()),
-                                         /*y=*/ValueType::FromString(input["y"].AsString())});
+        input["index"].AsUint64(), Input{
+                                       /*x=*/ValueType::FromString(input["x"].AsString()),
+                                       /*y=*/ValueType::FromString(input["y"].AsString())});
   }
 
   return res;

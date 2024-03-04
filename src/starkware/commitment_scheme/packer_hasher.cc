@@ -124,7 +124,11 @@ std::vector<std::byte> PackerHasher<HashT>::PackAndHash(
   }
   size_t n_elements_in_data = SafeDiv(data.size(), k_size_of_element);
   size_t n_packages = SafeDiv(n_elements_in_data, k_n_elements_in_package);
-  if (is_merkle_layer) {
+  if (is_merkle_layer ||
+      ((2 == k_n_elements_in_package) && (k_size_of_element == HashT::kDigestNumBytes))) {
+    // Pack TwoToOne if defined as merkle layer. Also applies best effort approach - In case each
+    // package contains 2 elements, each the same size as the hash digest, apply a TwoToOne behavior
+    // for efficiency. This may happen when the bottom layer is only one column.
     ASSERT_RELEASE(
         SafeDiv(data.size(), n_packages) == 2 * HashT::kDigestNumBytes, "Data size is wrong.");
     return details::HashElementsTwoToOne<HashT>(data);

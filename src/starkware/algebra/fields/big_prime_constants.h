@@ -97,16 +97,17 @@ struct BigPrimeConstants<254, 2> {
       0x0216d0b17f4e44a58c49833d53bb808553fe3ab1e35c59e31bb8e645ae216da7_Z;
   static constexpr ValueType kMontgomeryRCubed =
       0x0cf8594b7fcc657c893cc664a19fcfed2a489cbe1cfbb6b85e94d8e1b4bf0040_Z;
-  static constexpr std::array<ValueType, 10> kFactors{0x2_Z,
-                                                      0x3_Z,
-                                                      0xd_Z,
-                                                      0x1d_Z,
-                                                      0x3d7_Z,
-                                                      0x2afb_Z,
-                                                      0x39e11_Z,
-                                                      0x1831fb5f_Z,
-                                                      0x5ef9dea338eb5_Z,
-                                                      0x2ca6487cfcd795e8729527e1_Z};
+  static constexpr std::array<ValueType, 10> kFactors{
+      0x2_Z,
+      0x3_Z,
+      0xd_Z,
+      0x1d_Z,
+      0x3d7_Z,
+      0x2afb_Z,
+      0x39e11_Z,
+      0x1831fb5f_Z,
+      0x5ef9dea338eb5_Z,
+      0x2ca6487cfcd795e8729527e1_Z};
   static constexpr uint64_t kMontgomeryMPrime = 14042775128853446655UL;
   static constexpr uint64_t kGenerator = 5;
   static constexpr ValueType kMaxDivisible =

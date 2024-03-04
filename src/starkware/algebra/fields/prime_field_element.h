@@ -112,6 +112,9 @@ class PrimeFieldElement : public FieldElementBase<PrimeFieldElement<NBits, Index
 
   constexpr PrimeFieldElement operator-() const { return Zero() - *this; }
 
+  // Returns the underlying value of the field element in Montgomery form.
+  ValueType& GetUnderlyingValueType() { return value_; }
+
   bool operator==(const PrimeFieldElement& rhs) const { return value_ == rhs.value_; }
 
   PrimeFieldElement Inverse() const {
@@ -121,6 +124,12 @@ class PrimeFieldElement : public FieldElementBase<PrimeFieldElement<NBits, Index
 
   // Returns a byte serialization of the field element.
   void ToBytes(gsl::span<std::byte> span_out, bool use_big_endian = true) const;
+
+  /*
+    Returns a byte serialization of the field element after converting it from Montgomery form to
+    standard form.
+  */
+  void ToBytesStandardForm(gsl::span<std::byte> span_out, bool use_big_endian = true) const;
 
   /*
     Returns the standard representation.

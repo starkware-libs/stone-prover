@@ -158,8 +158,8 @@ class StarkTest : public ::testing::Test {
               field, n_rows, n_columns, &verifier_channel, n_verifier_friendly_commitment_layers);
         };
     StarkVerifier stark_verifier(
-        UseOwned(&verifier_channel), UseOwned(&table_verifier_factory),
-        UseOwned(&GetStarkParams()));
+        UseOwned(&verifier_channel), UseOwned(&table_verifier_factory), UseOwned(&GetStarkParams()),
+        /*verifier_friendly_channel_updates=*/false);
 
     if (skip_assert_for_extension_field_test) {
       stark_verifier.SetSkipAssertForExtensionFieldTest();
@@ -201,7 +201,8 @@ class DegreeThreeStarkTest : public StarkTest<HashT, ExtensionFieldElement<TestF
     auto air = DegThreeAirT(this->trace_length, res_claim_index, claimed_res);
     StarkProver stark_prover(
         UseOwned(&(this->prover_channel)), UseOwned(&(this->table_prover_factory)),
-        UseOwned(&GetStarkParams()), UseOwned(&(this->stark_config)));
+        UseOwned(&GetStarkParams()), UseOwned(&(this->stark_config)),
+        /*verifier_friendly_channel_updates=*/false);
 
     stark_prover.ProveStark(
         std::make_unique<DegThreeTraceContextT>(UseOwned(&air), secret, res_claim_index));
@@ -233,7 +234,8 @@ class FibonacciStarkTest : public StarkTest<HashT, TestFieldElement> {
     auto air = FibAirT(this->trace_length, fibonacci_claim_index, claimed_fib);
     StarkProver stark_prover(
         UseOwned(&(this->prover_channel)), UseOwned(&(this->table_prover_factory)),
-        UseOwned(&GetStarkParams()), UseOwned(&(this->stark_config)));
+        UseOwned(&GetStarkParams()), UseOwned(&(this->stark_config)),
+        /*verifier_friendly_channel_updates=*/false);
 
     stark_prover.ProveStark(
         std::make_unique<FibTraceContextT>(UseOwned(&air), secret, fibonacci_claim_index));
@@ -263,7 +265,8 @@ class PermutationStarkTest : public StarkTest<HashT, TestFieldElement> {
     PermutationAirT air(this->trace_length, &(this->prng));
     StarkProver stark_prover(
         UseOwned(&(this->prover_channel)), UseOwned(&(this->table_prover_factory)),
-        UseOwned(&(this->stark_params)), UseOwned(&(this->stark_config)));
+        UseOwned(&(this->stark_params)), UseOwned(&(this->stark_config)),
+        /*verifier_friendly_channel_updates=*/false);
 
     stark_prover.ProveStark(
         std::make_unique<PermutationTraceContext<TestFieldElement>>(UseOwned(&air)));
@@ -373,7 +376,8 @@ TYPED_TEST_CASE(StarkTestConstSeed, TestedChannelTypes);
 TYPED_TEST(StarkTestConstSeed, Regression_Statistical) {
   StarkProver stark_prover(
       UseOwned(&this->prover_channel), UseOwned(&this->table_prover_factory),
-      UseOwned(&(this->GetStarkParams())), UseOwned(&this->stark_config));
+      UseOwned(&(this->GetStarkParams())), UseOwned(&this->stark_config),
+      /*verifier_friendly_channel_updates=*/false);
 
   AnnotationScope scope(&this->prover_channel, "Fibonacci");
 
@@ -422,7 +426,8 @@ TYPED_TEST(FibonacciStarkTest, StarkWithFriProverBadTrace) {
 
   StarkProver stark_prover(
       UseOwned(&this->prover_channel), UseOwned(&this->table_prover_factory),
-      UseOwned(&(this->GetStarkParams())), UseOwned(&this->stark_config));
+      UseOwned(&(this->GetStarkParams())), UseOwned(&this->stark_config),
+      /*verifier_friendly_channel_updates=*/false);
 
   // Initialize trace context with the corrupted trace and send it to ProveStark.
   stark_prover.ProveStark(std::make_unique<TestTraceContext>(std::move(trace)));
@@ -442,7 +447,8 @@ TYPED_TEST(FibonacciStarkTest, StarkWithFriProverPublicInputInconsistentWithWitn
 
   StarkProver stark_prover(
       UseOwned(&this->prover_channel), UseOwned(&this->table_prover_factory),
-      UseOwned(&this->stark_params), UseOwned(&this->stark_config));
+      UseOwned(&this->stark_params), UseOwned(&this->stark_config),
+      /*verifier_friendly_channel_updates=*/false);
 
   stark_prover.ProveStark(
       std::make_unique<FibTraceContextT>(UseOwned(air), this->secret, this->fibonacci_claim_index));

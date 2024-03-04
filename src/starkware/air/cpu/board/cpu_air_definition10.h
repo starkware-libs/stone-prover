@@ -26,6 +26,7 @@
 #include "starkware/air/compile_time_optional.h"
 #include "starkware/air/components/ecdsa/ecdsa.h"
 #include "starkware/air/components/trace_generation_context.h"
+#include "starkware/air/cpu/board/cpu_air_definition_class.h"
 #include "starkware/air/cpu/board/memory_segment.h"
 #include "starkware/air/cpu/component/cpu_component.h"
 #include "starkware/air/trace.h"
@@ -57,8 +58,6 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
 
   uint64_t NumRandomCoefficients() const override { return kNumConstraints; }
 
-  uint64_t NumColumns() const override { return kNumColumns; }
-
   std::vector<std::vector<FieldElementT>> PrecomputeDomainEvalsOnCoset(
       const FieldElementT& point, const FieldElementT& generator,
       gsl::span<const uint64_t> point_exponents, gsl::span<const FieldElementT> shifts) const;
@@ -71,18 +70,21 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   std::vector<FieldElementT> DomainEvalsAtPoint(
       gsl::span<const FieldElementT> point_powers, gsl::span<const FieldElementT> shifts) const;
 
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& params) const override;
+
   TraceGenerationContext GetTraceGenerationContext() const;
 
   virtual void BuildPeriodicColumns(const FieldElementT& gen, Builder* builder) const = 0;
 
+  uint64_t NumColumns() const override { return kNumColumns; }
   std::optional<InteractionParams> GetInteractionParams() const override {
     InteractionParams interaction_params{kNumColumnsFirst, kNumColumnsSecond, 3};
     return interaction_params;
   }
 
-  static constexpr uint64_t kNumColumnsFirst = 6;
-  static constexpr uint64_t kNumColumnsSecond = 2;
-
+  static constexpr uint64_t kCpuComponentStep = 1;
+  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kPublicMemoryStep = 8;
   static constexpr bool kHasDilutedPool = false;
   static constexpr bool kHasOutputBuiltin = false;
@@ -93,14 +95,17 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   static constexpr bool kHasEcOpBuiltin = false;
   static constexpr bool kHasKeccakBuiltin = false;
   static constexpr bool kHasPoseidonBuiltin = false;
+  static constexpr bool kHasRangeCheck96Builtin = false;
+  static constexpr bool kHasAddModBuiltin = false;
   static constexpr char kLayoutName[] = "plain";
   static constexpr BigInt<4> kLayoutCode = 0x706c61696e_Z;
   static constexpr uint64_t kConstraintDegree = 2;
-  static constexpr uint64_t kCpuComponentHeight = 16;
   static constexpr uint64_t kLogCpuComponentHeight = 4;
-  static constexpr uint64_t kMemoryStep = 2;
   static constexpr std::array<std::string_view, 2> kSegmentNames = {"program", "execution"};
-  
+  static constexpr uint64_t kNumColumnsFirst = 6;
+  static constexpr uint64_t kNumColumnsSecond = 2;
+  static constexpr bool kIsDynamicAir = false;
+
   enum Columns {
     kColumn0Column,
     kColumn1Column,
@@ -117,6 +122,11 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   enum PeriodicColumns {
     // Number of periodic columns.
     kNumPeriodicColumns,
+  };
+
+  enum DynamicParams {
+    // Number of dynamic params.
+    kNumDynamicParams,
   };
 
   enum Neighbors {
@@ -173,10 +183,13 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
     kNumNeighbors,
   };
 
+  static constexpr std::array<FieldElementT, 1> kTrivialPeriodicColumnData = {
+      FieldElementT::Zero()};
+
   enum Constraints {
-    kCpuDecodeOpcodeRcBitCond,                      // Constraint 0.
-    kCpuDecodeOpcodeRcZeroCond,                     // Constraint 1.
-    kCpuDecodeOpcodeRcInputCond,                    // Constraint 2.
+    kCpuDecodeOpcodeRangeCheckBitCond,              // Constraint 0.
+    kCpuDecodeOpcodeRangeCheckZeroCond,             // Constraint 1.
+    kCpuDecodeOpcodeRangeCheckInputCond,            // Constraint 2.
     kCpuDecodeFlagOp1BaseOp0BitCond,                // Constraint 3.
     kCpuDecodeFlagResOp1BitCond,                    // Constraint 4.
     kCpuDecodeFlagPcUpdateRegularBitCond,           // Constraint 5.
@@ -215,12 +228,12 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
     kMemoryInitialAddrCond,                         // Constraint 38.
     kPublicMemoryAddrZeroCond,                      // Constraint 39.
     kPublicMemoryValueZeroCond,                     // Constraint 40.
-    kRc16PermInit0Cond,                             // Constraint 41.
-    kRc16PermStep0Cond,                             // Constraint 42.
-    kRc16PermLastCond,                              // Constraint 43.
-    kRc16DiffIsBitCond,                             // Constraint 44.
-    kRc16MinimumCond,                               // Constraint 45.
-    kRc16MaximumCond,                               // Constraint 46.
+    kRangeCheck16PermInit0Cond,                     // Constraint 41.
+    kRangeCheck16PermStep0Cond,                     // Constraint 42.
+    kRangeCheck16PermLastCond,                      // Constraint 43.
+    kRangeCheck16DiffIsBitCond,                     // Constraint 44.
+    kRangeCheck16MinimumCond,                       // Constraint 45.
+    kRangeCheck16MaximumCond,                       // Constraint 46.
     kNumConstraints,                                // Number of constraints.
   };
 
@@ -231,10 +244,10 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   using EcOpCurveConfigT = typename EllipticCurveConstants<FieldElementT>::CurveConfig;
 
   explicit CpuAirDefinition(
-      uint64_t trace_length, const FieldElementT& rc_min, const FieldElementT& rc_max,
-      const MemSegmentAddresses& mem_segment_addresses,
-      const HashContextT& hash_context)
-      : Air(trace_length),
+      uint64_t n_steps, const std::map<std::string, uint64_t>& dynamic_params,
+      const FieldElementT& rc_min, const FieldElementT& rc_max,
+      const MemSegmentAddresses& mem_segment_addresses, const HashContextT& hash_context)
+      : Air(n_steps * this->kCpuComponentHeight * this->kCpuComponentStep),
         initial_ap_(
             FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").begin_addr)),
         final_ap_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "execution").stop_ptr)),
@@ -243,9 +256,12 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
         final_pc_(FieldElementT::FromUint(GetSegment(mem_segment_addresses, "program").stop_ptr)),
         pedersen_begin_addr_(
             kHasPedersenBuiltin ? GetSegment(mem_segment_addresses, "pedersen").begin_addr : 0),
-        rc_begin_addr_(
+        range_check_begin_addr_(
             kHasRangeCheckBuiltin ? GetSegment(mem_segment_addresses, "range_check").begin_addr
                                   : 0),
+        range_check96_begin_addr_(
+            kHasRangeCheck96Builtin ? GetSegment(mem_segment_addresses, "range_check96").begin_addr
+                                    : 0),
         ecdsa_begin_addr_(
             kHasEcdsaBuiltin ? GetSegment(mem_segment_addresses, "ecdsa").begin_addr : 0),
         bitwise_begin_addr_(
@@ -256,8 +272,10 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
-        rc_min_(rc_min),
-        rc_max_(rc_max),
+        dynamic_params_(ParseDynamicParams(dynamic_params)),
+
+        range_check_min_(rc_min),
+        range_check_max_(rc_max),
         pedersen__shift_point_(hash_context.shift_point),
         ecdsa__sig_config_(EcdsaComponent<FieldElementT>::GetSigConfig()),
         ec_op__curve_config_{
@@ -277,9 +295,13 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPedersenBuiltin> initial_pedersen_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(pedersen_begin_addr_));
 
-  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> rc_begin_addr_;
-  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_rc_addr_ =
-      FieldElementT::FromUint(ExtractHiddenMemberValue(rc_begin_addr_));
+  const CompileTimeOptional<uint64_t, kHasRangeCheckBuiltin> range_check_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheckBuiltin> initial_range_check_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasRangeCheck96Builtin> range_check96_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasRangeCheck96Builtin> initial_range_check96_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(range_check96_begin_addr_));
 
   const CompileTimeOptional<uint64_t, kHasEcdsaBuiltin> ecdsa_begin_addr_;
   const CompileTimeOptional<FieldElementT, kHasEcdsaBuiltin> initial_ecdsa_addr_ =
@@ -301,8 +323,12 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
-  const FieldElementT rc_min_;
-  const FieldElementT rc_max_;
+  // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
+  // See ParseDynamicParams.
+  CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
+
+  const FieldElementT range_check_min_;
+  const FieldElementT range_check_max_;
   const EcPointT pedersen__shift_point_;
   const SigConfigT ecdsa__sig_config_;
   const EcOpCurveConfigT ec_op__curve_config_;
@@ -310,7 +336,7 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
   // Interaction elements.
   FieldElementT memory__multi_column_perm__perm__interaction_elm_ = FieldElementT::Uninitialized();
   FieldElementT memory__multi_column_perm__hash_interaction_elm0_ = FieldElementT::Uninitialized();
-  FieldElementT rc16__perm__interaction_elm_ = FieldElementT::Uninitialized();
+  FieldElementT range_check16__perm__interaction_elm_ = FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__permutation__interaction_elm_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
@@ -320,7 +346,7 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =
       FieldElementT::Uninitialized();
-  const FieldElementT rc16__perm__public_memory_prod_ = FieldElementT::One();
+  const FieldElementT range_check16__perm__public_memory_prod_ = FieldElementT::One();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__first_elm_ =
       FieldElementT::Zero();
   const CompileTimeOptional<FieldElementT, kHasDilutedPool>
@@ -331,7 +357,5 @@ class CpuAirDefinition<FieldElementT, 10> : public Air {
 
 }  // namespace cpu
 }  // namespace starkware
-
-#include "starkware/air/cpu/board/cpu_air_definition10.inl"
 
 #endif  // STARKWARE_AIR_CPU_BOARD_CPU_AIR10_H_

@@ -53,9 +53,9 @@ class EcdsaComponent {
   };
 
   static const Config& GetSigConfig() {
-    static const gsl::owner<const Config*> kSigConfig =
-        new Config{kPrimeFieldEc0.k_alpha, kPrimeFieldEc0.k_beta, kPrimeFieldEc0.k_order,
-                   kPrimeFieldEc0.k_points[0], kPrimeFieldEc0.k_points[1]};
+    static const gsl::owner<const Config*> kSigConfig = new Config{
+        kPrimeFieldEc0.k_alpha, kPrimeFieldEc0.k_beta, kPrimeFieldEc0.k_order,
+        kPrimeFieldEc0.k_points[0], kPrimeFieldEc0.k_points[1]};
     return *kSigConfig;
   }
 

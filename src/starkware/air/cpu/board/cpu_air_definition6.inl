@@ -29,61 +29,61 @@ CpuAirDefinition<FieldElementT, 6>::CreateCompositionPolynomial(
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
   const std::vector<uint64_t> point_exponents = {
-      trace_length_,
-      SafeDiv(trace_length_, 2),
-      SafeDiv(trace_length_, 4),
-      SafeDiv(trace_length_, 8),
-      SafeDiv(trace_length_, 16),
-      SafeDiv(trace_length_, 64),
-      SafeDiv(trace_length_, 128),
-      SafeDiv(trace_length_, 256),
-      SafeDiv(trace_length_, 512),
-      SafeDiv(trace_length_, 1024),
-      SafeDiv(trace_length_, 16384),
-      SafeDiv(trace_length_, 32768)};
+      uint64_t(trace_length_),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 4)),
+      uint64_t(SafeDiv(trace_length_, 8)),
+      uint64_t(SafeDiv(trace_length_, 16)),
+      uint64_t(SafeDiv(trace_length_, 64)),
+      uint64_t(SafeDiv(trace_length_, 128)),
+      uint64_t(SafeDiv(trace_length_, 256)),
+      uint64_t(SafeDiv(trace_length_, 512)),
+      uint64_t(SafeDiv(trace_length_, 1024)),
+      uint64_t(SafeDiv(trace_length_, 16384)),
+      uint64_t(SafeDiv(trace_length_, 32768))};
   const std::vector<uint64_t> gen_exponents = {
-      SafeDiv((15) * (trace_length_), 16),
-      SafeDiv((255) * (trace_length_), 256),
-      SafeDiv((63) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 4),
-      SafeDiv((31) * (trace_length_), 32),
-      SafeDiv((7) * (trace_length_), 8),
-      SafeDiv((11) * (trace_length_), 16),
-      SafeDiv((23) * (trace_length_), 32),
-      SafeDiv((25) * (trace_length_), 32),
-      SafeDiv((13) * (trace_length_), 16),
-      SafeDiv((27) * (trace_length_), 32),
-      SafeDiv((29) * (trace_length_), 32),
-      SafeDiv((5) * (trace_length_), 8),
-      SafeDiv((19) * (trace_length_), 32),
-      SafeDiv((21) * (trace_length_), 32),
-      SafeDiv((61) * (trace_length_), 64),
-      SafeDiv(trace_length_, 2),
-      SafeDiv(trace_length_, 64),
-      SafeDiv(trace_length_, 32),
-      SafeDiv((3) * (trace_length_), 64),
-      SafeDiv(trace_length_, 16),
-      SafeDiv((5) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 32),
-      SafeDiv((7) * (trace_length_), 64),
-      SafeDiv(trace_length_, 8),
-      SafeDiv((9) * (trace_length_), 64),
-      SafeDiv((5) * (trace_length_), 32),
-      SafeDiv((11) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 16),
-      SafeDiv((13) * (trace_length_), 64),
-      SafeDiv((7) * (trace_length_), 32),
-      SafeDiv((15) * (trace_length_), 64),
-      SafeDiv((251) * (trace_length_), 256),
-      (16) * ((SafeDiv(trace_length_, 16)) - (1)),
-      (2) * ((SafeDiv(trace_length_, 2)) - (1)),
-      (8) * ((SafeDiv(trace_length_, 8)) - (1)),
-      (4) * ((SafeDiv(trace_length_, 4)) - (1)),
-      (256) * ((SafeDiv(trace_length_, 256)) - (1)),
-      (512) * ((SafeDiv(trace_length_, 512)) - (1)),
-      (32768) * ((SafeDiv(trace_length_, 32768)) - (1)),
-      (16384) * ((SafeDiv(trace_length_, 16384)) - (1)),
-      (1024) * ((SafeDiv(trace_length_, 1024)) - (1))};
+      uint64_t(SafeDiv((15) * (trace_length_), 16)),
+      uint64_t(SafeDiv((255) * (trace_length_), 256)),
+      uint64_t(SafeDiv((63) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 4)),
+      uint64_t(SafeDiv((31) * (trace_length_), 32)),
+      uint64_t(SafeDiv((11) * (trace_length_), 16)),
+      uint64_t(SafeDiv((23) * (trace_length_), 32)),
+      uint64_t(SafeDiv((25) * (trace_length_), 32)),
+      uint64_t(SafeDiv((13) * (trace_length_), 16)),
+      uint64_t(SafeDiv((27) * (trace_length_), 32)),
+      uint64_t(SafeDiv((7) * (trace_length_), 8)),
+      uint64_t(SafeDiv((29) * (trace_length_), 32)),
+      uint64_t(SafeDiv((19) * (trace_length_), 32)),
+      uint64_t(SafeDiv((5) * (trace_length_), 8)),
+      uint64_t(SafeDiv((21) * (trace_length_), 32)),
+      uint64_t(SafeDiv((61) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 64)),
+      uint64_t(SafeDiv(trace_length_, 32)),
+      uint64_t(SafeDiv((3) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 16)),
+      uint64_t(SafeDiv((5) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 32)),
+      uint64_t(SafeDiv((7) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 8)),
+      uint64_t(SafeDiv((9) * (trace_length_), 64)),
+      uint64_t(SafeDiv((5) * (trace_length_), 32)),
+      uint64_t(SafeDiv((11) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 16)),
+      uint64_t(SafeDiv((13) * (trace_length_), 64)),
+      uint64_t(SafeDiv((7) * (trace_length_), 32)),
+      uint64_t(SafeDiv((15) * (trace_length_), 64)),
+      uint64_t(SafeDiv((251) * (trace_length_), 256)),
+      uint64_t((trace_length_) - (16)),
+      uint64_t((trace_length_) - (2)),
+      uint64_t((trace_length_) - (8)),
+      uint64_t((trace_length_) - (4)),
+      uint64_t((trace_length_) - (256)),
+      uint64_t((trace_length_) - (512)),
+      uint64_t((trace_length_) - (32768)),
+      uint64_t((trace_length_) - (16384)),
+      uint64_t((trace_length_) - (1024))};
 
   BuildAutoPeriodicColumns(gen, &builder);
 
@@ -102,21 +102,25 @@ void CpuAirDefinition<FieldElementT, 6>::BuildAutoPeriodicColumns(
           kPoseidonPoseidonFullRoundKey0PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey0PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonFullRoundKey1PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey1PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonFullRoundKey2PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey2PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonPartialRoundKey0PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kPoseidonPoseidonPartialRoundKey0PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonPartialRoundKey1PeriodicColumnData, gen, FieldElementT::One(),
@@ -129,7 +133,7 @@ std::vector<std::vector<FieldElementT>>
 CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -137,19 +141,21 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
     }
   }
 
-  TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  [[maybe_unused]] TaskManager& task_manager = TaskManager::GetInstance();
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -163,13 +169,11 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       FieldElementT::UninitializedVector(512),   FieldElementT::UninitializedVector(512),
       FieldElementT::UninitializedVector(512),   FieldElementT::UninitializedVector(512),
       FieldElementT::UninitializedVector(512),   FieldElementT::UninitializedVector(512),
-      FieldElementT::UninitializedVector(512),   FieldElementT::UninitializedVector(512),
-      FieldElementT::UninitializedVector(512),   FieldElementT::UninitializedVector(1024),
       FieldElementT::UninitializedVector(1024),  FieldElementT::UninitializedVector(1024),
+      FieldElementT::UninitializedVector(1024),  FieldElementT::UninitializedVector(16384),
       FieldElementT::UninitializedVector(16384), FieldElementT::UninitializedVector(16384),
-      FieldElementT::UninitializedVector(16384), FieldElementT::UninitializedVector(16384),
+      FieldElementT::UninitializedVector(16384), FieldElementT::UninitializedVector(32768),
       FieldElementT::UninitializedVector(32768), FieldElementT::UninitializedVector(32768),
-      FieldElementT::UninitializedVector(32768),
   };
 
   period = 1;
@@ -321,8 +325,16 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[13][i] = ((point_powers[8][i & (511)]) - (shifts[3])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[5]));
+          precomp_domains[13][i] = ((point_powers[8][i & (511)]) - (shifts[5])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[6])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[3])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[7])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[8])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[9])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[10])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[11])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[0])) *
+                                   (precomp_domains[12][i & (512 - 1)]);
         }
       },
       period, kTaskSize);
@@ -333,14 +345,9 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[14][i] = ((point_powers[8][i & (511)]) - (shifts[6])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[7])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[8])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[9])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[10])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[11])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[0])) *
-                                   (precomp_domains[12][i & (512 - 1)]) *
+          precomp_domains[14][i] = ((point_powers[8][i & (511)]) - (shifts[12])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[13])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[14])) *
                                    (precomp_domains[13][i & (512 - 1)]);
         }
       },
@@ -352,32 +359,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[15][i] = (point_powers[8][i & (511)]) - (shifts[12]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[16][i] = ((point_powers[8][i & (511)]) - (shifts[13])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[14])) *
-                                   (precomp_domains[14][i & (512 - 1)]) *
-                                   (precomp_domains[15][i & (512 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[17][i] = ((point_powers[8][i & (511)]) - (shifts[15])) *
+          precomp_domains[15][i] = ((point_powers[8][i & (511)]) - (shifts[15])) *
                                    ((point_powers[8][i & (511)]) - (shifts[2])) *
                                    (precomp_domains[12][i & (512 - 1)]);
         }
@@ -390,7 +372,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[18][i] = (point_powers[8][i & (511)]) - (shifts[16]);
+          precomp_domains[16][i] = (point_powers[8][i & (511)]) - (shifts[16]);
         }
       },
       period, kTaskSize);
@@ -401,19 +383,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[19][i] = (point_powers[8][i & (511)]) - (FieldElementT::One());
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[20][i] =
-              (precomp_domains[13][i & (512 - 1)]) * (precomp_domains[15][i & (512 - 1)]);
+          precomp_domains[17][i] = (point_powers[8][i & (511)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -424,7 +394,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[21][i] = (point_powers[9][i & (1023)]) - (shifts[3]);
+          precomp_domains[18][i] = (point_powers[9][i & (1023)]) - (shifts[3]);
         }
       },
       period, kTaskSize);
@@ -435,7 +405,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[22][i] = (point_powers[9][i & (1023)]) - (FieldElementT::One());
+          precomp_domains[19][i] = (point_powers[9][i & (1023)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -446,7 +416,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[23][i] = ((point_powers[9][i & (1023)]) - (shifts[17])) *
+          precomp_domains[20][i] = ((point_powers[9][i & (1023)]) - (shifts[17])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[18])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[19])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[20])) *
@@ -461,7 +431,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[9][i & (1023)]) - (shifts[29])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[30])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[31])) *
-                                   (precomp_domains[22][i & (1024 - 1)]);
+                                   (precomp_domains[19][i & (1024 - 1)]);
         }
       },
       period, kTaskSize);
@@ -472,7 +442,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[24][i] = (point_powers[10][i & (16383)]) - (shifts[1]);
+          precomp_domains[21][i] = (point_powers[10][i & (16383)]) - (shifts[1]);
         }
       },
       period, kTaskSize);
@@ -483,7 +453,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[25][i] = (point_powers[10][i & (16383)]) - (shifts[32]);
+          precomp_domains[22][i] = (point_powers[10][i & (16383)]) - (shifts[32]);
         }
       },
       period, kTaskSize);
@@ -494,7 +464,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[26][i] = (point_powers[10][i & (16383)]) - (FieldElementT::One());
+          precomp_domains[23][i] = (point_powers[10][i & (16383)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -505,7 +475,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[27][i] = (point_powers[10][i & (16383)]) - (shifts[2]);
+          precomp_domains[24][i] = (point_powers[10][i & (16383)]) - (shifts[2]);
         }
       },
       period, kTaskSize);
@@ -516,7 +486,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[28][i] = (point_powers[11][i & (32767)]) - (shifts[1]);
+          precomp_domains[25][i] = (point_powers[11][i & (32767)]) - (shifts[1]);
         }
       },
       period, kTaskSize);
@@ -527,7 +497,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[29][i] = (point_powers[11][i & (32767)]) - (shifts[32]);
+          precomp_domains[26][i] = (point_powers[11][i & (32767)]) - (shifts[32]);
         }
       },
       period, kTaskSize);
@@ -538,7 +508,7 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[30][i] = (point_powers[11][i & (32767)]) - (FieldElementT::One());
+          precomp_domains[27][i] = (point_powers[11][i & (32767)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -548,57 +518,60 @@ CpuAirDefinition<FieldElementT, 6>::PrecomputeDomainEvalsOnCoset(
 template <typename FieldElementT>
 FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 42, "shifts should contain 42 elements.");
 
   // domain0 = point^trace_length - 1.
-  const FieldElementT& domain0 = precomp_domains[0];
+  [[maybe_unused]] const FieldElementT& domain0 = precomp_domains[0];
   // domain1 = point^(trace_length / 2) - 1.
-  const FieldElementT& domain1 = precomp_domains[1];
+  [[maybe_unused]] const FieldElementT& domain1 = precomp_domains[1];
   // domain2 = point^(trace_length / 4) - 1.
-  const FieldElementT& domain2 = precomp_domains[2];
+  [[maybe_unused]] const FieldElementT& domain2 = precomp_domains[2];
   // domain3 = point^(trace_length / 8) - 1.
-  const FieldElementT& domain3 = precomp_domains[3];
+  [[maybe_unused]] const FieldElementT& domain3 = precomp_domains[3];
   // domain4 = point^(trace_length / 16) - gen^(15 * trace_length / 16).
-  const FieldElementT& domain4 = precomp_domains[4];
+  [[maybe_unused]] const FieldElementT& domain4 = precomp_domains[4];
   // domain5 = point^(trace_length / 16) - 1.
-  const FieldElementT& domain5 = precomp_domains[5];
+  [[maybe_unused]] const FieldElementT& domain5 = precomp_domains[5];
   // domain6 = point^(trace_length / 64) - 1.
-  const FieldElementT& domain6 = precomp_domains[6];
+  [[maybe_unused]] const FieldElementT& domain6 = precomp_domains[6];
   // domain7 = point^(trace_length / 128) - 1.
-  const FieldElementT& domain7 = precomp_domains[7];
+  [[maybe_unused]] const FieldElementT& domain7 = precomp_domains[7];
   // domain8 = point^(trace_length / 256) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain8 = precomp_domains[8];
+  [[maybe_unused]] const FieldElementT& domain8 = precomp_domains[8];
   // domain9 = point^(trace_length / 256) - 1.
-  const FieldElementT& domain9 = precomp_domains[9];
+  [[maybe_unused]] const FieldElementT& domain9 = precomp_domains[9];
   // domain10 = point^(trace_length / 256) - gen^(63 * trace_length / 64).
-  const FieldElementT& domain10 = precomp_domains[10];
+  [[maybe_unused]] const FieldElementT& domain10 = precomp_domains[10];
   // domain11 = point^(trace_length / 256) - gen^(3 * trace_length / 4).
-  const FieldElementT& domain11 = precomp_domains[11];
-  // domain14 = (point^(trace_length / 512) - gen^(11 * trace_length / 16)) * (point^(trace_length /
-  // 512) - gen^(23 * trace_length / 32)) * (point^(trace_length / 512) - gen^(25 * trace_length /
-  // 32)) * (point^(trace_length / 512) - gen^(13 * trace_length / 16)) * (point^(trace_length /
-  // 512) - gen^(27 * trace_length / 32)) * (point^(trace_length / 512) - gen^(29 * trace_length /
-  // 32)) * (point^(trace_length / 512) - gen^(15 * trace_length / 16)) * domain12 * domain13.
-  const FieldElementT& domain14 = precomp_domains[14];
-  // domain16 = (point^(trace_length / 512) - gen^(19 * trace_length / 32)) * (point^(trace_length /
-  // 512) - gen^(21 * trace_length / 32)) * domain14 * domain15.
-  const FieldElementT& domain16 = precomp_domains[16];
-  // domain17 = (point^(trace_length / 512) - gen^(61 * trace_length / 64)) * (point^(trace_length /
+  [[maybe_unused]] const FieldElementT& domain11 = precomp_domains[11];
+  // domain12 = point^(trace_length / 512) - gen^(31 * trace_length / 32).
+  [[maybe_unused]] const FieldElementT& domain12 = precomp_domains[12];
+  // domain13 = (point^(trace_length / 512) - gen^(11 * trace_length / 16)) * (point^(trace_length /
+  // 512) - gen^(23 * trace_length / 32)) * (point^(trace_length / 512) - gen^(3 * trace_length /
+  // 4)) * (point^(trace_length / 512) - gen^(25 * trace_length / 32)) * (point^(trace_length / 512)
+  // - gen^(13 * trace_length / 16)) * (point^(trace_length / 512) - gen^(27 * trace_length / 32)) *
+  // (point^(trace_length / 512) - gen^(7 * trace_length / 8)) * (point^(trace_length / 512) -
+  // gen^(29 * trace_length / 32)) * (point^(trace_length / 512) - gen^(15 * trace_length / 16)) *
+  // domain12.
+  [[maybe_unused]] const FieldElementT& domain13 = precomp_domains[13];
+  // domain14 = (point^(trace_length / 512) - gen^(19 * trace_length / 32)) * (point^(trace_length /
+  // 512) - gen^(5 * trace_length / 8)) * (point^(trace_length / 512) - gen^(21 * trace_length /
+  // 32)) * domain13.
+  [[maybe_unused]] const FieldElementT& domain14 = precomp_domains[14];
+  // domain15 = (point^(trace_length / 512) - gen^(61 * trace_length / 64)) * (point^(trace_length /
   // 512) - gen^(63 * trace_length / 64)) * domain12.
-  const FieldElementT& domain17 = precomp_domains[17];
-  // domain18 = point^(trace_length / 512) - gen^(trace_length / 2).
-  const FieldElementT& domain18 = precomp_domains[18];
-  // domain19 = point^(trace_length / 512) - 1.
-  const FieldElementT& domain19 = precomp_domains[19];
-  // domain20 = domain13 * domain15.
-  const FieldElementT& domain20 = precomp_domains[20];
-  // domain21 = point^(trace_length / 1024) - gen^(3 * trace_length / 4).
-  const FieldElementT& domain21 = precomp_domains[21];
-  // domain22 = point^(trace_length / 1024) - 1.
-  const FieldElementT& domain22 = precomp_domains[22];
-  // domain23 = (point^(trace_length / 1024) - gen^(trace_length / 64)) * (point^(trace_length /
+  [[maybe_unused]] const FieldElementT& domain15 = precomp_domains[15];
+  // domain16 = point^(trace_length / 512) - gen^(trace_length / 2).
+  [[maybe_unused]] const FieldElementT& domain16 = precomp_domains[16];
+  // domain17 = point^(trace_length / 512) - 1.
+  [[maybe_unused]] const FieldElementT& domain17 = precomp_domains[17];
+  // domain18 = point^(trace_length / 1024) - gen^(3 * trace_length / 4).
+  [[maybe_unused]] const FieldElementT& domain18 = precomp_domains[18];
+  // domain19 = point^(trace_length / 1024) - 1.
+  [[maybe_unused]] const FieldElementT& domain19 = precomp_domains[19];
+  // domain20 = (point^(trace_length / 1024) - gen^(trace_length / 64)) * (point^(trace_length /
   // 1024) - gen^(trace_length / 32)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 64))
   // * (point^(trace_length / 1024) - gen^(trace_length / 16)) * (point^(trace_length / 1024) -
   // gen^(5 * trace_length / 64)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 32)) *
@@ -608,44 +581,45 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
   // gen^(11 * trace_length / 64)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 16)) *
   // (point^(trace_length / 1024) - gen^(13 * trace_length / 64)) * (point^(trace_length / 1024) -
   // gen^(7 * trace_length / 32)) * (point^(trace_length / 1024) - gen^(15 * trace_length / 64)) *
-  // domain22.
-  const FieldElementT& domain23 = precomp_domains[23];
-  // domain24 = point^(trace_length / 16384) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain24 = precomp_domains[24];
-  // domain25 = point^(trace_length / 16384) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain25 = precomp_domains[25];
-  // domain26 = point^(trace_length / 16384) - 1.
-  const FieldElementT& domain26 = precomp_domains[26];
-  // domain27 = point^(trace_length / 16384) - gen^(63 * trace_length / 64).
-  const FieldElementT& domain27 = precomp_domains[27];
-  // domain28 = point^(trace_length / 32768) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain28 = precomp_domains[28];
-  // domain29 = point^(trace_length / 32768) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain29 = precomp_domains[29];
-  // domain30 = point^(trace_length / 32768) - 1.
-  const FieldElementT& domain30 = precomp_domains[30];
-  // domain31 = point - gen^(16 * (trace_length / 16 - 1)).
-  const FieldElementT& domain31 = (point) - (shifts[33]);
-  // domain32 = point - 1.
-  const FieldElementT& domain32 = (point) - (FieldElementT::One());
-  // domain33 = point - gen^(2 * (trace_length / 2 - 1)).
-  const FieldElementT& domain33 = (point) - (shifts[34]);
-  // domain34 = point - gen^(8 * (trace_length / 8 - 1)).
-  const FieldElementT& domain34 = (point) - (shifts[35]);
-  // domain35 = point - gen^(4 * (trace_length / 4 - 1)).
-  const FieldElementT& domain35 = (point) - (shifts[36]);
-  // domain36 = point - gen^(256 * (trace_length / 256 - 1)).
-  const FieldElementT& domain36 = (point) - (shifts[37]);
-  // domain37 = point - gen^(512 * (trace_length / 512 - 1)).
-  const FieldElementT& domain37 = (point) - (shifts[38]);
-  // domain38 = point - gen^(32768 * (trace_length / 32768 - 1)).
-  const FieldElementT& domain38 = (point) - (shifts[39]);
-  // domain39 = point - gen^(16384 * (trace_length / 16384 - 1)).
-  const FieldElementT& domain39 = (point) - (shifts[40]);
-  // domain40 = point - gen^(1024 * (trace_length / 1024 - 1)).
-  const FieldElementT& domain40 = (point) - (shifts[41]);
+  // domain19.
+  [[maybe_unused]] const FieldElementT& domain20 = precomp_domains[20];
+  // domain21 = point^(trace_length / 16384) - gen^(255 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain21 = precomp_domains[21];
+  // domain22 = point^(trace_length / 16384) - gen^(251 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain22 = precomp_domains[22];
+  // domain23 = point^(trace_length / 16384) - 1.
+  [[maybe_unused]] const FieldElementT& domain23 = precomp_domains[23];
+  // domain24 = point^(trace_length / 16384) - gen^(63 * trace_length / 64).
+  [[maybe_unused]] const FieldElementT& domain24 = precomp_domains[24];
+  // domain25 = point^(trace_length / 32768) - gen^(255 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain25 = precomp_domains[25];
+  // domain26 = point^(trace_length / 32768) - gen^(251 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain26 = precomp_domains[26];
+  // domain27 = point^(trace_length / 32768) - 1.
+  [[maybe_unused]] const FieldElementT& domain27 = precomp_domains[27];
+  // domain28 = point - gen^(trace_length - 16).
+  const FieldElementT& domain28 = (point) - (shifts[33]);
+  // domain29 = point - 1.
+  const FieldElementT& domain29 = (point) - (FieldElementT::One());
+  // domain30 = point - gen^(trace_length - 2).
+  const FieldElementT& domain30 = (point) - (shifts[34]);
+  // domain31 = point - gen^(trace_length - 8).
+  const FieldElementT& domain31 = (point) - (shifts[35]);
+  // domain32 = point - gen^(trace_length - 4).
+  const FieldElementT& domain32 = (point) - (shifts[36]);
+  // domain33 = point - gen^(trace_length - 256).
+  const FieldElementT& domain33 = (point) - (shifts[37]);
+  // domain34 = point - gen^(trace_length - 512).
+  const FieldElementT& domain34 = (point) - (shifts[38]);
+  // domain35 = point - gen^(trace_length - 32768).
+  const FieldElementT& domain35 = (point) - (shifts[39]);
+  // domain36 = point - gen^(trace_length - 16384).
+  const FieldElementT& domain36 = (point) - (shifts[40]);
+  // domain37 = point - gen^(trace_length - 1024).
+  const FieldElementT& domain37 = (point) - (shifts[41]);
 
-  ASSERT_VERIFIER(neighbors.size() == 269, "Neighbors must contain 269 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 271, "neighbors should contain 271 elements.");
+
   const FieldElementT& column0_row0 = neighbors[kColumn0Row0Neighbor];
   const FieldElementT& column0_row1 = neighbors[kColumn0Row1Neighbor];
   const FieldElementT& column0_row2 = neighbors[kColumn0Row2Neighbor];
@@ -703,21 +677,23 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
   const FieldElementT& column5_row103 = neighbors[kColumn5Row103Neighbor];
   const FieldElementT& column5_row134 = neighbors[kColumn5Row134Neighbor];
   const FieldElementT& column5_row135 = neighbors[kColumn5Row135Neighbor];
+  const FieldElementT& column5_row166 = neighbors[kColumn5Row166Neighbor];
   const FieldElementT& column5_row167 = neighbors[kColumn5Row167Neighbor];
   const FieldElementT& column5_row198 = neighbors[kColumn5Row198Neighbor];
   const FieldElementT& column5_row199 = neighbors[kColumn5Row199Neighbor];
-  const FieldElementT& column5_row231 = neighbors[kColumn5Row231Neighbor];
   const FieldElementT& column5_row262 = neighbors[kColumn5Row262Neighbor];
   const FieldElementT& column5_row263 = neighbors[kColumn5Row263Neighbor];
+  const FieldElementT& column5_row294 = neighbors[kColumn5Row294Neighbor];
   const FieldElementT& column5_row295 = neighbors[kColumn5Row295Neighbor];
   const FieldElementT& column5_row326 = neighbors[kColumn5Row326Neighbor];
   const FieldElementT& column5_row358 = neighbors[kColumn5Row358Neighbor];
   const FieldElementT& column5_row359 = neighbors[kColumn5Row359Neighbor];
   const FieldElementT& column5_row390 = neighbors[kColumn5Row390Neighbor];
   const FieldElementT& column5_row391 = neighbors[kColumn5Row391Neighbor];
+  const FieldElementT& column5_row422 = neighbors[kColumn5Row422Neighbor];
+  const FieldElementT& column5_row423 = neighbors[kColumn5Row423Neighbor];
   const FieldElementT& column5_row454 = neighbors[kColumn5Row454Neighbor];
   const FieldElementT& column5_row518 = neighbors[kColumn5Row518Neighbor];
-  const FieldElementT& column5_row550 = neighbors[kColumn5Row550Neighbor];
   const FieldElementT& column5_row711 = neighbors[kColumn5Row711Neighbor];
   const FieldElementT& column5_row902 = neighbors[kColumn5Row902Neighbor];
   const FieldElementT& column5_row903 = neighbors[kColumn5Row903Neighbor];
@@ -934,74 +910,74 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
   const FieldElementT& poseidon__poseidon__partial_round_key1 =
       periodic_columns[kPoseidonPoseidonPartialRoundKey1PeriodicColumn];
 
-  const FieldElementT cpu__decode__opcode_rc__bit_0 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_0 =
       (column0_row0) - ((column0_row1) + (column0_row1));
-  const FieldElementT cpu__decode__opcode_rc__bit_2 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_2 =
       (column0_row2) - ((column0_row3) + (column0_row3));
-  const FieldElementT cpu__decode__opcode_rc__bit_4 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_4 =
       (column0_row4) - ((column0_row5) + (column0_row5));
-  const FieldElementT cpu__decode__opcode_rc__bit_3 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_3 =
       (column0_row3) - ((column0_row4) + (column0_row4));
   const FieldElementT cpu__decode__flag_op1_base_op0_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_2) + (cpu__decode__opcode_rc__bit_4)) +
-       (cpu__decode__opcode_rc__bit_3));
-  const FieldElementT cpu__decode__opcode_rc__bit_5 =
+      (((cpu__decode__opcode_range_check__bit_2) + (cpu__decode__opcode_range_check__bit_4)) +
+       (cpu__decode__opcode_range_check__bit_3));
+  const FieldElementT cpu__decode__opcode_range_check__bit_5 =
       (column0_row5) - ((column0_row6) + (column0_row6));
-  const FieldElementT cpu__decode__opcode_rc__bit_6 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_6 =
       (column0_row6) - ((column0_row7) + (column0_row7));
-  const FieldElementT cpu__decode__opcode_rc__bit_9 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_9 =
       (column0_row9) - ((column0_row10) + (column0_row10));
   const FieldElementT cpu__decode__flag_res_op1_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_5) + (cpu__decode__opcode_rc__bit_6)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_7 =
+      (((cpu__decode__opcode_range_check__bit_5) + (cpu__decode__opcode_range_check__bit_6)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_7 =
       (column0_row7) - ((column0_row8) + (column0_row8));
-  const FieldElementT cpu__decode__opcode_rc__bit_8 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_8 =
       (column0_row8) - ((column0_row9) + (column0_row9));
   const FieldElementT cpu__decode__flag_pc_update_regular_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_8)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_12 =
+      (((cpu__decode__opcode_range_check__bit_7) + (cpu__decode__opcode_range_check__bit_8)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_12 =
       (column0_row12) - ((column0_row13) + (column0_row13));
-  const FieldElementT cpu__decode__opcode_rc__bit_13 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_13 =
       (column0_row13) - ((column0_row14) + (column0_row14));
   const FieldElementT cpu__decode__fp_update_regular_0 =
       (FieldElementT::One()) -
-      ((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_13));
-  const FieldElementT cpu__decode__opcode_rc__bit_1 =
+      ((cpu__decode__opcode_range_check__bit_12) + (cpu__decode__opcode_range_check__bit_13));
+  const FieldElementT cpu__decode__opcode_range_check__bit_1 =
       (column0_row1) - ((column0_row2) + (column0_row2));
   const FieldElementT npc_reg_0 =
-      ((column5_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One());
-  const FieldElementT cpu__decode__opcode_rc__bit_10 =
+      ((column5_row0) + (cpu__decode__opcode_range_check__bit_2)) + (FieldElementT::One());
+  const FieldElementT cpu__decode__opcode_range_check__bit_10 =
       (column0_row10) - ((column0_row11) + (column0_row11));
-  const FieldElementT cpu__decode__opcode_rc__bit_11 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_11 =
       (column0_row11) - ((column0_row12) + (column0_row12));
-  const FieldElementT cpu__decode__opcode_rc__bit_14 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_14 =
       (column0_row14) - ((column0_row15) + (column0_row15));
   const FieldElementT memory__address_diff_0 = (column6_row2) - (column6_row0);
-  const FieldElementT rc16__diff_0 = (column7_row6) - (column7_row2);
+  const FieldElementT range_check16__diff_0 = (column7_row6) - (column7_row2);
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_0 =
       (column3_row0) - ((column3_row1) + (column3_row1));
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_neg_0 =
       (FieldElementT::One()) - (pedersen__hash0__ec_subset_sum__bit_0);
-  const FieldElementT rc_builtin__value0_0 = column7_row12;
-  const FieldElementT rc_builtin__value1_0 =
-      ((rc_builtin__value0_0) * (offset_size_)) + (column7_row44);
-  const FieldElementT rc_builtin__value2_0 =
-      ((rc_builtin__value1_0) * (offset_size_)) + (column7_row76);
-  const FieldElementT rc_builtin__value3_0 =
-      ((rc_builtin__value2_0) * (offset_size_)) + (column7_row108);
-  const FieldElementT rc_builtin__value4_0 =
-      ((rc_builtin__value3_0) * (offset_size_)) + (column7_row140);
-  const FieldElementT rc_builtin__value5_0 =
-      ((rc_builtin__value4_0) * (offset_size_)) + (column7_row172);
-  const FieldElementT rc_builtin__value6_0 =
-      ((rc_builtin__value5_0) * (offset_size_)) + (column7_row204);
-  const FieldElementT rc_builtin__value7_0 =
-      ((rc_builtin__value6_0) * (offset_size_)) + (column7_row236);
+  const FieldElementT range_check_builtin__value0_0 = column7_row12;
+  const FieldElementT range_check_builtin__value1_0 =
+      ((range_check_builtin__value0_0) * (offset_size_)) + (column7_row44);
+  const FieldElementT range_check_builtin__value2_0 =
+      ((range_check_builtin__value1_0) * (offset_size_)) + (column7_row76);
+  const FieldElementT range_check_builtin__value3_0 =
+      ((range_check_builtin__value2_0) * (offset_size_)) + (column7_row108);
+  const FieldElementT range_check_builtin__value4_0 =
+      ((range_check_builtin__value3_0) * (offset_size_)) + (column7_row140);
+  const FieldElementT range_check_builtin__value5_0 =
+      ((range_check_builtin__value4_0) * (offset_size_)) + (column7_row172);
+  const FieldElementT range_check_builtin__value6_0 =
+      ((range_check_builtin__value5_0) * (offset_size_)) + (column7_row204);
+  const FieldElementT range_check_builtin__value7_0 =
+      ((range_check_builtin__value6_0) * (offset_size_)) + (column7_row236);
   const FieldElementT ecdsa__signature0__doubling_key__x_squared = (column8_row1) * (column8_row1);
   const FieldElementT ecdsa__signature0__exponentiate_generator__bit_0 =
       (column8_row59) - ((column8_row187) + (column8_row187));
@@ -1086,10 +1062,10 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       // Compute a sum of constraints with numerator = domain4.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/bit:
+        // Constraint expression for cpu/decode/opcode_range_check/bit:
         const FieldElementT constraint =
-            ((cpu__decode__opcode_rc__bit_0) * (cpu__decode__opcode_rc__bit_0)) -
-            (cpu__decode__opcode_rc__bit_0);
+            ((cpu__decode__opcode_range_check__bit_0) * (cpu__decode__opcode_range_check__bit_0)) -
+            (cpu__decode__opcode_range_check__bit_0);
         inner_sum += random_coefficients[0] * constraint;
       }
       outer_sum += inner_sum * domain4;
@@ -1152,7 +1128,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/zero:
+        // Constraint expression for cpu/decode/opcode_range_check/zero:
         const FieldElementT constraint = column0_row0;
         inner_sum += random_coefficients[1] * constraint;
       }
@@ -1169,7 +1145,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc_input:
+        // Constraint expression for cpu/decode/opcode_range_check_input:
         const FieldElementT constraint =
             (column5_row1) -
             (((((((column0_row0) * (offset_size_)) + (column7_row4)) * (offset_size_)) +
@@ -1210,8 +1186,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         // Constraint expression for cpu/operands/mem_dst_addr:
         const FieldElementT constraint =
             ((column5_row8) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_0) * (column8_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_0)) * (column8_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_0) * (column8_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_0)) *
+               (column8_row0))) +
              (column7_row0));
         inner_sum += random_coefficients[7] * constraint;
       }
@@ -1219,19 +1196,21 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         // Constraint expression for cpu/operands/mem0_addr:
         const FieldElementT constraint =
             ((column5_row4) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_1) * (column8_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_1)) * (column8_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_1) * (column8_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_1)) *
+               (column8_row0))) +
              (column7_row8));
         inner_sum += random_coefficients[8] * constraint;
       }
       {
         // Constraint expression for cpu/operands/mem1_addr:
-        const FieldElementT constraint = ((column5_row12) + (half_offset_size_)) -
-                                         ((((((cpu__decode__opcode_rc__bit_2) * (column5_row0)) +
-                                             ((cpu__decode__opcode_rc__bit_4) * (column8_row0))) +
-                                            ((cpu__decode__opcode_rc__bit_3) * (column8_row8))) +
-                                           ((cpu__decode__flag_op1_base_op0_0) * (column5_row5))) +
-                                          (column7_row4));
+        const FieldElementT constraint =
+            ((column5_row12) + (half_offset_size_)) -
+            ((((((cpu__decode__opcode_range_check__bit_2) * (column5_row0)) +
+                ((cpu__decode__opcode_range_check__bit_4) * (column8_row0))) +
+               ((cpu__decode__opcode_range_check__bit_3) * (column8_row8))) +
+              ((cpu__decode__flag_op1_base_op0_0) * (column5_row5))) +
+             (column7_row4));
         inner_sum += random_coefficients[9] * constraint;
       }
       {
@@ -1242,90 +1221,92 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       {
         // Constraint expression for cpu/operands/res:
         const FieldElementT constraint =
-            (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column8_row12)) -
-            ((((cpu__decode__opcode_rc__bit_5) * ((column5_row5) + (column5_row13))) +
-              ((cpu__decode__opcode_rc__bit_6) * (column8_row4))) +
+            (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+             (column8_row12)) -
+            ((((cpu__decode__opcode_range_check__bit_5) * ((column5_row5) + (column5_row13))) +
+              ((cpu__decode__opcode_range_check__bit_6) * (column8_row4))) +
              ((cpu__decode__flag_res_op1_0) * (column5_row13)));
         inner_sum += random_coefficients[11] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_fp:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column5_row9) - (column8_row8));
+            (cpu__decode__opcode_range_check__bit_12) * ((column5_row9) - (column8_row8));
         inner_sum += random_coefficients[18] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_pc:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            ((column5_row5) -
-             (((column5_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One())));
+            (cpu__decode__opcode_range_check__bit_12) *
+            ((column5_row5) - (((column5_row0) + (cpu__decode__opcode_range_check__bit_2)) +
+                               (FieldElementT::One())));
         inner_sum += random_coefficients[19] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column7_row0) - (half_offset_size_));
+            (cpu__decode__opcode_range_check__bit_12) * ((column7_row0) - (half_offset_size_));
         inner_sum += random_coefficients[20] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off1:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
+            (cpu__decode__opcode_range_check__bit_12) *
             ((column7_row8) - ((half_offset_size_) + (FieldElementT::One())));
         inner_sum += random_coefficients[21] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            (((((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_12)) +
-               (FieldElementT::One())) +
-              (FieldElementT::One())) -
-             (((cpu__decode__opcode_rc__bit_0) + (cpu__decode__opcode_rc__bit_1)) +
-              (FieldElementT::ConstexprFromBigInt(0x4_Z))));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_12) *
+                                         (((((cpu__decode__opcode_range_check__bit_12) +
+                                             (cpu__decode__opcode_range_check__bit_12)) +
+                                            (FieldElementT::One())) +
+                                           (FieldElementT::One())) -
+                                          (((cpu__decode__opcode_range_check__bit_0) +
+                                            (cpu__decode__opcode_range_check__bit_1)) +
+                                           (FieldElementT::ConstexprFromBigInt(0x4_Z))));
         inner_sum += random_coefficients[22] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column7_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z))) - (half_offset_size_));
         inner_sum += random_coefficients[23] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off2:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column7_row4) + (FieldElementT::One())) - (half_offset_size_));
         inner_sum += random_coefficients[24] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
-            (((((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_0)) +
-               (cpu__decode__opcode_rc__bit_3)) +
-              (cpu__decode__flag_res_op1_0)) -
-             (FieldElementT::ConstexprFromBigInt(0x4_Z)));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_13) *
+                                         (((((cpu__decode__opcode_range_check__bit_7) +
+                                             (cpu__decode__opcode_range_check__bit_0)) +
+                                            (cpu__decode__opcode_range_check__bit_3)) +
+                                           (cpu__decode__flag_res_op1_0)) -
+                                          (FieldElementT::ConstexprFromBigInt(0x4_Z)));
         inner_sum += random_coefficients[25] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/assert_eq/assert_eq:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_14) * ((column5_row9) - (column8_row12));
+            (cpu__decode__opcode_range_check__bit_14) * ((column5_row9) - (column8_row12));
         inner_sum += random_coefficients[26] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain31.
+      // Compute a sum of constraints with numerator = domain28.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for cpu/update_registers/update_pc/tmp0:
         const FieldElementT constraint =
-            (column8_row2) - ((cpu__decode__opcode_rc__bit_9) * (column5_row9));
+            (column8_row2) - ((cpu__decode__opcode_range_check__bit_9) * (column5_row9));
         inner_sum += random_coefficients[12] * constraint;
       }
       {
@@ -1336,53 +1317,56 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_negative:
         const FieldElementT constraint =
-            ((((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column5_row16)) +
+            ((((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+              (column5_row16)) +
              ((column8_row2) * ((column5_row16) - ((column5_row0) + (column5_row13))))) -
             ((((cpu__decode__flag_pc_update_regular_0) * (npc_reg_0)) +
-              ((cpu__decode__opcode_rc__bit_7) * (column8_row12))) +
-             ((cpu__decode__opcode_rc__bit_8) * ((column5_row0) + (column8_row12))));
+              ((cpu__decode__opcode_range_check__bit_7) * (column8_row12))) +
+             ((cpu__decode__opcode_range_check__bit_8) * ((column5_row0) + (column8_row12))));
         inner_sum += random_coefficients[14] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_positive:
         const FieldElementT constraint =
-            ((column8_row10) - (cpu__decode__opcode_rc__bit_9)) * ((column5_row16) - (npc_reg_0));
+            ((column8_row10) - (cpu__decode__opcode_range_check__bit_9)) *
+            ((column5_row16) - (npc_reg_0));
         inner_sum += random_coefficients[15] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_ap/ap_update:
         const FieldElementT constraint =
             (column8_row16) -
-            ((((column8_row0) + ((cpu__decode__opcode_rc__bit_10) * (column8_row12))) +
-              (cpu__decode__opcode_rc__bit_11)) +
-             ((cpu__decode__opcode_rc__bit_12) * (FieldElementT::ConstexprFromBigInt(0x2_Z))));
+            ((((column8_row0) + ((cpu__decode__opcode_range_check__bit_10) * (column8_row12))) +
+              (cpu__decode__opcode_range_check__bit_11)) +
+             ((cpu__decode__opcode_range_check__bit_12) *
+              (FieldElementT::ConstexprFromBigInt(0x2_Z))));
         inner_sum += random_coefficients[16] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_fp/fp_update:
         const FieldElementT constraint =
             (column8_row24) - ((((cpu__decode__fp_update_regular_0) * (column8_row8)) +
-                                ((cpu__decode__opcode_rc__bit_13) * (column5_row9))) +
-                               ((cpu__decode__opcode_rc__bit_12) *
+                                ((cpu__decode__opcode_range_check__bit_13) * (column5_row9))) +
+                               ((cpu__decode__opcode_range_check__bit_12) *
                                 ((column8_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z)))));
         inner_sum += random_coefficients[17] * constraint;
       }
-      outer_sum += inner_sum * domain31;
+      outer_sum += inner_sum * domain28;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain14.
+      // Compute a sum of constraints with numerator = domain13.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_rounds_state1_squaring:
         const FieldElementT constraint = ((column8_row6) * (column8_row6)) - (column8_row14);
-        inner_sum += random_coefficients[174] * constraint;
+        inner_sum += random_coefficients[177] * constraint;
       }
-      outer_sum += inner_sum * domain14;
+      outer_sum += inner_sum * domain13;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain16.
+      // Compute a sum of constraints with numerator = domain14.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_round1:
@@ -1399,15 +1383,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                    0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffff_Z)) *
                (poseidon__poseidon__partial_rounds_state1_cubed_2))) +
              (poseidon__poseidon__partial_round_key1));
-        inner_sum += random_coefficients[191] * constraint;
+        inner_sum += random_coefficients[194] * constraint;
       }
-      outer_sum += inner_sum * domain16;
+      outer_sum += inner_sum * domain14;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain5);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain32.
+    // Compute a sum of constraints with denominator = domain29.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -1446,16 +1430,16 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         inner_sum += random_coefficients[38] * constraint;
       }
       {
-        // Constraint expression for rc16/perm/init0:
+        // Constraint expression for range_check16/perm/init0:
         const FieldElementT constraint =
-            ((((rc16__perm__interaction_elm_) - (column7_row2)) * (column9_inter1_row1)) +
+            ((((range_check16__perm__interaction_elm_) - (column7_row2)) * (column9_inter1_row1)) +
              (column7_row0)) -
-            (rc16__perm__interaction_elm_);
+            (range_check16__perm__interaction_elm_);
         inner_sum += random_coefficients[41] * constraint;
       }
       {
-        // Constraint expression for rc16/minimum:
-        const FieldElementT constraint = (column7_row2) - (rc_min_);
+        // Constraint expression for range_check16/minimum:
+        const FieldElementT constraint = (column7_row2) - (range_check_min_);
         inner_sum += random_coefficients[45] * constraint;
       }
       {
@@ -1483,8 +1467,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         inner_sum += random_coefficients[74] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/init_addr:
-        const FieldElementT constraint = (column5_row70) - (initial_rc_addr_);
+        // Constraint expression for range_check_builtin/init_addr:
+        const FieldElementT constraint = (column5_row70) - (initial_range_check_addr_);
         inner_sum += random_coefficients[81] * constraint;
       }
       {
@@ -1503,17 +1487,30 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         inner_sum += random_coefficients[134] * constraint;
       }
       {
-        // Constraint expression for poseidon/init_input_output_addr:
+        // Constraint expression for poseidon/param_0/init_input_output_addr:
         const FieldElementT constraint = (column5_row38) - (initial_poseidon_addr_);
         inner_sum += random_coefficients[167] * constraint;
       }
+      {
+        // Constraint expression for poseidon/param_1/init_input_output_addr:
+        const FieldElementT constraint =
+            (column5_row166) - ((initial_poseidon_addr_) + (FieldElementT::One()));
+        inner_sum += random_coefficients[169] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_2/init_input_output_addr:
+        const FieldElementT constraint =
+            (column5_row102) -
+            ((initial_poseidon_addr_) + (FieldElementT::ConstexprFromBigInt(0x2_Z)));
+        inner_sum += random_coefficients[171] * constraint;
+      }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain32);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain29);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain31.
+    // Compute a sum of constraints with denominator = domain28.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -1536,7 +1533,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain31);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain28);
   }
 
   {
@@ -1544,7 +1541,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain33.
+      // Compute a sum of constraints with numerator = domain30.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for memory/multi_column_perm/perm/step0:
@@ -1571,13 +1568,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             ((memory__address_diff_0) - (FieldElementT::One())) * ((column6_row1) - (column6_row3));
         inner_sum += random_coefficients[37] * constraint;
       }
-      outer_sum += inner_sum * domain33;
+      outer_sum += inner_sum * domain30;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain1);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain33.
+    // Compute a sum of constraints with denominator = domain30.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -1591,7 +1588,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain33);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain30);
   }
 
   {
@@ -1614,13 +1611,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       {
         // Constraint expression for poseidon/poseidon/partial_rounds_state0_squaring:
         const FieldElementT constraint = ((column7_row3) * (column7_row3)) - (column7_row7);
-        inner_sum += random_coefficients[173] * constraint;
+        inner_sum += random_coefficients[176] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain34.
+      // Compute a sum of constraints with numerator = domain31.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for diluted_check/permutation/step0:
@@ -1642,11 +1639,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
               ((column7_row13) - (column7_row5))));
         inner_sum += random_coefficients[52] * constraint;
       }
-      outer_sum += inner_sum * domain34;
+      outer_sum += inner_sum * domain31;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain17.
+      // Compute a sum of constraints with numerator = domain15.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_round0:
@@ -1663,9 +1660,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                    0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffff_Z)) *
                (poseidon__poseidon__partial_rounds_state0_cubed_2))) +
              (poseidon__poseidon__partial_round_key0));
-        inner_sum += random_coefficients[190] * constraint;
+        inner_sum += random_coefficients[193] * constraint;
       }
-      outer_sum += inner_sum * domain17;
+      outer_sum += inner_sum * domain15;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain3);
   }
@@ -1675,49 +1672,51 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain35.
+      // Compute a sum of constraints with numerator = domain32.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/step0:
+        // Constraint expression for range_check16/perm/step0:
         const FieldElementT constraint =
-            (((rc16__perm__interaction_elm_) - (column7_row6)) * (column9_inter1_row5)) -
-            (((rc16__perm__interaction_elm_) - (column7_row4)) * (column9_inter1_row1));
+            (((range_check16__perm__interaction_elm_) - (column7_row6)) * (column9_inter1_row5)) -
+            (((range_check16__perm__interaction_elm_) - (column7_row4)) * (column9_inter1_row1));
         inner_sum += random_coefficients[42] * constraint;
       }
       {
-        // Constraint expression for rc16/diff_is_bit:
-        const FieldElementT constraint = ((rc16__diff_0) * (rc16__diff_0)) - (rc16__diff_0);
+        // Constraint expression for range_check16/diff_is_bit:
+        const FieldElementT constraint =
+            ((range_check16__diff_0) * (range_check16__diff_0)) - (range_check16__diff_0);
         inner_sum += random_coefficients[44] * constraint;
       }
-      outer_sum += inner_sum * domain35;
+      outer_sum += inner_sum * domain32;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain2);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain35.
+    // Compute a sum of constraints with denominator = domain32.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/last:
-        const FieldElementT constraint = (column9_inter1_row1) - (rc16__perm__public_memory_prod_);
+        // Constraint expression for range_check16/perm/last:
+        const FieldElementT constraint =
+            (column9_inter1_row1) - (range_check16__perm__public_memory_prod_);
         inner_sum += random_coefficients[43] * constraint;
       }
       {
-        // Constraint expression for rc16/maximum:
-        const FieldElementT constraint = (column7_row2) - (rc_max_);
+        // Constraint expression for range_check16/maximum:
+        const FieldElementT constraint = (column7_row2) - (range_check_max_);
         inner_sum += random_coefficients[46] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain35);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain32);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain34.
+    // Compute a sum of constraints with denominator = domain31.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -1736,7 +1735,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain34);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain31);
   }
 
   {
@@ -1794,8 +1793,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         inner_sum += random_coefficients[59] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/value:
-        const FieldElementT constraint = (rc_builtin__value7_0) - (column5_row71);
+        // Constraint expression for range_check_builtin/value:
+        const FieldElementT constraint = (range_check_builtin__value7_0) - (column5_row71);
         inner_sum += random_coefficients[79] * constraint;
       }
       {
@@ -1808,7 +1807,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain18.
+      // Compute a sum of constraints with numerator = domain16.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for pedersen/hash0/copy_point/x:
@@ -1820,23 +1819,41 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
         const FieldElementT constraint = (column2_row256) - (column2_row255);
         inner_sum += random_coefficients[69] * constraint;
       }
-      outer_sum += inner_sum * domain18;
+      outer_sum += inner_sum * domain16;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain36.
+      // Compute a sum of constraints with numerator = domain33.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc_builtin/addr_step:
+        // Constraint expression for range_check_builtin/addr_step:
         const FieldElementT constraint =
             (column5_row326) - ((column5_row70) + (FieldElementT::One()));
         inner_sum += random_coefficients[80] * constraint;
       }
-      outer_sum += inner_sum * domain36;
+      {
+        // Constraint expression for poseidon/param_0/addr_input_output_step:
+        const FieldElementT constraint =
+            (column5_row294) - ((column5_row38) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[168] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_1/addr_input_output_step:
+        const FieldElementT constraint =
+            (column5_row422) - ((column5_row166) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[170] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_2/addr_input_output_step:
+        const FieldElementT constraint =
+            (column5_row358) - ((column5_row102) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[172] * constraint;
+      }
+      outer_sum += inner_sum * domain33;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain21.
+      // Compute a sum of constraints with numerator = domain18.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for bitwise/step_var_pool_addr:
@@ -1844,7 +1861,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (column5_row454) - ((column5_row198) + (FieldElementT::One()));
         inner_sum += random_coefficients[124] * constraint;
       }
-      outer_sum += inner_sum * domain21;
+      outer_sum += inner_sum * domain18;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain9);
   }
@@ -1884,7 +1901,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
   }
 
   {
-    // Compute a sum of constraints with denominator = domain19.
+    // Compute a sum of constraints with denominator = domain17.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -1934,43 +1951,43 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
              (FieldElementT::ConstexprFromBigInt(
                  0x6861759ea556a2339dd92f9562a30b9e58e2ad98109ae4780b7fd8eac77fe6f_Z))) -
             (column8_row53);
-        inner_sum += random_coefficients[175] * constraint;
+        inner_sum += random_coefficients[178] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/add_first_round_key1:
         const FieldElementT constraint =
-            ((column5_row103) +
+            ((column5_row167) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3827681995d5af9ffc8397a3d00425a3da43f76abf28a64e4ab1a22f27508c4_Z))) -
             (column8_row13);
-        inner_sum += random_coefficients[176] * constraint;
+        inner_sum += random_coefficients[179] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/add_first_round_key2:
         const FieldElementT constraint =
-            ((column5_row167) +
+            ((column5_row103) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3a3956d2fad44d0e7f760a2277dc7cb2cac75dc279b2d687a0dbe17704a8309_Z))) -
             (column8_row45);
-        inner_sum += random_coefficients[177] * constraint;
+        inner_sum += random_coefficients[180] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round0:
         const FieldElementT constraint =
-            (column5_row231) - (((((poseidon__poseidon__full_rounds_state0_cubed_7) +
+            (column5_row295) - (((((poseidon__poseidon__full_rounds_state0_cubed_7) +
                                    (poseidon__poseidon__full_rounds_state0_cubed_7)) +
                                   (poseidon__poseidon__full_rounds_state0_cubed_7)) +
                                  (poseidon__poseidon__full_rounds_state1_cubed_7)) +
                                 (poseidon__poseidon__full_rounds_state2_cubed_7));
-        inner_sum += random_coefficients[181] * constraint;
+        inner_sum += random_coefficients[184] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round1:
         const FieldElementT constraint =
-            ((column5_row295) + (poseidon__poseidon__full_rounds_state1_cubed_7)) -
+            ((column5_row423) + (poseidon__poseidon__full_rounds_state1_cubed_7)) -
             ((poseidon__poseidon__full_rounds_state0_cubed_7) +
              (poseidon__poseidon__full_rounds_state2_cubed_7));
-        inner_sum += random_coefficients[182] * constraint;
+        inner_sum += random_coefficients[185] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round2:
@@ -1979,22 +1996,22 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
              (poseidon__poseidon__full_rounds_state2_cubed_7)) -
             ((poseidon__poseidon__full_rounds_state0_cubed_7) +
              (poseidon__poseidon__full_rounds_state1_cubed_7));
-        inner_sum += random_coefficients[183] * constraint;
+        inner_sum += random_coefficients[186] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i0:
         const FieldElementT constraint = (column7_row491) - (column8_row6);
-        inner_sum += random_coefficients[184] * constraint;
+        inner_sum += random_coefficients[187] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i1:
         const FieldElementT constraint = (column7_row499) - (column8_row22);
-        inner_sum += random_coefficients[185] * constraint;
+        inner_sum += random_coefficients[188] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i2:
         const FieldElementT constraint = (column7_row507) - (column8_row38);
-        inner_sum += random_coefficients[186] * constraint;
+        inner_sum += random_coefficients[189] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial0:
@@ -2005,7 +2022,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
               (poseidon__poseidon__full_rounds_state1_cubed_3)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x4b085eb1df4258c3453cc97445954bf3433b6ab9dd5a99592864c00f54a3f9a_Z)));
-        inner_sum += random_coefficients[187] * constraint;
+        inner_sum += random_coefficients[190] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial1:
@@ -2022,7 +2039,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                (poseidon__poseidon__partial_rounds_state0_cubed_0))) +
              (FieldElementT::ConstexprFromBigInt(
                  0x46fb825257fec76c50fe043684d4e6d2d2f2fdfe9b7c8d7128ca7acc0f66f30_Z)));
-        inner_sum += random_coefficients[188] * constraint;
+        inner_sum += random_coefficients[191] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial2:
@@ -2040,7 +2057,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                (poseidon__poseidon__partial_rounds_state0_cubed_1))) +
              (FieldElementT::ConstexprFromBigInt(
                  0xf2193ba0c7ea33ce6222d9446c1e166202ae5461005292f4a2bcb93420151a_Z)));
-        inner_sum += random_coefficients[189] * constraint;
+        inner_sum += random_coefficients[192] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full0:
@@ -2055,7 +2072,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
               (poseidon__poseidon__partial_rounds_state1_cubed_21)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x13d1b5cfd87693224f0ac561ab2c15ca53365d768311af59cefaf701bc53b37_Z)));
-        inner_sum += random_coefficients[192] * constraint;
+        inner_sum += random_coefficients[195] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full1:
@@ -2068,7 +2085,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
               (poseidon__poseidon__partial_rounds_state1_cubed_21)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3195d6b2d930e71cede286d5b8b41d49296ddf222bcd3bf3717a12a9a6947ff_Z)));
-        inner_sum += random_coefficients[193] * constraint;
+        inner_sum += random_coefficients[196] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full2:
@@ -2086,13 +2103,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                (poseidon__poseidon__partial_rounds_state1_cubed_21))) +
              (FieldElementT::ConstexprFromBigInt(
                  0x2c14fccabc26929170cc7ac9989c823608b9008bef3b8e16b6089a5d33cd72e_Z)));
-        inner_sum += random_coefficients[194] * constraint;
+        inner_sum += random_coefficients[197] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain37.
+      // Compute a sum of constraints with numerator = domain34.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for pedersen/input0_addr:
@@ -2100,15 +2117,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (column5_row518) - ((column5_row134) + (FieldElementT::One()));
         inner_sum += random_coefficients[73] * constraint;
       }
-      {
-        // Constraint expression for poseidon/addr_input_output_step_outter:
-        const FieldElementT constraint =
-            (column5_row550) - ((column5_row358) + (FieldElementT::One()));
-        inner_sum += random_coefficients[169] * constraint;
-      }
-      outer_sum += inner_sum * domain37;
+      outer_sum += inner_sum * domain34;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain19);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain17);
   }
 
   {
@@ -2116,7 +2127,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain24.
+      // Compute a sum of constraints with numerator = domain21.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/signature0/doubling_key/slope:
@@ -2251,19 +2262,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (ec_op__ec_subset_sum__bit_neg_0) * ((column8_row101) - (column8_row37));
         inner_sum += random_coefficients[161] * constraint;
       }
-      outer_sum += inner_sum * domain24;
-    }
-
-    {
-      // Compute a sum of constraints with numerator = domain20.
-      FieldElementT inner_sum = FieldElementT::Zero();
-      {
-        // Constraint expression for poseidon/addr_input_output_step_inner:
-        const FieldElementT constraint =
-            (column5_row102) - ((column5_row38) + (FieldElementT::One()));
-        inner_sum += random_coefficients[168] * constraint;
-      }
-      outer_sum += inner_sum * domain20;
+      outer_sum += inner_sum * domain21;
     }
 
     {
@@ -2272,17 +2271,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state0_squaring:
         const FieldElementT constraint = ((column8_row53) * (column8_row53)) - (column8_row29);
-        inner_sum += random_coefficients[170] * constraint;
+        inner_sum += random_coefficients[173] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state1_squaring:
         const FieldElementT constraint = ((column8_row13) * (column8_row13)) - (column8_row61);
-        inner_sum += random_coefficients[171] * constraint;
+        inner_sum += random_coefficients[174] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state2_squaring:
         const FieldElementT constraint = ((column8_row45) * (column8_row45)) - (column8_row3);
-        inner_sum += random_coefficients[172] * constraint;
+        inner_sum += random_coefficients[175] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
@@ -2299,7 +2298,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                                   (poseidon__poseidon__full_rounds_state1_cubed_0)) +
                                  (poseidon__poseidon__full_rounds_state2_cubed_0)) +
                                 (poseidon__poseidon__full_round_key0));
-        inner_sum += random_coefficients[178] * constraint;
+        inner_sum += random_coefficients[181] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_round1:
@@ -2308,7 +2307,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (((poseidon__poseidon__full_rounds_state0_cubed_0) +
               (poseidon__poseidon__full_rounds_state2_cubed_0)) +
              (poseidon__poseidon__full_round_key1));
-        inner_sum += random_coefficients[179] * constraint;
+        inner_sum += random_coefficients[182] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_round2:
@@ -2318,7 +2317,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (((poseidon__poseidon__full_rounds_state0_cubed_0) +
               (poseidon__poseidon__full_rounds_state1_cubed_0)) +
              (poseidon__poseidon__full_round_key2));
-        inner_sum += random_coefficients[180] * constraint;
+        inner_sum += random_coefficients[183] * constraint;
       }
       outer_sum += inner_sum * domain11;
     }
@@ -2330,7 +2329,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain28.
+      // Compute a sum of constraints with numerator = domain25.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/signature0/exponentiate_generator/booleanity_test:
@@ -2381,13 +2380,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
                                          ((column8_row219) - (column8_row91));
         inner_sum += random_coefficients[93] * constraint;
       }
-      outer_sum += inner_sum * domain28;
+      outer_sum += inner_sum * domain25;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain7);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain29.
+    // Compute a sum of constraints with denominator = domain26.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2400,11 +2399,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain29);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain26);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain28.
+    // Compute a sum of constraints with denominator = domain25.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2417,11 +2416,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain28);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain25);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain25.
+    // Compute a sum of constraints with denominator = domain22.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2434,11 +2433,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain25);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain22);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain24.
+    // Compute a sum of constraints with denominator = domain21.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2456,11 +2455,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain24);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain21);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain30.
+    // Compute a sum of constraints with denominator = domain27.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2564,7 +2563,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain38.
+      // Compute a sum of constraints with numerator = domain35.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/pubkey_addr:
@@ -2572,13 +2571,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (column5_row33158) - ((column5_row16774) + (FieldElementT::One()));
         inner_sum += random_coefficients[120] * constraint;
       }
-      outer_sum += inner_sum * domain38;
+      outer_sum += inner_sum * domain35;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain30);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain27);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain26.
+    // Compute a sum of constraints with denominator = domain23.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2720,7 +2719,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain39.
+      // Compute a sum of constraints with numerator = domain36.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ec_op/p_x_addr:
@@ -2728,13 +2727,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (column5_row24966) - ((column5_row8582) + (FieldElementT::ConstexprFromBigInt(0x7_Z)));
         inner_sum += random_coefficients[135] * constraint;
       }
-      outer_sum += inner_sum * domain39;
+      outer_sum += inner_sum * domain36;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain26);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain23);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain22.
+    // Compute a sum of constraints with denominator = domain19.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2783,7 +2782,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain40.
+      // Compute a sum of constraints with numerator = domain37.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for bitwise/next_var_pool_addr:
@@ -2791,13 +2790,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
             (column5_row1222) - ((column5_row902) + (FieldElementT::One()));
         inner_sum += random_coefficients[126] * constraint;
       }
-      outer_sum += inner_sum * domain40;
+      outer_sum += inner_sum * domain37;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain22);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain19);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain23.
+    // Compute a sum of constraints with denominator = domain20.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2811,11 +2810,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain23);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain20);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain27.
+    // Compute a sum of constraints with denominator = domain24.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -2828,7 +2827,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain27);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain24);
   }
   return res;
 }
@@ -2836,7 +2835,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 6>::Constrai
 template <typename FieldElementT>
 std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 6>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+  [[maybe_unused]] const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   const FieldElementT& domain1 = (point_powers[2]) - (FieldElementT::One());
   const FieldElementT& domain2 = (point_powers[3]) - (FieldElementT::One());
@@ -2851,23 +2851,21 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 6>::DomainEvalsAtPoin
   const FieldElementT& domain11 = (point_powers[8]) - (shifts[3]);
   const FieldElementT& domain12 = (point_powers[9]) - (shifts[4]);
   const FieldElementT& domain13 =
-      ((point_powers[9]) - (shifts[3])) * ((point_powers[9]) - (shifts[5]));
-  const FieldElementT& domain14 =
-      ((point_powers[9]) - (shifts[6])) * ((point_powers[9]) - (shifts[7])) *
+      ((point_powers[9]) - (shifts[5])) * ((point_powers[9]) - (shifts[6])) *
+      ((point_powers[9]) - (shifts[3])) * ((point_powers[9]) - (shifts[7])) *
       ((point_powers[9]) - (shifts[8])) * ((point_powers[9]) - (shifts[9])) *
       ((point_powers[9]) - (shifts[10])) * ((point_powers[9]) - (shifts[11])) *
-      ((point_powers[9]) - (shifts[0])) * (domain12) * (domain13);
-  const FieldElementT& domain15 = (point_powers[9]) - (shifts[12]);
-  const FieldElementT& domain16 = ((point_powers[9]) - (shifts[13])) *
-                                  ((point_powers[9]) - (shifts[14])) * (domain14) * (domain15);
-  const FieldElementT& domain17 =
+      ((point_powers[9]) - (shifts[0])) * (domain12);
+  const FieldElementT& domain14 = ((point_powers[9]) - (shifts[12])) *
+                                  ((point_powers[9]) - (shifts[13])) *
+                                  ((point_powers[9]) - (shifts[14])) * (domain13);
+  const FieldElementT& domain15 =
       ((point_powers[9]) - (shifts[15])) * ((point_powers[9]) - (shifts[2])) * (domain12);
-  const FieldElementT& domain18 = (point_powers[9]) - (shifts[16]);
-  const FieldElementT& domain19 = (point_powers[9]) - (FieldElementT::One());
-  const FieldElementT& domain20 = (domain13) * (domain15);
-  const FieldElementT& domain21 = (point_powers[10]) - (shifts[3]);
-  const FieldElementT& domain22 = (point_powers[10]) - (FieldElementT::One());
-  const FieldElementT& domain23 =
+  const FieldElementT& domain16 = (point_powers[9]) - (shifts[16]);
+  const FieldElementT& domain17 = (point_powers[9]) - (FieldElementT::One());
+  const FieldElementT& domain18 = (point_powers[10]) - (shifts[3]);
+  const FieldElementT& domain19 = (point_powers[10]) - (FieldElementT::One());
+  const FieldElementT& domain20 =
       ((point_powers[10]) - (shifts[17])) * ((point_powers[10]) - (shifts[18])) *
       ((point_powers[10]) - (shifts[19])) * ((point_powers[10]) - (shifts[20])) *
       ((point_powers[10]) - (shifts[21])) * ((point_powers[10]) - (shifts[22])) *
@@ -2875,20 +2873,30 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 6>::DomainEvalsAtPoin
       ((point_powers[10]) - (shifts[25])) * ((point_powers[10]) - (shifts[26])) *
       ((point_powers[10]) - (shifts[27])) * ((point_powers[10]) - (shifts[28])) *
       ((point_powers[10]) - (shifts[29])) * ((point_powers[10]) - (shifts[30])) *
-      ((point_powers[10]) - (shifts[31])) * (domain22);
-  const FieldElementT& domain24 = (point_powers[11]) - (shifts[1]);
-  const FieldElementT& domain25 = (point_powers[11]) - (shifts[32]);
-  const FieldElementT& domain26 = (point_powers[11]) - (FieldElementT::One());
-  const FieldElementT& domain27 = (point_powers[11]) - (shifts[2]);
-  const FieldElementT& domain28 = (point_powers[12]) - (shifts[1]);
-  const FieldElementT& domain29 = (point_powers[12]) - (shifts[32]);
-  const FieldElementT& domain30 = (point_powers[12]) - (FieldElementT::One());
+      ((point_powers[10]) - (shifts[31])) * (domain19);
+  const FieldElementT& domain21 = (point_powers[11]) - (shifts[1]);
+  const FieldElementT& domain22 = (point_powers[11]) - (shifts[32]);
+  const FieldElementT& domain23 = (point_powers[11]) - (FieldElementT::One());
+  const FieldElementT& domain24 = (point_powers[11]) - (shifts[2]);
+  const FieldElementT& domain25 = (point_powers[12]) - (shifts[1]);
+  const FieldElementT& domain26 = (point_powers[12]) - (shifts[32]);
+  const FieldElementT& domain27 = (point_powers[12]) - (FieldElementT::One());
   return {
-      domain0,  domain1,  domain2,  domain3,  domain4,  domain5,  domain6,  domain7,
-      domain8,  domain9,  domain10, domain11, domain12, domain13, domain14, domain15,
-      domain16, domain17, domain18, domain19, domain20, domain21, domain22, domain23,
-      domain24, domain25, domain26, domain27, domain28, domain29, domain30,
+      domain0,  domain1,  domain2,  domain3,  domain4,  domain5,  domain6,
+      domain7,  domain8,  domain9,  domain10, domain11, domain12, domain13,
+      domain14, domain15, domain16, domain17, domain18, domain19, domain20,
+      domain21, domain22, domain23, domain24, domain25, domain26, domain27,
   };
+}
+
+template <typename FieldElementT>
+std::vector<uint64_t> CpuAirDefinition<FieldElementT, 6>::ParseDynamicParams(
+    [[maybe_unused]] const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
 }
 
 template <typename FieldElementT>
@@ -2897,396 +2905,160 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 512)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 512)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 512)) - (1)) <= (SafeDiv(trace_length_, 512)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 512)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 512)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 512)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 512)) <= (SafeDiv(trace_length_, 512)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 512)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 512)), "Index out of range.");
-
-  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16384)), "Dimension should be a power of 2.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16384)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16384)) - (1)) <= (SafeDiv(trace_length_, 16384)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16384)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16384)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16384)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16384)) <= (SafeDiv(trace_length_, 16384)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 16384)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16384)), "Index out of range.");
-
-  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 1024)), "Dimension should be a power of 2.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 1024)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 1024)) - (1)) <= (SafeDiv(trace_length_, 1024)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 1024)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 1024)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 1024)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 1024)) <= (SafeDiv(trace_length_, 1024)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 1024)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 1024)), "Index out of range.");
-
-  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 32768)), "Dimension should be a power of 2.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 32768)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 32768)) <= (SafeDiv(trace_length_, 32768)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 32768)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 32768)), "Index out of range.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 32768)) - (1)) <= (SafeDiv(trace_length_, 32768)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 32768)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 32768)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 32768)), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 256)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 256)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 256)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 256)) - (1)) <= (SafeDiv(trace_length_, 256)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 256)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 256)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 256)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 256)) <= (SafeDiv(trace_length_, 256)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 256)) - (1)) >= (0), "step must not exceed dimension.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 256)) >= (0), "Index should be non negative.");
 
+  ASSERT_RELEASE(
+      IsPowerOfTwo(trace_length_),
+      "Coset step (MemberExpression(trace_length)) must be a power of two");
+
+  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16384)), "Dimension should be a power of 2.");
+
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16384)) - (1)) >= (0), "Index out of range.");
+
+  ASSERT_RELEASE((SafeDiv(trace_length_, 16384)) >= (0), "Index should be non negative.");
+
+  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 1024)), "Dimension should be a power of 2.");
+
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 1024)) - (1)) >= (0), "Index out of range.");
+
+  ASSERT_RELEASE((SafeDiv(trace_length_, 1024)) >= (0), "Index should be non negative.");
+
+  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 32768)), "Dimension should be a power of 2.");
+
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 32768)) - (1)) >= (0), "step must not exceed dimension.");
+
+  ASSERT_RELEASE((SafeDiv(trace_length_, 32768)) >= (0), "Index should be non negative.");
+
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 512)) - (1)) >= (0), "step must not exceed dimension.");
+
+  ASSERT_RELEASE((SafeDiv(trace_length_, 512)) >= (0), "Index should be non negative.");
+
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 8)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 8)) + (-1)) < (SafeDiv(trace_length_, 8)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 8)) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 8)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 8)) - (1)) <= (SafeDiv(trace_length_, 8)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 8)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 8)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 8)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 8)) <= (SafeDiv(trace_length_, 8)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 8)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 8)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 8)), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 4)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) + (-1)) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 4)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) - (1)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 4)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 4)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 4)) >= (0), "Index should be non negative.");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 2)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 2)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 2)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 2)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) - (1)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 2)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) + (-1)) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) + (-1)) >= (0), "Index should be non negative.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) + (-1)) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) + (-1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index out of range.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16)), "step must not exceed dimension.");
+  ASSERT_RELEASE(((trace_length_) - (2)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (3)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (6)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) - (1)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (4)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (8)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (9)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16)) - (1)), "start must not exceed stop.");
+  ASSERT_RELEASE(((trace_length_) - (5)) >= (0), "Offset must be smaller than trace length.");
 
-  ctx.AddVirtualColumn(
-      "cpu/decode/opcode_rc/column",
-      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
+  ASSERT_RELEASE(((trace_length_) - (13)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (11)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (7)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (15)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (34)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (18)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (50)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (10)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (42)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (26)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (58)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (38)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (22)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (54)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (14)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (46)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (30)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (62)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (36)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (20)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (52)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (12)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (44)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (28)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (92)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (60)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (124)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (256)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (72)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16356)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16340)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16372)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32764)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32648)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16332)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32716)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16364)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32748)) >= (0), "Offset must be smaller than trace length.");
+
   ctx.AddVirtualColumn(
       "mem_pool/addr", VirtualColumn(/*column=*/kColumn5Column, /*step=*/2, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "mem_pool/value", VirtualColumn(/*column=*/kColumn5Column, /*step=*/2, /*row_offset=*/1));
   ctx.AddVirtualColumn(
-      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn6Column, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/sorted/value",
-      VirtualColumn(/*column=*/kColumn6Column, /*step=*/2, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "rc16_pool", VirtualColumn(/*column=*/kColumn7Column, /*step=*/4, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/sorted", VirtualColumn(/*column=*/kColumn7Column, /*step=*/4, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "diluted_pool", VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "diluted_check/permuted_values",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/5));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state0",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state0_squared",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/7));
-  ctx.AddVirtualColumn(
-      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/8));
-  ctx.AddVirtualColumn(
-      "cpu/operands/ops_mul",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/4));
-  ctx.AddVirtualColumn(
-      "cpu/operands/res", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/12));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp0",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp1",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/10));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state1",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/6));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state1_squared",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/14));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/x",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/33));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/17));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/49));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/selector",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/9));
-  ctx.AddVirtualColumn(
-      "ec_op/doubled_points/x",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/41));
-  ctx.AddVirtualColumn(
-      "ec_op/doubled_points/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/25));
-  ctx.AddVirtualColumn(
-      "ec_op/doubling_slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/57));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/5));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/37));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/21));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state0",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/53));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state1",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/13));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state2",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/45));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state0_squared",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/29));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state1_squared",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/61));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state2_squared",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/doubling_slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/35));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/19));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/51));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/11));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/43));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/27));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/91));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/selector",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/59));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/123));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/7));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn4Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/71));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/r_w_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16355));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16339));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16371));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32763));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32647));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_slope",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/16331));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32715));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/z_inv",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/16363));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/q_x_squared",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32747));
-  ctx.AddVirtualColumn(
-      "memory/multi_column_perm/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "diluted_check/cumulative_value",
-      VirtualColumn(
-          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/8, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "diluted_check/permutation/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/8, /*row_offset=*/7));
+      "range_check16_pool", VirtualColumn(/*column=*/kColumn7Column, /*step=*/4, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/mem_inst/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/0));
@@ -3299,11 +3071,18 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
       "cpu/decode/instruction",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/1));
   ctx.AddVirtualColumn(
+      "cpu/decode/opcode_range_check/column",
+      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "cpu/decode/off0", VirtualColumn(/*column=*/kColumn7Column, /*step=*/16, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/off1", VirtualColumn(/*column=*/kColumn7Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/decode/off2", VirtualColumn(/*column=*/kColumn7Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/operands/mem_dst/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/8));
@@ -3323,11 +3102,51 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
       "cpu/operands/mem_op1/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/16, /*row_offset=*/13));
   ctx.AddVirtualColumn(
+      "cpu/operands/ops_mul",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/operands/res", VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/12));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp0",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp1",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/10));
+  ctx.AddVirtualColumn(
+      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn6Column, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "memory/sorted/value",
+      VirtualColumn(/*column=*/kColumn6Column, /*step=*/2, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "memory/multi_column_perm/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "orig/public_memory/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/8, /*row_offset=*/2));
   ctx.AddVirtualColumn(
       "orig/public_memory/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "range_check16/sorted",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/4, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "range_check16/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "diluted_pool", VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "diluted_check/permuted_values",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/5));
+  ctx.AddVirtualColumn(
+      "diluted_check/cumulative_value",
+      VirtualColumn(
+          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "diluted_check/permutation/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn9Inter1Column - kNumColumnsFirst, /*step=*/8, /*row_offset=*/7));
   ctx.AddVirtualColumn(
       "pedersen/input0/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/512, /*row_offset=*/6));
@@ -3347,13 +3166,31 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
       "pedersen/output/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/512, /*row_offset=*/135));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/addr",
+      "pedersen/hash0/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn4Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/71));
+  ctx.AddVirtualColumn(
+      "range_check_builtin/mem/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/70));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/value",
+      "range_check_builtin/mem/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/71));
   ctx.AddVirtualColumn(
-      "rc_builtin/inner_rc",
+      "range_check_builtin/inner_range_check",
       VirtualColumn(/*column=*/kColumn7Column, /*step=*/32, /*row_offset=*/12));
   ctx.AddVirtualColumn(
       "ecdsa/pubkey/addr",
@@ -3367,6 +3204,72 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
   ctx.AddVirtualColumn(
       "ecdsa/message/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/32768, /*row_offset=*/16775));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/x",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/33));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/doubling_slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/35));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/27));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/91));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/123));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/selector",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/59));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/128, /*row_offset=*/7));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/17));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/49));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/19));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/selector",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/9));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/51));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32763));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32647));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/16331));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32715));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/z_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/16363));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/r_w_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16355));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/q_x_squared",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/32747));
+  ctx.AddVirtualColumn(
+      "bitwise/var_pool/addr",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/198));
+  ctx.AddVirtualColumn(
+      "bitwise/var_pool/value",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/199));
   ctx.AddVirtualColumn(
       "bitwise/x/addr",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/1024, /*row_offset=*/198));
@@ -3463,11 +3366,83 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 6>::GetTraceGenerationCon
       "ec_op/r_y/value",
       VirtualColumn(/*column=*/kColumn5Column, /*step=*/16384, /*row_offset=*/14727));
   ctx.AddVirtualColumn(
-      "poseidon/input_output/addr",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/64, /*row_offset=*/38));
+      "ec_op/doubled_points/x",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/41));
   ctx.AddVirtualColumn(
-      "poseidon/input_output/value",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/64, /*row_offset=*/39));
+      "ec_op/doubled_points/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/25));
+  ctx.AddVirtualColumn(
+      "ec_op/doubling_slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/57));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/5));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/37));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/11));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/21));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/43));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16339));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/16371));
+  ctx.AddVirtualColumn(
+      "poseidon/param_0/input_output/addr",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/38));
+  ctx.AddVirtualColumn(
+      "poseidon/param_0/input_output/value",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/39));
+  ctx.AddVirtualColumn(
+      "poseidon/param_1/input_output/addr",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/166));
+  ctx.AddVirtualColumn(
+      "poseidon/param_1/input_output/value",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/167));
+  ctx.AddVirtualColumn(
+      "poseidon/param_2/input_output/addr",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/102));
+  ctx.AddVirtualColumn(
+      "poseidon/param_2/input_output/value",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/256, /*row_offset=*/103));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state0",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/53));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state1",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/13));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state2",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/45));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state0_squared",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/29));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state1_squared",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/61));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state2_squared",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state0",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state1",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/6));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state0_squared",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/8, /*row_offset=*/7));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state1_squared",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/14));
 
   ctx.AddPeriodicColumn(
       "pedersen/points/x",
@@ -3524,7 +3499,7 @@ template <typename FieldElementT>
 std::vector<std::pair<int64_t, uint64_t>> CpuAirDefinition<FieldElementT, 6>::GetMask() const {
   std::vector<std::pair<int64_t, uint64_t>> mask;
 
-  mask.reserve(269);
+  mask.reserve(271);
   mask.emplace_back(0, kColumn0Column);
   mask.emplace_back(1, kColumn0Column);
   mask.emplace_back(2, kColumn0Column);
@@ -3582,21 +3557,23 @@ std::vector<std::pair<int64_t, uint64_t>> CpuAirDefinition<FieldElementT, 6>::Ge
   mask.emplace_back(103, kColumn5Column);
   mask.emplace_back(134, kColumn5Column);
   mask.emplace_back(135, kColumn5Column);
+  mask.emplace_back(166, kColumn5Column);
   mask.emplace_back(167, kColumn5Column);
   mask.emplace_back(198, kColumn5Column);
   mask.emplace_back(199, kColumn5Column);
-  mask.emplace_back(231, kColumn5Column);
   mask.emplace_back(262, kColumn5Column);
   mask.emplace_back(263, kColumn5Column);
+  mask.emplace_back(294, kColumn5Column);
   mask.emplace_back(295, kColumn5Column);
   mask.emplace_back(326, kColumn5Column);
   mask.emplace_back(358, kColumn5Column);
   mask.emplace_back(359, kColumn5Column);
   mask.emplace_back(390, kColumn5Column);
   mask.emplace_back(391, kColumn5Column);
+  mask.emplace_back(422, kColumn5Column);
+  mask.emplace_back(423, kColumn5Column);
   mask.emplace_back(454, kColumn5Column);
   mask.emplace_back(518, kColumn5Column);
-  mask.emplace_back(550, kColumn5Column);
   mask.emplace_back(711, kColumn5Column);
   mask.emplace_back(902, kColumn5Column);
   mask.emplace_back(903, kColumn5Column);

@@ -27,16 +27,14 @@ void PoseidonBuiltinProverContext<FieldElementT, M>::WriteTrace(
 
     const uint64_t mem_addr = begin_addr_ + 2 * M * i;
     for (size_t index = 0; index < M; ++index) {
-      mem_input_output_.WriteTrace(
-          index + 2 * kMCapacity * i, mem_addr + index, input[index], trace);
+      mem_input_output_[index].WriteTrace(2 * i, mem_addr + index, input[index], trace);
     }
 
     const auto output = poseidon_component_.WriteTrace(input, i, trace);
     ASSERT_RELEASE(output.size() == M, "Wrong output length");
 
     for (size_t index = 0; index < M; ++index) {
-      mem_input_output_.WriteTrace(
-          M + index + 2 * kMCapacity * i, mem_addr + M + index, output[index], trace);
+      mem_input_output_[index].WriteTrace(1 + 2 * i, mem_addr + M + index, output[index], trace);
     }
   }
 }

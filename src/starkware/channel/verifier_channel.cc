@@ -39,17 +39,6 @@ FieldElement VerifierChannel::ReceiveFieldElementImpl(const Field& field) {
   return field.FromBytes(ReceiveBytes(field.ElementSizeInBytes()));
 }
 
-void VerifierChannel::ReceiveFieldElementSpanImpl(
-    const Field& field, const FieldElementSpan& span) {
-  const size_t size_in_bytes = field.ElementSizeInBytes();
-  const size_t n_elements = span.Size();
-  std::vector<std::byte> field_element_vector_bytes = ReceiveBytes(size_in_bytes * n_elements);
-  auto span_bytes = gsl::make_span(field_element_vector_bytes);
-  for (size_t i = 0; i < n_elements; i++) {
-    span.Set(i, field.FromBytes(span_bytes.subspan(i * size_in_bytes, size_in_bytes)));
-  }
-}
-
 /*
   Generates a random number, sends it to the prover and returns it to the caller.
   The number should be chosen uniformly in the range [0, upper_bound).

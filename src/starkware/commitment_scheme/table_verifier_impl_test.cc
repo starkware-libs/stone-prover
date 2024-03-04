@@ -205,13 +205,13 @@ std::vector<std::byte> TableVerifierImplTest::GetValidProof(
 
   Prng prng;
   const size_t n_out_of_memory_merkle_layers = 0;
-  auto commitment_scheme_prover = MakeCommitmentSchemeProver<Blake2s256>(
+  auto commitment_scheme_prover = MakeCommitmentSchemeProver(
       size_of_row, n_rows_per_segment, n_segments, &prover_channel,
       /*n_verifier_friendly_commitment_layers=*/0, CommitmentHashes(Blake2s256::HashName()),
-      n_out_of_memory_merkle_layers);
+      n_columns, n_out_of_memory_merkle_layers);
 
   std::unique_ptr<TableProver> table_prover = std::make_unique<TableProverImpl>(
-      n_columns, UseOwned(&commitment_scheme_prover), &prover_channel);
+      n_columns, UseOwned(commitment_scheme_prover), &prover_channel);
 
   // Start protocol - prover side.
   for (size_t i = 0; i < segment_data.size(); ++i) {
@@ -253,12 +253,12 @@ bool TableVerifierImplTest::VerifyProof(
   // Setup verifier.
   NoninteractiveVerifierChannel verifier_channel(channel_prng.Clone(), proof);
   const size_t size_of_row = field.ElementSizeInBytes() * n_columns;
-  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier<Blake2s256>(
+  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier(
       size_of_row, n_rows, &verifier_channel, /*n_verifier_friendly_commitment_layers=*/0,
-      CommitmentHashes(Blake2s256::HashName()));
+      CommitmentHashes(Blake2s256::HashName()), n_columns);
 
   std::unique_ptr<TableVerifier> table_verifier = std::make_unique<TableVerifierImpl>(
-      field, n_columns, UseOwned(&commitment_scheme_verifier), &verifier_channel);
+      field, n_columns, UseOwned(commitment_scheme_verifier), &verifier_channel);
 
   // Start protocol - verifier side.
   table_verifier->ReadCommitment();
@@ -300,12 +300,12 @@ TEST_F(TableVerifierImplTest, AllQueriesAnswered) {
   NoninteractiveVerifierChannel verifier_channel(channel_prng.Clone(), proof);
   const size_t size_of_row = field.ElementSizeInBytes() * kNColumns;
 
-  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier<Blake2s256>(
+  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier(
       size_of_row, kNRows, &verifier_channel, /*n_verifier_friendly_commitment_layers=*/0,
-      CommitmentHashes(Blake2s256::HashName()));
+      CommitmentHashes(Blake2s256::HashName()), kNColumns);
 
   std::unique_ptr<TableVerifier> table_verifier = std::make_unique<TableVerifierImpl>(
-      field, kNColumns, UseOwned(&commitment_scheme_verifier), &verifier_channel);
+      field, kNColumns, UseOwned(commitment_scheme_verifier), &verifier_channel);
 
   // Start protocol - verifier side.
   table_verifier->ReadCommitment();
@@ -378,12 +378,12 @@ TEST_F(TableVerifierImplTest, DisjointIntegrityAndDataQueries) {
   NoninteractiveVerifierChannel verifier_channel(channel_prng.Clone(), proof);
   const size_t size_of_row = field.ElementSizeInBytes() * kNColumns;
 
-  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier<Blake2s256>(
+  auto commitment_scheme_verifier = MakeCommitmentSchemeVerifier(
       size_of_row, kNRows, &verifier_channel, /*n_verifier_friendly_commitment_layers=*/0,
-      CommitmentHashes(Blake2s256::HashName()));
+      CommitmentHashes(Blake2s256::HashName()), kNColumns);
 
   std::unique_ptr<TableVerifier> table_verifier = std::make_unique<TableVerifierImpl>(
-      field, kNColumns, UseOwned(&commitment_scheme_verifier), &verifier_channel);
+      field, kNColumns, UseOwned(commitment_scheme_verifier), &verifier_channel);
 
   // Start protocol - verifier side.
   table_verifier->ReadCommitment();

@@ -15,7 +15,9 @@
 #ifndef STARKWARE_AIR_BOUNDARY_BOUNDARY_AIR_H_
 #define STARKWARE_AIR_BOUNDARY_BOUNDARY_AIR_H_
 
+#include <map>
 #include <memory>
+#include <string>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -95,14 +97,12 @@ class BoundaryAir : public Air {
   auto ConstraintsEval(
       gsl::span<const FieldElementT> neighbors,
       gsl::span<const FieldElementT> /* periodic_columns */,
-      gsl::span<const FieldElementT> random_coefficients,
-      gsl::span<const FieldElementT> point_powers, gsl::span<const FieldElementT> /*shifts*/,
+      gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
+      gsl::span<const FieldElementT> /*shifts*/,
       gsl::span<const FieldElementT> /* precomp_domains */) const {
     ASSERT_DEBUG(neighbors.size() == n_columns_, "Wrong number of neighbors");
     ASSERT_DEBUG(
         random_coefficients.size() == constraints_.size(), "Wrong number of random coefficients");
-
-    const FieldElementT& point = point_powers[0];
 
     FractionFieldElement<FieldElementT> outer_sum(FieldElementT::Zero());
     FieldElementT inner_sum(FieldElementT::Zero());
@@ -142,6 +142,11 @@ class BoundaryAir : public Air {
   uint64_t NumRandomCoefficients() const override { return constraints_.size(); };
 
   std::vector<std::pair<int64_t, uint64_t>> GetMask() const override { return mask_; };
+
+  std::vector<uint64_t> ParseDynamicParams(
+      const std::map<std::string, uint64_t>& /* params */) const override {
+    return {};
+  };
 
   uint64_t NumColumns() const override { return n_columns_; };
 

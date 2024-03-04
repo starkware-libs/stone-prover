@@ -28,82 +28,257 @@ namespace cpu {
 
 template <typename FieldElementT, int LayoutId>
 constexpr uint64_t CpuAir<FieldElementT, LayoutId>::PedersenRatio() const {
-  if constexpr (CpuAir::kHasPedersenBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    return CpuAir::kPedersenBuiltinRatio;
-  } else {  // NOLINT: clang-tidy if constexpr bug.
-    return 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kPedersenBuiltinRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                        // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasPedersenBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kPedersenBuiltinRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
   }
 }
 
 template <typename FieldElementT, int LayoutId>
 constexpr uint64_t CpuAir<FieldElementT, LayoutId>::RangeCheckRatio() const {
-  if constexpr (CpuAir::kHasRangeCheckBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    return CpuAir::kRcBuiltinRatio;
-  } else {  // NOLINT: clang-tidy if constexpr bug.
-    return 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kRangeCheckBuiltinRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                          // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasRangeCheckBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kRangeCheckBuiltinRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::RangeCheck96Ratio() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kRangeCheck96RowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                            // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasRangeCheck96Builtin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kRangeCheck96BuiltinRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
   }
 }
 
 template <typename FieldElementT, int LayoutId>
 constexpr uint64_t CpuAir<FieldElementT, LayoutId>::EcdsaRatio() const {
-  if constexpr (CpuAir::kHasEcdsaBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    return CpuAir::kEcdsaBuiltinRatio;
-  } else {  // NOLINT: clang-tidy if constexpr bug.
-    return 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kEcdsaBuiltinRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                     // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasEcdsaBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kEcdsaBuiltinRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
   }
 }
 
 template <typename FieldElementT, int LayoutId>
 constexpr uint64_t CpuAir<FieldElementT, LayoutId>::BitwiseRatio() const {
-  if constexpr (CpuAir::kHasBitwiseBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    return CpuAir::kBitwiseRatio;
-  } else {  // NOLINT: clang-tidy if constexpr bug.
-    return 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kBitwiseRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                       // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasBitwiseBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kBitwiseRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
   }
 }
 
 template <typename FieldElementT, int LayoutId>
 constexpr uint64_t CpuAir<FieldElementT, LayoutId>::EcOpRatio() const {
-  if constexpr (CpuAir::kHasEcOpBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    return CpuAir::kEcOpBuiltinRatio;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kEcOpBuiltinRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                    // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasEcOpBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kEcOpBuiltinRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::KeccakRatio() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kKeccakRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                      // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasKeccakBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kKeccakRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::PoseidonRatio() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return SafeDiv(
+        this->dynamic_params_[CpuAir::kPoseidonRowRatioDynamicParam],
+        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
+  } else {                                        // NOLINT: clang-tidy if constexpr bug.
+    if constexpr (CpuAir::kHasPoseidonBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      return CpuAir::kPoseidonRatio;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesPedersenBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesPedersenBuiltinDynamicParam];
   } else {  // NOLINT: clang-tidy if constexpr bug.
-    return 0;
+    return CpuAir::kHasPedersenBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesRangeCheckBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesRangeCheckBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasRangeCheckBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesRangeCheck96Builtin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesRangeCheck96BuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasRangeCheck96Builtin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesEcdsaBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesEcdsaBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasEcdsaBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesBitwiseBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesBitwiseBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasBitwiseBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesEcOpBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesEcOpBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasEcOpBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesKeccakBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesKeccakBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasKeccakBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesPoseidonBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesPoseidonBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasPoseidonBuiltin;
   }
 }
 
 template <typename FieldElementT, int LayoutId>
 void CpuAir<FieldElementT, LayoutId>::BuildPeriodicColumns(
-    const FieldElementT& gen, [[maybe_unused]] Builder* builder) const {
+    const FieldElementT& gen, Builder* builder) const {
   // Pedersen builtin.
   if constexpr (CpuAir::kHasPedersenBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    for (const auto& [column_name, column_values] : hash_factory_.ComputePeriodicColumnValues()) {
-      const auto& column_info = this->ctx_.GetPeriodicColumn(column_name);
-      builder->AddPeriodicColumn(
-          PeriodicColumn<FieldElementT>(
-              column_values, gen, FieldElementT::One(), this->trace_length_, column_info.view.step),
-          column_info.column);
+    if (UsesPedersenBuiltin()) {
+      for (const auto& [column_name, column_values] : hash_factory_.ComputePeriodicColumnValues()) {
+        const auto& column_info = this->ctx_.GetPeriodicColumn(column_name);
+        builder->AddPeriodicColumn(
+            PeriodicColumn<FieldElementT>(
+                column_values, gen, FieldElementT::One(), this->trace_length_,
+                column_info.view.step),
+            column_info.column);
+      }
+    } else {
+      for (const auto& column_name : {"pedersen/points/x", "pedersen/points/y"}) {
+        const auto& column_info = this->ctx_.GetPeriodicColumn(column_name);
+        builder->AddPeriodicColumn(
+            PeriodicColumn<FieldElementT>(
+                CpuAir::kTrivialPeriodicColumnData, gen, FieldElementT::One(), this->trace_length_,
+                1),
+            column_info.column);
+      }
     }
   }
 
   // Periodic columns for ecdsa constant column.
   if constexpr (CpuAir::kHasEcdsaBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    const auto& [points_x, points_y] = EcPoint<FieldElementT>::ToCoordinatesAndExpand(
-        TwosPowersOfPoint(
-            this->ecdsa__sig_config_.generator_point, this->ecdsa__sig_config_.alpha,
-            CpuAir::kEcdsaElementBits),
-        CpuAir::kEcdsaElementHeight);
+    if (UsesEcdsaBuiltin()) {
+      const auto& [points_x, points_y] = EcPoint<FieldElementT>::ToCoordinatesAndExpand(
+          TwosPowersOfPoint(
+              this->ecdsa__sig_config_.generator_point, this->ecdsa__sig_config_.alpha,
+              CpuAir::kEcdsaElementBits),
+          CpuAir::kEcdsaElementHeight);
 
-    const auto& column_info_x = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/x");
-    builder->AddPeriodicColumn(
-        PeriodicColumn<FieldElementT>(
-            points_x, gen, FieldElementT::One(), this->trace_length_, column_info_x.view.step),
-        column_info_x.column);
+      const auto& column_info_x = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/x");
+      builder->AddPeriodicColumn(
+          PeriodicColumn<FieldElementT>(
+              points_x, gen, FieldElementT::One(), this->trace_length_, column_info_x.view.step),
+          column_info_x.column);
 
-    const auto& column_info_y = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/y");
-    builder->AddPeriodicColumn(
-        PeriodicColumn<FieldElementT>(
-            points_y, gen, FieldElementT::One(), this->trace_length_, column_info_y.view.step),
-        column_info_y.column);
+      const auto& column_info_y = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/y");
+      builder->AddPeriodicColumn(
+          PeriodicColumn<FieldElementT>(
+              points_y, gen, FieldElementT::One(), this->trace_length_, column_info_y.view.step),
+          column_info_y.column);
+    } else {
+      const auto& column_info_x = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/x");
+      builder->AddPeriodicColumn(
+          PeriodicColumn<FieldElementT>(
+              CpuAir::kTrivialPeriodicColumnData, gen, FieldElementT::One(), this->trace_length_,
+              1),
+          column_info_x.column);
+
+      const auto& column_info_y = this->ctx_.GetPeriodicColumn("ecdsa/generator_points/y");
+      builder->AddPeriodicColumn(
+          PeriodicColumn<FieldElementT>(
+              CpuAir::kTrivialPeriodicColumnData, gen, FieldElementT::One(), this->trace_length_,
+              1),
+          column_info_y.column);
+    }
   }
 }
 
@@ -116,7 +291,7 @@ CpuAir<FieldElementT, LayoutId> CpuAir<FieldElementT, LayoutId>::WithInteraction
       "Interaction element vector is of wrong size.");
   new_air.memory__multi_column_perm__perm__interaction_elm_ = interaction_elms[0];
   new_air.memory__multi_column_perm__hash_interaction_elm0_ = interaction_elms[1];
-  new_air.rc16__perm__interaction_elm_ = interaction_elms[2];
+  new_air.range_check16__perm__interaction_elm_ = interaction_elms[2];
   new_air.memory__multi_column_perm__perm__public_memory_prod_ = new_air.GetPublicMemoryProd();
   if constexpr (CpuAir::kHasDilutedPool) {  // NOLINT: clang-tidy if constexpr bug.
     new_air.diluted_check__permutation__interaction_elm_ = interaction_elms[3];
@@ -138,13 +313,13 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
 
   ProfilingBlock init_trace_block("Init trace memory");
   std::vector<std::vector<FieldElementT>> trace(
-      this->kNumColumnsFirst,
+      this->GetInteractionParams()->n_columns_first,
       std::vector<FieldElementT>(this->trace_length_, FieldElementT::Zero()));
   std::vector<gsl::span<FieldElementT>> trace_spans(trace.begin(), trace.end());
   init_trace_block.CloseBlock();
 
   MemoryCell<FieldElementT> memory_pool("mem_pool", ctx_, this->trace_length_);
-  RangeCheckCell<FieldElementT> rc16_pool("rc16_pool", ctx_, this->trace_length_);
+  RangeCheckCell<FieldElementT> rc16_pool("range_check16_pool", ctx_, this->trace_length_);
 
   {
     ProfilingBlock cpu_component_block("CpuComponent::WriteTrace");
@@ -160,37 +335,58 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
 
   // Pedersen builtin.
   if constexpr (CpuAir::kHasPedersenBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock pedersen_builtin_block("Pedersen builtin");
-    HashBuiltinProverContext<FieldElementT>(
-        "pedersen", ctx_, hash_factory_, &memory_pool, this->pedersen_begin_addr_,
-        SafeDiv(n_steps_, PedersenRatio()), CpuAir::kPedersenBuiltinRepetitions,
-        HashBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["pedersen"]))
-        .WriteTrace(trace_spans);
+    if (UsesPedersenBuiltin()) {
+      ProfilingBlock pedersen_builtin_block("Pedersen builtin");
+      HashBuiltinProverContext<FieldElementT>(
+          "pedersen", ctx_, hash_factory_, &memory_pool, this->pedersen_begin_addr_,
+          SafeDiv(n_steps_, PedersenRatio()), CpuAir::kPedersenBuiltinRepetitions,
+          HashBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["pedersen"]))
+          .WriteTrace(trace_spans);
+    }
   }
 
   // Range check builtin.
   std::optional<RangeCheckBuiltinProverContext<FieldElementT>> rc_prover;
   if constexpr (CpuAir::kHasRangeCheckBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    rc_prover.emplace(
-        "rc_builtin", ctx_, &memory_pool, &rc16_pool, this->rc_begin_addr_,
-        SafeDiv(n_steps_, RangeCheckRatio()), CpuAir::kRcNParts, CpuAir::kOffsetBits,
-        RangeCheckBuiltinProverContext<FieldElementT>::ParsePrivateInput(
-            private_input["range_check"]));
+    if (UsesRangeCheckBuiltin()) {
+      rc_prover.emplace(
+          "range_check_builtin", ctx_, &memory_pool, &rc16_pool, this->range_check_begin_addr_,
+          SafeDiv(n_steps_, RangeCheckRatio()), CpuAir::kRangeCheckNParts, CpuAir::kOffsetBits,
+          RangeCheckBuiltinProverContext<FieldElementT>::ParsePrivateInput(
+              private_input["range_check"]));
 
-    ProfilingBlock range_check_builtin_block("Range check builtin");
-    rc_prover->WriteTrace(trace_spans);
+      ProfilingBlock range_check_builtin_block("Range check builtin");
+      rc_prover->WriteTrace(trace_spans);
+    }
+  }
+
+  // Range check 96 builtin.
+  std::optional<RangeCheckBuiltinProverContext<FieldElementT>> rc96_prover;
+  if constexpr (CpuAir::kHasRangeCheck96Builtin) {  // NOLINT: clang-tidy if constexpr bug.
+    if (UsesRangeCheck96Builtin()) {
+      rc96_prover.emplace(
+          "range_check96_builtin", ctx_, &memory_pool, &rc16_pool, this->range_check96_begin_addr_,
+          SafeDiv(n_steps_, RangeCheck96Ratio()), CpuAir::kRangeCheck96NParts, CpuAir::kOffsetBits,
+          RangeCheckBuiltinProverContext<FieldElementT>::ParsePrivateInput(
+              private_input["range_check96"]));
+
+      ProfilingBlock range_check_builtin_block("Range check 96 builtin");
+      rc96_prover->WriteTrace(trace_spans);
+    }
   }
 
   // ECDSA builtin.
   if constexpr (CpuAir::kHasEcdsaBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock ecdsa_builtin_block("ECDSA builtin");
-    SignatureBuiltinProverContext<FieldElementT>(
-        "ecdsa", ctx_, &memory_pool, this->ecdsa_begin_addr_, CpuAir::kEcdsaElementHeight,
-        CpuAir::kEcdsaElementBits, SafeDiv(n_steps_, EcdsaRatio()),
-        CpuAir::kEcdsaBuiltinRepetitions, this->ecdsa__sig_config_,
-        SignatureBuiltinProverContext<FieldElementT>::ParsePrivateInput(
-            private_input["ecdsa"], this->ecdsa__sig_config_))
-        .WriteTrace(trace_spans);
+    if (UsesEcdsaBuiltin()) {
+      ProfilingBlock ecdsa_builtin_block("ECDSA builtin");
+      SignatureBuiltinProverContext<FieldElementT>(
+          "ecdsa", ctx_, &memory_pool, this->ecdsa_begin_addr_, CpuAir::kEcdsaElementHeight,
+          CpuAir::kEcdsaElementBits, SafeDiv(n_steps_, EcdsaRatio()),
+          CpuAir::kEcdsaBuiltinRepetitions, this->ecdsa__sig_config_,
+          SignatureBuiltinProverContext<FieldElementT>::ParsePrivateInput(
+              private_input["ecdsa"], this->ecdsa__sig_config_))
+          .WriteTrace(trace_spans);
+    }
   }
 
   std::optional<diluted_check_cell::DilutedCheckCell<FieldElementT>> diluted_pool;
@@ -201,57 +397,65 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
 
   // Bitwise builtin.
   if constexpr (CpuAir::kHasBitwiseBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock bitwise_builtin_block("Bitwise builtin");
-    BitwiseBuiltinProverContext<FieldElementT>(
-        "bitwise", ctx_, &memory_pool, &*diluted_pool, this->bitwise_begin_addr_,
-        SafeDiv(n_steps_, BitwiseRatio()), CpuAir::kDilutedSpacing, CpuAir::kDilutedNBits,
-        CpuAir::kBitwiseTotalNBits,
-        BitwiseBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["bitwise"]))
-        .WriteTrace(trace_spans);
+    if (UsesBitwiseBuiltin()) {
+      ProfilingBlock bitwise_builtin_block("Bitwise builtin");
+      BitwiseBuiltinProverContext<FieldElementT>(
+          "bitwise", ctx_, &memory_pool, &*diluted_pool, this->bitwise_begin_addr_,
+          SafeDiv(n_steps_, BitwiseRatio()), CpuAir::kDilutedSpacing, CpuAir::kDilutedNBits,
+          CpuAir::kBitwiseTotalNBits,
+          BitwiseBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["bitwise"]))
+          .WriteTrace(trace_spans);
+    }
   }
 
   // EcOp builtin.
   if constexpr (CpuAir::kHasEcOpBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock ec_op_builtin_block("EC operation builtin");
-    EcOpBuiltinProverContext<FieldElementT>(
-        /*name=*/"ec_op",
-        /*ctx=*/ctx_,
-        /*memory_pool=*/&memory_pool,
-        /*begin_addr=*/this->ec_op_begin_addr_,
-        /*height=*/CpuAir::kEcOpScalarHeight,
-        /*n_bits=*/CpuAir::kEcOpNBits, SafeDiv(n_steps_, EcOpRatio()),
-        /*curve_config=*/this->ec_op__curve_config_,
-        /*inputs=*/
-        EcOpBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["ec_op"]))
-        .WriteTrace(trace_spans);
+    if (UsesEcOpBuiltin()) {
+      ProfilingBlock ec_op_builtin_block("EC operation builtin");
+      EcOpBuiltinProverContext<FieldElementT>(
+          /*name=*/"ec_op",
+          /*ctx=*/ctx_,
+          /*memory_pool=*/&memory_pool,
+          /*begin_addr=*/this->ec_op_begin_addr_,
+          /*height=*/CpuAir::kEcOpScalarHeight,
+          /*n_bits=*/CpuAir::kEcOpNBits, SafeDiv(n_steps_, EcOpRatio()),
+          /*curve_config=*/this->ec_op__curve_config_,
+          /*inputs=*/
+          EcOpBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["ec_op"]))
+          .WriteTrace(trace_spans);
+    }
   }
 
   // Keccak builtin.
   if constexpr (CpuAir::kHasKeccakBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock keccak_builtin_block("Keccak builtin");
-    KeccakBuiltinProverContext<FieldElementT>(
-        "keccak", ctx_, &memory_pool, &*diluted_pool, this->keccak_begin_addr_,
-        SafeDiv(n_steps_, CpuAir::kKeccakRatio * CpuAir::kDilutedNBits), CpuAir::kDilutedSpacing,
-        CpuAir::kDilutedNBits,
-        KeccakBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["keccak"]))
-        .WriteTrace(trace_spans);
+    if (UsesKeccakBuiltin()) {
+      ProfilingBlock keccak_builtin_block("Keccak builtin");
+      KeccakBuiltinProverContext<FieldElementT>(
+          "keccak", ctx_, &memory_pool, &*diluted_pool, this->keccak_begin_addr_,
+          SafeDiv(n_steps_, KeccakRatio() * CpuAir::kDilutedNBits), CpuAir::kDilutedSpacing,
+          CpuAir::kDilutedNBits,
+          KeccakBuiltinProverContext<FieldElementT>::ParsePrivateInput(private_input["keccak"]))
+          .WriteTrace(trace_spans);
+    }
   }
 
   // Poseidon builtin.
   if constexpr (CpuAir::kHasPoseidonBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
-    ProfilingBlock poseidon_builtin_block("Poseidon builtin");
-    const ConstSpanAdapter<FieldElementT> mds_spans{
-        gsl::span<const std::array<FieldElementT, CpuAir::kPoseidonM>>{CpuAir::kPoseidonMds}};
-    const ConstSpanAdapter<FieldElementT> ark_spans{
-        gsl::span<const std::array<FieldElementT, CpuAir::kPoseidonM>>{CpuAir::kPoseidonArk}};
-    PoseidonBuiltinProverContext<FieldElementT, CpuAir::kPoseidonM>(
-        "poseidon", ctx_, &memory_pool, this->poseidon_begin_addr_,
-        SafeDiv(n_steps_, CpuAir::kPoseidonRatio),
-        PoseidonBuiltinProverContext<FieldElementT, CpuAir::kPoseidonM>::ParsePrivateInput(
-            private_input["poseidon"]),
-        CpuAir::kPoseidonRoundsFull, CpuAir::kPoseidonRoundsPartial, CpuAir::kPoseidonRPPartition,
-        mds_spans, ark_spans)
-        .WriteTrace(trace_spans);
+    if (UsesPoseidonBuiltin()) {
+      ProfilingBlock poseidon_builtin_block("Poseidon builtin");
+      const ConstSpanAdapter<FieldElementT> mds_spans{
+          gsl::span<const std::array<FieldElementT, CpuAir::kPoseidonM>>{CpuAir::kPoseidonMds}};
+      const ConstSpanAdapter<FieldElementT> ark_spans{
+          gsl::span<const std::array<FieldElementT, CpuAir::kPoseidonM>>{CpuAir::kPoseidonArk}};
+      PoseidonBuiltinProverContext<FieldElementT, CpuAir::kPoseidonM>(
+          "poseidon", ctx_, &memory_pool, this->poseidon_begin_addr_,
+          SafeDiv(n_steps_, PoseidonRatio()),
+          PoseidonBuiltinProverContext<FieldElementT, CpuAir::kPoseidonM>::ParsePrivateInput(
+              private_input["poseidon"]),
+          CpuAir::kPoseidonRoundsFull, CpuAir::kPoseidonRoundsPartial,
+          CpuAir::kPoseidonPartialRoundsPartition, mds_spans, ark_spans)
+          .WriteTrace(trace_spans);
+    }
   }
 
   // Finalize.
@@ -259,6 +463,10 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
   if (rc_prover.has_value()) {
     // rc_prover writes to memory, so this must be called before the memory finalization.
     rc_prover->Finalize(trace_spans);
+  }
+  if (rc96_prover.has_value()) {
+    // rc96_prover writes to memory, so this must be called before the memory finalization.
+    rc96_prover->Finalize(trace_spans);
   }
   if constexpr (CpuAir::kHasDilutedPool) {  // NOLINT: clang-tidy if constexpr bug.
     diluted_pool->Finalize(trace_spans);
@@ -270,7 +478,8 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
           .WriteTrace(trace_spans, this->disable_asserts_in_memory_);
 
   PermRangeCheckComponentProverContext1<FieldElementT> perm_range_check_prover_context1 =
-      PermRangeCheckComponentProverContext0<FieldElementT>("rc16", ctx_, std::move(rc16_pool))
+      PermRangeCheckComponentProverContext0<FieldElementT>(
+          "range_check16", ctx_, std::move(rc16_pool))
           .WriteTrace(trace_spans);
 
   std::optional<DilutedCheckComponentProverContext1<FieldElementT>> diluted_check_prover_context1;
@@ -295,7 +504,7 @@ template <typename FieldElementT, int LayoutId>
 Trace CpuAir<FieldElementT, LayoutId>::GetInteractionTrace(
     CpuAirProverContext1<FieldElementT>&& cpu_air_prover_context1) const {
   std::vector<std::vector<FieldElementT>> trace(
-      this->kNumColumnsSecond,
+      this->GetInteractionParams()->n_columns_second,
       std::vector<FieldElementT>(this->trace_length_, FieldElementT::Zero()));
 
   const std::vector<FieldElementT> interaction_elms_vec = {
@@ -307,7 +516,7 @@ Trace CpuAir<FieldElementT, LayoutId>::GetInteractionTrace(
           interaction_elms_vec, SpanAdapter(trace),
           this->memory__multi_column_perm__perm__public_memory_prod_);
   std::move(cpu_air_prover_context1.perm_range_check_prover_context1)
-      .WriteTrace(this->rc16__perm__interaction_elm_, SpanAdapter(trace));
+      .WriteTrace(this->range_check16__perm__interaction_elm_, SpanAdapter(trace));
 
   if constexpr (CpuAir::kHasDilutedPool) {  // NOLINT: clang-tidy if constexpr bug.
     ConsumeOptional(std::move(cpu_air_prover_context1.diluted_check_prover_context1))

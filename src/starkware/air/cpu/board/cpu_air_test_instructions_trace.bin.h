@@ -13,8 +13,8 @@
 // and limitations under the License.
 
 
-#ifndef ZWXKVEYIDFZXPMQNSKMD_H_
-#define ZWXKVEYIDFZXPMQNSKMD_H_
+#ifndef SRILZXPPCKQXPPMIOKKH_H_
+#define SRILZXPPCKQXPPMIOKKH_H_
 
 #include <sstream>
 
@@ -41,5 +41,5 @@ inline std::string GetCpuAirTestInstructionsTraceString() {
 
 }  // namespace starkware
 
-#endif  // ZWXKVEYIDFZXPMQNSKMD_H_
+#endif  // SRILZXPPCKQXPPMIOKKH_H_
 

@@ -29,3376 +29,3376 @@ CpuAirDefinition<FieldElementT, 8>::CreateCompositionPolynomial(
   const FieldElementT& gen = trace_generator.As<FieldElementT>();
 
   const std::vector<uint64_t> point_exponents = {
-      trace_length_,
-      SafeDiv(trace_length_, 2),
-      SafeDiv(trace_length_, 4),
-      SafeDiv(trace_length_, 8),
-      SafeDiv(trace_length_, 16),
-      SafeDiv(trace_length_, 64),
-      SafeDiv(trace_length_, 128),
-      SafeDiv(trace_length_, 256),
-      SafeDiv(trace_length_, 512),
-      SafeDiv(trace_length_, 1024),
-      SafeDiv(trace_length_, 2048),
-      SafeDiv(trace_length_, 8192),
-      SafeDiv(trace_length_, 16384),
-      SafeDiv(trace_length_, 32768),
-      SafeDiv(trace_length_, 524288)};
+      uint64_t(trace_length_),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 4)),
+      uint64_t(SafeDiv(trace_length_, 8)),
+      uint64_t(SafeDiv(trace_length_, 16)),
+      uint64_t(SafeDiv(trace_length_, 64)),
+      uint64_t(SafeDiv(trace_length_, 128)),
+      uint64_t(SafeDiv(trace_length_, 256)),
+      uint64_t(SafeDiv(trace_length_, 512)),
+      uint64_t(SafeDiv(trace_length_, 1024)),
+      uint64_t(SafeDiv(trace_length_, 2048)),
+      uint64_t(SafeDiv(trace_length_, 8192)),
+      uint64_t(SafeDiv(trace_length_, 16384)),
+      uint64_t(SafeDiv(trace_length_, 32768)),
+      uint64_t(SafeDiv(trace_length_, 524288))};
   const std::vector<uint64_t> gen_exponents = {
-      SafeDiv((15) * (trace_length_), 16),
-      SafeDiv((255) * (trace_length_), 256),
-      SafeDiv((63) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 4),
-      SafeDiv(trace_length_, 32),
-      SafeDiv((31) * (trace_length_), 32),
-      SafeDiv((7) * (trace_length_), 8),
-      SafeDiv((11) * (trace_length_), 16),
-      SafeDiv((23) * (trace_length_), 32),
-      SafeDiv((25) * (trace_length_), 32),
-      SafeDiv((13) * (trace_length_), 16),
-      SafeDiv((27) * (trace_length_), 32),
-      SafeDiv((29) * (trace_length_), 32),
-      SafeDiv((5) * (trace_length_), 8),
-      SafeDiv((19) * (trace_length_), 32),
-      SafeDiv((21) * (trace_length_), 32),
-      SafeDiv((61) * (trace_length_), 64),
-      SafeDiv(trace_length_, 2),
-      SafeDiv(trace_length_, 64),
-      SafeDiv((3) * (trace_length_), 64),
-      SafeDiv(trace_length_, 16),
-      SafeDiv((5) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 32),
-      SafeDiv((7) * (trace_length_), 64),
-      SafeDiv(trace_length_, 8),
-      SafeDiv((9) * (trace_length_), 64),
-      SafeDiv((5) * (trace_length_), 32),
-      SafeDiv((11) * (trace_length_), 64),
-      SafeDiv((3) * (trace_length_), 16),
-      SafeDiv((13) * (trace_length_), 64),
-      SafeDiv((7) * (trace_length_), 32),
-      SafeDiv((15) * (trace_length_), 64),
-      SafeDiv(trace_length_, 1024),
-      SafeDiv(trace_length_, 512),
-      SafeDiv((3) * (trace_length_), 1024),
-      SafeDiv(trace_length_, 256),
-      SafeDiv((5) * (trace_length_), 1024),
-      SafeDiv((3) * (trace_length_), 512),
-      SafeDiv((7) * (trace_length_), 1024),
-      SafeDiv(trace_length_, 128),
-      SafeDiv((9) * (trace_length_), 1024),
-      SafeDiv((5) * (trace_length_), 512),
-      SafeDiv((11) * (trace_length_), 1024),
-      SafeDiv((3) * (trace_length_), 256),
-      SafeDiv((13) * (trace_length_), 1024),
-      SafeDiv((7) * (trace_length_), 512),
-      SafeDiv((15) * (trace_length_), 1024),
-      SafeDiv((17) * (trace_length_), 1024),
-      SafeDiv((9) * (trace_length_), 512),
-      SafeDiv((19) * (trace_length_), 1024),
-      SafeDiv((5) * (trace_length_), 256),
-      SafeDiv((21) * (trace_length_), 1024),
-      SafeDiv((11) * (trace_length_), 512),
-      SafeDiv((23) * (trace_length_), 1024),
-      SafeDiv((161) * (trace_length_), 1024),
-      SafeDiv((81) * (trace_length_), 512),
-      SafeDiv((163) * (trace_length_), 1024),
-      SafeDiv((41) * (trace_length_), 256),
-      SafeDiv((165) * (trace_length_), 1024),
-      SafeDiv((83) * (trace_length_), 512),
-      SafeDiv((167) * (trace_length_), 1024),
-      SafeDiv((21) * (trace_length_), 128),
-      SafeDiv((169) * (trace_length_), 1024),
-      SafeDiv((85) * (trace_length_), 512),
-      SafeDiv((171) * (trace_length_), 1024),
-      SafeDiv((43) * (trace_length_), 256),
-      SafeDiv((173) * (trace_length_), 1024),
-      SafeDiv((87) * (trace_length_), 512),
-      SafeDiv((175) * (trace_length_), 1024),
-      SafeDiv((177) * (trace_length_), 1024),
-      SafeDiv((89) * (trace_length_), 512),
-      SafeDiv((179) * (trace_length_), 1024),
-      SafeDiv((45) * (trace_length_), 256),
-      SafeDiv((181) * (trace_length_), 1024),
-      SafeDiv((91) * (trace_length_), 512),
-      SafeDiv((183) * (trace_length_), 1024),
-      SafeDiv((5) * (trace_length_), 16),
-      SafeDiv((321) * (trace_length_), 1024),
-      SafeDiv((161) * (trace_length_), 512),
-      SafeDiv((323) * (trace_length_), 1024),
-      SafeDiv((81) * (trace_length_), 256),
-      SafeDiv((325) * (trace_length_), 1024),
-      SafeDiv((163) * (trace_length_), 512),
-      SafeDiv((327) * (trace_length_), 1024),
-      SafeDiv((41) * (trace_length_), 128),
-      SafeDiv((329) * (trace_length_), 1024),
-      SafeDiv((165) * (trace_length_), 512),
-      SafeDiv((331) * (trace_length_), 1024),
-      SafeDiv((83) * (trace_length_), 256),
-      SafeDiv((333) * (trace_length_), 1024),
-      SafeDiv((167) * (trace_length_), 512),
-      SafeDiv((335) * (trace_length_), 1024),
-      SafeDiv((21) * (trace_length_), 64),
-      SafeDiv((337) * (trace_length_), 1024),
-      SafeDiv((169) * (trace_length_), 512),
-      SafeDiv((339) * (trace_length_), 1024),
-      SafeDiv((85) * (trace_length_), 256),
-      SafeDiv((341) * (trace_length_), 1024),
-      SafeDiv((171) * (trace_length_), 512),
-      SafeDiv((343) * (trace_length_), 1024),
-      SafeDiv((15) * (trace_length_), 32),
-      SafeDiv((481) * (trace_length_), 1024),
-      SafeDiv((241) * (trace_length_), 512),
-      SafeDiv((483) * (trace_length_), 1024),
-      SafeDiv((121) * (trace_length_), 256),
-      SafeDiv((485) * (trace_length_), 1024),
-      SafeDiv((243) * (trace_length_), 512),
-      SafeDiv((487) * (trace_length_), 1024),
-      SafeDiv((61) * (trace_length_), 128),
-      SafeDiv((489) * (trace_length_), 1024),
-      SafeDiv((245) * (trace_length_), 512),
-      SafeDiv((491) * (trace_length_), 1024),
-      SafeDiv((123) * (trace_length_), 256),
-      SafeDiv((493) * (trace_length_), 1024),
-      SafeDiv((247) * (trace_length_), 512),
-      SafeDiv((495) * (trace_length_), 1024),
-      SafeDiv((31) * (trace_length_), 64),
-      SafeDiv((497) * (trace_length_), 1024),
-      SafeDiv((249) * (trace_length_), 512),
-      SafeDiv((499) * (trace_length_), 1024),
-      SafeDiv((125) * (trace_length_), 256),
-      SafeDiv((501) * (trace_length_), 1024),
-      SafeDiv((251) * (trace_length_), 512),
-      SafeDiv((503) * (trace_length_), 1024),
-      SafeDiv((641) * (trace_length_), 1024),
-      SafeDiv((321) * (trace_length_), 512),
-      SafeDiv((643) * (trace_length_), 1024),
-      SafeDiv((161) * (trace_length_), 256),
-      SafeDiv((645) * (trace_length_), 1024),
-      SafeDiv((323) * (trace_length_), 512),
-      SafeDiv((647) * (trace_length_), 1024),
-      SafeDiv((81) * (trace_length_), 128),
-      SafeDiv((649) * (trace_length_), 1024),
-      SafeDiv((325) * (trace_length_), 512),
-      SafeDiv((651) * (trace_length_), 1024),
-      SafeDiv((163) * (trace_length_), 256),
-      SafeDiv((653) * (trace_length_), 1024),
-      SafeDiv((327) * (trace_length_), 512),
-      SafeDiv((655) * (trace_length_), 1024),
-      SafeDiv((41) * (trace_length_), 64),
-      SafeDiv((657) * (trace_length_), 1024),
-      SafeDiv((329) * (trace_length_), 512),
-      SafeDiv((659) * (trace_length_), 1024),
-      SafeDiv((165) * (trace_length_), 256),
-      SafeDiv((661) * (trace_length_), 1024),
-      SafeDiv((331) * (trace_length_), 512),
-      SafeDiv((663) * (trace_length_), 1024),
-      SafeDiv((33) * (trace_length_), 1024),
-      SafeDiv((17) * (trace_length_), 512),
-      SafeDiv((35) * (trace_length_), 1024),
-      SafeDiv((9) * (trace_length_), 256),
-      SafeDiv((37) * (trace_length_), 1024),
-      SafeDiv((19) * (trace_length_), 512),
-      SafeDiv((39) * (trace_length_), 1024),
-      SafeDiv((5) * (trace_length_), 128),
-      SafeDiv((41) * (trace_length_), 1024),
-      SafeDiv((21) * (trace_length_), 512),
-      SafeDiv((43) * (trace_length_), 1024),
-      SafeDiv((11) * (trace_length_), 256),
-      SafeDiv((45) * (trace_length_), 1024),
-      SafeDiv((23) * (trace_length_), 512),
-      SafeDiv((47) * (trace_length_), 1024),
-      SafeDiv((49) * (trace_length_), 1024),
-      SafeDiv((25) * (trace_length_), 512),
-      SafeDiv((51) * (trace_length_), 1024),
-      SafeDiv((13) * (trace_length_), 256),
-      SafeDiv((53) * (trace_length_), 1024),
-      SafeDiv((27) * (trace_length_), 512),
-      SafeDiv((55) * (trace_length_), 1024),
-      SafeDiv((65) * (trace_length_), 1024),
-      SafeDiv((33) * (trace_length_), 512),
-      SafeDiv((67) * (trace_length_), 1024),
-      SafeDiv((17) * (trace_length_), 256),
-      SafeDiv((69) * (trace_length_), 1024),
-      SafeDiv((35) * (trace_length_), 512),
-      SafeDiv((71) * (trace_length_), 1024),
-      SafeDiv((9) * (trace_length_), 128),
-      SafeDiv((73) * (trace_length_), 1024),
-      SafeDiv((37) * (trace_length_), 512),
-      SafeDiv((75) * (trace_length_), 1024),
-      SafeDiv((19) * (trace_length_), 256),
-      SafeDiv((77) * (trace_length_), 1024),
-      SafeDiv((39) * (trace_length_), 512),
-      SafeDiv((79) * (trace_length_), 1024),
-      SafeDiv((81) * (trace_length_), 1024),
-      SafeDiv((41) * (trace_length_), 512),
-      SafeDiv((83) * (trace_length_), 1024),
-      SafeDiv((21) * (trace_length_), 256),
-      SafeDiv((85) * (trace_length_), 1024),
-      SafeDiv((43) * (trace_length_), 512),
-      SafeDiv((87) * (trace_length_), 1024),
-      SafeDiv((193) * (trace_length_), 1024),
-      SafeDiv((97) * (trace_length_), 512),
-      SafeDiv((195) * (trace_length_), 1024),
-      SafeDiv((49) * (trace_length_), 256),
-      SafeDiv((197) * (trace_length_), 1024),
-      SafeDiv((99) * (trace_length_), 512),
-      SafeDiv((199) * (trace_length_), 1024),
-      SafeDiv((25) * (trace_length_), 128),
-      SafeDiv((201) * (trace_length_), 1024),
-      SafeDiv((101) * (trace_length_), 512),
-      SafeDiv((203) * (trace_length_), 1024),
-      SafeDiv((51) * (trace_length_), 256),
-      SafeDiv((205) * (trace_length_), 1024),
-      SafeDiv((103) * (trace_length_), 512),
-      SafeDiv((207) * (trace_length_), 1024),
-      SafeDiv((209) * (trace_length_), 1024),
-      SafeDiv((105) * (trace_length_), 512),
-      SafeDiv((211) * (trace_length_), 1024),
-      SafeDiv((53) * (trace_length_), 256),
-      SafeDiv((213) * (trace_length_), 1024),
-      SafeDiv((107) * (trace_length_), 512),
-      SafeDiv((215) * (trace_length_), 1024),
-      SafeDiv((225) * (trace_length_), 1024),
-      SafeDiv((113) * (trace_length_), 512),
-      SafeDiv((227) * (trace_length_), 1024),
-      SafeDiv((57) * (trace_length_), 256),
-      SafeDiv((229) * (trace_length_), 1024),
-      SafeDiv((115) * (trace_length_), 512),
-      SafeDiv((231) * (trace_length_), 1024),
-      SafeDiv((29) * (trace_length_), 128),
-      SafeDiv((233) * (trace_length_), 1024),
-      SafeDiv((117) * (trace_length_), 512),
-      SafeDiv((235) * (trace_length_), 1024),
-      SafeDiv((59) * (trace_length_), 256),
-      SafeDiv((237) * (trace_length_), 1024),
-      SafeDiv((119) * (trace_length_), 512),
-      SafeDiv((239) * (trace_length_), 1024),
-      SafeDiv((241) * (trace_length_), 1024),
-      SafeDiv((121) * (trace_length_), 512),
-      SafeDiv((243) * (trace_length_), 1024),
-      SafeDiv((61) * (trace_length_), 256),
-      SafeDiv((245) * (trace_length_), 1024),
-      SafeDiv((123) * (trace_length_), 512),
-      SafeDiv((247) * (trace_length_), 1024),
-      SafeDiv((11) * (trace_length_), 32),
-      SafeDiv((353) * (trace_length_), 1024),
-      SafeDiv((177) * (trace_length_), 512),
-      SafeDiv((355) * (trace_length_), 1024),
-      SafeDiv((89) * (trace_length_), 256),
-      SafeDiv((357) * (trace_length_), 1024),
-      SafeDiv((179) * (trace_length_), 512),
-      SafeDiv((359) * (trace_length_), 1024),
-      SafeDiv((45) * (trace_length_), 128),
-      SafeDiv((361) * (trace_length_), 1024),
-      SafeDiv((181) * (trace_length_), 512),
-      SafeDiv((363) * (trace_length_), 1024),
-      SafeDiv((91) * (trace_length_), 256),
-      SafeDiv((365) * (trace_length_), 1024),
-      SafeDiv((183) * (trace_length_), 512),
-      SafeDiv((367) * (trace_length_), 1024),
-      SafeDiv((23) * (trace_length_), 64),
-      SafeDiv((369) * (trace_length_), 1024),
-      SafeDiv((185) * (trace_length_), 512),
-      SafeDiv((371) * (trace_length_), 1024),
-      SafeDiv((93) * (trace_length_), 256),
-      SafeDiv((373) * (trace_length_), 1024),
-      SafeDiv((187) * (trace_length_), 512),
-      SafeDiv((375) * (trace_length_), 1024),
-      SafeDiv((3) * (trace_length_), 8),
-      SafeDiv((385) * (trace_length_), 1024),
-      SafeDiv((193) * (trace_length_), 512),
-      SafeDiv((387) * (trace_length_), 1024),
-      SafeDiv((97) * (trace_length_), 256),
-      SafeDiv((389) * (trace_length_), 1024),
-      SafeDiv((195) * (trace_length_), 512),
-      SafeDiv((391) * (trace_length_), 1024),
-      SafeDiv((49) * (trace_length_), 128),
-      SafeDiv((393) * (trace_length_), 1024),
-      SafeDiv((197) * (trace_length_), 512),
-      SafeDiv((395) * (trace_length_), 1024),
-      SafeDiv((99) * (trace_length_), 256),
-      SafeDiv((397) * (trace_length_), 1024),
-      SafeDiv((199) * (trace_length_), 512),
-      SafeDiv((399) * (trace_length_), 1024),
-      SafeDiv((25) * (trace_length_), 64),
-      SafeDiv((401) * (trace_length_), 1024),
-      SafeDiv((201) * (trace_length_), 512),
-      SafeDiv((403) * (trace_length_), 1024),
-      SafeDiv((101) * (trace_length_), 256),
-      SafeDiv((405) * (trace_length_), 1024),
-      SafeDiv((203) * (trace_length_), 512),
-      SafeDiv((407) * (trace_length_), 1024),
-      SafeDiv((513) * (trace_length_), 1024),
-      SafeDiv((257) * (trace_length_), 512),
-      SafeDiv((515) * (trace_length_), 1024),
-      SafeDiv((129) * (trace_length_), 256),
-      SafeDiv((517) * (trace_length_), 1024),
-      SafeDiv((259) * (trace_length_), 512),
-      SafeDiv((519) * (trace_length_), 1024),
-      SafeDiv((65) * (trace_length_), 128),
-      SafeDiv((521) * (trace_length_), 1024),
-      SafeDiv((261) * (trace_length_), 512),
-      SafeDiv((523) * (trace_length_), 1024),
-      SafeDiv((131) * (trace_length_), 256),
-      SafeDiv((525) * (trace_length_), 1024),
-      SafeDiv((263) * (trace_length_), 512),
-      SafeDiv((527) * (trace_length_), 1024),
-      SafeDiv((33) * (trace_length_), 64),
-      SafeDiv((529) * (trace_length_), 1024),
-      SafeDiv((265) * (trace_length_), 512),
-      SafeDiv((531) * (trace_length_), 1024),
-      SafeDiv((133) * (trace_length_), 256),
-      SafeDiv((533) * (trace_length_), 1024),
-      SafeDiv((267) * (trace_length_), 512),
-      SafeDiv((535) * (trace_length_), 1024),
-      SafeDiv((17) * (trace_length_), 32),
-      SafeDiv((545) * (trace_length_), 1024),
-      SafeDiv((273) * (trace_length_), 512),
-      SafeDiv((547) * (trace_length_), 1024),
-      SafeDiv((137) * (trace_length_), 256),
-      SafeDiv((549) * (trace_length_), 1024),
-      SafeDiv((275) * (trace_length_), 512),
-      SafeDiv((551) * (trace_length_), 1024),
-      SafeDiv((69) * (trace_length_), 128),
-      SafeDiv((553) * (trace_length_), 1024),
-      SafeDiv((277) * (trace_length_), 512),
-      SafeDiv((555) * (trace_length_), 1024),
-      SafeDiv((139) * (trace_length_), 256),
-      SafeDiv((557) * (trace_length_), 1024),
-      SafeDiv((279) * (trace_length_), 512),
-      SafeDiv((559) * (trace_length_), 1024),
-      SafeDiv((35) * (trace_length_), 64),
-      SafeDiv((561) * (trace_length_), 1024),
-      SafeDiv((281) * (trace_length_), 512),
-      SafeDiv((563) * (trace_length_), 1024),
-      SafeDiv((141) * (trace_length_), 256),
-      SafeDiv((565) * (trace_length_), 1024),
-      SafeDiv((283) * (trace_length_), 512),
-      SafeDiv((567) * (trace_length_), 1024),
-      SafeDiv((673) * (trace_length_), 1024),
-      SafeDiv((337) * (trace_length_), 512),
-      SafeDiv((675) * (trace_length_), 1024),
-      SafeDiv((169) * (trace_length_), 256),
-      SafeDiv((677) * (trace_length_), 1024),
-      SafeDiv((339) * (trace_length_), 512),
-      SafeDiv((679) * (trace_length_), 1024),
-      SafeDiv((85) * (trace_length_), 128),
-      SafeDiv((681) * (trace_length_), 1024),
-      SafeDiv((341) * (trace_length_), 512),
-      SafeDiv((683) * (trace_length_), 1024),
-      SafeDiv((171) * (trace_length_), 256),
-      SafeDiv((685) * (trace_length_), 1024),
-      SafeDiv((343) * (trace_length_), 512),
-      SafeDiv((687) * (trace_length_), 1024),
-      SafeDiv((43) * (trace_length_), 64),
-      SafeDiv((689) * (trace_length_), 1024),
-      SafeDiv((345) * (trace_length_), 512),
-      SafeDiv((691) * (trace_length_), 1024),
-      SafeDiv((173) * (trace_length_), 256),
-      SafeDiv((693) * (trace_length_), 1024),
-      SafeDiv((347) * (trace_length_), 512),
-      SafeDiv((695) * (trace_length_), 1024),
-      SafeDiv((705) * (trace_length_), 1024),
-      SafeDiv((353) * (trace_length_), 512),
-      SafeDiv((707) * (trace_length_), 1024),
-      SafeDiv((177) * (trace_length_), 256),
-      SafeDiv((709) * (trace_length_), 1024),
-      SafeDiv((355) * (trace_length_), 512),
-      SafeDiv((711) * (trace_length_), 1024),
-      SafeDiv((89) * (trace_length_), 128),
-      SafeDiv((713) * (trace_length_), 1024),
-      SafeDiv((357) * (trace_length_), 512),
-      SafeDiv((715) * (trace_length_), 1024),
-      SafeDiv((179) * (trace_length_), 256),
-      SafeDiv((717) * (trace_length_), 1024),
-      SafeDiv((359) * (trace_length_), 512),
-      SafeDiv((719) * (trace_length_), 1024),
-      SafeDiv((45) * (trace_length_), 64),
-      SafeDiv((721) * (trace_length_), 1024),
-      SafeDiv((361) * (trace_length_), 512),
-      SafeDiv((723) * (trace_length_), 1024),
-      SafeDiv((181) * (trace_length_), 256),
-      SafeDiv((725) * (trace_length_), 1024),
-      SafeDiv((363) * (trace_length_), 512),
-      SafeDiv((727) * (trace_length_), 1024),
-      SafeDiv((251) * (trace_length_), 256),
-      SafeDiv((2017) * (trace_length_), 2048),
-      SafeDiv((1009) * (trace_length_), 1024),
-      SafeDiv((2019) * (trace_length_), 2048),
-      SafeDiv((505) * (trace_length_), 512),
-      SafeDiv((2021) * (trace_length_), 2048),
-      SafeDiv((1011) * (trace_length_), 1024),
-      SafeDiv((2023) * (trace_length_), 2048),
-      SafeDiv((253) * (trace_length_), 256),
-      SafeDiv((2025) * (trace_length_), 2048),
-      SafeDiv((1013) * (trace_length_), 1024),
-      SafeDiv((2027) * (trace_length_), 2048),
-      SafeDiv((507) * (trace_length_), 512),
-      SafeDiv((2029) * (trace_length_), 2048),
-      SafeDiv((1015) * (trace_length_), 1024),
-      SafeDiv((2031) * (trace_length_), 2048),
-      SafeDiv((127) * (trace_length_), 128),
-      SafeDiv((2033) * (trace_length_), 2048),
-      SafeDiv((1017) * (trace_length_), 1024),
-      SafeDiv((2035) * (trace_length_), 2048),
-      SafeDiv((509) * (trace_length_), 512),
-      SafeDiv((2037) * (trace_length_), 2048),
-      SafeDiv((1019) * (trace_length_), 1024),
-      SafeDiv((2039) * (trace_length_), 2048),
-      SafeDiv((64513) * (trace_length_), 65536),
-      SafeDiv((833) * (trace_length_), 1024),
-      SafeDiv((865) * (trace_length_), 1024),
-      SafeDiv((897) * (trace_length_), 1024),
-      SafeDiv((929) * (trace_length_), 1024),
-      SafeDiv((961) * (trace_length_), 1024),
-      SafeDiv((993) * (trace_length_), 1024),
-      SafeDiv((64545) * (trace_length_), 65536),
-      SafeDiv((64577) * (trace_length_), 65536),
-      SafeDiv((64609) * (trace_length_), 65536),
-      SafeDiv((64641) * (trace_length_), 65536),
-      SafeDiv((64673) * (trace_length_), 65536),
-      SafeDiv((64705) * (trace_length_), 65536),
-      SafeDiv((64737) * (trace_length_), 65536),
-      SafeDiv((64769) * (trace_length_), 65536),
-      SafeDiv((64801) * (trace_length_), 65536),
-      SafeDiv((64833) * (trace_length_), 65536),
-      SafeDiv((64865) * (trace_length_), 65536),
-      SafeDiv((64897) * (trace_length_), 65536),
-      SafeDiv((64929) * (trace_length_), 65536),
-      SafeDiv((64961) * (trace_length_), 65536),
-      SafeDiv((64993) * (trace_length_), 65536),
-      SafeDiv((65025) * (trace_length_), 65536),
-      SafeDiv((65057) * (trace_length_), 65536),
-      SafeDiv((65089) * (trace_length_), 65536),
-      SafeDiv((65121) * (trace_length_), 65536),
-      SafeDiv((65153) * (trace_length_), 65536),
-      SafeDiv((65185) * (trace_length_), 65536),
-      SafeDiv((65217) * (trace_length_), 65536),
-      SafeDiv((65249) * (trace_length_), 65536),
-      SafeDiv((65281) * (trace_length_), 65536),
-      SafeDiv((2041) * (trace_length_), 2048),
-      SafeDiv((65313) * (trace_length_), 65536),
-      SafeDiv((32257) * (trace_length_), 32768),
-      SafeDiv((64515) * (trace_length_), 65536),
-      SafeDiv((16129) * (trace_length_), 16384),
-      SafeDiv((64517) * (trace_length_), 65536),
-      SafeDiv((32259) * (trace_length_), 32768),
-      SafeDiv((64519) * (trace_length_), 65536),
-      SafeDiv((8065) * (trace_length_), 8192),
-      SafeDiv((64521) * (trace_length_), 65536),
-      SafeDiv((32261) * (trace_length_), 32768),
-      SafeDiv((64523) * (trace_length_), 65536),
-      SafeDiv((16131) * (trace_length_), 16384),
-      SafeDiv((64525) * (trace_length_), 65536),
-      SafeDiv((32263) * (trace_length_), 32768),
-      SafeDiv((64527) * (trace_length_), 65536),
-      SafeDiv((4033) * (trace_length_), 4096),
-      SafeDiv((64529) * (trace_length_), 65536),
-      SafeDiv((32265) * (trace_length_), 32768),
-      SafeDiv((64531) * (trace_length_), 65536),
-      SafeDiv((16133) * (trace_length_), 16384),
-      SafeDiv((64533) * (trace_length_), 65536),
-      SafeDiv((32267) * (trace_length_), 32768),
-      SafeDiv((64535) * (trace_length_), 65536),
-      SafeDiv((417) * (trace_length_), 512),
-      SafeDiv((835) * (trace_length_), 1024),
-      SafeDiv((209) * (trace_length_), 256),
-      SafeDiv((837) * (trace_length_), 1024),
-      SafeDiv((419) * (trace_length_), 512),
-      SafeDiv((839) * (trace_length_), 1024),
-      SafeDiv((105) * (trace_length_), 128),
-      SafeDiv((841) * (trace_length_), 1024),
-      SafeDiv((421) * (trace_length_), 512),
-      SafeDiv((843) * (trace_length_), 1024),
-      SafeDiv((211) * (trace_length_), 256),
-      SafeDiv((845) * (trace_length_), 1024),
-      SafeDiv((423) * (trace_length_), 512),
-      SafeDiv((847) * (trace_length_), 1024),
-      SafeDiv((53) * (trace_length_), 64),
-      SafeDiv((849) * (trace_length_), 1024),
-      SafeDiv((425) * (trace_length_), 512),
-      SafeDiv((851) * (trace_length_), 1024),
-      SafeDiv((213) * (trace_length_), 256),
-      SafeDiv((853) * (trace_length_), 1024),
-      SafeDiv((427) * (trace_length_), 512),
-      SafeDiv((855) * (trace_length_), 1024),
-      SafeDiv((107) * (trace_length_), 128),
-      SafeDiv((857) * (trace_length_), 1024),
-      SafeDiv((429) * (trace_length_), 512),
-      SafeDiv((859) * (trace_length_), 1024),
-      SafeDiv((215) * (trace_length_), 256),
-      SafeDiv((861) * (trace_length_), 1024),
-      SafeDiv((433) * (trace_length_), 512),
-      SafeDiv((867) * (trace_length_), 1024),
-      SafeDiv((217) * (trace_length_), 256),
-      SafeDiv((869) * (trace_length_), 1024),
-      SafeDiv((435) * (trace_length_), 512),
-      SafeDiv((871) * (trace_length_), 1024),
-      SafeDiv((109) * (trace_length_), 128),
-      SafeDiv((873) * (trace_length_), 1024),
-      SafeDiv((437) * (trace_length_), 512),
-      SafeDiv((875) * (trace_length_), 1024),
-      SafeDiv((219) * (trace_length_), 256),
-      SafeDiv((877) * (trace_length_), 1024),
-      SafeDiv((439) * (trace_length_), 512),
-      SafeDiv((879) * (trace_length_), 1024),
-      SafeDiv((55) * (trace_length_), 64),
-      SafeDiv((881) * (trace_length_), 1024),
-      SafeDiv((441) * (trace_length_), 512),
-      SafeDiv((883) * (trace_length_), 1024),
-      SafeDiv((221) * (trace_length_), 256),
-      SafeDiv((885) * (trace_length_), 1024),
-      SafeDiv((443) * (trace_length_), 512),
-      SafeDiv((887) * (trace_length_), 1024),
-      SafeDiv((111) * (trace_length_), 128),
-      SafeDiv((889) * (trace_length_), 1024),
-      SafeDiv((445) * (trace_length_), 512),
-      SafeDiv((891) * (trace_length_), 1024),
-      SafeDiv((223) * (trace_length_), 256),
-      SafeDiv((893) * (trace_length_), 1024),
-      SafeDiv((449) * (trace_length_), 512),
-      SafeDiv((899) * (trace_length_), 1024),
-      SafeDiv((225) * (trace_length_), 256),
-      SafeDiv((901) * (trace_length_), 1024),
-      SafeDiv((451) * (trace_length_), 512),
-      SafeDiv((903) * (trace_length_), 1024),
-      SafeDiv((113) * (trace_length_), 128),
-      SafeDiv((905) * (trace_length_), 1024),
-      SafeDiv((453) * (trace_length_), 512),
-      SafeDiv((907) * (trace_length_), 1024),
-      SafeDiv((227) * (trace_length_), 256),
-      SafeDiv((909) * (trace_length_), 1024),
-      SafeDiv((455) * (trace_length_), 512),
-      SafeDiv((911) * (trace_length_), 1024),
-      SafeDiv((57) * (trace_length_), 64),
-      SafeDiv((913) * (trace_length_), 1024),
-      SafeDiv((457) * (trace_length_), 512),
-      SafeDiv((915) * (trace_length_), 1024),
-      SafeDiv((229) * (trace_length_), 256),
-      SafeDiv((917) * (trace_length_), 1024),
-      SafeDiv((459) * (trace_length_), 512),
-      SafeDiv((919) * (trace_length_), 1024),
-      SafeDiv((115) * (trace_length_), 128),
-      SafeDiv((921) * (trace_length_), 1024),
-      SafeDiv((461) * (trace_length_), 512),
-      SafeDiv((923) * (trace_length_), 1024),
-      SafeDiv((231) * (trace_length_), 256),
-      SafeDiv((925) * (trace_length_), 1024),
-      SafeDiv((465) * (trace_length_), 512),
-      SafeDiv((931) * (trace_length_), 1024),
-      SafeDiv((233) * (trace_length_), 256),
-      SafeDiv((933) * (trace_length_), 1024),
-      SafeDiv((467) * (trace_length_), 512),
-      SafeDiv((935) * (trace_length_), 1024),
-      SafeDiv((117) * (trace_length_), 128),
-      SafeDiv((937) * (trace_length_), 1024),
-      SafeDiv((469) * (trace_length_), 512),
-      SafeDiv((939) * (trace_length_), 1024),
-      SafeDiv((235) * (trace_length_), 256),
-      SafeDiv((941) * (trace_length_), 1024),
-      SafeDiv((471) * (trace_length_), 512),
-      SafeDiv((943) * (trace_length_), 1024),
-      SafeDiv((59) * (trace_length_), 64),
-      SafeDiv((945) * (trace_length_), 1024),
-      SafeDiv((473) * (trace_length_), 512),
-      SafeDiv((947) * (trace_length_), 1024),
-      SafeDiv((237) * (trace_length_), 256),
-      SafeDiv((949) * (trace_length_), 1024),
-      SafeDiv((475) * (trace_length_), 512),
-      SafeDiv((951) * (trace_length_), 1024),
-      SafeDiv((119) * (trace_length_), 128),
-      SafeDiv((953) * (trace_length_), 1024),
-      SafeDiv((477) * (trace_length_), 512),
-      SafeDiv((955) * (trace_length_), 1024),
-      SafeDiv((239) * (trace_length_), 256),
-      SafeDiv((957) * (trace_length_), 1024),
-      SafeDiv((481) * (trace_length_), 512),
-      SafeDiv((963) * (trace_length_), 1024),
-      SafeDiv((241) * (trace_length_), 256),
-      SafeDiv((965) * (trace_length_), 1024),
-      SafeDiv((483) * (trace_length_), 512),
-      SafeDiv((967) * (trace_length_), 1024),
-      SafeDiv((121) * (trace_length_), 128),
-      SafeDiv((969) * (trace_length_), 1024),
-      SafeDiv((485) * (trace_length_), 512),
-      SafeDiv((971) * (trace_length_), 1024),
-      SafeDiv((243) * (trace_length_), 256),
-      SafeDiv((973) * (trace_length_), 1024),
-      SafeDiv((487) * (trace_length_), 512),
-      SafeDiv((975) * (trace_length_), 1024),
-      SafeDiv((977) * (trace_length_), 1024),
-      SafeDiv((489) * (trace_length_), 512),
-      SafeDiv((979) * (trace_length_), 1024),
-      SafeDiv((245) * (trace_length_), 256),
-      SafeDiv((981) * (trace_length_), 1024),
-      SafeDiv((491) * (trace_length_), 512),
-      SafeDiv((983) * (trace_length_), 1024),
-      SafeDiv((123) * (trace_length_), 128),
-      SafeDiv((985) * (trace_length_), 1024),
-      SafeDiv((493) * (trace_length_), 512),
-      SafeDiv((987) * (trace_length_), 1024),
-      SafeDiv((247) * (trace_length_), 256),
-      SafeDiv((989) * (trace_length_), 1024),
-      SafeDiv((497) * (trace_length_), 512),
-      SafeDiv((995) * (trace_length_), 1024),
-      SafeDiv((249) * (trace_length_), 256),
-      SafeDiv((997) * (trace_length_), 1024),
-      SafeDiv((499) * (trace_length_), 512),
-      SafeDiv((999) * (trace_length_), 1024),
-      SafeDiv((125) * (trace_length_), 128),
-      SafeDiv((1001) * (trace_length_), 1024),
-      SafeDiv((501) * (trace_length_), 512),
-      SafeDiv((1003) * (trace_length_), 1024),
-      SafeDiv((1005) * (trace_length_), 1024),
-      SafeDiv((503) * (trace_length_), 512),
-      SafeDiv((1007) * (trace_length_), 1024),
-      SafeDiv((1021) * (trace_length_), 1024),
-      SafeDiv((8067) * (trace_length_), 8192),
-      SafeDiv((64537) * (trace_length_), 65536),
-      SafeDiv((32269) * (trace_length_), 32768),
-      SafeDiv((64539) * (trace_length_), 65536),
-      SafeDiv((16135) * (trace_length_), 16384),
-      SafeDiv((64541) * (trace_length_), 65536),
-      SafeDiv((32273) * (trace_length_), 32768),
-      SafeDiv((64547) * (trace_length_), 65536),
-      SafeDiv((16137) * (trace_length_), 16384),
-      SafeDiv((64549) * (trace_length_), 65536),
-      SafeDiv((32275) * (trace_length_), 32768),
-      SafeDiv((64551) * (trace_length_), 65536),
-      SafeDiv((8069) * (trace_length_), 8192),
-      SafeDiv((64553) * (trace_length_), 65536),
-      SafeDiv((32277) * (trace_length_), 32768),
-      SafeDiv((64555) * (trace_length_), 65536),
-      SafeDiv((16139) * (trace_length_), 16384),
-      SafeDiv((64557) * (trace_length_), 65536),
-      SafeDiv((32279) * (trace_length_), 32768),
-      SafeDiv((64559) * (trace_length_), 65536),
-      SafeDiv((4035) * (trace_length_), 4096),
-      SafeDiv((64561) * (trace_length_), 65536),
-      SafeDiv((32281) * (trace_length_), 32768),
-      SafeDiv((64563) * (trace_length_), 65536),
-      SafeDiv((16141) * (trace_length_), 16384),
-      SafeDiv((64565) * (trace_length_), 65536),
-      SafeDiv((32283) * (trace_length_), 32768),
-      SafeDiv((64567) * (trace_length_), 65536),
-      SafeDiv((8071) * (trace_length_), 8192),
-      SafeDiv((64569) * (trace_length_), 65536),
-      SafeDiv((32285) * (trace_length_), 32768),
-      SafeDiv((64571) * (trace_length_), 65536),
-      SafeDiv((16143) * (trace_length_), 16384),
-      SafeDiv((64573) * (trace_length_), 65536),
-      SafeDiv((32289) * (trace_length_), 32768),
-      SafeDiv((64579) * (trace_length_), 65536),
-      SafeDiv((16145) * (trace_length_), 16384),
-      SafeDiv((64581) * (trace_length_), 65536),
-      SafeDiv((32291) * (trace_length_), 32768),
-      SafeDiv((64583) * (trace_length_), 65536),
-      SafeDiv((8073) * (trace_length_), 8192),
-      SafeDiv((64585) * (trace_length_), 65536),
-      SafeDiv((32293) * (trace_length_), 32768),
-      SafeDiv((64587) * (trace_length_), 65536),
-      SafeDiv((16147) * (trace_length_), 16384),
-      SafeDiv((64589) * (trace_length_), 65536),
-      SafeDiv((32295) * (trace_length_), 32768),
-      SafeDiv((64591) * (trace_length_), 65536),
-      SafeDiv((4037) * (trace_length_), 4096),
-      SafeDiv((64593) * (trace_length_), 65536),
-      SafeDiv((32297) * (trace_length_), 32768),
-      SafeDiv((64595) * (trace_length_), 65536),
-      SafeDiv((16149) * (trace_length_), 16384),
-      SafeDiv((64597) * (trace_length_), 65536),
-      SafeDiv((32299) * (trace_length_), 32768),
-      SafeDiv((64599) * (trace_length_), 65536),
-      SafeDiv((8075) * (trace_length_), 8192),
-      SafeDiv((64601) * (trace_length_), 65536),
-      SafeDiv((32301) * (trace_length_), 32768),
-      SafeDiv((64603) * (trace_length_), 65536),
-      SafeDiv((16151) * (trace_length_), 16384),
-      SafeDiv((64605) * (trace_length_), 65536),
-      SafeDiv((32305) * (trace_length_), 32768),
-      SafeDiv((64611) * (trace_length_), 65536),
-      SafeDiv((16153) * (trace_length_), 16384),
-      SafeDiv((64613) * (trace_length_), 65536),
-      SafeDiv((32307) * (trace_length_), 32768),
-      SafeDiv((64615) * (trace_length_), 65536),
-      SafeDiv((8077) * (trace_length_), 8192),
-      SafeDiv((64617) * (trace_length_), 65536),
-      SafeDiv((32309) * (trace_length_), 32768),
-      SafeDiv((64619) * (trace_length_), 65536),
-      SafeDiv((16155) * (trace_length_), 16384),
-      SafeDiv((64621) * (trace_length_), 65536),
-      SafeDiv((32311) * (trace_length_), 32768),
-      SafeDiv((64623) * (trace_length_), 65536),
-      SafeDiv((4039) * (trace_length_), 4096),
-      SafeDiv((64625) * (trace_length_), 65536),
-      SafeDiv((32313) * (trace_length_), 32768),
-      SafeDiv((64627) * (trace_length_), 65536),
-      SafeDiv((16157) * (trace_length_), 16384),
-      SafeDiv((64629) * (trace_length_), 65536),
-      SafeDiv((32315) * (trace_length_), 32768),
-      SafeDiv((64631) * (trace_length_), 65536),
-      SafeDiv((8079) * (trace_length_), 8192),
-      SafeDiv((64633) * (trace_length_), 65536),
-      SafeDiv((32317) * (trace_length_), 32768),
-      SafeDiv((64635) * (trace_length_), 65536),
-      SafeDiv((16159) * (trace_length_), 16384),
-      SafeDiv((64637) * (trace_length_), 65536),
-      SafeDiv((32321) * (trace_length_), 32768),
-      SafeDiv((64643) * (trace_length_), 65536),
-      SafeDiv((16161) * (trace_length_), 16384),
-      SafeDiv((64645) * (trace_length_), 65536),
-      SafeDiv((32323) * (trace_length_), 32768),
-      SafeDiv((64647) * (trace_length_), 65536),
-      SafeDiv((8081) * (trace_length_), 8192),
-      SafeDiv((64649) * (trace_length_), 65536),
-      SafeDiv((32325) * (trace_length_), 32768),
-      SafeDiv((64651) * (trace_length_), 65536),
-      SafeDiv((16163) * (trace_length_), 16384),
-      SafeDiv((64653) * (trace_length_), 65536),
-      SafeDiv((32327) * (trace_length_), 32768),
-      SafeDiv((64655) * (trace_length_), 65536),
-      SafeDiv((4041) * (trace_length_), 4096),
-      SafeDiv((64657) * (trace_length_), 65536),
-      SafeDiv((32329) * (trace_length_), 32768),
-      SafeDiv((64659) * (trace_length_), 65536),
-      SafeDiv((16165) * (trace_length_), 16384),
-      SafeDiv((64661) * (trace_length_), 65536),
-      SafeDiv((32331) * (trace_length_), 32768),
-      SafeDiv((64663) * (trace_length_), 65536),
-      SafeDiv((8083) * (trace_length_), 8192),
-      SafeDiv((64665) * (trace_length_), 65536),
-      SafeDiv((32333) * (trace_length_), 32768),
-      SafeDiv((64667) * (trace_length_), 65536),
-      SafeDiv((16167) * (trace_length_), 16384),
-      SafeDiv((64669) * (trace_length_), 65536),
-      SafeDiv((32337) * (trace_length_), 32768),
-      SafeDiv((64675) * (trace_length_), 65536),
-      SafeDiv((16169) * (trace_length_), 16384),
-      SafeDiv((64677) * (trace_length_), 65536),
-      SafeDiv((32339) * (trace_length_), 32768),
-      SafeDiv((64679) * (trace_length_), 65536),
-      SafeDiv((8085) * (trace_length_), 8192),
-      SafeDiv((64681) * (trace_length_), 65536),
-      SafeDiv((32341) * (trace_length_), 32768),
-      SafeDiv((64683) * (trace_length_), 65536),
-      SafeDiv((16171) * (trace_length_), 16384),
-      SafeDiv((64685) * (trace_length_), 65536),
-      SafeDiv((32343) * (trace_length_), 32768),
-      SafeDiv((64687) * (trace_length_), 65536),
-      SafeDiv((4043) * (trace_length_), 4096),
-      SafeDiv((64689) * (trace_length_), 65536),
-      SafeDiv((32345) * (trace_length_), 32768),
-      SafeDiv((64691) * (trace_length_), 65536),
-      SafeDiv((16173) * (trace_length_), 16384),
-      SafeDiv((64693) * (trace_length_), 65536),
-      SafeDiv((32347) * (trace_length_), 32768),
-      SafeDiv((64695) * (trace_length_), 65536),
-      SafeDiv((8087) * (trace_length_), 8192),
-      SafeDiv((64697) * (trace_length_), 65536),
-      SafeDiv((32349) * (trace_length_), 32768),
-      SafeDiv((64699) * (trace_length_), 65536),
-      SafeDiv((16175) * (trace_length_), 16384),
-      SafeDiv((64701) * (trace_length_), 65536),
-      SafeDiv((32353) * (trace_length_), 32768),
-      SafeDiv((64707) * (trace_length_), 65536),
-      SafeDiv((16177) * (trace_length_), 16384),
-      SafeDiv((64709) * (trace_length_), 65536),
-      SafeDiv((32355) * (trace_length_), 32768),
-      SafeDiv((64711) * (trace_length_), 65536),
-      SafeDiv((8089) * (trace_length_), 8192),
-      SafeDiv((64713) * (trace_length_), 65536),
-      SafeDiv((32357) * (trace_length_), 32768),
-      SafeDiv((64715) * (trace_length_), 65536),
-      SafeDiv((16179) * (trace_length_), 16384),
-      SafeDiv((64717) * (trace_length_), 65536),
-      SafeDiv((32359) * (trace_length_), 32768),
-      SafeDiv((64719) * (trace_length_), 65536),
-      SafeDiv((4045) * (trace_length_), 4096),
-      SafeDiv((64721) * (trace_length_), 65536),
-      SafeDiv((32361) * (trace_length_), 32768),
-      SafeDiv((64723) * (trace_length_), 65536),
-      SafeDiv((16181) * (trace_length_), 16384),
-      SafeDiv((64725) * (trace_length_), 65536),
-      SafeDiv((32363) * (trace_length_), 32768),
-      SafeDiv((64727) * (trace_length_), 65536),
-      SafeDiv((8091) * (trace_length_), 8192),
-      SafeDiv((64729) * (trace_length_), 65536),
-      SafeDiv((32365) * (trace_length_), 32768),
-      SafeDiv((64731) * (trace_length_), 65536),
-      SafeDiv((16183) * (trace_length_), 16384),
-      SafeDiv((64733) * (trace_length_), 65536),
-      SafeDiv((32369) * (trace_length_), 32768),
-      SafeDiv((64739) * (trace_length_), 65536),
-      SafeDiv((16185) * (trace_length_), 16384),
-      SafeDiv((64741) * (trace_length_), 65536),
-      SafeDiv((32371) * (trace_length_), 32768),
-      SafeDiv((64743) * (trace_length_), 65536),
-      SafeDiv((8093) * (trace_length_), 8192),
-      SafeDiv((64745) * (trace_length_), 65536),
-      SafeDiv((32373) * (trace_length_), 32768),
-      SafeDiv((64747) * (trace_length_), 65536),
-      SafeDiv((16187) * (trace_length_), 16384),
-      SafeDiv((64749) * (trace_length_), 65536),
-      SafeDiv((32375) * (trace_length_), 32768),
-      SafeDiv((64751) * (trace_length_), 65536),
-      SafeDiv((4047) * (trace_length_), 4096),
-      SafeDiv((64753) * (trace_length_), 65536),
-      SafeDiv((32377) * (trace_length_), 32768),
-      SafeDiv((64755) * (trace_length_), 65536),
-      SafeDiv((16189) * (trace_length_), 16384),
-      SafeDiv((64757) * (trace_length_), 65536),
-      SafeDiv((32379) * (trace_length_), 32768),
-      SafeDiv((64759) * (trace_length_), 65536),
-      SafeDiv((8095) * (trace_length_), 8192),
-      SafeDiv((64761) * (trace_length_), 65536),
-      SafeDiv((32381) * (trace_length_), 32768),
-      SafeDiv((64763) * (trace_length_), 65536),
-      SafeDiv((16191) * (trace_length_), 16384),
-      SafeDiv((64765) * (trace_length_), 65536),
-      SafeDiv((32385) * (trace_length_), 32768),
-      SafeDiv((64771) * (trace_length_), 65536),
-      SafeDiv((16193) * (trace_length_), 16384),
-      SafeDiv((64773) * (trace_length_), 65536),
-      SafeDiv((32387) * (trace_length_), 32768),
-      SafeDiv((64775) * (trace_length_), 65536),
-      SafeDiv((8097) * (trace_length_), 8192),
-      SafeDiv((64777) * (trace_length_), 65536),
-      SafeDiv((32389) * (trace_length_), 32768),
-      SafeDiv((64779) * (trace_length_), 65536),
-      SafeDiv((16195) * (trace_length_), 16384),
-      SafeDiv((64781) * (trace_length_), 65536),
-      SafeDiv((32391) * (trace_length_), 32768),
-      SafeDiv((64783) * (trace_length_), 65536),
-      SafeDiv((4049) * (trace_length_), 4096),
-      SafeDiv((64785) * (trace_length_), 65536),
-      SafeDiv((32393) * (trace_length_), 32768),
-      SafeDiv((64787) * (trace_length_), 65536),
-      SafeDiv((16197) * (trace_length_), 16384),
-      SafeDiv((64789) * (trace_length_), 65536),
-      SafeDiv((32395) * (trace_length_), 32768),
-      SafeDiv((64791) * (trace_length_), 65536),
-      SafeDiv((8099) * (trace_length_), 8192),
-      SafeDiv((64793) * (trace_length_), 65536),
-      SafeDiv((32397) * (trace_length_), 32768),
-      SafeDiv((64795) * (trace_length_), 65536),
-      SafeDiv((16199) * (trace_length_), 16384),
-      SafeDiv((64797) * (trace_length_), 65536),
-      SafeDiv((32401) * (trace_length_), 32768),
-      SafeDiv((64803) * (trace_length_), 65536),
-      SafeDiv((16201) * (trace_length_), 16384),
-      SafeDiv((64805) * (trace_length_), 65536),
-      SafeDiv((32403) * (trace_length_), 32768),
-      SafeDiv((64807) * (trace_length_), 65536),
-      SafeDiv((8101) * (trace_length_), 8192),
-      SafeDiv((64809) * (trace_length_), 65536),
-      SafeDiv((32405) * (trace_length_), 32768),
-      SafeDiv((64811) * (trace_length_), 65536),
-      SafeDiv((16203) * (trace_length_), 16384),
-      SafeDiv((64813) * (trace_length_), 65536),
-      SafeDiv((32407) * (trace_length_), 32768),
-      SafeDiv((64815) * (trace_length_), 65536),
-      SafeDiv((4051) * (trace_length_), 4096),
-      SafeDiv((64817) * (trace_length_), 65536),
-      SafeDiv((32409) * (trace_length_), 32768),
-      SafeDiv((64819) * (trace_length_), 65536),
-      SafeDiv((16205) * (trace_length_), 16384),
-      SafeDiv((64821) * (trace_length_), 65536),
-      SafeDiv((32411) * (trace_length_), 32768),
-      SafeDiv((64823) * (trace_length_), 65536),
-      SafeDiv((8103) * (trace_length_), 8192),
-      SafeDiv((64825) * (trace_length_), 65536),
-      SafeDiv((32413) * (trace_length_), 32768),
-      SafeDiv((64827) * (trace_length_), 65536),
-      SafeDiv((16207) * (trace_length_), 16384),
-      SafeDiv((64829) * (trace_length_), 65536),
-      SafeDiv((32417) * (trace_length_), 32768),
-      SafeDiv((64835) * (trace_length_), 65536),
-      SafeDiv((16209) * (trace_length_), 16384),
-      SafeDiv((64837) * (trace_length_), 65536),
-      SafeDiv((32419) * (trace_length_), 32768),
-      SafeDiv((64839) * (trace_length_), 65536),
-      SafeDiv((8105) * (trace_length_), 8192),
-      SafeDiv((64841) * (trace_length_), 65536),
-      SafeDiv((32421) * (trace_length_), 32768),
-      SafeDiv((64843) * (trace_length_), 65536),
-      SafeDiv((16211) * (trace_length_), 16384),
-      SafeDiv((64845) * (trace_length_), 65536),
-      SafeDiv((32423) * (trace_length_), 32768),
-      SafeDiv((64847) * (trace_length_), 65536),
-      SafeDiv((4053) * (trace_length_), 4096),
-      SafeDiv((64849) * (trace_length_), 65536),
-      SafeDiv((32425) * (trace_length_), 32768),
-      SafeDiv((64851) * (trace_length_), 65536),
-      SafeDiv((16213) * (trace_length_), 16384),
-      SafeDiv((64853) * (trace_length_), 65536),
-      SafeDiv((32427) * (trace_length_), 32768),
-      SafeDiv((64855) * (trace_length_), 65536),
-      SafeDiv((8107) * (trace_length_), 8192),
-      SafeDiv((64857) * (trace_length_), 65536),
-      SafeDiv((32429) * (trace_length_), 32768),
-      SafeDiv((64859) * (trace_length_), 65536),
-      SafeDiv((16215) * (trace_length_), 16384),
-      SafeDiv((64861) * (trace_length_), 65536),
-      SafeDiv((32433) * (trace_length_), 32768),
-      SafeDiv((64867) * (trace_length_), 65536),
-      SafeDiv((16217) * (trace_length_), 16384),
-      SafeDiv((64869) * (trace_length_), 65536),
-      SafeDiv((32435) * (trace_length_), 32768),
-      SafeDiv((64871) * (trace_length_), 65536),
-      SafeDiv((8109) * (trace_length_), 8192),
-      SafeDiv((64873) * (trace_length_), 65536),
-      SafeDiv((32437) * (trace_length_), 32768),
-      SafeDiv((64875) * (trace_length_), 65536),
-      SafeDiv((16219) * (trace_length_), 16384),
-      SafeDiv((64877) * (trace_length_), 65536),
-      SafeDiv((32439) * (trace_length_), 32768),
-      SafeDiv((64879) * (trace_length_), 65536),
-      SafeDiv((4055) * (trace_length_), 4096),
-      SafeDiv((64881) * (trace_length_), 65536),
-      SafeDiv((32441) * (trace_length_), 32768),
-      SafeDiv((64883) * (trace_length_), 65536),
-      SafeDiv((16221) * (trace_length_), 16384),
-      SafeDiv((64885) * (trace_length_), 65536),
-      SafeDiv((32443) * (trace_length_), 32768),
-      SafeDiv((64887) * (trace_length_), 65536),
-      SafeDiv((8111) * (trace_length_), 8192),
-      SafeDiv((64889) * (trace_length_), 65536),
-      SafeDiv((32445) * (trace_length_), 32768),
-      SafeDiv((64891) * (trace_length_), 65536),
-      SafeDiv((16223) * (trace_length_), 16384),
-      SafeDiv((64893) * (trace_length_), 65536),
-      SafeDiv((32449) * (trace_length_), 32768),
-      SafeDiv((64899) * (trace_length_), 65536),
-      SafeDiv((16225) * (trace_length_), 16384),
-      SafeDiv((64901) * (trace_length_), 65536),
-      SafeDiv((32451) * (trace_length_), 32768),
-      SafeDiv((64903) * (trace_length_), 65536),
-      SafeDiv((8113) * (trace_length_), 8192),
-      SafeDiv((64905) * (trace_length_), 65536),
-      SafeDiv((32453) * (trace_length_), 32768),
-      SafeDiv((64907) * (trace_length_), 65536),
-      SafeDiv((16227) * (trace_length_), 16384),
-      SafeDiv((64909) * (trace_length_), 65536),
-      SafeDiv((32455) * (trace_length_), 32768),
-      SafeDiv((64911) * (trace_length_), 65536),
-      SafeDiv((4057) * (trace_length_), 4096),
-      SafeDiv((64913) * (trace_length_), 65536),
-      SafeDiv((32457) * (trace_length_), 32768),
-      SafeDiv((64915) * (trace_length_), 65536),
-      SafeDiv((16229) * (trace_length_), 16384),
-      SafeDiv((64917) * (trace_length_), 65536),
-      SafeDiv((32459) * (trace_length_), 32768),
-      SafeDiv((64919) * (trace_length_), 65536),
-      SafeDiv((8115) * (trace_length_), 8192),
-      SafeDiv((64921) * (trace_length_), 65536),
-      SafeDiv((32461) * (trace_length_), 32768),
-      SafeDiv((64923) * (trace_length_), 65536),
-      SafeDiv((16231) * (trace_length_), 16384),
-      SafeDiv((64925) * (trace_length_), 65536),
-      SafeDiv((32465) * (trace_length_), 32768),
-      SafeDiv((64931) * (trace_length_), 65536),
-      SafeDiv((16233) * (trace_length_), 16384),
-      SafeDiv((64933) * (trace_length_), 65536),
-      SafeDiv((32467) * (trace_length_), 32768),
-      SafeDiv((64935) * (trace_length_), 65536),
-      SafeDiv((8117) * (trace_length_), 8192),
-      SafeDiv((64937) * (trace_length_), 65536),
-      SafeDiv((32469) * (trace_length_), 32768),
-      SafeDiv((64939) * (trace_length_), 65536),
-      SafeDiv((16235) * (trace_length_), 16384),
-      SafeDiv((64941) * (trace_length_), 65536),
-      SafeDiv((32471) * (trace_length_), 32768),
-      SafeDiv((64943) * (trace_length_), 65536),
-      SafeDiv((4059) * (trace_length_), 4096),
-      SafeDiv((64945) * (trace_length_), 65536),
-      SafeDiv((32473) * (trace_length_), 32768),
-      SafeDiv((64947) * (trace_length_), 65536),
-      SafeDiv((16237) * (trace_length_), 16384),
-      SafeDiv((64949) * (trace_length_), 65536),
-      SafeDiv((32475) * (trace_length_), 32768),
-      SafeDiv((64951) * (trace_length_), 65536),
-      SafeDiv((8119) * (trace_length_), 8192),
-      SafeDiv((64953) * (trace_length_), 65536),
-      SafeDiv((32477) * (trace_length_), 32768),
-      SafeDiv((64955) * (trace_length_), 65536),
-      SafeDiv((16239) * (trace_length_), 16384),
-      SafeDiv((64957) * (trace_length_), 65536),
-      SafeDiv((32481) * (trace_length_), 32768),
-      SafeDiv((64963) * (trace_length_), 65536),
-      SafeDiv((16241) * (trace_length_), 16384),
-      SafeDiv((64965) * (trace_length_), 65536),
-      SafeDiv((32483) * (trace_length_), 32768),
-      SafeDiv((64967) * (trace_length_), 65536),
-      SafeDiv((8121) * (trace_length_), 8192),
-      SafeDiv((64969) * (trace_length_), 65536),
-      SafeDiv((32485) * (trace_length_), 32768),
-      SafeDiv((64971) * (trace_length_), 65536),
-      SafeDiv((16243) * (trace_length_), 16384),
-      SafeDiv((64973) * (trace_length_), 65536),
-      SafeDiv((32487) * (trace_length_), 32768),
-      SafeDiv((64975) * (trace_length_), 65536),
-      SafeDiv((4061) * (trace_length_), 4096),
-      SafeDiv((64977) * (trace_length_), 65536),
-      SafeDiv((32489) * (trace_length_), 32768),
-      SafeDiv((64979) * (trace_length_), 65536),
-      SafeDiv((16245) * (trace_length_), 16384),
-      SafeDiv((64981) * (trace_length_), 65536),
-      SafeDiv((32491) * (trace_length_), 32768),
-      SafeDiv((64983) * (trace_length_), 65536),
-      SafeDiv((8123) * (trace_length_), 8192),
-      SafeDiv((64985) * (trace_length_), 65536),
-      SafeDiv((32493) * (trace_length_), 32768),
-      SafeDiv((64987) * (trace_length_), 65536),
-      SafeDiv((16247) * (trace_length_), 16384),
-      SafeDiv((64989) * (trace_length_), 65536),
-      SafeDiv((32497) * (trace_length_), 32768),
-      SafeDiv((64995) * (trace_length_), 65536),
-      SafeDiv((16249) * (trace_length_), 16384),
-      SafeDiv((64997) * (trace_length_), 65536),
-      SafeDiv((32499) * (trace_length_), 32768),
-      SafeDiv((64999) * (trace_length_), 65536),
-      SafeDiv((8125) * (trace_length_), 8192),
-      SafeDiv((65001) * (trace_length_), 65536),
-      SafeDiv((32501) * (trace_length_), 32768),
-      SafeDiv((65003) * (trace_length_), 65536),
-      SafeDiv((16251) * (trace_length_), 16384),
-      SafeDiv((65005) * (trace_length_), 65536),
-      SafeDiv((32503) * (trace_length_), 32768),
-      SafeDiv((65007) * (trace_length_), 65536),
-      SafeDiv((4063) * (trace_length_), 4096),
-      SafeDiv((65009) * (trace_length_), 65536),
-      SafeDiv((32505) * (trace_length_), 32768),
-      SafeDiv((65011) * (trace_length_), 65536),
-      SafeDiv((16253) * (trace_length_), 16384),
-      SafeDiv((65013) * (trace_length_), 65536),
-      SafeDiv((32507) * (trace_length_), 32768),
-      SafeDiv((65015) * (trace_length_), 65536),
-      SafeDiv((8127) * (trace_length_), 8192),
-      SafeDiv((65017) * (trace_length_), 65536),
-      SafeDiv((32509) * (trace_length_), 32768),
-      SafeDiv((65019) * (trace_length_), 65536),
-      SafeDiv((16255) * (trace_length_), 16384),
-      SafeDiv((65021) * (trace_length_), 65536),
-      SafeDiv((32513) * (trace_length_), 32768),
-      SafeDiv((65027) * (trace_length_), 65536),
-      SafeDiv((16257) * (trace_length_), 16384),
-      SafeDiv((65029) * (trace_length_), 65536),
-      SafeDiv((32515) * (trace_length_), 32768),
-      SafeDiv((65031) * (trace_length_), 65536),
-      SafeDiv((8129) * (trace_length_), 8192),
-      SafeDiv((65033) * (trace_length_), 65536),
-      SafeDiv((32517) * (trace_length_), 32768),
-      SafeDiv((65035) * (trace_length_), 65536),
-      SafeDiv((16259) * (trace_length_), 16384),
-      SafeDiv((65037) * (trace_length_), 65536),
-      SafeDiv((32519) * (trace_length_), 32768),
-      SafeDiv((65039) * (trace_length_), 65536),
-      SafeDiv((4065) * (trace_length_), 4096),
-      SafeDiv((65041) * (trace_length_), 65536),
-      SafeDiv((32521) * (trace_length_), 32768),
-      SafeDiv((65043) * (trace_length_), 65536),
-      SafeDiv((16261) * (trace_length_), 16384),
-      SafeDiv((65045) * (trace_length_), 65536),
-      SafeDiv((32523) * (trace_length_), 32768),
-      SafeDiv((65047) * (trace_length_), 65536),
-      SafeDiv((8131) * (trace_length_), 8192),
-      SafeDiv((65049) * (trace_length_), 65536),
-      SafeDiv((32525) * (trace_length_), 32768),
-      SafeDiv((65051) * (trace_length_), 65536),
-      SafeDiv((16263) * (trace_length_), 16384),
-      SafeDiv((65053) * (trace_length_), 65536),
-      SafeDiv((32529) * (trace_length_), 32768),
-      SafeDiv((65059) * (trace_length_), 65536),
-      SafeDiv((16265) * (trace_length_), 16384),
-      SafeDiv((65061) * (trace_length_), 65536),
-      SafeDiv((32531) * (trace_length_), 32768),
-      SafeDiv((65063) * (trace_length_), 65536),
-      SafeDiv((8133) * (trace_length_), 8192),
-      SafeDiv((65065) * (trace_length_), 65536),
-      SafeDiv((32533) * (trace_length_), 32768),
-      SafeDiv((65067) * (trace_length_), 65536),
-      SafeDiv((16267) * (trace_length_), 16384),
-      SafeDiv((65069) * (trace_length_), 65536),
-      SafeDiv((32535) * (trace_length_), 32768),
-      SafeDiv((65071) * (trace_length_), 65536),
-      SafeDiv((4067) * (trace_length_), 4096),
-      SafeDiv((65073) * (trace_length_), 65536),
-      SafeDiv((32537) * (trace_length_), 32768),
-      SafeDiv((65075) * (trace_length_), 65536),
-      SafeDiv((16269) * (trace_length_), 16384),
-      SafeDiv((65077) * (trace_length_), 65536),
-      SafeDiv((32539) * (trace_length_), 32768),
-      SafeDiv((65079) * (trace_length_), 65536),
-      SafeDiv((8135) * (trace_length_), 8192),
-      SafeDiv((65081) * (trace_length_), 65536),
-      SafeDiv((32541) * (trace_length_), 32768),
-      SafeDiv((65083) * (trace_length_), 65536),
-      SafeDiv((16271) * (trace_length_), 16384),
-      SafeDiv((65085) * (trace_length_), 65536),
-      SafeDiv((32545) * (trace_length_), 32768),
-      SafeDiv((65091) * (trace_length_), 65536),
-      SafeDiv((16273) * (trace_length_), 16384),
-      SafeDiv((65093) * (trace_length_), 65536),
-      SafeDiv((32547) * (trace_length_), 32768),
-      SafeDiv((65095) * (trace_length_), 65536),
-      SafeDiv((8137) * (trace_length_), 8192),
-      SafeDiv((65097) * (trace_length_), 65536),
-      SafeDiv((32549) * (trace_length_), 32768),
-      SafeDiv((65099) * (trace_length_), 65536),
-      SafeDiv((16275) * (trace_length_), 16384),
-      SafeDiv((65101) * (trace_length_), 65536),
-      SafeDiv((32551) * (trace_length_), 32768),
-      SafeDiv((65103) * (trace_length_), 65536),
-      SafeDiv((4069) * (trace_length_), 4096),
-      SafeDiv((65105) * (trace_length_), 65536),
-      SafeDiv((32553) * (trace_length_), 32768),
-      SafeDiv((65107) * (trace_length_), 65536),
-      SafeDiv((16277) * (trace_length_), 16384),
-      SafeDiv((65109) * (trace_length_), 65536),
-      SafeDiv((32555) * (trace_length_), 32768),
-      SafeDiv((65111) * (trace_length_), 65536),
-      SafeDiv((8139) * (trace_length_), 8192),
-      SafeDiv((65113) * (trace_length_), 65536),
-      SafeDiv((32557) * (trace_length_), 32768),
-      SafeDiv((65115) * (trace_length_), 65536),
-      SafeDiv((16279) * (trace_length_), 16384),
-      SafeDiv((65117) * (trace_length_), 65536),
-      SafeDiv((32561) * (trace_length_), 32768),
-      SafeDiv((65123) * (trace_length_), 65536),
-      SafeDiv((16281) * (trace_length_), 16384),
-      SafeDiv((65125) * (trace_length_), 65536),
-      SafeDiv((32563) * (trace_length_), 32768),
-      SafeDiv((65127) * (trace_length_), 65536),
-      SafeDiv((8141) * (trace_length_), 8192),
-      SafeDiv((65129) * (trace_length_), 65536),
-      SafeDiv((32565) * (trace_length_), 32768),
-      SafeDiv((65131) * (trace_length_), 65536),
-      SafeDiv((16283) * (trace_length_), 16384),
-      SafeDiv((65133) * (trace_length_), 65536),
-      SafeDiv((32567) * (trace_length_), 32768),
-      SafeDiv((65135) * (trace_length_), 65536),
-      SafeDiv((4071) * (trace_length_), 4096),
-      SafeDiv((65137) * (trace_length_), 65536),
-      SafeDiv((32569) * (trace_length_), 32768),
-      SafeDiv((65139) * (trace_length_), 65536),
-      SafeDiv((16285) * (trace_length_), 16384),
-      SafeDiv((65141) * (trace_length_), 65536),
-      SafeDiv((32571) * (trace_length_), 32768),
-      SafeDiv((65143) * (trace_length_), 65536),
-      SafeDiv((8143) * (trace_length_), 8192),
-      SafeDiv((65145) * (trace_length_), 65536),
-      SafeDiv((32573) * (trace_length_), 32768),
-      SafeDiv((65147) * (trace_length_), 65536),
-      SafeDiv((16287) * (trace_length_), 16384),
-      SafeDiv((65149) * (trace_length_), 65536),
-      SafeDiv((32577) * (trace_length_), 32768),
-      SafeDiv((65155) * (trace_length_), 65536),
-      SafeDiv((16289) * (trace_length_), 16384),
-      SafeDiv((65157) * (trace_length_), 65536),
-      SafeDiv((32579) * (trace_length_), 32768),
-      SafeDiv((65159) * (trace_length_), 65536),
-      SafeDiv((8145) * (trace_length_), 8192),
-      SafeDiv((65161) * (trace_length_), 65536),
-      SafeDiv((32581) * (trace_length_), 32768),
-      SafeDiv((65163) * (trace_length_), 65536),
-      SafeDiv((16291) * (trace_length_), 16384),
-      SafeDiv((65165) * (trace_length_), 65536),
-      SafeDiv((32583) * (trace_length_), 32768),
-      SafeDiv((65167) * (trace_length_), 65536),
-      SafeDiv((4073) * (trace_length_), 4096),
-      SafeDiv((65169) * (trace_length_), 65536),
-      SafeDiv((32585) * (trace_length_), 32768),
-      SafeDiv((65171) * (trace_length_), 65536),
-      SafeDiv((16293) * (trace_length_), 16384),
-      SafeDiv((65173) * (trace_length_), 65536),
-      SafeDiv((32587) * (trace_length_), 32768),
-      SafeDiv((65175) * (trace_length_), 65536),
-      SafeDiv((8147) * (trace_length_), 8192),
-      SafeDiv((65177) * (trace_length_), 65536),
-      SafeDiv((32589) * (trace_length_), 32768),
-      SafeDiv((65179) * (trace_length_), 65536),
-      SafeDiv((16295) * (trace_length_), 16384),
-      SafeDiv((65181) * (trace_length_), 65536),
-      SafeDiv((32593) * (trace_length_), 32768),
-      SafeDiv((65187) * (trace_length_), 65536),
-      SafeDiv((16297) * (trace_length_), 16384),
-      SafeDiv((65189) * (trace_length_), 65536),
-      SafeDiv((32595) * (trace_length_), 32768),
-      SafeDiv((65191) * (trace_length_), 65536),
-      SafeDiv((8149) * (trace_length_), 8192),
-      SafeDiv((65193) * (trace_length_), 65536),
-      SafeDiv((32597) * (trace_length_), 32768),
-      SafeDiv((65195) * (trace_length_), 65536),
-      SafeDiv((16299) * (trace_length_), 16384),
-      SafeDiv((65197) * (trace_length_), 65536),
-      SafeDiv((32599) * (trace_length_), 32768),
-      SafeDiv((65199) * (trace_length_), 65536),
-      SafeDiv((4075) * (trace_length_), 4096),
-      SafeDiv((65201) * (trace_length_), 65536),
-      SafeDiv((32601) * (trace_length_), 32768),
-      SafeDiv((65203) * (trace_length_), 65536),
-      SafeDiv((16301) * (trace_length_), 16384),
-      SafeDiv((65205) * (trace_length_), 65536),
-      SafeDiv((32603) * (trace_length_), 32768),
-      SafeDiv((65207) * (trace_length_), 65536),
-      SafeDiv((8151) * (trace_length_), 8192),
-      SafeDiv((65209) * (trace_length_), 65536),
-      SafeDiv((32605) * (trace_length_), 32768),
-      SafeDiv((65211) * (trace_length_), 65536),
-      SafeDiv((16303) * (trace_length_), 16384),
-      SafeDiv((65213) * (trace_length_), 65536),
-      SafeDiv((32609) * (trace_length_), 32768),
-      SafeDiv((65219) * (trace_length_), 65536),
-      SafeDiv((16305) * (trace_length_), 16384),
-      SafeDiv((65221) * (trace_length_), 65536),
-      SafeDiv((32611) * (trace_length_), 32768),
-      SafeDiv((65223) * (trace_length_), 65536),
-      SafeDiv((8153) * (trace_length_), 8192),
-      SafeDiv((65225) * (trace_length_), 65536),
-      SafeDiv((32613) * (trace_length_), 32768),
-      SafeDiv((65227) * (trace_length_), 65536),
-      SafeDiv((16307) * (trace_length_), 16384),
-      SafeDiv((65229) * (trace_length_), 65536),
-      SafeDiv((32615) * (trace_length_), 32768),
-      SafeDiv((65231) * (trace_length_), 65536),
-      SafeDiv((4077) * (trace_length_), 4096),
-      SafeDiv((65233) * (trace_length_), 65536),
-      SafeDiv((32617) * (trace_length_), 32768),
-      SafeDiv((65235) * (trace_length_), 65536),
-      SafeDiv((16309) * (trace_length_), 16384),
-      SafeDiv((65237) * (trace_length_), 65536),
-      SafeDiv((32619) * (trace_length_), 32768),
-      SafeDiv((65239) * (trace_length_), 65536),
-      SafeDiv((8155) * (trace_length_), 8192),
-      SafeDiv((65241) * (trace_length_), 65536),
-      SafeDiv((32621) * (trace_length_), 32768),
-      SafeDiv((65243) * (trace_length_), 65536),
-      SafeDiv((16311) * (trace_length_), 16384),
-      SafeDiv((65245) * (trace_length_), 65536),
-      SafeDiv((32625) * (trace_length_), 32768),
-      SafeDiv((65251) * (trace_length_), 65536),
-      SafeDiv((16313) * (trace_length_), 16384),
-      SafeDiv((65253) * (trace_length_), 65536),
-      SafeDiv((32627) * (trace_length_), 32768),
-      SafeDiv((65255) * (trace_length_), 65536),
-      SafeDiv((8157) * (trace_length_), 8192),
-      SafeDiv((65257) * (trace_length_), 65536),
-      SafeDiv((32629) * (trace_length_), 32768),
-      SafeDiv((65259) * (trace_length_), 65536),
-      SafeDiv((16315) * (trace_length_), 16384),
-      SafeDiv((65261) * (trace_length_), 65536),
-      SafeDiv((32631) * (trace_length_), 32768),
-      SafeDiv((65263) * (trace_length_), 65536),
-      SafeDiv((4079) * (trace_length_), 4096),
-      SafeDiv((65265) * (trace_length_), 65536),
-      SafeDiv((32633) * (trace_length_), 32768),
-      SafeDiv((65267) * (trace_length_), 65536),
-      SafeDiv((16317) * (trace_length_), 16384),
-      SafeDiv((65269) * (trace_length_), 65536),
-      SafeDiv((32635) * (trace_length_), 32768),
-      SafeDiv((65271) * (trace_length_), 65536),
-      SafeDiv((8159) * (trace_length_), 8192),
-      SafeDiv((65273) * (trace_length_), 65536),
-      SafeDiv((32637) * (trace_length_), 32768),
-      SafeDiv((65275) * (trace_length_), 65536),
-      SafeDiv((16319) * (trace_length_), 16384),
-      SafeDiv((65277) * (trace_length_), 65536),
-      SafeDiv((32641) * (trace_length_), 32768),
-      SafeDiv((65283) * (trace_length_), 65536),
-      SafeDiv((16321) * (trace_length_), 16384),
-      SafeDiv((65285) * (trace_length_), 65536),
-      SafeDiv((32643) * (trace_length_), 32768),
-      SafeDiv((65287) * (trace_length_), 65536),
-      SafeDiv((8161) * (trace_length_), 8192),
-      SafeDiv((65289) * (trace_length_), 65536),
-      SafeDiv((32645) * (trace_length_), 32768),
-      SafeDiv((65291) * (trace_length_), 65536),
-      SafeDiv((16323) * (trace_length_), 16384),
-      SafeDiv((65293) * (trace_length_), 65536),
-      SafeDiv((32647) * (trace_length_), 32768),
-      SafeDiv((65295) * (trace_length_), 65536),
-      SafeDiv((4081) * (trace_length_), 4096),
-      SafeDiv((65297) * (trace_length_), 65536),
-      SafeDiv((32649) * (trace_length_), 32768),
-      SafeDiv((65299) * (trace_length_), 65536),
-      SafeDiv((16325) * (trace_length_), 16384),
-      SafeDiv((65301) * (trace_length_), 65536),
-      SafeDiv((32651) * (trace_length_), 32768),
-      SafeDiv((65303) * (trace_length_), 65536),
-      SafeDiv((8163) * (trace_length_), 8192),
-      SafeDiv((65305) * (trace_length_), 65536),
-      SafeDiv((32653) * (trace_length_), 32768),
-      SafeDiv((65307) * (trace_length_), 65536),
-      SafeDiv((16327) * (trace_length_), 16384),
-      SafeDiv((65309) * (trace_length_), 65536),
-      SafeDiv((32657) * (trace_length_), 32768),
-      SafeDiv((65315) * (trace_length_), 65536),
-      SafeDiv((16329) * (trace_length_), 16384),
-      SafeDiv((65317) * (trace_length_), 65536),
-      SafeDiv((32659) * (trace_length_), 32768),
-      SafeDiv((65319) * (trace_length_), 65536),
-      SafeDiv((8165) * (trace_length_), 8192),
-      SafeDiv((65321) * (trace_length_), 65536),
-      SafeDiv((32661) * (trace_length_), 32768),
-      SafeDiv((65323) * (trace_length_), 65536),
-      SafeDiv((16331) * (trace_length_), 16384),
-      SafeDiv((65325) * (trace_length_), 65536),
-      SafeDiv((32663) * (trace_length_), 32768),
-      SafeDiv((65327) * (trace_length_), 65536),
-      SafeDiv((4083) * (trace_length_), 4096),
-      SafeDiv((65329) * (trace_length_), 65536),
-      SafeDiv((32665) * (trace_length_), 32768),
-      SafeDiv((65331) * (trace_length_), 65536),
-      SafeDiv((16333) * (trace_length_), 16384),
-      SafeDiv((65333) * (trace_length_), 65536),
-      SafeDiv((32667) * (trace_length_), 32768),
-      SafeDiv((65335) * (trace_length_), 65536),
-      SafeDiv((8167) * (trace_length_), 8192),
-      SafeDiv((65337) * (trace_length_), 65536),
-      SafeDiv((32669) * (trace_length_), 32768),
-      SafeDiv((65339) * (trace_length_), 65536),
-      SafeDiv((16335) * (trace_length_), 16384),
-      SafeDiv((65341) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 65536),
-      SafeDiv(trace_length_, 524288),
-      SafeDiv(trace_length_, 262144),
-      SafeDiv((3) * (trace_length_), 524288),
-      SafeDiv(trace_length_, 131072),
-      SafeDiv((5) * (trace_length_), 524288),
-      SafeDiv((3) * (trace_length_), 262144),
-      SafeDiv((7) * (trace_length_), 524288),
-      SafeDiv((9) * (trace_length_), 524288),
-      SafeDiv((5) * (trace_length_), 262144),
-      SafeDiv((11) * (trace_length_), 524288),
-      SafeDiv((3) * (trace_length_), 131072),
-      SafeDiv((13) * (trace_length_), 524288),
-      SafeDiv((7) * (trace_length_), 262144),
-      SafeDiv((15) * (trace_length_), 524288),
-      SafeDiv(trace_length_, 32768),
-      SafeDiv((3) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 16384),
-      SafeDiv((5) * (trace_length_), 65536),
-      SafeDiv((3) * (trace_length_), 32768),
-      SafeDiv((7) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 8192),
-      SafeDiv((9) * (trace_length_), 65536),
-      SafeDiv((5) * (trace_length_), 32768),
-      SafeDiv((11) * (trace_length_), 65536),
-      SafeDiv((3) * (trace_length_), 16384),
-      SafeDiv((13) * (trace_length_), 65536),
-      SafeDiv((7) * (trace_length_), 32768),
-      SafeDiv((15) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 4096),
-      SafeDiv((17) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 32768),
-      SafeDiv((19) * (trace_length_), 65536),
-      SafeDiv((5) * (trace_length_), 16384),
-      SafeDiv((21) * (trace_length_), 65536),
-      SafeDiv((11) * (trace_length_), 32768),
-      SafeDiv((23) * (trace_length_), 65536),
-      SafeDiv((3) * (trace_length_), 8192),
-      SafeDiv((25) * (trace_length_), 65536),
-      SafeDiv((13) * (trace_length_), 32768),
-      SafeDiv((27) * (trace_length_), 65536),
-      SafeDiv((7) * (trace_length_), 16384),
-      SafeDiv((29) * (trace_length_), 65536),
-      SafeDiv((15) * (trace_length_), 32768),
-      SafeDiv((31) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 2048),
-      SafeDiv((3) * (trace_length_), 2048),
-      SafeDiv((5) * (trace_length_), 2048),
-      SafeDiv((7) * (trace_length_), 2048),
-      SafeDiv((9) * (trace_length_), 2048),
-      SafeDiv((11) * (trace_length_), 2048),
-      SafeDiv((13) * (trace_length_), 2048),
-      SafeDiv((15) * (trace_length_), 2048),
-      SafeDiv((17) * (trace_length_), 2048),
-      SafeDiv((19) * (trace_length_), 2048),
-      SafeDiv((21) * (trace_length_), 2048),
-      SafeDiv((23) * (trace_length_), 2048),
-      SafeDiv((33) * (trace_length_), 65536),
-      SafeDiv((65) * (trace_length_), 65536),
-      SafeDiv((97) * (trace_length_), 65536),
-      SafeDiv((129) * (trace_length_), 65536),
-      SafeDiv((161) * (trace_length_), 65536),
-      SafeDiv((193) * (trace_length_), 65536),
-      SafeDiv((225) * (trace_length_), 65536),
-      SafeDiv((257) * (trace_length_), 65536),
-      SafeDiv((289) * (trace_length_), 65536),
-      SafeDiv((321) * (trace_length_), 65536),
-      SafeDiv((353) * (trace_length_), 65536),
-      SafeDiv((385) * (trace_length_), 65536),
-      SafeDiv((417) * (trace_length_), 65536),
-      SafeDiv((449) * (trace_length_), 65536),
-      SafeDiv((481) * (trace_length_), 65536),
-      SafeDiv((513) * (trace_length_), 65536),
-      SafeDiv((545) * (trace_length_), 65536),
-      SafeDiv((577) * (trace_length_), 65536),
-      SafeDiv((609) * (trace_length_), 65536),
-      SafeDiv((641) * (trace_length_), 65536),
-      SafeDiv((673) * (trace_length_), 65536),
-      SafeDiv((705) * (trace_length_), 65536),
-      SafeDiv((737) * (trace_length_), 65536),
-      SafeDiv((769) * (trace_length_), 65536),
-      SafeDiv((17) * (trace_length_), 32768),
-      SafeDiv((35) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 16384),
-      SafeDiv((37) * (trace_length_), 65536),
-      SafeDiv((19) * (trace_length_), 32768),
-      SafeDiv((39) * (trace_length_), 65536),
-      SafeDiv((5) * (trace_length_), 8192),
-      SafeDiv((41) * (trace_length_), 65536),
-      SafeDiv((21) * (trace_length_), 32768),
-      SafeDiv((43) * (trace_length_), 65536),
-      SafeDiv((11) * (trace_length_), 16384),
-      SafeDiv((45) * (trace_length_), 65536),
-      SafeDiv((23) * (trace_length_), 32768),
-      SafeDiv((47) * (trace_length_), 65536),
-      SafeDiv((3) * (trace_length_), 4096),
-      SafeDiv((49) * (trace_length_), 65536),
-      SafeDiv((25) * (trace_length_), 32768),
-      SafeDiv((51) * (trace_length_), 65536),
-      SafeDiv((13) * (trace_length_), 16384),
-      SafeDiv((53) * (trace_length_), 65536),
-      SafeDiv((27) * (trace_length_), 32768),
-      SafeDiv((55) * (trace_length_), 65536),
-      SafeDiv((7) * (trace_length_), 8192),
-      SafeDiv((57) * (trace_length_), 65536),
-      SafeDiv((29) * (trace_length_), 32768),
-      SafeDiv((59) * (trace_length_), 65536),
-      SafeDiv((15) * (trace_length_), 16384),
-      SafeDiv((61) * (trace_length_), 65536),
-      SafeDiv((33) * (trace_length_), 32768),
-      SafeDiv((67) * (trace_length_), 65536),
-      SafeDiv((17) * (trace_length_), 16384),
-      SafeDiv((69) * (trace_length_), 65536),
-      SafeDiv((35) * (trace_length_), 32768),
-      SafeDiv((71) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 8192),
-      SafeDiv((73) * (trace_length_), 65536),
-      SafeDiv((37) * (trace_length_), 32768),
-      SafeDiv((75) * (trace_length_), 65536),
-      SafeDiv((19) * (trace_length_), 16384),
-      SafeDiv((77) * (trace_length_), 65536),
-      SafeDiv((39) * (trace_length_), 32768),
-      SafeDiv((79) * (trace_length_), 65536),
-      SafeDiv((5) * (trace_length_), 4096),
-      SafeDiv((81) * (trace_length_), 65536),
-      SafeDiv((41) * (trace_length_), 32768),
-      SafeDiv((83) * (trace_length_), 65536),
-      SafeDiv((21) * (trace_length_), 16384),
-      SafeDiv((85) * (trace_length_), 65536),
-      SafeDiv((43) * (trace_length_), 32768),
-      SafeDiv((87) * (trace_length_), 65536),
-      SafeDiv((11) * (trace_length_), 8192),
-      SafeDiv((89) * (trace_length_), 65536),
-      SafeDiv((45) * (trace_length_), 32768),
-      SafeDiv((91) * (trace_length_), 65536),
-      SafeDiv((23) * (trace_length_), 16384),
-      SafeDiv((93) * (trace_length_), 65536),
-      SafeDiv((49) * (trace_length_), 32768),
-      SafeDiv((99) * (trace_length_), 65536),
-      SafeDiv((25) * (trace_length_), 16384),
-      SafeDiv((101) * (trace_length_), 65536),
-      SafeDiv((51) * (trace_length_), 32768),
-      SafeDiv((103) * (trace_length_), 65536),
-      SafeDiv((13) * (trace_length_), 8192),
-      SafeDiv((105) * (trace_length_), 65536),
-      SafeDiv((53) * (trace_length_), 32768),
-      SafeDiv((107) * (trace_length_), 65536),
-      SafeDiv((27) * (trace_length_), 16384),
-      SafeDiv((109) * (trace_length_), 65536),
-      SafeDiv((55) * (trace_length_), 32768),
-      SafeDiv((111) * (trace_length_), 65536),
-      SafeDiv((7) * (trace_length_), 4096),
-      SafeDiv((113) * (trace_length_), 65536),
-      SafeDiv((57) * (trace_length_), 32768),
-      SafeDiv((115) * (trace_length_), 65536),
-      SafeDiv((29) * (trace_length_), 16384),
-      SafeDiv((117) * (trace_length_), 65536),
-      SafeDiv((59) * (trace_length_), 32768),
-      SafeDiv((119) * (trace_length_), 65536),
-      SafeDiv((15) * (trace_length_), 8192),
-      SafeDiv((121) * (trace_length_), 65536),
-      SafeDiv((61) * (trace_length_), 32768),
-      SafeDiv((123) * (trace_length_), 65536),
-      SafeDiv((31) * (trace_length_), 16384),
-      SafeDiv((125) * (trace_length_), 65536),
-      SafeDiv((65) * (trace_length_), 32768),
-      SafeDiv((131) * (trace_length_), 65536),
-      SafeDiv((33) * (trace_length_), 16384),
-      SafeDiv((133) * (trace_length_), 65536),
-      SafeDiv((67) * (trace_length_), 32768),
-      SafeDiv((135) * (trace_length_), 65536),
-      SafeDiv((17) * (trace_length_), 8192),
-      SafeDiv((137) * (trace_length_), 65536),
-      SafeDiv((69) * (trace_length_), 32768),
-      SafeDiv((139) * (trace_length_), 65536),
-      SafeDiv((35) * (trace_length_), 16384),
-      SafeDiv((141) * (trace_length_), 65536),
-      SafeDiv((71) * (trace_length_), 32768),
-      SafeDiv((143) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 4096),
-      SafeDiv((145) * (trace_length_), 65536),
-      SafeDiv((73) * (trace_length_), 32768),
-      SafeDiv((147) * (trace_length_), 65536),
-      SafeDiv((37) * (trace_length_), 16384),
-      SafeDiv((149) * (trace_length_), 65536),
-      SafeDiv((75) * (trace_length_), 32768),
-      SafeDiv((151) * (trace_length_), 65536),
-      SafeDiv((19) * (trace_length_), 8192),
-      SafeDiv((153) * (trace_length_), 65536),
-      SafeDiv((77) * (trace_length_), 32768),
-      SafeDiv((155) * (trace_length_), 65536),
-      SafeDiv((39) * (trace_length_), 16384),
-      SafeDiv((157) * (trace_length_), 65536),
-      SafeDiv((81) * (trace_length_), 32768),
-      SafeDiv((163) * (trace_length_), 65536),
-      SafeDiv((41) * (trace_length_), 16384),
-      SafeDiv((165) * (trace_length_), 65536),
-      SafeDiv((83) * (trace_length_), 32768),
-      SafeDiv((167) * (trace_length_), 65536),
-      SafeDiv((21) * (trace_length_), 8192),
-      SafeDiv((169) * (trace_length_), 65536),
-      SafeDiv((85) * (trace_length_), 32768),
-      SafeDiv((171) * (trace_length_), 65536),
-      SafeDiv((43) * (trace_length_), 16384),
-      SafeDiv((173) * (trace_length_), 65536),
-      SafeDiv((87) * (trace_length_), 32768),
-      SafeDiv((175) * (trace_length_), 65536),
-      SafeDiv((11) * (trace_length_), 4096),
-      SafeDiv((177) * (trace_length_), 65536),
-      SafeDiv((89) * (trace_length_), 32768),
-      SafeDiv((179) * (trace_length_), 65536),
-      SafeDiv((45) * (trace_length_), 16384),
-      SafeDiv((181) * (trace_length_), 65536),
-      SafeDiv((91) * (trace_length_), 32768),
-      SafeDiv((183) * (trace_length_), 65536),
-      SafeDiv((23) * (trace_length_), 8192),
-      SafeDiv((185) * (trace_length_), 65536),
-      SafeDiv((93) * (trace_length_), 32768),
-      SafeDiv((187) * (trace_length_), 65536),
-      SafeDiv((47) * (trace_length_), 16384),
-      SafeDiv((189) * (trace_length_), 65536),
-      SafeDiv((97) * (trace_length_), 32768),
-      SafeDiv((195) * (trace_length_), 65536),
-      SafeDiv((49) * (trace_length_), 16384),
-      SafeDiv((197) * (trace_length_), 65536),
-      SafeDiv((99) * (trace_length_), 32768),
-      SafeDiv((199) * (trace_length_), 65536),
-      SafeDiv((25) * (trace_length_), 8192),
-      SafeDiv((201) * (trace_length_), 65536),
-      SafeDiv((101) * (trace_length_), 32768),
-      SafeDiv((203) * (trace_length_), 65536),
-      SafeDiv((51) * (trace_length_), 16384),
-      SafeDiv((205) * (trace_length_), 65536),
-      SafeDiv((103) * (trace_length_), 32768),
-      SafeDiv((207) * (trace_length_), 65536),
-      SafeDiv((13) * (trace_length_), 4096),
-      SafeDiv((209) * (trace_length_), 65536),
-      SafeDiv((105) * (trace_length_), 32768),
-      SafeDiv((211) * (trace_length_), 65536),
-      SafeDiv((53) * (trace_length_), 16384),
-      SafeDiv((213) * (trace_length_), 65536),
-      SafeDiv((107) * (trace_length_), 32768),
-      SafeDiv((215) * (trace_length_), 65536),
-      SafeDiv((27) * (trace_length_), 8192),
-      SafeDiv((217) * (trace_length_), 65536),
-      SafeDiv((109) * (trace_length_), 32768),
-      SafeDiv((219) * (trace_length_), 65536),
-      SafeDiv((55) * (trace_length_), 16384),
-      SafeDiv((221) * (trace_length_), 65536),
-      SafeDiv((113) * (trace_length_), 32768),
-      SafeDiv((227) * (trace_length_), 65536),
-      SafeDiv((57) * (trace_length_), 16384),
-      SafeDiv((229) * (trace_length_), 65536),
-      SafeDiv((115) * (trace_length_), 32768),
-      SafeDiv((231) * (trace_length_), 65536),
-      SafeDiv((29) * (trace_length_), 8192),
-      SafeDiv((233) * (trace_length_), 65536),
-      SafeDiv((117) * (trace_length_), 32768),
-      SafeDiv((235) * (trace_length_), 65536),
-      SafeDiv((59) * (trace_length_), 16384),
-      SafeDiv((237) * (trace_length_), 65536),
-      SafeDiv((119) * (trace_length_), 32768),
-      SafeDiv((239) * (trace_length_), 65536),
-      SafeDiv((15) * (trace_length_), 4096),
-      SafeDiv((241) * (trace_length_), 65536),
-      SafeDiv((121) * (trace_length_), 32768),
-      SafeDiv((243) * (trace_length_), 65536),
-      SafeDiv((61) * (trace_length_), 16384),
-      SafeDiv((245) * (trace_length_), 65536),
-      SafeDiv((123) * (trace_length_), 32768),
-      SafeDiv((247) * (trace_length_), 65536),
-      SafeDiv((31) * (trace_length_), 8192),
-      SafeDiv((249) * (trace_length_), 65536),
-      SafeDiv((125) * (trace_length_), 32768),
-      SafeDiv((251) * (trace_length_), 65536),
-      SafeDiv((63) * (trace_length_), 16384),
-      SafeDiv((253) * (trace_length_), 65536),
-      SafeDiv((129) * (trace_length_), 32768),
-      SafeDiv((259) * (trace_length_), 65536),
-      SafeDiv((65) * (trace_length_), 16384),
-      SafeDiv((261) * (trace_length_), 65536),
-      SafeDiv((131) * (trace_length_), 32768),
-      SafeDiv((263) * (trace_length_), 65536),
-      SafeDiv((33) * (trace_length_), 8192),
-      SafeDiv((265) * (trace_length_), 65536),
-      SafeDiv((133) * (trace_length_), 32768),
-      SafeDiv((267) * (trace_length_), 65536),
-      SafeDiv((67) * (trace_length_), 16384),
-      SafeDiv((269) * (trace_length_), 65536),
-      SafeDiv((135) * (trace_length_), 32768),
-      SafeDiv((271) * (trace_length_), 65536),
-      SafeDiv((17) * (trace_length_), 4096),
-      SafeDiv((273) * (trace_length_), 65536),
-      SafeDiv((137) * (trace_length_), 32768),
-      SafeDiv((275) * (trace_length_), 65536),
-      SafeDiv((69) * (trace_length_), 16384),
-      SafeDiv((277) * (trace_length_), 65536),
-      SafeDiv((139) * (trace_length_), 32768),
-      SafeDiv((279) * (trace_length_), 65536),
-      SafeDiv((35) * (trace_length_), 8192),
-      SafeDiv((281) * (trace_length_), 65536),
-      SafeDiv((141) * (trace_length_), 32768),
-      SafeDiv((283) * (trace_length_), 65536),
-      SafeDiv((71) * (trace_length_), 16384),
-      SafeDiv((285) * (trace_length_), 65536),
-      SafeDiv((145) * (trace_length_), 32768),
-      SafeDiv((291) * (trace_length_), 65536),
-      SafeDiv((73) * (trace_length_), 16384),
-      SafeDiv((293) * (trace_length_), 65536),
-      SafeDiv((147) * (trace_length_), 32768),
-      SafeDiv((295) * (trace_length_), 65536),
-      SafeDiv((37) * (trace_length_), 8192),
-      SafeDiv((297) * (trace_length_), 65536),
-      SafeDiv((149) * (trace_length_), 32768),
-      SafeDiv((299) * (trace_length_), 65536),
-      SafeDiv((75) * (trace_length_), 16384),
-      SafeDiv((301) * (trace_length_), 65536),
-      SafeDiv((151) * (trace_length_), 32768),
-      SafeDiv((303) * (trace_length_), 65536),
-      SafeDiv((19) * (trace_length_), 4096),
-      SafeDiv((305) * (trace_length_), 65536),
-      SafeDiv((153) * (trace_length_), 32768),
-      SafeDiv((307) * (trace_length_), 65536),
-      SafeDiv((77) * (trace_length_), 16384),
-      SafeDiv((309) * (trace_length_), 65536),
-      SafeDiv((155) * (trace_length_), 32768),
-      SafeDiv((311) * (trace_length_), 65536),
-      SafeDiv((39) * (trace_length_), 8192),
-      SafeDiv((313) * (trace_length_), 65536),
-      SafeDiv((157) * (trace_length_), 32768),
-      SafeDiv((315) * (trace_length_), 65536),
-      SafeDiv((79) * (trace_length_), 16384),
-      SafeDiv((317) * (trace_length_), 65536),
-      SafeDiv((161) * (trace_length_), 32768),
-      SafeDiv((323) * (trace_length_), 65536),
-      SafeDiv((81) * (trace_length_), 16384),
-      SafeDiv((325) * (trace_length_), 65536),
-      SafeDiv((163) * (trace_length_), 32768),
-      SafeDiv((327) * (trace_length_), 65536),
-      SafeDiv((41) * (trace_length_), 8192),
-      SafeDiv((329) * (trace_length_), 65536),
-      SafeDiv((165) * (trace_length_), 32768),
-      SafeDiv((331) * (trace_length_), 65536),
-      SafeDiv((83) * (trace_length_), 16384),
-      SafeDiv((333) * (trace_length_), 65536),
-      SafeDiv((167) * (trace_length_), 32768),
-      SafeDiv((335) * (trace_length_), 65536),
-      SafeDiv((21) * (trace_length_), 4096),
-      SafeDiv((337) * (trace_length_), 65536),
-      SafeDiv((169) * (trace_length_), 32768),
-      SafeDiv((339) * (trace_length_), 65536),
-      SafeDiv((85) * (trace_length_), 16384),
-      SafeDiv((341) * (trace_length_), 65536),
-      SafeDiv((171) * (trace_length_), 32768),
-      SafeDiv((343) * (trace_length_), 65536),
-      SafeDiv((43) * (trace_length_), 8192),
-      SafeDiv((345) * (trace_length_), 65536),
-      SafeDiv((173) * (trace_length_), 32768),
-      SafeDiv((347) * (trace_length_), 65536),
-      SafeDiv((87) * (trace_length_), 16384),
-      SafeDiv((349) * (trace_length_), 65536),
-      SafeDiv((177) * (trace_length_), 32768),
-      SafeDiv((355) * (trace_length_), 65536),
-      SafeDiv((89) * (trace_length_), 16384),
-      SafeDiv((357) * (trace_length_), 65536),
-      SafeDiv((179) * (trace_length_), 32768),
-      SafeDiv((359) * (trace_length_), 65536),
-      SafeDiv((45) * (trace_length_), 8192),
-      SafeDiv((361) * (trace_length_), 65536),
-      SafeDiv((181) * (trace_length_), 32768),
-      SafeDiv((363) * (trace_length_), 65536),
-      SafeDiv((91) * (trace_length_), 16384),
-      SafeDiv((365) * (trace_length_), 65536),
-      SafeDiv((183) * (trace_length_), 32768),
-      SafeDiv((367) * (trace_length_), 65536),
-      SafeDiv((23) * (trace_length_), 4096),
-      SafeDiv((369) * (trace_length_), 65536),
-      SafeDiv((185) * (trace_length_), 32768),
-      SafeDiv((371) * (trace_length_), 65536),
-      SafeDiv((93) * (trace_length_), 16384),
-      SafeDiv((373) * (trace_length_), 65536),
-      SafeDiv((187) * (trace_length_), 32768),
-      SafeDiv((375) * (trace_length_), 65536),
-      SafeDiv((47) * (trace_length_), 8192),
-      SafeDiv((377) * (trace_length_), 65536),
-      SafeDiv((189) * (trace_length_), 32768),
-      SafeDiv((379) * (trace_length_), 65536),
-      SafeDiv((95) * (trace_length_), 16384),
-      SafeDiv((381) * (trace_length_), 65536),
-      SafeDiv((193) * (trace_length_), 32768),
-      SafeDiv((387) * (trace_length_), 65536),
-      SafeDiv((97) * (trace_length_), 16384),
-      SafeDiv((389) * (trace_length_), 65536),
-      SafeDiv((195) * (trace_length_), 32768),
-      SafeDiv((391) * (trace_length_), 65536),
-      SafeDiv((49) * (trace_length_), 8192),
-      SafeDiv((393) * (trace_length_), 65536),
-      SafeDiv((197) * (trace_length_), 32768),
-      SafeDiv((395) * (trace_length_), 65536),
-      SafeDiv((99) * (trace_length_), 16384),
-      SafeDiv((397) * (trace_length_), 65536),
-      SafeDiv((199) * (trace_length_), 32768),
-      SafeDiv((399) * (trace_length_), 65536),
-      SafeDiv((25) * (trace_length_), 4096),
-      SafeDiv((401) * (trace_length_), 65536),
-      SafeDiv((201) * (trace_length_), 32768),
-      SafeDiv((403) * (trace_length_), 65536),
-      SafeDiv((101) * (trace_length_), 16384),
-      SafeDiv((405) * (trace_length_), 65536),
-      SafeDiv((203) * (trace_length_), 32768),
-      SafeDiv((407) * (trace_length_), 65536),
-      SafeDiv((51) * (trace_length_), 8192),
-      SafeDiv((409) * (trace_length_), 65536),
-      SafeDiv((205) * (trace_length_), 32768),
-      SafeDiv((411) * (trace_length_), 65536),
-      SafeDiv((103) * (trace_length_), 16384),
-      SafeDiv((413) * (trace_length_), 65536),
-      SafeDiv((209) * (trace_length_), 32768),
-      SafeDiv((419) * (trace_length_), 65536),
-      SafeDiv((105) * (trace_length_), 16384),
-      SafeDiv((421) * (trace_length_), 65536),
-      SafeDiv((211) * (trace_length_), 32768),
-      SafeDiv((423) * (trace_length_), 65536),
-      SafeDiv((53) * (trace_length_), 8192),
-      SafeDiv((425) * (trace_length_), 65536),
-      SafeDiv((213) * (trace_length_), 32768),
-      SafeDiv((427) * (trace_length_), 65536),
-      SafeDiv((107) * (trace_length_), 16384),
-      SafeDiv((429) * (trace_length_), 65536),
-      SafeDiv((215) * (trace_length_), 32768),
-      SafeDiv((431) * (trace_length_), 65536),
-      SafeDiv((27) * (trace_length_), 4096),
-      SafeDiv((433) * (trace_length_), 65536),
-      SafeDiv((217) * (trace_length_), 32768),
-      SafeDiv((435) * (trace_length_), 65536),
-      SafeDiv((109) * (trace_length_), 16384),
-      SafeDiv((437) * (trace_length_), 65536),
-      SafeDiv((219) * (trace_length_), 32768),
-      SafeDiv((439) * (trace_length_), 65536),
-      SafeDiv((55) * (trace_length_), 8192),
-      SafeDiv((441) * (trace_length_), 65536),
-      SafeDiv((221) * (trace_length_), 32768),
-      SafeDiv((443) * (trace_length_), 65536),
-      SafeDiv((111) * (trace_length_), 16384),
-      SafeDiv((445) * (trace_length_), 65536),
-      SafeDiv((225) * (trace_length_), 32768),
-      SafeDiv((451) * (trace_length_), 65536),
-      SafeDiv((113) * (trace_length_), 16384),
-      SafeDiv((453) * (trace_length_), 65536),
-      SafeDiv((227) * (trace_length_), 32768),
-      SafeDiv((455) * (trace_length_), 65536),
-      SafeDiv((57) * (trace_length_), 8192),
-      SafeDiv((457) * (trace_length_), 65536),
-      SafeDiv((229) * (trace_length_), 32768),
-      SafeDiv((459) * (trace_length_), 65536),
-      SafeDiv((115) * (trace_length_), 16384),
-      SafeDiv((461) * (trace_length_), 65536),
-      SafeDiv((231) * (trace_length_), 32768),
-      SafeDiv((463) * (trace_length_), 65536),
-      SafeDiv((29) * (trace_length_), 4096),
-      SafeDiv((465) * (trace_length_), 65536),
-      SafeDiv((233) * (trace_length_), 32768),
-      SafeDiv((467) * (trace_length_), 65536),
-      SafeDiv((117) * (trace_length_), 16384),
-      SafeDiv((469) * (trace_length_), 65536),
-      SafeDiv((235) * (trace_length_), 32768),
-      SafeDiv((471) * (trace_length_), 65536),
-      SafeDiv((59) * (trace_length_), 8192),
-      SafeDiv((473) * (trace_length_), 65536),
-      SafeDiv((237) * (trace_length_), 32768),
-      SafeDiv((475) * (trace_length_), 65536),
-      SafeDiv((119) * (trace_length_), 16384),
-      SafeDiv((477) * (trace_length_), 65536),
-      SafeDiv((241) * (trace_length_), 32768),
-      SafeDiv((483) * (trace_length_), 65536),
-      SafeDiv((121) * (trace_length_), 16384),
-      SafeDiv((485) * (trace_length_), 65536),
-      SafeDiv((243) * (trace_length_), 32768),
-      SafeDiv((487) * (trace_length_), 65536),
-      SafeDiv((61) * (trace_length_), 8192),
-      SafeDiv((489) * (trace_length_), 65536),
-      SafeDiv((245) * (trace_length_), 32768),
-      SafeDiv((491) * (trace_length_), 65536),
-      SafeDiv((123) * (trace_length_), 16384),
-      SafeDiv((493) * (trace_length_), 65536),
-      SafeDiv((247) * (trace_length_), 32768),
-      SafeDiv((495) * (trace_length_), 65536),
-      SafeDiv((31) * (trace_length_), 4096),
-      SafeDiv((497) * (trace_length_), 65536),
-      SafeDiv((249) * (trace_length_), 32768),
-      SafeDiv((499) * (trace_length_), 65536),
-      SafeDiv((125) * (trace_length_), 16384),
-      SafeDiv((501) * (trace_length_), 65536),
-      SafeDiv((251) * (trace_length_), 32768),
-      SafeDiv((503) * (trace_length_), 65536),
-      SafeDiv((63) * (trace_length_), 8192),
-      SafeDiv((505) * (trace_length_), 65536),
-      SafeDiv((253) * (trace_length_), 32768),
-      SafeDiv((507) * (trace_length_), 65536),
-      SafeDiv((127) * (trace_length_), 16384),
-      SafeDiv((509) * (trace_length_), 65536),
-      SafeDiv((257) * (trace_length_), 32768),
-      SafeDiv((515) * (trace_length_), 65536),
-      SafeDiv((129) * (trace_length_), 16384),
-      SafeDiv((517) * (trace_length_), 65536),
-      SafeDiv((259) * (trace_length_), 32768),
-      SafeDiv((519) * (trace_length_), 65536),
-      SafeDiv((65) * (trace_length_), 8192),
-      SafeDiv((521) * (trace_length_), 65536),
-      SafeDiv((261) * (trace_length_), 32768),
-      SafeDiv((523) * (trace_length_), 65536),
-      SafeDiv((131) * (trace_length_), 16384),
-      SafeDiv((525) * (trace_length_), 65536),
-      SafeDiv((263) * (trace_length_), 32768),
-      SafeDiv((527) * (trace_length_), 65536),
-      SafeDiv((33) * (trace_length_), 4096),
-      SafeDiv((529) * (trace_length_), 65536),
-      SafeDiv((265) * (trace_length_), 32768),
-      SafeDiv((531) * (trace_length_), 65536),
-      SafeDiv((133) * (trace_length_), 16384),
-      SafeDiv((533) * (trace_length_), 65536),
-      SafeDiv((267) * (trace_length_), 32768),
-      SafeDiv((535) * (trace_length_), 65536),
-      SafeDiv((67) * (trace_length_), 8192),
-      SafeDiv((537) * (trace_length_), 65536),
-      SafeDiv((269) * (trace_length_), 32768),
-      SafeDiv((539) * (trace_length_), 65536),
-      SafeDiv((135) * (trace_length_), 16384),
-      SafeDiv((541) * (trace_length_), 65536),
-      SafeDiv((273) * (trace_length_), 32768),
-      SafeDiv((547) * (trace_length_), 65536),
-      SafeDiv((137) * (trace_length_), 16384),
-      SafeDiv((549) * (trace_length_), 65536),
-      SafeDiv((275) * (trace_length_), 32768),
-      SafeDiv((551) * (trace_length_), 65536),
-      SafeDiv((69) * (trace_length_), 8192),
-      SafeDiv((553) * (trace_length_), 65536),
-      SafeDiv((277) * (trace_length_), 32768),
-      SafeDiv((555) * (trace_length_), 65536),
-      SafeDiv((139) * (trace_length_), 16384),
-      SafeDiv((557) * (trace_length_), 65536),
-      SafeDiv((279) * (trace_length_), 32768),
-      SafeDiv((559) * (trace_length_), 65536),
-      SafeDiv((35) * (trace_length_), 4096),
-      SafeDiv((561) * (trace_length_), 65536),
-      SafeDiv((281) * (trace_length_), 32768),
-      SafeDiv((563) * (trace_length_), 65536),
-      SafeDiv((141) * (trace_length_), 16384),
-      SafeDiv((565) * (trace_length_), 65536),
-      SafeDiv((283) * (trace_length_), 32768),
-      SafeDiv((567) * (trace_length_), 65536),
-      SafeDiv((71) * (trace_length_), 8192),
-      SafeDiv((569) * (trace_length_), 65536),
-      SafeDiv((285) * (trace_length_), 32768),
-      SafeDiv((571) * (trace_length_), 65536),
-      SafeDiv((143) * (trace_length_), 16384),
-      SafeDiv((573) * (trace_length_), 65536),
-      SafeDiv((289) * (trace_length_), 32768),
-      SafeDiv((579) * (trace_length_), 65536),
-      SafeDiv((145) * (trace_length_), 16384),
-      SafeDiv((581) * (trace_length_), 65536),
-      SafeDiv((291) * (trace_length_), 32768),
-      SafeDiv((583) * (trace_length_), 65536),
-      SafeDiv((73) * (trace_length_), 8192),
-      SafeDiv((585) * (trace_length_), 65536),
-      SafeDiv((293) * (trace_length_), 32768),
-      SafeDiv((587) * (trace_length_), 65536),
-      SafeDiv((147) * (trace_length_), 16384),
-      SafeDiv((589) * (trace_length_), 65536),
-      SafeDiv((295) * (trace_length_), 32768),
-      SafeDiv((591) * (trace_length_), 65536),
-      SafeDiv((37) * (trace_length_), 4096),
-      SafeDiv((593) * (trace_length_), 65536),
-      SafeDiv((297) * (trace_length_), 32768),
-      SafeDiv((595) * (trace_length_), 65536),
-      SafeDiv((149) * (trace_length_), 16384),
-      SafeDiv((597) * (trace_length_), 65536),
-      SafeDiv((299) * (trace_length_), 32768),
-      SafeDiv((599) * (trace_length_), 65536),
-      SafeDiv((75) * (trace_length_), 8192),
-      SafeDiv((601) * (trace_length_), 65536),
-      SafeDiv((301) * (trace_length_), 32768),
-      SafeDiv((603) * (trace_length_), 65536),
-      SafeDiv((151) * (trace_length_), 16384),
-      SafeDiv((605) * (trace_length_), 65536),
-      SafeDiv((305) * (trace_length_), 32768),
-      SafeDiv((611) * (trace_length_), 65536),
-      SafeDiv((153) * (trace_length_), 16384),
-      SafeDiv((613) * (trace_length_), 65536),
-      SafeDiv((307) * (trace_length_), 32768),
-      SafeDiv((615) * (trace_length_), 65536),
-      SafeDiv((77) * (trace_length_), 8192),
-      SafeDiv((617) * (trace_length_), 65536),
-      SafeDiv((309) * (trace_length_), 32768),
-      SafeDiv((619) * (trace_length_), 65536),
-      SafeDiv((155) * (trace_length_), 16384),
-      SafeDiv((621) * (trace_length_), 65536),
-      SafeDiv((311) * (trace_length_), 32768),
-      SafeDiv((623) * (trace_length_), 65536),
-      SafeDiv((39) * (trace_length_), 4096),
-      SafeDiv((625) * (trace_length_), 65536),
-      SafeDiv((313) * (trace_length_), 32768),
-      SafeDiv((627) * (trace_length_), 65536),
-      SafeDiv((157) * (trace_length_), 16384),
-      SafeDiv((629) * (trace_length_), 65536),
-      SafeDiv((315) * (trace_length_), 32768),
-      SafeDiv((631) * (trace_length_), 65536),
-      SafeDiv((79) * (trace_length_), 8192),
-      SafeDiv((633) * (trace_length_), 65536),
-      SafeDiv((317) * (trace_length_), 32768),
-      SafeDiv((635) * (trace_length_), 65536),
-      SafeDiv((159) * (trace_length_), 16384),
-      SafeDiv((637) * (trace_length_), 65536),
-      SafeDiv((321) * (trace_length_), 32768),
-      SafeDiv((643) * (trace_length_), 65536),
-      SafeDiv((161) * (trace_length_), 16384),
-      SafeDiv((645) * (trace_length_), 65536),
-      SafeDiv((323) * (trace_length_), 32768),
-      SafeDiv((647) * (trace_length_), 65536),
-      SafeDiv((81) * (trace_length_), 8192),
-      SafeDiv((649) * (trace_length_), 65536),
-      SafeDiv((325) * (trace_length_), 32768),
-      SafeDiv((651) * (trace_length_), 65536),
-      SafeDiv((163) * (trace_length_), 16384),
-      SafeDiv((653) * (trace_length_), 65536),
-      SafeDiv((327) * (trace_length_), 32768),
-      SafeDiv((655) * (trace_length_), 65536),
-      SafeDiv((41) * (trace_length_), 4096),
-      SafeDiv((657) * (trace_length_), 65536),
-      SafeDiv((329) * (trace_length_), 32768),
-      SafeDiv((659) * (trace_length_), 65536),
-      SafeDiv((165) * (trace_length_), 16384),
-      SafeDiv((661) * (trace_length_), 65536),
-      SafeDiv((331) * (trace_length_), 32768),
-      SafeDiv((663) * (trace_length_), 65536),
-      SafeDiv((83) * (trace_length_), 8192),
-      SafeDiv((665) * (trace_length_), 65536),
-      SafeDiv((333) * (trace_length_), 32768),
-      SafeDiv((667) * (trace_length_), 65536),
-      SafeDiv((167) * (trace_length_), 16384),
-      SafeDiv((669) * (trace_length_), 65536),
-      SafeDiv((337) * (trace_length_), 32768),
-      SafeDiv((675) * (trace_length_), 65536),
-      SafeDiv((169) * (trace_length_), 16384),
-      SafeDiv((677) * (trace_length_), 65536),
-      SafeDiv((339) * (trace_length_), 32768),
-      SafeDiv((679) * (trace_length_), 65536),
-      SafeDiv((85) * (trace_length_), 8192),
-      SafeDiv((681) * (trace_length_), 65536),
-      SafeDiv((341) * (trace_length_), 32768),
-      SafeDiv((683) * (trace_length_), 65536),
-      SafeDiv((171) * (trace_length_), 16384),
-      SafeDiv((685) * (trace_length_), 65536),
-      SafeDiv((343) * (trace_length_), 32768),
-      SafeDiv((687) * (trace_length_), 65536),
-      SafeDiv((43) * (trace_length_), 4096),
-      SafeDiv((689) * (trace_length_), 65536),
-      SafeDiv((345) * (trace_length_), 32768),
-      SafeDiv((691) * (trace_length_), 65536),
-      SafeDiv((173) * (trace_length_), 16384),
-      SafeDiv((693) * (trace_length_), 65536),
-      SafeDiv((347) * (trace_length_), 32768),
-      SafeDiv((695) * (trace_length_), 65536),
-      SafeDiv((87) * (trace_length_), 8192),
-      SafeDiv((697) * (trace_length_), 65536),
-      SafeDiv((349) * (trace_length_), 32768),
-      SafeDiv((699) * (trace_length_), 65536),
-      SafeDiv((175) * (trace_length_), 16384),
-      SafeDiv((701) * (trace_length_), 65536),
-      SafeDiv((353) * (trace_length_), 32768),
-      SafeDiv((707) * (trace_length_), 65536),
-      SafeDiv((177) * (trace_length_), 16384),
-      SafeDiv((709) * (trace_length_), 65536),
-      SafeDiv((355) * (trace_length_), 32768),
-      SafeDiv((711) * (trace_length_), 65536),
-      SafeDiv((89) * (trace_length_), 8192),
-      SafeDiv((713) * (trace_length_), 65536),
-      SafeDiv((357) * (trace_length_), 32768),
-      SafeDiv((715) * (trace_length_), 65536),
-      SafeDiv((179) * (trace_length_), 16384),
-      SafeDiv((717) * (trace_length_), 65536),
-      SafeDiv((359) * (trace_length_), 32768),
-      SafeDiv((719) * (trace_length_), 65536),
-      SafeDiv((45) * (trace_length_), 4096),
-      SafeDiv((721) * (trace_length_), 65536),
-      SafeDiv((361) * (trace_length_), 32768),
-      SafeDiv((723) * (trace_length_), 65536),
-      SafeDiv((181) * (trace_length_), 16384),
-      SafeDiv((725) * (trace_length_), 65536),
-      SafeDiv((363) * (trace_length_), 32768),
-      SafeDiv((727) * (trace_length_), 65536),
-      SafeDiv((91) * (trace_length_), 8192),
-      SafeDiv((729) * (trace_length_), 65536),
-      SafeDiv((365) * (trace_length_), 32768),
-      SafeDiv((731) * (trace_length_), 65536),
-      SafeDiv((183) * (trace_length_), 16384),
-      SafeDiv((733) * (trace_length_), 65536),
-      SafeDiv((369) * (trace_length_), 32768),
-      SafeDiv((739) * (trace_length_), 65536),
-      SafeDiv((185) * (trace_length_), 16384),
-      SafeDiv((741) * (trace_length_), 65536),
-      SafeDiv((371) * (trace_length_), 32768),
-      SafeDiv((743) * (trace_length_), 65536),
-      SafeDiv((93) * (trace_length_), 8192),
-      SafeDiv((745) * (trace_length_), 65536),
-      SafeDiv((373) * (trace_length_), 32768),
-      SafeDiv((747) * (trace_length_), 65536),
-      SafeDiv((187) * (trace_length_), 16384),
-      SafeDiv((749) * (trace_length_), 65536),
-      SafeDiv((375) * (trace_length_), 32768),
-      SafeDiv((751) * (trace_length_), 65536),
-      SafeDiv((47) * (trace_length_), 4096),
-      SafeDiv((753) * (trace_length_), 65536),
-      SafeDiv((377) * (trace_length_), 32768),
-      SafeDiv((755) * (trace_length_), 65536),
-      SafeDiv((189) * (trace_length_), 16384),
-      SafeDiv((757) * (trace_length_), 65536),
-      SafeDiv((379) * (trace_length_), 32768),
-      SafeDiv((759) * (trace_length_), 65536),
-      SafeDiv((95) * (trace_length_), 8192),
-      SafeDiv((761) * (trace_length_), 65536),
-      SafeDiv((381) * (trace_length_), 32768),
-      SafeDiv((763) * (trace_length_), 65536),
-      SafeDiv((191) * (trace_length_), 16384),
-      SafeDiv((765) * (trace_length_), 65536),
-      SafeDiv((385) * (trace_length_), 32768),
-      SafeDiv((771) * (trace_length_), 65536),
-      SafeDiv((193) * (trace_length_), 16384),
-      SafeDiv((773) * (trace_length_), 65536),
-      SafeDiv((387) * (trace_length_), 32768),
-      SafeDiv((775) * (trace_length_), 65536),
-      SafeDiv((97) * (trace_length_), 8192),
-      SafeDiv((777) * (trace_length_), 65536),
-      SafeDiv((389) * (trace_length_), 32768),
-      SafeDiv((779) * (trace_length_), 65536),
-      SafeDiv((195) * (trace_length_), 16384),
-      SafeDiv((781) * (trace_length_), 65536),
-      SafeDiv((391) * (trace_length_), 32768),
-      SafeDiv((783) * (trace_length_), 65536),
-      SafeDiv((49) * (trace_length_), 4096),
-      SafeDiv((785) * (trace_length_), 65536),
-      SafeDiv((393) * (trace_length_), 32768),
-      SafeDiv((787) * (trace_length_), 65536),
-      SafeDiv((197) * (trace_length_), 16384),
-      SafeDiv((789) * (trace_length_), 65536),
-      SafeDiv((395) * (trace_length_), 32768),
-      SafeDiv((791) * (trace_length_), 65536),
-      SafeDiv((99) * (trace_length_), 8192),
-      SafeDiv((793) * (trace_length_), 65536),
-      SafeDiv((397) * (trace_length_), 32768),
-      SafeDiv((795) * (trace_length_), 65536),
-      SafeDiv((199) * (trace_length_), 16384),
-      SafeDiv((797) * (trace_length_), 65536),
-      SafeDiv((63489) * (trace_length_), 65536),
-      SafeDiv((31745) * (trace_length_), 32768),
-      SafeDiv((63491) * (trace_length_), 65536),
-      SafeDiv((15873) * (trace_length_), 16384),
-      SafeDiv((63493) * (trace_length_), 65536),
-      SafeDiv((31747) * (trace_length_), 32768),
-      SafeDiv((63495) * (trace_length_), 65536),
-      SafeDiv((7937) * (trace_length_), 8192),
-      SafeDiv((63497) * (trace_length_), 65536),
-      SafeDiv((31749) * (trace_length_), 32768),
-      SafeDiv((63499) * (trace_length_), 65536),
-      SafeDiv((15875) * (trace_length_), 16384),
-      SafeDiv((63501) * (trace_length_), 65536),
-      SafeDiv((31751) * (trace_length_), 32768),
-      SafeDiv((63503) * (trace_length_), 65536),
-      SafeDiv((3969) * (trace_length_), 4096),
-      SafeDiv((63505) * (trace_length_), 65536),
-      SafeDiv((31753) * (trace_length_), 32768),
-      SafeDiv((63507) * (trace_length_), 65536),
-      SafeDiv((15877) * (trace_length_), 16384),
-      SafeDiv((63509) * (trace_length_), 65536),
-      SafeDiv((31755) * (trace_length_), 32768),
-      SafeDiv((63511) * (trace_length_), 65536),
-      SafeDiv((62465) * (trace_length_), 65536),
-      SafeDiv((31233) * (trace_length_), 32768),
-      SafeDiv((62467) * (trace_length_), 65536),
-      SafeDiv((15617) * (trace_length_), 16384),
-      SafeDiv((62469) * (trace_length_), 65536),
-      SafeDiv((31235) * (trace_length_), 32768),
-      SafeDiv((62471) * (trace_length_), 65536),
-      SafeDiv((7809) * (trace_length_), 8192),
-      SafeDiv((62473) * (trace_length_), 65536),
-      SafeDiv((31237) * (trace_length_), 32768),
-      SafeDiv((62475) * (trace_length_), 65536),
-      SafeDiv((15619) * (trace_length_), 16384),
-      SafeDiv((62477) * (trace_length_), 65536),
-      SafeDiv((31239) * (trace_length_), 32768),
-      SafeDiv((62479) * (trace_length_), 65536),
-      SafeDiv((3905) * (trace_length_), 4096),
-      SafeDiv((62481) * (trace_length_), 65536),
-      SafeDiv((31241) * (trace_length_), 32768),
-      SafeDiv((62483) * (trace_length_), 65536),
-      SafeDiv((15621) * (trace_length_), 16384),
-      SafeDiv((62485) * (trace_length_), 65536),
-      SafeDiv((31243) * (trace_length_), 32768),
-      SafeDiv((62487) * (trace_length_), 65536),
-      SafeDiv((59393) * (trace_length_), 65536),
-      SafeDiv((29697) * (trace_length_), 32768),
-      SafeDiv((59395) * (trace_length_), 65536),
-      SafeDiv((14849) * (trace_length_), 16384),
-      SafeDiv((59397) * (trace_length_), 65536),
-      SafeDiv((29699) * (trace_length_), 32768),
-      SafeDiv((59399) * (trace_length_), 65536),
-      SafeDiv((60417) * (trace_length_), 65536),
-      SafeDiv((30209) * (trace_length_), 32768),
-      SafeDiv((60419) * (trace_length_), 65536),
-      SafeDiv((15105) * (trace_length_), 16384),
-      SafeDiv((60421) * (trace_length_), 65536),
-      SafeDiv((30211) * (trace_length_), 32768),
-      SafeDiv((60423) * (trace_length_), 65536),
-      SafeDiv((61441) * (trace_length_), 65536),
-      SafeDiv((30721) * (trace_length_), 32768),
-      SafeDiv((61443) * (trace_length_), 65536),
-      SafeDiv((15361) * (trace_length_), 16384),
-      SafeDiv((61445) * (trace_length_), 65536),
-      SafeDiv((30723) * (trace_length_), 32768),
-      SafeDiv((61447) * (trace_length_), 65536),
-      SafeDiv((7425) * (trace_length_), 8192),
-      SafeDiv((59401) * (trace_length_), 65536),
-      SafeDiv((29701) * (trace_length_), 32768),
-      SafeDiv((59403) * (trace_length_), 65536),
-      SafeDiv((14851) * (trace_length_), 16384),
-      SafeDiv((59405) * (trace_length_), 65536),
-      SafeDiv((29703) * (trace_length_), 32768),
-      SafeDiv((59407) * (trace_length_), 65536),
-      SafeDiv((3713) * (trace_length_), 4096),
-      SafeDiv((59409) * (trace_length_), 65536),
-      SafeDiv((29705) * (trace_length_), 32768),
-      SafeDiv((59411) * (trace_length_), 65536),
-      SafeDiv((14853) * (trace_length_), 16384),
-      SafeDiv((59413) * (trace_length_), 65536),
-      SafeDiv((29707) * (trace_length_), 32768),
-      SafeDiv((59415) * (trace_length_), 65536),
-      SafeDiv((7553) * (trace_length_), 8192),
-      SafeDiv((60425) * (trace_length_), 65536),
-      SafeDiv((30213) * (trace_length_), 32768),
-      SafeDiv((60427) * (trace_length_), 65536),
-      SafeDiv((15107) * (trace_length_), 16384),
-      SafeDiv((60429) * (trace_length_), 65536),
-      SafeDiv((30215) * (trace_length_), 32768),
-      SafeDiv((60431) * (trace_length_), 65536),
-      SafeDiv((3777) * (trace_length_), 4096),
-      SafeDiv((60433) * (trace_length_), 65536),
-      SafeDiv((30217) * (trace_length_), 32768),
-      SafeDiv((60435) * (trace_length_), 65536),
-      SafeDiv((15109) * (trace_length_), 16384),
-      SafeDiv((60437) * (trace_length_), 65536),
-      SafeDiv((30219) * (trace_length_), 32768),
-      SafeDiv((60439) * (trace_length_), 65536),
-      SafeDiv((7681) * (trace_length_), 8192),
-      SafeDiv((61449) * (trace_length_), 65536),
-      SafeDiv((30725) * (trace_length_), 32768),
-      SafeDiv((61451) * (trace_length_), 65536),
-      SafeDiv((15363) * (trace_length_), 16384),
-      SafeDiv((61453) * (trace_length_), 65536),
-      SafeDiv((30727) * (trace_length_), 32768),
-      SafeDiv((61455) * (trace_length_), 65536),
-      SafeDiv((3841) * (trace_length_), 4096),
-      SafeDiv((61457) * (trace_length_), 65536),
-      SafeDiv((30729) * (trace_length_), 32768),
-      SafeDiv((61459) * (trace_length_), 65536),
-      SafeDiv((15365) * (trace_length_), 16384),
-      SafeDiv((61461) * (trace_length_), 65536),
-      SafeDiv((30731) * (trace_length_), 32768),
-      SafeDiv((61463) * (trace_length_), 65536),
-      SafeDiv((57345) * (trace_length_), 65536),
-      SafeDiv((28673) * (trace_length_), 32768),
-      SafeDiv((57347) * (trace_length_), 65536),
-      SafeDiv((14337) * (trace_length_), 16384),
-      SafeDiv((57349) * (trace_length_), 65536),
-      SafeDiv((28675) * (trace_length_), 32768),
-      SafeDiv((57351) * (trace_length_), 65536),
-      SafeDiv((58369) * (trace_length_), 65536),
-      SafeDiv((29185) * (trace_length_), 32768),
-      SafeDiv((58371) * (trace_length_), 65536),
-      SafeDiv((14593) * (trace_length_), 16384),
-      SafeDiv((58373) * (trace_length_), 65536),
-      SafeDiv((29187) * (trace_length_), 32768),
-      SafeDiv((58375) * (trace_length_), 65536),
-      SafeDiv((7169) * (trace_length_), 8192),
-      SafeDiv((57353) * (trace_length_), 65536),
-      SafeDiv((28677) * (trace_length_), 32768),
-      SafeDiv((57355) * (trace_length_), 65536),
-      SafeDiv((14339) * (trace_length_), 16384),
-      SafeDiv((57357) * (trace_length_), 65536),
-      SafeDiv((28679) * (trace_length_), 32768),
-      SafeDiv((57359) * (trace_length_), 65536),
-      SafeDiv((3585) * (trace_length_), 4096),
-      SafeDiv((57361) * (trace_length_), 65536),
-      SafeDiv((28681) * (trace_length_), 32768),
-      SafeDiv((57363) * (trace_length_), 65536),
-      SafeDiv((14341) * (trace_length_), 16384),
-      SafeDiv((57365) * (trace_length_), 65536),
-      SafeDiv((28683) * (trace_length_), 32768),
-      SafeDiv((57367) * (trace_length_), 65536),
-      SafeDiv((7297) * (trace_length_), 8192),
-      SafeDiv((58377) * (trace_length_), 65536),
-      SafeDiv((29189) * (trace_length_), 32768),
-      SafeDiv((58379) * (trace_length_), 65536),
-      SafeDiv((14595) * (trace_length_), 16384),
-      SafeDiv((58381) * (trace_length_), 65536),
-      SafeDiv((29191) * (trace_length_), 32768),
-      SafeDiv((58383) * (trace_length_), 65536),
-      SafeDiv((3649) * (trace_length_), 4096),
-      SafeDiv((58385) * (trace_length_), 65536),
-      SafeDiv((29193) * (trace_length_), 32768),
-      SafeDiv((58387) * (trace_length_), 65536),
-      SafeDiv((14597) * (trace_length_), 16384),
-      SafeDiv((58389) * (trace_length_), 65536),
-      SafeDiv((29195) * (trace_length_), 32768),
-      SafeDiv((58391) * (trace_length_), 65536),
-      SafeDiv((56321) * (trace_length_), 65536),
-      SafeDiv((28161) * (trace_length_), 32768),
-      SafeDiv((56323) * (trace_length_), 65536),
-      SafeDiv((14081) * (trace_length_), 16384),
-      SafeDiv((56325) * (trace_length_), 65536),
-      SafeDiv((28163) * (trace_length_), 32768),
-      SafeDiv((56327) * (trace_length_), 65536),
-      SafeDiv((55297) * (trace_length_), 65536),
-      SafeDiv((27649) * (trace_length_), 32768),
-      SafeDiv((55299) * (trace_length_), 65536),
-      SafeDiv((13825) * (trace_length_), 16384),
-      SafeDiv((55301) * (trace_length_), 65536),
-      SafeDiv((27651) * (trace_length_), 32768),
-      SafeDiv((55303) * (trace_length_), 65536),
-      SafeDiv((6913) * (trace_length_), 8192),
-      SafeDiv((55305) * (trace_length_), 65536),
-      SafeDiv((27653) * (trace_length_), 32768),
-      SafeDiv((55307) * (trace_length_), 65536),
-      SafeDiv((13827) * (trace_length_), 16384),
-      SafeDiv((55309) * (trace_length_), 65536),
-      SafeDiv((27655) * (trace_length_), 32768),
-      SafeDiv((55311) * (trace_length_), 65536),
-      SafeDiv((3457) * (trace_length_), 4096),
-      SafeDiv((55313) * (trace_length_), 65536),
-      SafeDiv((27657) * (trace_length_), 32768),
-      SafeDiv((55315) * (trace_length_), 65536),
-      SafeDiv((13829) * (trace_length_), 16384),
-      SafeDiv((55317) * (trace_length_), 65536),
-      SafeDiv((27659) * (trace_length_), 32768),
-      SafeDiv((55319) * (trace_length_), 65536),
-      SafeDiv((7041) * (trace_length_), 8192),
-      SafeDiv((56329) * (trace_length_), 65536),
-      SafeDiv((28165) * (trace_length_), 32768),
-      SafeDiv((56331) * (trace_length_), 65536),
-      SafeDiv((14083) * (trace_length_), 16384),
-      SafeDiv((56333) * (trace_length_), 65536),
-      SafeDiv((28167) * (trace_length_), 32768),
-      SafeDiv((56335) * (trace_length_), 65536),
-      SafeDiv((3521) * (trace_length_), 4096),
-      SafeDiv((56337) * (trace_length_), 65536),
-      SafeDiv((28169) * (trace_length_), 32768),
-      SafeDiv((56339) * (trace_length_), 65536),
-      SafeDiv((14085) * (trace_length_), 16384),
-      SafeDiv((56341) * (trace_length_), 65536),
-      SafeDiv((28171) * (trace_length_), 32768),
-      SafeDiv((56343) * (trace_length_), 65536),
-      SafeDiv((51201) * (trace_length_), 65536),
-      SafeDiv((25601) * (trace_length_), 32768),
-      SafeDiv((51203) * (trace_length_), 65536),
-      SafeDiv((12801) * (trace_length_), 16384),
-      SafeDiv((51205) * (trace_length_), 65536),
-      SafeDiv((25603) * (trace_length_), 32768),
-      SafeDiv((51207) * (trace_length_), 65536),
-      SafeDiv((51) * (trace_length_), 64),
-      SafeDiv((52225) * (trace_length_), 65536),
-      SafeDiv((26113) * (trace_length_), 32768),
-      SafeDiv((52227) * (trace_length_), 65536),
-      SafeDiv((13057) * (trace_length_), 16384),
-      SafeDiv((52229) * (trace_length_), 65536),
-      SafeDiv((26115) * (trace_length_), 32768),
-      SafeDiv((52231) * (trace_length_), 65536),
-      SafeDiv((53249) * (trace_length_), 65536),
-      SafeDiv((26625) * (trace_length_), 32768),
-      SafeDiv((53251) * (trace_length_), 65536),
-      SafeDiv((13313) * (trace_length_), 16384),
-      SafeDiv((53253) * (trace_length_), 65536),
-      SafeDiv((26627) * (trace_length_), 32768),
-      SafeDiv((53255) * (trace_length_), 65536),
-      SafeDiv((54273) * (trace_length_), 65536),
-      SafeDiv((27137) * (trace_length_), 32768),
-      SafeDiv((54275) * (trace_length_), 65536),
-      SafeDiv((13569) * (trace_length_), 16384),
-      SafeDiv((54277) * (trace_length_), 65536),
-      SafeDiv((27139) * (trace_length_), 32768),
-      SafeDiv((54279) * (trace_length_), 65536),
-      SafeDiv((6401) * (trace_length_), 8192),
-      SafeDiv((51209) * (trace_length_), 65536),
-      SafeDiv((25605) * (trace_length_), 32768),
-      SafeDiv((51211) * (trace_length_), 65536),
-      SafeDiv((12803) * (trace_length_), 16384),
-      SafeDiv((51213) * (trace_length_), 65536),
-      SafeDiv((25607) * (trace_length_), 32768),
-      SafeDiv((51215) * (trace_length_), 65536),
-      SafeDiv((3201) * (trace_length_), 4096),
-      SafeDiv((51217) * (trace_length_), 65536),
-      SafeDiv((25609) * (trace_length_), 32768),
-      SafeDiv((51219) * (trace_length_), 65536),
-      SafeDiv((12805) * (trace_length_), 16384),
-      SafeDiv((51221) * (trace_length_), 65536),
-      SafeDiv((25611) * (trace_length_), 32768),
-      SafeDiv((51223) * (trace_length_), 65536),
-      SafeDiv((6529) * (trace_length_), 8192),
-      SafeDiv((52233) * (trace_length_), 65536),
-      SafeDiv((26117) * (trace_length_), 32768),
-      SafeDiv((52235) * (trace_length_), 65536),
-      SafeDiv((13059) * (trace_length_), 16384),
-      SafeDiv((52237) * (trace_length_), 65536),
-      SafeDiv((26119) * (trace_length_), 32768),
-      SafeDiv((52239) * (trace_length_), 65536),
-      SafeDiv((3265) * (trace_length_), 4096),
-      SafeDiv((52241) * (trace_length_), 65536),
-      SafeDiv((26121) * (trace_length_), 32768),
-      SafeDiv((52243) * (trace_length_), 65536),
-      SafeDiv((13061) * (trace_length_), 16384),
-      SafeDiv((52245) * (trace_length_), 65536),
-      SafeDiv((26123) * (trace_length_), 32768),
-      SafeDiv((52247) * (trace_length_), 65536),
-      SafeDiv((6657) * (trace_length_), 8192),
-      SafeDiv((53257) * (trace_length_), 65536),
-      SafeDiv((26629) * (trace_length_), 32768),
-      SafeDiv((53259) * (trace_length_), 65536),
-      SafeDiv((13315) * (trace_length_), 16384),
-      SafeDiv((53261) * (trace_length_), 65536),
-      SafeDiv((26631) * (trace_length_), 32768),
-      SafeDiv((53263) * (trace_length_), 65536),
-      SafeDiv((3329) * (trace_length_), 4096),
-      SafeDiv((53265) * (trace_length_), 65536),
-      SafeDiv((26633) * (trace_length_), 32768),
-      SafeDiv((53267) * (trace_length_), 65536),
-      SafeDiv((13317) * (trace_length_), 16384),
-      SafeDiv((53269) * (trace_length_), 65536),
-      SafeDiv((26635) * (trace_length_), 32768),
-      SafeDiv((53271) * (trace_length_), 65536),
-      SafeDiv((6785) * (trace_length_), 8192),
-      SafeDiv((54281) * (trace_length_), 65536),
-      SafeDiv((27141) * (trace_length_), 32768),
-      SafeDiv((54283) * (trace_length_), 65536),
-      SafeDiv((13571) * (trace_length_), 16384),
-      SafeDiv((54285) * (trace_length_), 65536),
-      SafeDiv((27143) * (trace_length_), 32768),
-      SafeDiv((54287) * (trace_length_), 65536),
-      SafeDiv((3393) * (trace_length_), 4096),
-      SafeDiv((54289) * (trace_length_), 65536),
-      SafeDiv((27145) * (trace_length_), 32768),
-      SafeDiv((54291) * (trace_length_), 65536),
-      SafeDiv((13573) * (trace_length_), 16384),
-      SafeDiv((54293) * (trace_length_), 65536),
-      SafeDiv((27147) * (trace_length_), 32768),
-      SafeDiv((54295) * (trace_length_), 65536),
-      SafeDiv((49) * (trace_length_), 64),
-      SafeDiv((50177) * (trace_length_), 65536),
-      SafeDiv((25089) * (trace_length_), 32768),
-      SafeDiv((50179) * (trace_length_), 65536),
-      SafeDiv((12545) * (trace_length_), 16384),
-      SafeDiv((50181) * (trace_length_), 65536),
-      SafeDiv((25091) * (trace_length_), 32768),
-      SafeDiv((50183) * (trace_length_), 65536),
-      SafeDiv((6273) * (trace_length_), 8192),
-      SafeDiv((50185) * (trace_length_), 65536),
-      SafeDiv((25093) * (trace_length_), 32768),
-      SafeDiv((50187) * (trace_length_), 65536),
-      SafeDiv((12547) * (trace_length_), 16384),
-      SafeDiv((50189) * (trace_length_), 65536),
-      SafeDiv((25095) * (trace_length_), 32768),
-      SafeDiv((50191) * (trace_length_), 65536),
-      SafeDiv((3137) * (trace_length_), 4096),
-      SafeDiv((50193) * (trace_length_), 65536),
-      SafeDiv((25097) * (trace_length_), 32768),
-      SafeDiv((50195) * (trace_length_), 65536),
-      SafeDiv((12549) * (trace_length_), 16384),
-      SafeDiv((50197) * (trace_length_), 65536),
-      SafeDiv((25099) * (trace_length_), 32768),
-      SafeDiv((50199) * (trace_length_), 65536),
-      SafeDiv((47105) * (trace_length_), 65536),
-      SafeDiv((23553) * (trace_length_), 32768),
-      SafeDiv((47107) * (trace_length_), 65536),
-      SafeDiv((11777) * (trace_length_), 16384),
-      SafeDiv((47109) * (trace_length_), 65536),
-      SafeDiv((23555) * (trace_length_), 32768),
-      SafeDiv((47111) * (trace_length_), 65536),
-      SafeDiv((47) * (trace_length_), 64),
-      SafeDiv((48129) * (trace_length_), 65536),
-      SafeDiv((24065) * (trace_length_), 32768),
-      SafeDiv((48131) * (trace_length_), 65536),
-      SafeDiv((12033) * (trace_length_), 16384),
-      SafeDiv((48133) * (trace_length_), 65536),
-      SafeDiv((24067) * (trace_length_), 32768),
-      SafeDiv((48135) * (trace_length_), 65536),
-      SafeDiv((49153) * (trace_length_), 65536),
-      SafeDiv((24577) * (trace_length_), 32768),
-      SafeDiv((49155) * (trace_length_), 65536),
-      SafeDiv((12289) * (trace_length_), 16384),
-      SafeDiv((49157) * (trace_length_), 65536),
-      SafeDiv((24579) * (trace_length_), 32768),
-      SafeDiv((49159) * (trace_length_), 65536),
-      SafeDiv((5889) * (trace_length_), 8192),
-      SafeDiv((47113) * (trace_length_), 65536),
-      SafeDiv((23557) * (trace_length_), 32768),
-      SafeDiv((47115) * (trace_length_), 65536),
-      SafeDiv((11779) * (trace_length_), 16384),
-      SafeDiv((47117) * (trace_length_), 65536),
-      SafeDiv((23559) * (trace_length_), 32768),
-      SafeDiv((47119) * (trace_length_), 65536),
-      SafeDiv((2945) * (trace_length_), 4096),
-      SafeDiv((47121) * (trace_length_), 65536),
-      SafeDiv((23561) * (trace_length_), 32768),
-      SafeDiv((47123) * (trace_length_), 65536),
-      SafeDiv((11781) * (trace_length_), 16384),
-      SafeDiv((47125) * (trace_length_), 65536),
-      SafeDiv((23563) * (trace_length_), 32768),
-      SafeDiv((47127) * (trace_length_), 65536),
-      SafeDiv((6017) * (trace_length_), 8192),
-      SafeDiv((48137) * (trace_length_), 65536),
-      SafeDiv((24069) * (trace_length_), 32768),
-      SafeDiv((48139) * (trace_length_), 65536),
-      SafeDiv((12035) * (trace_length_), 16384),
-      SafeDiv((48141) * (trace_length_), 65536),
-      SafeDiv((24071) * (trace_length_), 32768),
-      SafeDiv((48143) * (trace_length_), 65536),
-      SafeDiv((3009) * (trace_length_), 4096),
-      SafeDiv((48145) * (trace_length_), 65536),
-      SafeDiv((24073) * (trace_length_), 32768),
-      SafeDiv((48147) * (trace_length_), 65536),
-      SafeDiv((12037) * (trace_length_), 16384),
-      SafeDiv((48149) * (trace_length_), 65536),
-      SafeDiv((24075) * (trace_length_), 32768),
-      SafeDiv((48151) * (trace_length_), 65536),
-      SafeDiv((6145) * (trace_length_), 8192),
-      SafeDiv((49161) * (trace_length_), 65536),
-      SafeDiv((24581) * (trace_length_), 32768),
-      SafeDiv((49163) * (trace_length_), 65536),
-      SafeDiv((12291) * (trace_length_), 16384),
-      SafeDiv((49165) * (trace_length_), 65536),
-      SafeDiv((24583) * (trace_length_), 32768),
-      SafeDiv((49167) * (trace_length_), 65536),
-      SafeDiv((3073) * (trace_length_), 4096),
-      SafeDiv((49169) * (trace_length_), 65536),
-      SafeDiv((24585) * (trace_length_), 32768),
-      SafeDiv((49171) * (trace_length_), 65536),
-      SafeDiv((12293) * (trace_length_), 16384),
-      SafeDiv((49173) * (trace_length_), 65536),
-      SafeDiv((24587) * (trace_length_), 32768),
-      SafeDiv((49175) * (trace_length_), 65536),
-      SafeDiv((46081) * (trace_length_), 65536),
-      SafeDiv((23041) * (trace_length_), 32768),
-      SafeDiv((46083) * (trace_length_), 65536),
-      SafeDiv((11521) * (trace_length_), 16384),
-      SafeDiv((46085) * (trace_length_), 65536),
-      SafeDiv((23043) * (trace_length_), 32768),
-      SafeDiv((46087) * (trace_length_), 65536),
-      SafeDiv((5761) * (trace_length_), 8192),
-      SafeDiv((46089) * (trace_length_), 65536),
-      SafeDiv((23045) * (trace_length_), 32768),
-      SafeDiv((46091) * (trace_length_), 65536),
-      SafeDiv((11523) * (trace_length_), 16384),
-      SafeDiv((46093) * (trace_length_), 65536),
-      SafeDiv((23047) * (trace_length_), 32768),
-      SafeDiv((46095) * (trace_length_), 65536),
-      SafeDiv((2881) * (trace_length_), 4096),
-      SafeDiv((46097) * (trace_length_), 65536),
-      SafeDiv((23049) * (trace_length_), 32768),
-      SafeDiv((46099) * (trace_length_), 65536),
-      SafeDiv((11525) * (trace_length_), 16384),
-      SafeDiv((46101) * (trace_length_), 65536),
-      SafeDiv((23051) * (trace_length_), 32768),
-      SafeDiv((46103) * (trace_length_), 65536),
-      SafeDiv((45057) * (trace_length_), 65536),
-      SafeDiv((22529) * (trace_length_), 32768),
-      SafeDiv((45059) * (trace_length_), 65536),
-      SafeDiv((11265) * (trace_length_), 16384),
-      SafeDiv((45061) * (trace_length_), 65536),
-      SafeDiv((22531) * (trace_length_), 32768),
-      SafeDiv((45063) * (trace_length_), 65536),
-      SafeDiv((5633) * (trace_length_), 8192),
-      SafeDiv((45065) * (trace_length_), 65536),
-      SafeDiv((22533) * (trace_length_), 32768),
-      SafeDiv((45067) * (trace_length_), 65536),
-      SafeDiv((11267) * (trace_length_), 16384),
-      SafeDiv((45069) * (trace_length_), 65536),
-      SafeDiv((22535) * (trace_length_), 32768),
-      SafeDiv((45071) * (trace_length_), 65536),
-      SafeDiv((2817) * (trace_length_), 4096),
-      SafeDiv((45073) * (trace_length_), 65536),
-      SafeDiv((22537) * (trace_length_), 32768),
-      SafeDiv((45075) * (trace_length_), 65536),
-      SafeDiv((11269) * (trace_length_), 16384),
-      SafeDiv((45077) * (trace_length_), 65536),
-      SafeDiv((22539) * (trace_length_), 32768),
-      SafeDiv((45079) * (trace_length_), 65536),
-      SafeDiv((44033) * (trace_length_), 65536),
-      SafeDiv((22017) * (trace_length_), 32768),
-      SafeDiv((44035) * (trace_length_), 65536),
-      SafeDiv((11009) * (trace_length_), 16384),
-      SafeDiv((44037) * (trace_length_), 65536),
-      SafeDiv((22019) * (trace_length_), 32768),
-      SafeDiv((44039) * (trace_length_), 65536),
-      SafeDiv((5505) * (trace_length_), 8192),
-      SafeDiv((44041) * (trace_length_), 65536),
-      SafeDiv((22021) * (trace_length_), 32768),
-      SafeDiv((44043) * (trace_length_), 65536),
-      SafeDiv((11011) * (trace_length_), 16384),
-      SafeDiv((44045) * (trace_length_), 65536),
-      SafeDiv((22023) * (trace_length_), 32768),
-      SafeDiv((44047) * (trace_length_), 65536),
-      SafeDiv((2753) * (trace_length_), 4096),
-      SafeDiv((44049) * (trace_length_), 65536),
-      SafeDiv((22025) * (trace_length_), 32768),
-      SafeDiv((44051) * (trace_length_), 65536),
-      SafeDiv((11013) * (trace_length_), 16384),
-      SafeDiv((44053) * (trace_length_), 65536),
-      SafeDiv((22027) * (trace_length_), 32768),
-      SafeDiv((44055) * (trace_length_), 65536),
-      SafeDiv((41985) * (trace_length_), 65536),
-      SafeDiv((20993) * (trace_length_), 32768),
-      SafeDiv((41987) * (trace_length_), 65536),
-      SafeDiv((10497) * (trace_length_), 16384),
-      SafeDiv((41989) * (trace_length_), 65536),
-      SafeDiv((20995) * (trace_length_), 32768),
-      SafeDiv((41991) * (trace_length_), 65536),
-      SafeDiv((43009) * (trace_length_), 65536),
-      SafeDiv((21505) * (trace_length_), 32768),
-      SafeDiv((43011) * (trace_length_), 65536),
-      SafeDiv((10753) * (trace_length_), 16384),
-      SafeDiv((43013) * (trace_length_), 65536),
-      SafeDiv((21507) * (trace_length_), 32768),
-      SafeDiv((43015) * (trace_length_), 65536),
-      SafeDiv((39) * (trace_length_), 64),
-      SafeDiv((39937) * (trace_length_), 65536),
-      SafeDiv((19969) * (trace_length_), 32768),
-      SafeDiv((39939) * (trace_length_), 65536),
-      SafeDiv((9985) * (trace_length_), 16384),
-      SafeDiv((39941) * (trace_length_), 65536),
-      SafeDiv((19971) * (trace_length_), 32768),
-      SafeDiv((39943) * (trace_length_), 65536),
-      SafeDiv((40961) * (trace_length_), 65536),
-      SafeDiv((20481) * (trace_length_), 32768),
-      SafeDiv((40963) * (trace_length_), 65536),
-      SafeDiv((10241) * (trace_length_), 16384),
-      SafeDiv((40965) * (trace_length_), 65536),
-      SafeDiv((20483) * (trace_length_), 32768),
-      SafeDiv((40967) * (trace_length_), 65536),
-      SafeDiv((4993) * (trace_length_), 8192),
-      SafeDiv((39945) * (trace_length_), 65536),
-      SafeDiv((19973) * (trace_length_), 32768),
-      SafeDiv((39947) * (trace_length_), 65536),
-      SafeDiv((9987) * (trace_length_), 16384),
-      SafeDiv((39949) * (trace_length_), 65536),
-      SafeDiv((19975) * (trace_length_), 32768),
-      SafeDiv((39951) * (trace_length_), 65536),
-      SafeDiv((2497) * (trace_length_), 4096),
-      SafeDiv((39953) * (trace_length_), 65536),
-      SafeDiv((19977) * (trace_length_), 32768),
-      SafeDiv((39955) * (trace_length_), 65536),
-      SafeDiv((9989) * (trace_length_), 16384),
-      SafeDiv((39957) * (trace_length_), 65536),
-      SafeDiv((19979) * (trace_length_), 32768),
-      SafeDiv((39959) * (trace_length_), 65536),
-      SafeDiv((5121) * (trace_length_), 8192),
-      SafeDiv((40969) * (trace_length_), 65536),
-      SafeDiv((20485) * (trace_length_), 32768),
-      SafeDiv((40971) * (trace_length_), 65536),
-      SafeDiv((10243) * (trace_length_), 16384),
-      SafeDiv((40973) * (trace_length_), 65536),
-      SafeDiv((20487) * (trace_length_), 32768),
-      SafeDiv((40975) * (trace_length_), 65536),
-      SafeDiv((2561) * (trace_length_), 4096),
-      SafeDiv((40977) * (trace_length_), 65536),
-      SafeDiv((20489) * (trace_length_), 32768),
-      SafeDiv((40979) * (trace_length_), 65536),
-      SafeDiv((10245) * (trace_length_), 16384),
-      SafeDiv((40981) * (trace_length_), 65536),
-      SafeDiv((20491) * (trace_length_), 32768),
-      SafeDiv((40983) * (trace_length_), 65536),
-      SafeDiv((5249) * (trace_length_), 8192),
-      SafeDiv((41993) * (trace_length_), 65536),
-      SafeDiv((20997) * (trace_length_), 32768),
-      SafeDiv((41995) * (trace_length_), 65536),
-      SafeDiv((10499) * (trace_length_), 16384),
-      SafeDiv((41997) * (trace_length_), 65536),
-      SafeDiv((20999) * (trace_length_), 32768),
-      SafeDiv((41999) * (trace_length_), 65536),
-      SafeDiv((2625) * (trace_length_), 4096),
-      SafeDiv((42001) * (trace_length_), 65536),
-      SafeDiv((21001) * (trace_length_), 32768),
-      SafeDiv((42003) * (trace_length_), 65536),
-      SafeDiv((10501) * (trace_length_), 16384),
-      SafeDiv((42005) * (trace_length_), 65536),
-      SafeDiv((21003) * (trace_length_), 32768),
-      SafeDiv((42007) * (trace_length_), 65536),
-      SafeDiv((5377) * (trace_length_), 8192),
-      SafeDiv((43017) * (trace_length_), 65536),
-      SafeDiv((21509) * (trace_length_), 32768),
-      SafeDiv((43019) * (trace_length_), 65536),
-      SafeDiv((10755) * (trace_length_), 16384),
-      SafeDiv((43021) * (trace_length_), 65536),
-      SafeDiv((21511) * (trace_length_), 32768),
-      SafeDiv((43023) * (trace_length_), 65536),
-      SafeDiv((2689) * (trace_length_), 4096),
-      SafeDiv((43025) * (trace_length_), 65536),
-      SafeDiv((21513) * (trace_length_), 32768),
-      SafeDiv((43027) * (trace_length_), 65536),
-      SafeDiv((10757) * (trace_length_), 16384),
-      SafeDiv((43029) * (trace_length_), 65536),
-      SafeDiv((21515) * (trace_length_), 32768),
-      SafeDiv((43031) * (trace_length_), 65536),
-      SafeDiv((37) * (trace_length_), 64),
-      SafeDiv((37889) * (trace_length_), 65536),
-      SafeDiv((18945) * (trace_length_), 32768),
-      SafeDiv((37891) * (trace_length_), 65536),
-      SafeDiv((9473) * (trace_length_), 16384),
-      SafeDiv((37893) * (trace_length_), 65536),
-      SafeDiv((18947) * (trace_length_), 32768),
-      SafeDiv((37895) * (trace_length_), 65536),
-      SafeDiv((4737) * (trace_length_), 8192),
-      SafeDiv((37897) * (trace_length_), 65536),
-      SafeDiv((18949) * (trace_length_), 32768),
-      SafeDiv((37899) * (trace_length_), 65536),
-      SafeDiv((9475) * (trace_length_), 16384),
-      SafeDiv((37901) * (trace_length_), 65536),
-      SafeDiv((18951) * (trace_length_), 32768),
-      SafeDiv((37903) * (trace_length_), 65536),
-      SafeDiv((2369) * (trace_length_), 4096),
-      SafeDiv((37905) * (trace_length_), 65536),
-      SafeDiv((18953) * (trace_length_), 32768),
-      SafeDiv((37907) * (trace_length_), 65536),
-      SafeDiv((9477) * (trace_length_), 16384),
-      SafeDiv((37909) * (trace_length_), 65536),
-      SafeDiv((18955) * (trace_length_), 32768),
-      SafeDiv((37911) * (trace_length_), 65536),
-      SafeDiv((38913) * (trace_length_), 65536),
-      SafeDiv((19457) * (trace_length_), 32768),
-      SafeDiv((38915) * (trace_length_), 65536),
-      SafeDiv((9729) * (trace_length_), 16384),
-      SafeDiv((38917) * (trace_length_), 65536),
-      SafeDiv((19459) * (trace_length_), 32768),
-      SafeDiv((38919) * (trace_length_), 65536),
-      SafeDiv((4865) * (trace_length_), 8192),
-      SafeDiv((38921) * (trace_length_), 65536),
-      SafeDiv((19461) * (trace_length_), 32768),
-      SafeDiv((38923) * (trace_length_), 65536),
-      SafeDiv((9731) * (trace_length_), 16384),
-      SafeDiv((38925) * (trace_length_), 65536),
-      SafeDiv((19463) * (trace_length_), 32768),
-      SafeDiv((38927) * (trace_length_), 65536),
-      SafeDiv((2433) * (trace_length_), 4096),
-      SafeDiv((38929) * (trace_length_), 65536),
-      SafeDiv((19465) * (trace_length_), 32768),
-      SafeDiv((38931) * (trace_length_), 65536),
-      SafeDiv((9733) * (trace_length_), 16384),
-      SafeDiv((38933) * (trace_length_), 65536),
-      SafeDiv((19467) * (trace_length_), 32768),
-      SafeDiv((38935) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 16),
-      SafeDiv((36865) * (trace_length_), 65536),
-      SafeDiv((18433) * (trace_length_), 32768),
-      SafeDiv((36867) * (trace_length_), 65536),
-      SafeDiv((9217) * (trace_length_), 16384),
-      SafeDiv((36869) * (trace_length_), 65536),
-      SafeDiv((18435) * (trace_length_), 32768),
-      SafeDiv((36871) * (trace_length_), 65536),
-      SafeDiv((4609) * (trace_length_), 8192),
-      SafeDiv((36873) * (trace_length_), 65536),
-      SafeDiv((18437) * (trace_length_), 32768),
-      SafeDiv((36875) * (trace_length_), 65536),
-      SafeDiv((9219) * (trace_length_), 16384),
-      SafeDiv((36877) * (trace_length_), 65536),
-      SafeDiv((18439) * (trace_length_), 32768),
-      SafeDiv((36879) * (trace_length_), 65536),
-      SafeDiv((2305) * (trace_length_), 4096),
-      SafeDiv((36881) * (trace_length_), 65536),
-      SafeDiv((18441) * (trace_length_), 32768),
-      SafeDiv((36883) * (trace_length_), 65536),
-      SafeDiv((9221) * (trace_length_), 16384),
-      SafeDiv((36885) * (trace_length_), 65536),
-      SafeDiv((18443) * (trace_length_), 32768),
-      SafeDiv((36887) * (trace_length_), 65536),
-      SafeDiv((1025) * (trace_length_), 65536),
-      SafeDiv((513) * (trace_length_), 32768),
-      SafeDiv((1027) * (trace_length_), 65536),
-      SafeDiv((257) * (trace_length_), 16384),
-      SafeDiv((1029) * (trace_length_), 65536),
-      SafeDiv((515) * (trace_length_), 32768),
-      SafeDiv((1031) * (trace_length_), 65536),
-      SafeDiv((129) * (trace_length_), 8192),
-      SafeDiv((1033) * (trace_length_), 65536),
-      SafeDiv((517) * (trace_length_), 32768),
-      SafeDiv((1035) * (trace_length_), 65536),
-      SafeDiv((259) * (trace_length_), 16384),
-      SafeDiv((1037) * (trace_length_), 65536),
-      SafeDiv((519) * (trace_length_), 32768),
-      SafeDiv((1039) * (trace_length_), 65536),
-      SafeDiv((65) * (trace_length_), 4096),
-      SafeDiv((1041) * (trace_length_), 65536),
-      SafeDiv((521) * (trace_length_), 32768),
-      SafeDiv((1043) * (trace_length_), 65536),
-      SafeDiv((261) * (trace_length_), 16384),
-      SafeDiv((1045) * (trace_length_), 65536),
-      SafeDiv((523) * (trace_length_), 32768),
-      SafeDiv((1047) * (trace_length_), 65536),
-      SafeDiv((2049) * (trace_length_), 65536),
-      SafeDiv((1025) * (trace_length_), 32768),
-      SafeDiv((2051) * (trace_length_), 65536),
-      SafeDiv((513) * (trace_length_), 16384),
-      SafeDiv((2053) * (trace_length_), 65536),
-      SafeDiv((1027) * (trace_length_), 32768),
-      SafeDiv((2055) * (trace_length_), 65536),
-      SafeDiv((3073) * (trace_length_), 65536),
-      SafeDiv((1537) * (trace_length_), 32768),
-      SafeDiv((3075) * (trace_length_), 65536),
-      SafeDiv((769) * (trace_length_), 16384),
-      SafeDiv((3077) * (trace_length_), 65536),
-      SafeDiv((1539) * (trace_length_), 32768),
-      SafeDiv((3079) * (trace_length_), 65536),
-      SafeDiv((4097) * (trace_length_), 65536),
-      SafeDiv((2049) * (trace_length_), 32768),
-      SafeDiv((4099) * (trace_length_), 65536),
-      SafeDiv((1025) * (trace_length_), 16384),
-      SafeDiv((4101) * (trace_length_), 65536),
-      SafeDiv((2051) * (trace_length_), 32768),
-      SafeDiv((4103) * (trace_length_), 65536),
-      SafeDiv((5121) * (trace_length_), 65536),
-      SafeDiv((2561) * (trace_length_), 32768),
-      SafeDiv((5123) * (trace_length_), 65536),
-      SafeDiv((1281) * (trace_length_), 16384),
-      SafeDiv((5125) * (trace_length_), 65536),
-      SafeDiv((2563) * (trace_length_), 32768),
-      SafeDiv((5127) * (trace_length_), 65536),
-      SafeDiv((257) * (trace_length_), 8192),
-      SafeDiv((2057) * (trace_length_), 65536),
-      SafeDiv((1029) * (trace_length_), 32768),
-      SafeDiv((2059) * (trace_length_), 65536),
-      SafeDiv((515) * (trace_length_), 16384),
-      SafeDiv((2061) * (trace_length_), 65536),
-      SafeDiv((1031) * (trace_length_), 32768),
-      SafeDiv((2063) * (trace_length_), 65536),
-      SafeDiv((129) * (trace_length_), 4096),
-      SafeDiv((2065) * (trace_length_), 65536),
-      SafeDiv((1033) * (trace_length_), 32768),
-      SafeDiv((2067) * (trace_length_), 65536),
-      SafeDiv((517) * (trace_length_), 16384),
-      SafeDiv((2069) * (trace_length_), 65536),
-      SafeDiv((1035) * (trace_length_), 32768),
-      SafeDiv((2071) * (trace_length_), 65536),
-      SafeDiv((385) * (trace_length_), 8192),
-      SafeDiv((3081) * (trace_length_), 65536),
-      SafeDiv((1541) * (trace_length_), 32768),
-      SafeDiv((3083) * (trace_length_), 65536),
-      SafeDiv((771) * (trace_length_), 16384),
-      SafeDiv((3085) * (trace_length_), 65536),
-      SafeDiv((1543) * (trace_length_), 32768),
-      SafeDiv((3087) * (trace_length_), 65536),
-      SafeDiv((193) * (trace_length_), 4096),
-      SafeDiv((3089) * (trace_length_), 65536),
-      SafeDiv((1545) * (trace_length_), 32768),
-      SafeDiv((3091) * (trace_length_), 65536),
-      SafeDiv((773) * (trace_length_), 16384),
-      SafeDiv((3093) * (trace_length_), 65536),
-      SafeDiv((1547) * (trace_length_), 32768),
-      SafeDiv((3095) * (trace_length_), 65536),
-      SafeDiv((513) * (trace_length_), 8192),
-      SafeDiv((4105) * (trace_length_), 65536),
-      SafeDiv((2053) * (trace_length_), 32768),
-      SafeDiv((4107) * (trace_length_), 65536),
-      SafeDiv((1027) * (trace_length_), 16384),
-      SafeDiv((4109) * (trace_length_), 65536),
-      SafeDiv((2055) * (trace_length_), 32768),
-      SafeDiv((4111) * (trace_length_), 65536),
-      SafeDiv((257) * (trace_length_), 4096),
-      SafeDiv((4113) * (trace_length_), 65536),
-      SafeDiv((2057) * (trace_length_), 32768),
-      SafeDiv((4115) * (trace_length_), 65536),
-      SafeDiv((1029) * (trace_length_), 16384),
-      SafeDiv((4117) * (trace_length_), 65536),
-      SafeDiv((2059) * (trace_length_), 32768),
-      SafeDiv((4119) * (trace_length_), 65536),
-      SafeDiv((641) * (trace_length_), 8192),
-      SafeDiv((5129) * (trace_length_), 65536),
-      SafeDiv((2565) * (trace_length_), 32768),
-      SafeDiv((5131) * (trace_length_), 65536),
-      SafeDiv((1283) * (trace_length_), 16384),
-      SafeDiv((5133) * (trace_length_), 65536),
-      SafeDiv((2567) * (trace_length_), 32768),
-      SafeDiv((5135) * (trace_length_), 65536),
-      SafeDiv((321) * (trace_length_), 4096),
-      SafeDiv((5137) * (trace_length_), 65536),
-      SafeDiv((2569) * (trace_length_), 32768),
-      SafeDiv((5139) * (trace_length_), 65536),
-      SafeDiv((1285) * (trace_length_), 16384),
-      SafeDiv((5141) * (trace_length_), 65536),
-      SafeDiv((2571) * (trace_length_), 32768),
-      SafeDiv((5143) * (trace_length_), 65536),
-      SafeDiv((7169) * (trace_length_), 65536),
-      SafeDiv((3585) * (trace_length_), 32768),
-      SafeDiv((7171) * (trace_length_), 65536),
-      SafeDiv((1793) * (trace_length_), 16384),
-      SafeDiv((7173) * (trace_length_), 65536),
-      SafeDiv((3587) * (trace_length_), 32768),
-      SafeDiv((7175) * (trace_length_), 65536),
-      SafeDiv((6145) * (trace_length_), 65536),
-      SafeDiv((3073) * (trace_length_), 32768),
-      SafeDiv((6147) * (trace_length_), 65536),
-      SafeDiv((1537) * (trace_length_), 16384),
-      SafeDiv((6149) * (trace_length_), 65536),
-      SafeDiv((3075) * (trace_length_), 32768),
-      SafeDiv((6151) * (trace_length_), 65536),
-      SafeDiv((8193) * (trace_length_), 65536),
-      SafeDiv((4097) * (trace_length_), 32768),
-      SafeDiv((8195) * (trace_length_), 65536),
-      SafeDiv((2049) * (trace_length_), 16384),
-      SafeDiv((8197) * (trace_length_), 65536),
-      SafeDiv((4099) * (trace_length_), 32768),
-      SafeDiv((8199) * (trace_length_), 65536),
-      SafeDiv((9217) * (trace_length_), 65536),
-      SafeDiv((4609) * (trace_length_), 32768),
-      SafeDiv((9219) * (trace_length_), 65536),
-      SafeDiv((2305) * (trace_length_), 16384),
-      SafeDiv((9221) * (trace_length_), 65536),
-      SafeDiv((4611) * (trace_length_), 32768),
-      SafeDiv((9223) * (trace_length_), 65536),
-      SafeDiv((897) * (trace_length_), 8192),
-      SafeDiv((7177) * (trace_length_), 65536),
-      SafeDiv((3589) * (trace_length_), 32768),
-      SafeDiv((7179) * (trace_length_), 65536),
-      SafeDiv((1795) * (trace_length_), 16384),
-      SafeDiv((7181) * (trace_length_), 65536),
-      SafeDiv((3591) * (trace_length_), 32768),
-      SafeDiv((7183) * (trace_length_), 65536),
-      SafeDiv((449) * (trace_length_), 4096),
-      SafeDiv((7185) * (trace_length_), 65536),
-      SafeDiv((3593) * (trace_length_), 32768),
-      SafeDiv((7187) * (trace_length_), 65536),
-      SafeDiv((1797) * (trace_length_), 16384),
-      SafeDiv((7189) * (trace_length_), 65536),
-      SafeDiv((3595) * (trace_length_), 32768),
-      SafeDiv((7191) * (trace_length_), 65536),
-      SafeDiv((769) * (trace_length_), 8192),
-      SafeDiv((6153) * (trace_length_), 65536),
-      SafeDiv((3077) * (trace_length_), 32768),
-      SafeDiv((6155) * (trace_length_), 65536),
-      SafeDiv((1539) * (trace_length_), 16384),
-      SafeDiv((6157) * (trace_length_), 65536),
-      SafeDiv((3079) * (trace_length_), 32768),
-      SafeDiv((6159) * (trace_length_), 65536),
-      SafeDiv((385) * (trace_length_), 4096),
-      SafeDiv((6161) * (trace_length_), 65536),
-      SafeDiv((3081) * (trace_length_), 32768),
-      SafeDiv((6163) * (trace_length_), 65536),
-      SafeDiv((1541) * (trace_length_), 16384),
-      SafeDiv((6165) * (trace_length_), 65536),
-      SafeDiv((3083) * (trace_length_), 32768),
-      SafeDiv((6167) * (trace_length_), 65536),
-      SafeDiv((1025) * (trace_length_), 8192),
-      SafeDiv((8201) * (trace_length_), 65536),
-      SafeDiv((4101) * (trace_length_), 32768),
-      SafeDiv((8203) * (trace_length_), 65536),
-      SafeDiv((2051) * (trace_length_), 16384),
-      SafeDiv((8205) * (trace_length_), 65536),
-      SafeDiv((4103) * (trace_length_), 32768),
-      SafeDiv((8207) * (trace_length_), 65536),
-      SafeDiv((513) * (trace_length_), 4096),
-      SafeDiv((8209) * (trace_length_), 65536),
-      SafeDiv((4105) * (trace_length_), 32768),
-      SafeDiv((8211) * (trace_length_), 65536),
-      SafeDiv((2053) * (trace_length_), 16384),
-      SafeDiv((8213) * (trace_length_), 65536),
-      SafeDiv((4107) * (trace_length_), 32768),
-      SafeDiv((8215) * (trace_length_), 65536),
-      SafeDiv((1153) * (trace_length_), 8192),
-      SafeDiv((9225) * (trace_length_), 65536),
-      SafeDiv((4613) * (trace_length_), 32768),
-      SafeDiv((9227) * (trace_length_), 65536),
-      SafeDiv((2307) * (trace_length_), 16384),
-      SafeDiv((9229) * (trace_length_), 65536),
-      SafeDiv((4615) * (trace_length_), 32768),
-      SafeDiv((9231) * (trace_length_), 65536),
-      SafeDiv((577) * (trace_length_), 4096),
-      SafeDiv((9233) * (trace_length_), 65536),
-      SafeDiv((4617) * (trace_length_), 32768),
-      SafeDiv((9235) * (trace_length_), 65536),
-      SafeDiv((2309) * (trace_length_), 16384),
-      SafeDiv((9237) * (trace_length_), 65536),
-      SafeDiv((4619) * (trace_length_), 32768),
-      SafeDiv((9239) * (trace_length_), 65536),
-      SafeDiv((10241) * (trace_length_), 65536),
-      SafeDiv((5121) * (trace_length_), 32768),
-      SafeDiv((10243) * (trace_length_), 65536),
-      SafeDiv((2561) * (trace_length_), 16384),
-      SafeDiv((10245) * (trace_length_), 65536),
-      SafeDiv((5123) * (trace_length_), 32768),
-      SafeDiv((10247) * (trace_length_), 65536),
-      SafeDiv((11265) * (trace_length_), 65536),
-      SafeDiv((5633) * (trace_length_), 32768),
-      SafeDiv((11267) * (trace_length_), 65536),
-      SafeDiv((2817) * (trace_length_), 16384),
-      SafeDiv((11269) * (trace_length_), 65536),
-      SafeDiv((5635) * (trace_length_), 32768),
-      SafeDiv((11271) * (trace_length_), 65536),
-      SafeDiv((12289) * (trace_length_), 65536),
-      SafeDiv((6145) * (trace_length_), 32768),
-      SafeDiv((12291) * (trace_length_), 65536),
-      SafeDiv((3073) * (trace_length_), 16384),
-      SafeDiv((12293) * (trace_length_), 65536),
-      SafeDiv((6147) * (trace_length_), 32768),
-      SafeDiv((12295) * (trace_length_), 65536),
-      SafeDiv((13313) * (trace_length_), 65536),
-      SafeDiv((6657) * (trace_length_), 32768),
-      SafeDiv((13315) * (trace_length_), 65536),
-      SafeDiv((3329) * (trace_length_), 16384),
-      SafeDiv((13317) * (trace_length_), 65536),
-      SafeDiv((6659) * (trace_length_), 32768),
-      SafeDiv((13319) * (trace_length_), 65536),
-      SafeDiv((14337) * (trace_length_), 65536),
-      SafeDiv((7169) * (trace_length_), 32768),
-      SafeDiv((14339) * (trace_length_), 65536),
-      SafeDiv((3585) * (trace_length_), 16384),
-      SafeDiv((14341) * (trace_length_), 65536),
-      SafeDiv((7171) * (trace_length_), 32768),
-      SafeDiv((14343) * (trace_length_), 65536),
-      SafeDiv((15361) * (trace_length_), 65536),
-      SafeDiv((7681) * (trace_length_), 32768),
-      SafeDiv((15363) * (trace_length_), 65536),
-      SafeDiv((3841) * (trace_length_), 16384),
-      SafeDiv((15365) * (trace_length_), 65536),
-      SafeDiv((7683) * (trace_length_), 32768),
-      SafeDiv((15367) * (trace_length_), 65536),
-      SafeDiv(trace_length_, 4),
-      SafeDiv((16385) * (trace_length_), 65536),
-      SafeDiv((8193) * (trace_length_), 32768),
-      SafeDiv((16387) * (trace_length_), 65536),
-      SafeDiv((4097) * (trace_length_), 16384),
-      SafeDiv((16389) * (trace_length_), 65536),
-      SafeDiv((8195) * (trace_length_), 32768),
-      SafeDiv((16391) * (trace_length_), 65536),
-      SafeDiv((17) * (trace_length_), 64),
-      SafeDiv((17409) * (trace_length_), 65536),
-      SafeDiv((8705) * (trace_length_), 32768),
-      SafeDiv((17411) * (trace_length_), 65536),
-      SafeDiv((4353) * (trace_length_), 16384),
-      SafeDiv((17413) * (trace_length_), 65536),
-      SafeDiv((8707) * (trace_length_), 32768),
-      SafeDiv((17415) * (trace_length_), 65536),
-      SafeDiv((9) * (trace_length_), 32),
-      SafeDiv((18433) * (trace_length_), 65536),
-      SafeDiv((9217) * (trace_length_), 32768),
-      SafeDiv((18435) * (trace_length_), 65536),
-      SafeDiv((4609) * (trace_length_), 16384),
-      SafeDiv((18437) * (trace_length_), 65536),
-      SafeDiv((9219) * (trace_length_), 32768),
-      SafeDiv((18439) * (trace_length_), 65536),
-      SafeDiv((19) * (trace_length_), 64),
-      SafeDiv((19457) * (trace_length_), 65536),
-      SafeDiv((9729) * (trace_length_), 32768),
-      SafeDiv((19459) * (trace_length_), 65536),
-      SafeDiv((4865) * (trace_length_), 16384),
-      SafeDiv((19461) * (trace_length_), 65536),
-      SafeDiv((9731) * (trace_length_), 32768),
-      SafeDiv((19463) * (trace_length_), 65536),
-      SafeDiv((1281) * (trace_length_), 8192),
-      SafeDiv((10249) * (trace_length_), 65536),
-      SafeDiv((5125) * (trace_length_), 32768),
-      SafeDiv((10251) * (trace_length_), 65536),
-      SafeDiv((2563) * (trace_length_), 16384),
-      SafeDiv((10253) * (trace_length_), 65536),
-      SafeDiv((5127) * (trace_length_), 32768),
-      SafeDiv((10255) * (trace_length_), 65536),
-      SafeDiv((641) * (trace_length_), 4096),
-      SafeDiv((10257) * (trace_length_), 65536),
-      SafeDiv((5129) * (trace_length_), 32768),
-      SafeDiv((10259) * (trace_length_), 65536),
-      SafeDiv((2565) * (trace_length_), 16384),
-      SafeDiv((10261) * (trace_length_), 65536),
-      SafeDiv((5131) * (trace_length_), 32768),
-      SafeDiv((10263) * (trace_length_), 65536),
-      SafeDiv((1409) * (trace_length_), 8192),
-      SafeDiv((11273) * (trace_length_), 65536),
-      SafeDiv((5637) * (trace_length_), 32768),
-      SafeDiv((11275) * (trace_length_), 65536),
-      SafeDiv((2819) * (trace_length_), 16384),
-      SafeDiv((11277) * (trace_length_), 65536),
-      SafeDiv((5639) * (trace_length_), 32768),
-      SafeDiv((11279) * (trace_length_), 65536),
-      SafeDiv((705) * (trace_length_), 4096),
-      SafeDiv((11281) * (trace_length_), 65536),
-      SafeDiv((5641) * (trace_length_), 32768),
-      SafeDiv((11283) * (trace_length_), 65536),
-      SafeDiv((2821) * (trace_length_), 16384),
-      SafeDiv((11285) * (trace_length_), 65536),
-      SafeDiv((5643) * (trace_length_), 32768),
-      SafeDiv((11287) * (trace_length_), 65536),
-      SafeDiv((1537) * (trace_length_), 8192),
-      SafeDiv((12297) * (trace_length_), 65536),
-      SafeDiv((6149) * (trace_length_), 32768),
-      SafeDiv((12299) * (trace_length_), 65536),
-      SafeDiv((3075) * (trace_length_), 16384),
-      SafeDiv((12301) * (trace_length_), 65536),
-      SafeDiv((6151) * (trace_length_), 32768),
-      SafeDiv((12303) * (trace_length_), 65536),
-      SafeDiv((769) * (trace_length_), 4096),
-      SafeDiv((12305) * (trace_length_), 65536),
-      SafeDiv((6153) * (trace_length_), 32768),
-      SafeDiv((12307) * (trace_length_), 65536),
-      SafeDiv((3077) * (trace_length_), 16384),
-      SafeDiv((12309) * (trace_length_), 65536),
-      SafeDiv((6155) * (trace_length_), 32768),
-      SafeDiv((12311) * (trace_length_), 65536),
-      SafeDiv((1665) * (trace_length_), 8192),
-      SafeDiv((13321) * (trace_length_), 65536),
-      SafeDiv((6661) * (trace_length_), 32768),
-      SafeDiv((13323) * (trace_length_), 65536),
-      SafeDiv((3331) * (trace_length_), 16384),
-      SafeDiv((13325) * (trace_length_), 65536),
-      SafeDiv((6663) * (trace_length_), 32768),
-      SafeDiv((13327) * (trace_length_), 65536),
-      SafeDiv((833) * (trace_length_), 4096),
-      SafeDiv((13329) * (trace_length_), 65536),
-      SafeDiv((6665) * (trace_length_), 32768),
-      SafeDiv((13331) * (trace_length_), 65536),
-      SafeDiv((3333) * (trace_length_), 16384),
-      SafeDiv((13333) * (trace_length_), 65536),
-      SafeDiv((6667) * (trace_length_), 32768),
-      SafeDiv((13335) * (trace_length_), 65536),
-      SafeDiv((1793) * (trace_length_), 8192),
-      SafeDiv((14345) * (trace_length_), 65536),
-      SafeDiv((7173) * (trace_length_), 32768),
-      SafeDiv((14347) * (trace_length_), 65536),
-      SafeDiv((3587) * (trace_length_), 16384),
-      SafeDiv((14349) * (trace_length_), 65536),
-      SafeDiv((7175) * (trace_length_), 32768),
-      SafeDiv((14351) * (trace_length_), 65536),
-      SafeDiv((897) * (trace_length_), 4096),
-      SafeDiv((14353) * (trace_length_), 65536),
-      SafeDiv((7177) * (trace_length_), 32768),
-      SafeDiv((14355) * (trace_length_), 65536),
-      SafeDiv((3589) * (trace_length_), 16384),
-      SafeDiv((14357) * (trace_length_), 65536),
-      SafeDiv((7179) * (trace_length_), 32768),
-      SafeDiv((14359) * (trace_length_), 65536),
-      SafeDiv((1921) * (trace_length_), 8192),
-      SafeDiv((15369) * (trace_length_), 65536),
-      SafeDiv((7685) * (trace_length_), 32768),
-      SafeDiv((15371) * (trace_length_), 65536),
-      SafeDiv((3843) * (trace_length_), 16384),
-      SafeDiv((15373) * (trace_length_), 65536),
-      SafeDiv((7687) * (trace_length_), 32768),
-      SafeDiv((15375) * (trace_length_), 65536),
-      SafeDiv((961) * (trace_length_), 4096),
-      SafeDiv((15377) * (trace_length_), 65536),
-      SafeDiv((7689) * (trace_length_), 32768),
-      SafeDiv((15379) * (trace_length_), 65536),
-      SafeDiv((3845) * (trace_length_), 16384),
-      SafeDiv((15381) * (trace_length_), 65536),
-      SafeDiv((7691) * (trace_length_), 32768),
-      SafeDiv((15383) * (trace_length_), 65536),
-      SafeDiv((2049) * (trace_length_), 8192),
-      SafeDiv((16393) * (trace_length_), 65536),
-      SafeDiv((8197) * (trace_length_), 32768),
-      SafeDiv((16395) * (trace_length_), 65536),
-      SafeDiv((4099) * (trace_length_), 16384),
-      SafeDiv((16397) * (trace_length_), 65536),
-      SafeDiv((8199) * (trace_length_), 32768),
-      SafeDiv((16399) * (trace_length_), 65536),
-      SafeDiv((1025) * (trace_length_), 4096),
-      SafeDiv((16401) * (trace_length_), 65536),
-      SafeDiv((8201) * (trace_length_), 32768),
-      SafeDiv((16403) * (trace_length_), 65536),
-      SafeDiv((4101) * (trace_length_), 16384),
-      SafeDiv((16405) * (trace_length_), 65536),
-      SafeDiv((8203) * (trace_length_), 32768),
-      SafeDiv((16407) * (trace_length_), 65536),
-      SafeDiv((2177) * (trace_length_), 8192),
-      SafeDiv((17417) * (trace_length_), 65536),
-      SafeDiv((8709) * (trace_length_), 32768),
-      SafeDiv((17419) * (trace_length_), 65536),
-      SafeDiv((4355) * (trace_length_), 16384),
-      SafeDiv((17421) * (trace_length_), 65536),
-      SafeDiv((8711) * (trace_length_), 32768),
-      SafeDiv((17423) * (trace_length_), 65536),
-      SafeDiv((1089) * (trace_length_), 4096),
-      SafeDiv((17425) * (trace_length_), 65536),
-      SafeDiv((8713) * (trace_length_), 32768),
-      SafeDiv((17427) * (trace_length_), 65536),
-      SafeDiv((4357) * (trace_length_), 16384),
-      SafeDiv((17429) * (trace_length_), 65536),
-      SafeDiv((8715) * (trace_length_), 32768),
-      SafeDiv((17431) * (trace_length_), 65536),
-      SafeDiv((2305) * (trace_length_), 8192),
-      SafeDiv((18441) * (trace_length_), 65536),
-      SafeDiv((9221) * (trace_length_), 32768),
-      SafeDiv((18443) * (trace_length_), 65536),
-      SafeDiv((4611) * (trace_length_), 16384),
-      SafeDiv((18445) * (trace_length_), 65536),
-      SafeDiv((9223) * (trace_length_), 32768),
-      SafeDiv((18447) * (trace_length_), 65536),
-      SafeDiv((1153) * (trace_length_), 4096),
-      SafeDiv((18449) * (trace_length_), 65536),
-      SafeDiv((9225) * (trace_length_), 32768),
-      SafeDiv((18451) * (trace_length_), 65536),
-      SafeDiv((4613) * (trace_length_), 16384),
-      SafeDiv((18453) * (trace_length_), 65536),
-      SafeDiv((9227) * (trace_length_), 32768),
-      SafeDiv((18455) * (trace_length_), 65536),
-      SafeDiv((2433) * (trace_length_), 8192),
-      SafeDiv((19465) * (trace_length_), 65536),
-      SafeDiv((9733) * (trace_length_), 32768),
-      SafeDiv((19467) * (trace_length_), 65536),
-      SafeDiv((4867) * (trace_length_), 16384),
-      SafeDiv((19469) * (trace_length_), 65536),
-      SafeDiv((9735) * (trace_length_), 32768),
-      SafeDiv((19471) * (trace_length_), 65536),
-      SafeDiv((1217) * (trace_length_), 4096),
-      SafeDiv((19473) * (trace_length_), 65536),
-      SafeDiv((9737) * (trace_length_), 32768),
-      SafeDiv((19475) * (trace_length_), 65536),
-      SafeDiv((4869) * (trace_length_), 16384),
-      SafeDiv((19477) * (trace_length_), 65536),
-      SafeDiv((9739) * (trace_length_), 32768),
-      SafeDiv((19479) * (trace_length_), 65536),
-      SafeDiv((20481) * (trace_length_), 65536),
-      SafeDiv((10241) * (trace_length_), 32768),
-      SafeDiv((20483) * (trace_length_), 65536),
-      SafeDiv((5121) * (trace_length_), 16384),
-      SafeDiv((20485) * (trace_length_), 65536),
-      SafeDiv((10243) * (trace_length_), 32768),
-      SafeDiv((20487) * (trace_length_), 65536),
-      SafeDiv((2561) * (trace_length_), 8192),
-      SafeDiv((20489) * (trace_length_), 65536),
-      SafeDiv((10245) * (trace_length_), 32768),
-      SafeDiv((20491) * (trace_length_), 65536),
-      SafeDiv((5123) * (trace_length_), 16384),
-      SafeDiv((20493) * (trace_length_), 65536),
-      SafeDiv((10247) * (trace_length_), 32768),
-      SafeDiv((20495) * (trace_length_), 65536),
-      SafeDiv((1281) * (trace_length_), 4096),
-      SafeDiv((20497) * (trace_length_), 65536),
-      SafeDiv((10249) * (trace_length_), 32768),
-      SafeDiv((20499) * (trace_length_), 65536),
-      SafeDiv((5125) * (trace_length_), 16384),
-      SafeDiv((20501) * (trace_length_), 65536),
-      SafeDiv((10251) * (trace_length_), 32768),
-      SafeDiv((20503) * (trace_length_), 65536),
-      SafeDiv((21505) * (trace_length_), 65536),
-      SafeDiv((10753) * (trace_length_), 32768),
-      SafeDiv((21507) * (trace_length_), 65536),
-      SafeDiv((5377) * (trace_length_), 16384),
-      SafeDiv((21509) * (trace_length_), 65536),
-      SafeDiv((10755) * (trace_length_), 32768),
-      SafeDiv((21511) * (trace_length_), 65536),
-      SafeDiv((22529) * (trace_length_), 65536),
-      SafeDiv((11265) * (trace_length_), 32768),
-      SafeDiv((22531) * (trace_length_), 65536),
-      SafeDiv((5633) * (trace_length_), 16384),
-      SafeDiv((22533) * (trace_length_), 65536),
-      SafeDiv((11267) * (trace_length_), 32768),
-      SafeDiv((22535) * (trace_length_), 65536),
-      SafeDiv((23553) * (trace_length_), 65536),
-      SafeDiv((11777) * (trace_length_), 32768),
-      SafeDiv((23555) * (trace_length_), 65536),
-      SafeDiv((5889) * (trace_length_), 16384),
-      SafeDiv((23557) * (trace_length_), 65536),
-      SafeDiv((11779) * (trace_length_), 32768),
-      SafeDiv((23559) * (trace_length_), 65536),
-      SafeDiv((24577) * (trace_length_), 65536),
-      SafeDiv((12289) * (trace_length_), 32768),
-      SafeDiv((24579) * (trace_length_), 65536),
-      SafeDiv((6145) * (trace_length_), 16384),
-      SafeDiv((24581) * (trace_length_), 65536),
-      SafeDiv((12291) * (trace_length_), 32768),
-      SafeDiv((24583) * (trace_length_), 65536),
-      SafeDiv((2689) * (trace_length_), 8192),
-      SafeDiv((21513) * (trace_length_), 65536),
-      SafeDiv((10757) * (trace_length_), 32768),
-      SafeDiv((21515) * (trace_length_), 65536),
-      SafeDiv((5379) * (trace_length_), 16384),
-      SafeDiv((21517) * (trace_length_), 65536),
-      SafeDiv((10759) * (trace_length_), 32768),
-      SafeDiv((21519) * (trace_length_), 65536),
-      SafeDiv((1345) * (trace_length_), 4096),
-      SafeDiv((21521) * (trace_length_), 65536),
-      SafeDiv((10761) * (trace_length_), 32768),
-      SafeDiv((21523) * (trace_length_), 65536),
-      SafeDiv((5381) * (trace_length_), 16384),
-      SafeDiv((21525) * (trace_length_), 65536),
-      SafeDiv((10763) * (trace_length_), 32768),
-      SafeDiv((21527) * (trace_length_), 65536),
-      SafeDiv((2817) * (trace_length_), 8192),
-      SafeDiv((22537) * (trace_length_), 65536),
-      SafeDiv((11269) * (trace_length_), 32768),
-      SafeDiv((22539) * (trace_length_), 65536),
-      SafeDiv((5635) * (trace_length_), 16384),
-      SafeDiv((22541) * (trace_length_), 65536),
-      SafeDiv((11271) * (trace_length_), 32768),
-      SafeDiv((22543) * (trace_length_), 65536),
-      SafeDiv((1409) * (trace_length_), 4096),
-      SafeDiv((22545) * (trace_length_), 65536),
-      SafeDiv((11273) * (trace_length_), 32768),
-      SafeDiv((22547) * (trace_length_), 65536),
-      SafeDiv((5637) * (trace_length_), 16384),
-      SafeDiv((22549) * (trace_length_), 65536),
-      SafeDiv((11275) * (trace_length_), 32768),
-      SafeDiv((22551) * (trace_length_), 65536),
-      SafeDiv((2945) * (trace_length_), 8192),
-      SafeDiv((23561) * (trace_length_), 65536),
-      SafeDiv((11781) * (trace_length_), 32768),
-      SafeDiv((23563) * (trace_length_), 65536),
-      SafeDiv((5891) * (trace_length_), 16384),
-      SafeDiv((23565) * (trace_length_), 65536),
-      SafeDiv((11783) * (trace_length_), 32768),
-      SafeDiv((23567) * (trace_length_), 65536),
-      SafeDiv((1473) * (trace_length_), 4096),
-      SafeDiv((23569) * (trace_length_), 65536),
-      SafeDiv((11785) * (trace_length_), 32768),
-      SafeDiv((23571) * (trace_length_), 65536),
-      SafeDiv((5893) * (trace_length_), 16384),
-      SafeDiv((23573) * (trace_length_), 65536),
-      SafeDiv((11787) * (trace_length_), 32768),
-      SafeDiv((23575) * (trace_length_), 65536),
-      SafeDiv((3073) * (trace_length_), 8192),
-      SafeDiv((24585) * (trace_length_), 65536),
-      SafeDiv((12293) * (trace_length_), 32768),
-      SafeDiv((24587) * (trace_length_), 65536),
-      SafeDiv((6147) * (trace_length_), 16384),
-      SafeDiv((24589) * (trace_length_), 65536),
-      SafeDiv((12295) * (trace_length_), 32768),
-      SafeDiv((24591) * (trace_length_), 65536),
-      SafeDiv((1537) * (trace_length_), 4096),
-      SafeDiv((24593) * (trace_length_), 65536),
-      SafeDiv((12297) * (trace_length_), 32768),
-      SafeDiv((24595) * (trace_length_), 65536),
-      SafeDiv((6149) * (trace_length_), 16384),
-      SafeDiv((24597) * (trace_length_), 65536),
-      SafeDiv((12299) * (trace_length_), 32768),
-      SafeDiv((24599) * (trace_length_), 65536),
-      SafeDiv((25601) * (trace_length_), 65536),
-      SafeDiv((12801) * (trace_length_), 32768),
-      SafeDiv((25603) * (trace_length_), 65536),
-      SafeDiv((6401) * (trace_length_), 16384),
-      SafeDiv((25605) * (trace_length_), 65536),
-      SafeDiv((12803) * (trace_length_), 32768),
-      SafeDiv((25607) * (trace_length_), 65536),
-      SafeDiv((3201) * (trace_length_), 8192),
-      SafeDiv((25609) * (trace_length_), 65536),
-      SafeDiv((12805) * (trace_length_), 32768),
-      SafeDiv((25611) * (trace_length_), 65536),
-      SafeDiv((6403) * (trace_length_), 16384),
-      SafeDiv((25613) * (trace_length_), 65536),
-      SafeDiv((12807) * (trace_length_), 32768),
-      SafeDiv((25615) * (trace_length_), 65536),
-      SafeDiv((1601) * (trace_length_), 4096),
-      SafeDiv((25617) * (trace_length_), 65536),
-      SafeDiv((12809) * (trace_length_), 32768),
-      SafeDiv((25619) * (trace_length_), 65536),
-      SafeDiv((6405) * (trace_length_), 16384),
-      SafeDiv((25621) * (trace_length_), 65536),
-      SafeDiv((12811) * (trace_length_), 32768),
-      SafeDiv((25623) * (trace_length_), 65536),
-      SafeDiv((13) * (trace_length_), 32),
-      SafeDiv((26625) * (trace_length_), 65536),
-      SafeDiv((13313) * (trace_length_), 32768),
-      SafeDiv((26627) * (trace_length_), 65536),
-      SafeDiv((6657) * (trace_length_), 16384),
-      SafeDiv((26629) * (trace_length_), 65536),
-      SafeDiv((13315) * (trace_length_), 32768),
-      SafeDiv((26631) * (trace_length_), 65536),
-      SafeDiv((3329) * (trace_length_), 8192),
-      SafeDiv((26633) * (trace_length_), 65536),
-      SafeDiv((13317) * (trace_length_), 32768),
-      SafeDiv((26635) * (trace_length_), 65536),
-      SafeDiv((6659) * (trace_length_), 16384),
-      SafeDiv((26637) * (trace_length_), 65536),
-      SafeDiv((13319) * (trace_length_), 32768),
-      SafeDiv((26639) * (trace_length_), 65536),
-      SafeDiv((1665) * (trace_length_), 4096),
-      SafeDiv((26641) * (trace_length_), 65536),
-      SafeDiv((13321) * (trace_length_), 32768),
-      SafeDiv((26643) * (trace_length_), 65536),
-      SafeDiv((6661) * (trace_length_), 16384),
-      SafeDiv((26645) * (trace_length_), 65536),
-      SafeDiv((13323) * (trace_length_), 32768),
-      SafeDiv((26647) * (trace_length_), 65536),
-      SafeDiv((27) * (trace_length_), 64),
-      SafeDiv((27649) * (trace_length_), 65536),
-      SafeDiv((13825) * (trace_length_), 32768),
-      SafeDiv((27651) * (trace_length_), 65536),
-      SafeDiv((6913) * (trace_length_), 16384),
-      SafeDiv((27653) * (trace_length_), 65536),
-      SafeDiv((13827) * (trace_length_), 32768),
-      SafeDiv((27655) * (trace_length_), 65536),
-      SafeDiv((3457) * (trace_length_), 8192),
-      SafeDiv((27657) * (trace_length_), 65536),
-      SafeDiv((13829) * (trace_length_), 32768),
-      SafeDiv((27659) * (trace_length_), 65536),
-      SafeDiv((6915) * (trace_length_), 16384),
-      SafeDiv((27661) * (trace_length_), 65536),
-      SafeDiv((13831) * (trace_length_), 32768),
-      SafeDiv((27663) * (trace_length_), 65536),
-      SafeDiv((1729) * (trace_length_), 4096),
-      SafeDiv((27665) * (trace_length_), 65536),
-      SafeDiv((13833) * (trace_length_), 32768),
-      SafeDiv((27667) * (trace_length_), 65536),
-      SafeDiv((6917) * (trace_length_), 16384),
-      SafeDiv((27669) * (trace_length_), 65536),
-      SafeDiv((13835) * (trace_length_), 32768),
-      SafeDiv((27671) * (trace_length_), 65536),
-      SafeDiv((31745) * (trace_length_), 65536),
-      SafeDiv((15873) * (trace_length_), 32768),
-      SafeDiv((31747) * (trace_length_), 65536),
-      SafeDiv((7937) * (trace_length_), 16384),
-      SafeDiv((31749) * (trace_length_), 65536),
-      SafeDiv((15875) * (trace_length_), 32768),
-      SafeDiv((31751) * (trace_length_), 65536),
-      SafeDiv((3969) * (trace_length_), 8192),
-      SafeDiv((31753) * (trace_length_), 65536),
-      SafeDiv((15877) * (trace_length_), 32768),
-      SafeDiv((31755) * (trace_length_), 65536),
-      SafeDiv((7939) * (trace_length_), 16384),
-      SafeDiv((31757) * (trace_length_), 65536),
-      SafeDiv((15879) * (trace_length_), 32768),
-      SafeDiv((31759) * (trace_length_), 65536),
-      SafeDiv((1985) * (trace_length_), 4096),
-      SafeDiv((31761) * (trace_length_), 65536),
-      SafeDiv((15881) * (trace_length_), 32768),
-      SafeDiv((31763) * (trace_length_), 65536),
-      SafeDiv((7941) * (trace_length_), 16384),
-      SafeDiv((31765) * (trace_length_), 65536),
-      SafeDiv((15883) * (trace_length_), 32768),
-      SafeDiv((31767) * (trace_length_), 65536),
-      (trace_length_) - (1),
-      (16) * ((SafeDiv(trace_length_, 16)) - (1)),
-      (2) * ((SafeDiv(trace_length_, 2)) - (1)),
-      (4) * ((SafeDiv(trace_length_, 4)) - (1)),
-      (256) * ((SafeDiv(trace_length_, 256)) - (1)),
-      (512) * ((SafeDiv(trace_length_, 512)) - (1)),
-      (32768) * ((SafeDiv(trace_length_, 32768)) - (1)),
-      (16384) * ((SafeDiv(trace_length_, 16384)) - (1)),
-      (1024) * ((SafeDiv(trace_length_, 1024)) - (1)),
-      (2048) * ((SafeDiv(trace_length_, 2048)) - (1))};
+      uint64_t(SafeDiv((15) * (trace_length_), 16)),
+      uint64_t(SafeDiv((255) * (trace_length_), 256)),
+      uint64_t(SafeDiv((63) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 4)),
+      uint64_t(SafeDiv(trace_length_, 32)),
+      uint64_t(SafeDiv((31) * (trace_length_), 32)),
+      uint64_t(SafeDiv((11) * (trace_length_), 16)),
+      uint64_t(SafeDiv((23) * (trace_length_), 32)),
+      uint64_t(SafeDiv((25) * (trace_length_), 32)),
+      uint64_t(SafeDiv((13) * (trace_length_), 16)),
+      uint64_t(SafeDiv((27) * (trace_length_), 32)),
+      uint64_t(SafeDiv((7) * (trace_length_), 8)),
+      uint64_t(SafeDiv((29) * (trace_length_), 32)),
+      uint64_t(SafeDiv((19) * (trace_length_), 32)),
+      uint64_t(SafeDiv((5) * (trace_length_), 8)),
+      uint64_t(SafeDiv((21) * (trace_length_), 32)),
+      uint64_t(SafeDiv((61) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 2)),
+      uint64_t(SafeDiv(trace_length_, 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 16)),
+      uint64_t(SafeDiv((5) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 32)),
+      uint64_t(SafeDiv((7) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 8)),
+      uint64_t(SafeDiv((9) * (trace_length_), 64)),
+      uint64_t(SafeDiv((5) * (trace_length_), 32)),
+      uint64_t(SafeDiv((11) * (trace_length_), 64)),
+      uint64_t(SafeDiv((3) * (trace_length_), 16)),
+      uint64_t(SafeDiv((13) * (trace_length_), 64)),
+      uint64_t(SafeDiv((7) * (trace_length_), 32)),
+      uint64_t(SafeDiv((15) * (trace_length_), 64)),
+      uint64_t(SafeDiv(trace_length_, 1024)),
+      uint64_t(SafeDiv(trace_length_, 512)),
+      uint64_t(SafeDiv((3) * (trace_length_), 1024)),
+      uint64_t(SafeDiv(trace_length_, 256)),
+      uint64_t(SafeDiv((5) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((3) * (trace_length_), 512)),
+      uint64_t(SafeDiv((7) * (trace_length_), 1024)),
+      uint64_t(SafeDiv(trace_length_, 128)),
+      uint64_t(SafeDiv((9) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((5) * (trace_length_), 512)),
+      uint64_t(SafeDiv((11) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((3) * (trace_length_), 256)),
+      uint64_t(SafeDiv((13) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((7) * (trace_length_), 512)),
+      uint64_t(SafeDiv((15) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((17) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((9) * (trace_length_), 512)),
+      uint64_t(SafeDiv((19) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((5) * (trace_length_), 256)),
+      uint64_t(SafeDiv((21) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((11) * (trace_length_), 512)),
+      uint64_t(SafeDiv((23) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((161) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((81) * (trace_length_), 512)),
+      uint64_t(SafeDiv((163) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((41) * (trace_length_), 256)),
+      uint64_t(SafeDiv((165) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((83) * (trace_length_), 512)),
+      uint64_t(SafeDiv((167) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((21) * (trace_length_), 128)),
+      uint64_t(SafeDiv((169) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((85) * (trace_length_), 512)),
+      uint64_t(SafeDiv((171) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((43) * (trace_length_), 256)),
+      uint64_t(SafeDiv((173) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((87) * (trace_length_), 512)),
+      uint64_t(SafeDiv((175) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((177) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((89) * (trace_length_), 512)),
+      uint64_t(SafeDiv((179) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((45) * (trace_length_), 256)),
+      uint64_t(SafeDiv((181) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((91) * (trace_length_), 512)),
+      uint64_t(SafeDiv((183) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((5) * (trace_length_), 16)),
+      uint64_t(SafeDiv((321) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((161) * (trace_length_), 512)),
+      uint64_t(SafeDiv((323) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((81) * (trace_length_), 256)),
+      uint64_t(SafeDiv((325) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((163) * (trace_length_), 512)),
+      uint64_t(SafeDiv((327) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((41) * (trace_length_), 128)),
+      uint64_t(SafeDiv((329) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((165) * (trace_length_), 512)),
+      uint64_t(SafeDiv((331) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((83) * (trace_length_), 256)),
+      uint64_t(SafeDiv((333) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((167) * (trace_length_), 512)),
+      uint64_t(SafeDiv((335) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((21) * (trace_length_), 64)),
+      uint64_t(SafeDiv((337) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((169) * (trace_length_), 512)),
+      uint64_t(SafeDiv((339) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((85) * (trace_length_), 256)),
+      uint64_t(SafeDiv((341) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((171) * (trace_length_), 512)),
+      uint64_t(SafeDiv((343) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((15) * (trace_length_), 32)),
+      uint64_t(SafeDiv((481) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((241) * (trace_length_), 512)),
+      uint64_t(SafeDiv((483) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((121) * (trace_length_), 256)),
+      uint64_t(SafeDiv((485) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((243) * (trace_length_), 512)),
+      uint64_t(SafeDiv((487) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((61) * (trace_length_), 128)),
+      uint64_t(SafeDiv((489) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((245) * (trace_length_), 512)),
+      uint64_t(SafeDiv((491) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((123) * (trace_length_), 256)),
+      uint64_t(SafeDiv((493) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((247) * (trace_length_), 512)),
+      uint64_t(SafeDiv((495) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((31) * (trace_length_), 64)),
+      uint64_t(SafeDiv((497) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((249) * (trace_length_), 512)),
+      uint64_t(SafeDiv((499) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((125) * (trace_length_), 256)),
+      uint64_t(SafeDiv((501) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((251) * (trace_length_), 512)),
+      uint64_t(SafeDiv((503) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((641) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((321) * (trace_length_), 512)),
+      uint64_t(SafeDiv((643) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((161) * (trace_length_), 256)),
+      uint64_t(SafeDiv((645) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((323) * (trace_length_), 512)),
+      uint64_t(SafeDiv((647) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((81) * (trace_length_), 128)),
+      uint64_t(SafeDiv((649) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((325) * (trace_length_), 512)),
+      uint64_t(SafeDiv((651) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((163) * (trace_length_), 256)),
+      uint64_t(SafeDiv((653) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((327) * (trace_length_), 512)),
+      uint64_t(SafeDiv((655) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((41) * (trace_length_), 64)),
+      uint64_t(SafeDiv((657) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((329) * (trace_length_), 512)),
+      uint64_t(SafeDiv((659) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((165) * (trace_length_), 256)),
+      uint64_t(SafeDiv((661) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((331) * (trace_length_), 512)),
+      uint64_t(SafeDiv((663) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((33) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((17) * (trace_length_), 512)),
+      uint64_t(SafeDiv((35) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((9) * (trace_length_), 256)),
+      uint64_t(SafeDiv((37) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((19) * (trace_length_), 512)),
+      uint64_t(SafeDiv((39) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((5) * (trace_length_), 128)),
+      uint64_t(SafeDiv((41) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((21) * (trace_length_), 512)),
+      uint64_t(SafeDiv((43) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((11) * (trace_length_), 256)),
+      uint64_t(SafeDiv((45) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((23) * (trace_length_), 512)),
+      uint64_t(SafeDiv((47) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((49) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((25) * (trace_length_), 512)),
+      uint64_t(SafeDiv((51) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((13) * (trace_length_), 256)),
+      uint64_t(SafeDiv((53) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((27) * (trace_length_), 512)),
+      uint64_t(SafeDiv((55) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((65) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((33) * (trace_length_), 512)),
+      uint64_t(SafeDiv((67) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((17) * (trace_length_), 256)),
+      uint64_t(SafeDiv((69) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((35) * (trace_length_), 512)),
+      uint64_t(SafeDiv((71) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((9) * (trace_length_), 128)),
+      uint64_t(SafeDiv((73) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((37) * (trace_length_), 512)),
+      uint64_t(SafeDiv((75) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((19) * (trace_length_), 256)),
+      uint64_t(SafeDiv((77) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((39) * (trace_length_), 512)),
+      uint64_t(SafeDiv((79) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((81) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((41) * (trace_length_), 512)),
+      uint64_t(SafeDiv((83) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((21) * (trace_length_), 256)),
+      uint64_t(SafeDiv((85) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((43) * (trace_length_), 512)),
+      uint64_t(SafeDiv((87) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((193) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((97) * (trace_length_), 512)),
+      uint64_t(SafeDiv((195) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((49) * (trace_length_), 256)),
+      uint64_t(SafeDiv((197) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((99) * (trace_length_), 512)),
+      uint64_t(SafeDiv((199) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((25) * (trace_length_), 128)),
+      uint64_t(SafeDiv((201) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((101) * (trace_length_), 512)),
+      uint64_t(SafeDiv((203) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((51) * (trace_length_), 256)),
+      uint64_t(SafeDiv((205) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((103) * (trace_length_), 512)),
+      uint64_t(SafeDiv((207) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((209) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((105) * (trace_length_), 512)),
+      uint64_t(SafeDiv((211) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((53) * (trace_length_), 256)),
+      uint64_t(SafeDiv((213) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((107) * (trace_length_), 512)),
+      uint64_t(SafeDiv((215) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((225) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((113) * (trace_length_), 512)),
+      uint64_t(SafeDiv((227) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((57) * (trace_length_), 256)),
+      uint64_t(SafeDiv((229) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((115) * (trace_length_), 512)),
+      uint64_t(SafeDiv((231) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((29) * (trace_length_), 128)),
+      uint64_t(SafeDiv((233) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((117) * (trace_length_), 512)),
+      uint64_t(SafeDiv((235) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((59) * (trace_length_), 256)),
+      uint64_t(SafeDiv((237) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((119) * (trace_length_), 512)),
+      uint64_t(SafeDiv((239) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((241) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((121) * (trace_length_), 512)),
+      uint64_t(SafeDiv((243) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((61) * (trace_length_), 256)),
+      uint64_t(SafeDiv((245) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((123) * (trace_length_), 512)),
+      uint64_t(SafeDiv((247) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((11) * (trace_length_), 32)),
+      uint64_t(SafeDiv((353) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((177) * (trace_length_), 512)),
+      uint64_t(SafeDiv((355) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((89) * (trace_length_), 256)),
+      uint64_t(SafeDiv((357) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((179) * (trace_length_), 512)),
+      uint64_t(SafeDiv((359) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((45) * (trace_length_), 128)),
+      uint64_t(SafeDiv((361) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((181) * (trace_length_), 512)),
+      uint64_t(SafeDiv((363) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((91) * (trace_length_), 256)),
+      uint64_t(SafeDiv((365) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((183) * (trace_length_), 512)),
+      uint64_t(SafeDiv((367) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((23) * (trace_length_), 64)),
+      uint64_t(SafeDiv((369) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((185) * (trace_length_), 512)),
+      uint64_t(SafeDiv((371) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((93) * (trace_length_), 256)),
+      uint64_t(SafeDiv((373) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((187) * (trace_length_), 512)),
+      uint64_t(SafeDiv((375) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((3) * (trace_length_), 8)),
+      uint64_t(SafeDiv((385) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((193) * (trace_length_), 512)),
+      uint64_t(SafeDiv((387) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((97) * (trace_length_), 256)),
+      uint64_t(SafeDiv((389) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((195) * (trace_length_), 512)),
+      uint64_t(SafeDiv((391) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((49) * (trace_length_), 128)),
+      uint64_t(SafeDiv((393) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((197) * (trace_length_), 512)),
+      uint64_t(SafeDiv((395) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((99) * (trace_length_), 256)),
+      uint64_t(SafeDiv((397) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((199) * (trace_length_), 512)),
+      uint64_t(SafeDiv((399) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((25) * (trace_length_), 64)),
+      uint64_t(SafeDiv((401) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((201) * (trace_length_), 512)),
+      uint64_t(SafeDiv((403) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((101) * (trace_length_), 256)),
+      uint64_t(SafeDiv((405) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((203) * (trace_length_), 512)),
+      uint64_t(SafeDiv((407) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((513) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((257) * (trace_length_), 512)),
+      uint64_t(SafeDiv((515) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((129) * (trace_length_), 256)),
+      uint64_t(SafeDiv((517) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((259) * (trace_length_), 512)),
+      uint64_t(SafeDiv((519) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((65) * (trace_length_), 128)),
+      uint64_t(SafeDiv((521) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((261) * (trace_length_), 512)),
+      uint64_t(SafeDiv((523) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((131) * (trace_length_), 256)),
+      uint64_t(SafeDiv((525) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((263) * (trace_length_), 512)),
+      uint64_t(SafeDiv((527) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((33) * (trace_length_), 64)),
+      uint64_t(SafeDiv((529) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((265) * (trace_length_), 512)),
+      uint64_t(SafeDiv((531) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((133) * (trace_length_), 256)),
+      uint64_t(SafeDiv((533) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((267) * (trace_length_), 512)),
+      uint64_t(SafeDiv((535) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((17) * (trace_length_), 32)),
+      uint64_t(SafeDiv((545) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((273) * (trace_length_), 512)),
+      uint64_t(SafeDiv((547) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((137) * (trace_length_), 256)),
+      uint64_t(SafeDiv((549) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((275) * (trace_length_), 512)),
+      uint64_t(SafeDiv((551) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((69) * (trace_length_), 128)),
+      uint64_t(SafeDiv((553) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((277) * (trace_length_), 512)),
+      uint64_t(SafeDiv((555) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((139) * (trace_length_), 256)),
+      uint64_t(SafeDiv((557) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((279) * (trace_length_), 512)),
+      uint64_t(SafeDiv((559) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((35) * (trace_length_), 64)),
+      uint64_t(SafeDiv((561) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((281) * (trace_length_), 512)),
+      uint64_t(SafeDiv((563) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((141) * (trace_length_), 256)),
+      uint64_t(SafeDiv((565) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((283) * (trace_length_), 512)),
+      uint64_t(SafeDiv((567) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((673) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((337) * (trace_length_), 512)),
+      uint64_t(SafeDiv((675) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((169) * (trace_length_), 256)),
+      uint64_t(SafeDiv((677) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((339) * (trace_length_), 512)),
+      uint64_t(SafeDiv((679) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((85) * (trace_length_), 128)),
+      uint64_t(SafeDiv((681) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((341) * (trace_length_), 512)),
+      uint64_t(SafeDiv((683) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((171) * (trace_length_), 256)),
+      uint64_t(SafeDiv((685) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((343) * (trace_length_), 512)),
+      uint64_t(SafeDiv((687) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((43) * (trace_length_), 64)),
+      uint64_t(SafeDiv((689) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((345) * (trace_length_), 512)),
+      uint64_t(SafeDiv((691) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((173) * (trace_length_), 256)),
+      uint64_t(SafeDiv((693) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((347) * (trace_length_), 512)),
+      uint64_t(SafeDiv((695) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((705) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((353) * (trace_length_), 512)),
+      uint64_t(SafeDiv((707) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((177) * (trace_length_), 256)),
+      uint64_t(SafeDiv((709) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((355) * (trace_length_), 512)),
+      uint64_t(SafeDiv((711) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((89) * (trace_length_), 128)),
+      uint64_t(SafeDiv((713) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((357) * (trace_length_), 512)),
+      uint64_t(SafeDiv((715) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((179) * (trace_length_), 256)),
+      uint64_t(SafeDiv((717) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((359) * (trace_length_), 512)),
+      uint64_t(SafeDiv((719) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((45) * (trace_length_), 64)),
+      uint64_t(SafeDiv((721) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((361) * (trace_length_), 512)),
+      uint64_t(SafeDiv((723) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((181) * (trace_length_), 256)),
+      uint64_t(SafeDiv((725) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((363) * (trace_length_), 512)),
+      uint64_t(SafeDiv((727) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((251) * (trace_length_), 256)),
+      uint64_t(SafeDiv((2017) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1009) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2019) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((505) * (trace_length_), 512)),
+      uint64_t(SafeDiv((2021) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1011) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2023) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((253) * (trace_length_), 256)),
+      uint64_t(SafeDiv((2025) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1013) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2027) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((507) * (trace_length_), 512)),
+      uint64_t(SafeDiv((2029) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1015) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2031) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((127) * (trace_length_), 128)),
+      uint64_t(SafeDiv((2033) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1017) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2035) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((509) * (trace_length_), 512)),
+      uint64_t(SafeDiv((2037) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((1019) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((2039) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((64513) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((833) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((865) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((897) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((929) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((961) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((993) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((64545) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64577) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64609) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64641) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64673) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64705) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64737) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64769) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64801) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64833) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64865) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64897) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64929) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64961) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((64993) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65025) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65057) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65089) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65121) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65153) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65185) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65217) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65249) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65281) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2041) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((65313) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32257) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64515) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16129) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64517) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32259) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64519) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8065) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64521) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32261) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64523) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16131) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64525) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32263) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64527) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4033) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64529) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32265) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64531) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16133) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64533) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32267) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64535) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((417) * (trace_length_), 512)),
+      uint64_t(SafeDiv((835) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((209) * (trace_length_), 256)),
+      uint64_t(SafeDiv((837) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((419) * (trace_length_), 512)),
+      uint64_t(SafeDiv((839) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((105) * (trace_length_), 128)),
+      uint64_t(SafeDiv((841) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((421) * (trace_length_), 512)),
+      uint64_t(SafeDiv((843) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((211) * (trace_length_), 256)),
+      uint64_t(SafeDiv((845) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((423) * (trace_length_), 512)),
+      uint64_t(SafeDiv((847) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((53) * (trace_length_), 64)),
+      uint64_t(SafeDiv((849) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((425) * (trace_length_), 512)),
+      uint64_t(SafeDiv((851) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((213) * (trace_length_), 256)),
+      uint64_t(SafeDiv((853) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((427) * (trace_length_), 512)),
+      uint64_t(SafeDiv((855) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((107) * (trace_length_), 128)),
+      uint64_t(SafeDiv((857) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((429) * (trace_length_), 512)),
+      uint64_t(SafeDiv((859) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((215) * (trace_length_), 256)),
+      uint64_t(SafeDiv((861) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((433) * (trace_length_), 512)),
+      uint64_t(SafeDiv((867) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((217) * (trace_length_), 256)),
+      uint64_t(SafeDiv((869) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((435) * (trace_length_), 512)),
+      uint64_t(SafeDiv((871) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((109) * (trace_length_), 128)),
+      uint64_t(SafeDiv((873) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((437) * (trace_length_), 512)),
+      uint64_t(SafeDiv((875) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((219) * (trace_length_), 256)),
+      uint64_t(SafeDiv((877) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((439) * (trace_length_), 512)),
+      uint64_t(SafeDiv((879) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((55) * (trace_length_), 64)),
+      uint64_t(SafeDiv((881) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((441) * (trace_length_), 512)),
+      uint64_t(SafeDiv((883) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((221) * (trace_length_), 256)),
+      uint64_t(SafeDiv((885) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((443) * (trace_length_), 512)),
+      uint64_t(SafeDiv((887) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((111) * (trace_length_), 128)),
+      uint64_t(SafeDiv((889) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((445) * (trace_length_), 512)),
+      uint64_t(SafeDiv((891) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((223) * (trace_length_), 256)),
+      uint64_t(SafeDiv((893) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((449) * (trace_length_), 512)),
+      uint64_t(SafeDiv((899) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((225) * (trace_length_), 256)),
+      uint64_t(SafeDiv((901) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((451) * (trace_length_), 512)),
+      uint64_t(SafeDiv((903) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((113) * (trace_length_), 128)),
+      uint64_t(SafeDiv((905) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((453) * (trace_length_), 512)),
+      uint64_t(SafeDiv((907) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((227) * (trace_length_), 256)),
+      uint64_t(SafeDiv((909) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((455) * (trace_length_), 512)),
+      uint64_t(SafeDiv((911) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((57) * (trace_length_), 64)),
+      uint64_t(SafeDiv((913) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((457) * (trace_length_), 512)),
+      uint64_t(SafeDiv((915) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((229) * (trace_length_), 256)),
+      uint64_t(SafeDiv((917) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((459) * (trace_length_), 512)),
+      uint64_t(SafeDiv((919) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((115) * (trace_length_), 128)),
+      uint64_t(SafeDiv((921) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((461) * (trace_length_), 512)),
+      uint64_t(SafeDiv((923) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((231) * (trace_length_), 256)),
+      uint64_t(SafeDiv((925) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((465) * (trace_length_), 512)),
+      uint64_t(SafeDiv((931) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((233) * (trace_length_), 256)),
+      uint64_t(SafeDiv((933) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((467) * (trace_length_), 512)),
+      uint64_t(SafeDiv((935) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((117) * (trace_length_), 128)),
+      uint64_t(SafeDiv((937) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((469) * (trace_length_), 512)),
+      uint64_t(SafeDiv((939) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((235) * (trace_length_), 256)),
+      uint64_t(SafeDiv((941) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((471) * (trace_length_), 512)),
+      uint64_t(SafeDiv((943) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((59) * (trace_length_), 64)),
+      uint64_t(SafeDiv((945) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((473) * (trace_length_), 512)),
+      uint64_t(SafeDiv((947) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((237) * (trace_length_), 256)),
+      uint64_t(SafeDiv((949) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((475) * (trace_length_), 512)),
+      uint64_t(SafeDiv((951) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((119) * (trace_length_), 128)),
+      uint64_t(SafeDiv((953) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((477) * (trace_length_), 512)),
+      uint64_t(SafeDiv((955) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((239) * (trace_length_), 256)),
+      uint64_t(SafeDiv((957) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((481) * (trace_length_), 512)),
+      uint64_t(SafeDiv((963) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((241) * (trace_length_), 256)),
+      uint64_t(SafeDiv((965) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((483) * (trace_length_), 512)),
+      uint64_t(SafeDiv((967) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((121) * (trace_length_), 128)),
+      uint64_t(SafeDiv((969) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((485) * (trace_length_), 512)),
+      uint64_t(SafeDiv((971) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((243) * (trace_length_), 256)),
+      uint64_t(SafeDiv((973) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((487) * (trace_length_), 512)),
+      uint64_t(SafeDiv((975) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((977) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((489) * (trace_length_), 512)),
+      uint64_t(SafeDiv((979) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((245) * (trace_length_), 256)),
+      uint64_t(SafeDiv((981) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((491) * (trace_length_), 512)),
+      uint64_t(SafeDiv((983) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((123) * (trace_length_), 128)),
+      uint64_t(SafeDiv((985) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((493) * (trace_length_), 512)),
+      uint64_t(SafeDiv((987) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((247) * (trace_length_), 256)),
+      uint64_t(SafeDiv((989) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((497) * (trace_length_), 512)),
+      uint64_t(SafeDiv((995) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((249) * (trace_length_), 256)),
+      uint64_t(SafeDiv((997) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((499) * (trace_length_), 512)),
+      uint64_t(SafeDiv((999) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((125) * (trace_length_), 128)),
+      uint64_t(SafeDiv((1001) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((501) * (trace_length_), 512)),
+      uint64_t(SafeDiv((1003) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((1005) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((503) * (trace_length_), 512)),
+      uint64_t(SafeDiv((1007) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((1021) * (trace_length_), 1024)),
+      uint64_t(SafeDiv((8067) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64537) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32269) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64539) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16135) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64541) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32273) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64547) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16137) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64549) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32275) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64551) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8069) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64553) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32277) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64555) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16139) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64557) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32279) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64559) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4035) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64561) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32281) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64563) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16141) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64565) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32283) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64567) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8071) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64569) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32285) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64571) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16143) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64573) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32289) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64579) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16145) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64581) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32291) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64583) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8073) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64585) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32293) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64587) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16147) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64589) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32295) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64591) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4037) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64593) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32297) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64595) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16149) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64597) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32299) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64599) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8075) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64601) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32301) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64603) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16151) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64605) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32305) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64611) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16153) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64613) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32307) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64615) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8077) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64617) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32309) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64619) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16155) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64621) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32311) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64623) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4039) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64625) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32313) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64627) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16157) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64629) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32315) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64631) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8079) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64633) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32317) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64635) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16159) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64637) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32321) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64643) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16161) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64645) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32323) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64647) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8081) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64649) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32325) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64651) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16163) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64653) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32327) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64655) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4041) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64657) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32329) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64659) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16165) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64661) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32331) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64663) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8083) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64665) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32333) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64667) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16167) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64669) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32337) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64675) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16169) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64677) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32339) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64679) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8085) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64681) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32341) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64683) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16171) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64685) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32343) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64687) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4043) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64689) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32345) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64691) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16173) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64693) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32347) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64695) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8087) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64697) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32349) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64699) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16175) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64701) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32353) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64707) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16177) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64709) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32355) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64711) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8089) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64713) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32357) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64715) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16179) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64717) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32359) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64719) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4045) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64721) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32361) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64723) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16181) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64725) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32363) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64727) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8091) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64729) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32365) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64731) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16183) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64733) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32369) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64739) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16185) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64741) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32371) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64743) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8093) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64745) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32373) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64747) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16187) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64749) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32375) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64751) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4047) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64753) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32377) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64755) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16189) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64757) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32379) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64759) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8095) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64761) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32381) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64763) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16191) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64765) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32385) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64771) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16193) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64773) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32387) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64775) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8097) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64777) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32389) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64779) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16195) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64781) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32391) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64783) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4049) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64785) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32393) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64787) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16197) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64789) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32395) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64791) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8099) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64793) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32397) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64795) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16199) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64797) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32401) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64803) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16201) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64805) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32403) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64807) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8101) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64809) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32405) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64811) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16203) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64813) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32407) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64815) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4051) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64817) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32409) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64819) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16205) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64821) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32411) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64823) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8103) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64825) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32413) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64827) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16207) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64829) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32417) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64835) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16209) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64837) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32419) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64839) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8105) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64841) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32421) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64843) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16211) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64845) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32423) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64847) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4053) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64849) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32425) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64851) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16213) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64853) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32427) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64855) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8107) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64857) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32429) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64859) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16215) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64861) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32433) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64867) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16217) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64869) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32435) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64871) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8109) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64873) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32437) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64875) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16219) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64877) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32439) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64879) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4055) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64881) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32441) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64883) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16221) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64885) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32443) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64887) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8111) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64889) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32445) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64891) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16223) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64893) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32449) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64899) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16225) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64901) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32451) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64903) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8113) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64905) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32453) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64907) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16227) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64909) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32455) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64911) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4057) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64913) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32457) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64915) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16229) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64917) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32459) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64919) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8115) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64921) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32461) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64923) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16231) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64925) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32465) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64931) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16233) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64933) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32467) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64935) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8117) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64937) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32469) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64939) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16235) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64941) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32471) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64943) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4059) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64945) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32473) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64947) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16237) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64949) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32475) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64951) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8119) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64953) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32477) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64955) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16239) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64957) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32481) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64963) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16241) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64965) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32483) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64967) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8121) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64969) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32485) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64971) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16243) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64973) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32487) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64975) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4061) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((64977) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32489) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64979) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16245) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64981) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32491) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64983) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8123) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((64985) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32493) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64987) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16247) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64989) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32497) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64995) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16249) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((64997) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32499) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((64999) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8125) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65001) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32501) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65003) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16251) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65005) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32503) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65007) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4063) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65009) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32505) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65011) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16253) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65013) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32507) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65015) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8127) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65017) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32509) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65019) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16255) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65021) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32513) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65027) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16257) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65029) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32515) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65031) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8129) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65033) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32517) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65035) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16259) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65037) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32519) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65039) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4065) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65041) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32521) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65043) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16261) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65045) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32523) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65047) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8131) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65049) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32525) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65051) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16263) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65053) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32529) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65059) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16265) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65061) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32531) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65063) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8133) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65065) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32533) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65067) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16267) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65069) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32535) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65071) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4067) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65073) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32537) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65075) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16269) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65077) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32539) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65079) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8135) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65081) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32541) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65083) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16271) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65085) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32545) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65091) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16273) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65093) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32547) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65095) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8137) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65097) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32549) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65099) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16275) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65101) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32551) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65103) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4069) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65105) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32553) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65107) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16277) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65109) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32555) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65111) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8139) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65113) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32557) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65115) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16279) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65117) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32561) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65123) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16281) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65125) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32563) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65127) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8141) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65129) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32565) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65131) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16283) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65133) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32567) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65135) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4071) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65137) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32569) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65139) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16285) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65141) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32571) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65143) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8143) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65145) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32573) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65147) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16287) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65149) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32577) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65155) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16289) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65157) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32579) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65159) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8145) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65161) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32581) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65163) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16291) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65165) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32583) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65167) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4073) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65169) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32585) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65171) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16293) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65173) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32587) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65175) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8147) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65177) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32589) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65179) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16295) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65181) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32593) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65187) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16297) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65189) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32595) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65191) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8149) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65193) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32597) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65195) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16299) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65197) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32599) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65199) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4075) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65201) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32601) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65203) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16301) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65205) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32603) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65207) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8151) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65209) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32605) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65211) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16303) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65213) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32609) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65219) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16305) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65221) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32611) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65223) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8153) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65225) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32613) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65227) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16307) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65229) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32615) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65231) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4077) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65233) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32617) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65235) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16309) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65237) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32619) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65239) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8155) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65241) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32621) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65243) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16311) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65245) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32625) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65251) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16313) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65253) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32627) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65255) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8157) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65257) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32629) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65259) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16315) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65261) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32631) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65263) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4079) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65265) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32633) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65267) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16317) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65269) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32635) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65271) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8159) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65273) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32637) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65275) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16319) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65277) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32641) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65283) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16321) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65285) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32643) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65287) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8161) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65289) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32645) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65291) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16323) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65293) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32647) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65295) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4081) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65297) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32649) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65299) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16325) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65301) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32651) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65303) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8163) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65305) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32653) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65307) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16327) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65309) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32657) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65315) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16329) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65317) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32659) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65319) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8165) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65321) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32661) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65323) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16331) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65325) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32663) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65327) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4083) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((65329) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32665) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65331) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16333) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65333) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32667) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65335) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8167) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((65337) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((32669) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((65339) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((16335) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((65341) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 65536)),
+      uint64_t(SafeDiv(trace_length_, 524288)),
+      uint64_t(SafeDiv(trace_length_, 262144)),
+      uint64_t(SafeDiv((3) * (trace_length_), 524288)),
+      uint64_t(SafeDiv(trace_length_, 131072)),
+      uint64_t(SafeDiv((5) * (trace_length_), 524288)),
+      uint64_t(SafeDiv((3) * (trace_length_), 262144)),
+      uint64_t(SafeDiv((7) * (trace_length_), 524288)),
+      uint64_t(SafeDiv((9) * (trace_length_), 524288)),
+      uint64_t(SafeDiv((5) * (trace_length_), 262144)),
+      uint64_t(SafeDiv((11) * (trace_length_), 524288)),
+      uint64_t(SafeDiv((3) * (trace_length_), 131072)),
+      uint64_t(SafeDiv((13) * (trace_length_), 524288)),
+      uint64_t(SafeDiv((7) * (trace_length_), 262144)),
+      uint64_t(SafeDiv((15) * (trace_length_), 524288)),
+      uint64_t(SafeDiv(trace_length_, 32768)),
+      uint64_t(SafeDiv((3) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 16384)),
+      uint64_t(SafeDiv((5) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 8192)),
+      uint64_t(SafeDiv((9) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((13) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 4096)),
+      uint64_t(SafeDiv((17) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((21) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((25) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((29) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 2048)),
+      uint64_t(SafeDiv((3) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((5) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((7) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((9) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((11) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((13) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((15) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((17) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((19) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((21) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((23) * (trace_length_), 2048)),
+      uint64_t(SafeDiv((33) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((97) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((129) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((161) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((193) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((225) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((257) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((289) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((321) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((353) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((385) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((417) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((449) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((481) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((513) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((545) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((577) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((609) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((641) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((673) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((705) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((737) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((769) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((17) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((35) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((37) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((41) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((45) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((49) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((53) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((57) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((61) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((33) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((67) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((17) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((69) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((35) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((71) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((73) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((37) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((75) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((77) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((39) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((79) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((81) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((41) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((83) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((85) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((43) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((87) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((89) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((45) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((91) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((93) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((99) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((101) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((51) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((103) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((105) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((53) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((107) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((109) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((55) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((111) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((113) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((57) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((115) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((117) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((59) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((119) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((121) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((61) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((123) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((125) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((131) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((33) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((133) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((67) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((135) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((17) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((137) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((69) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((139) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((35) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((141) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((71) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((143) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((145) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((73) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((147) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((37) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((149) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((75) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((151) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((153) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((77) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((155) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((39) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((157) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((81) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((163) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((41) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((165) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((83) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((167) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((169) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((85) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((171) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((43) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((173) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((87) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((175) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((177) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((89) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((179) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((45) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((181) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((91) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((183) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((185) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((93) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((187) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((47) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((189) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((97) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((195) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((197) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((99) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((199) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((201) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((101) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((203) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((51) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((205) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((103) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((207) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((209) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((105) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((211) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((53) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((213) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((107) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((215) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((217) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((109) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((219) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((55) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((221) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((113) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((227) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((57) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((229) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((115) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((231) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((233) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((117) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((235) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((59) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((237) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((119) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((239) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((241) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((121) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((243) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((61) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((245) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((123) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((247) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((249) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((125) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((251) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((63) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((253) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((129) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((259) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((261) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((131) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((263) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((33) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((265) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((133) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((267) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((67) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((269) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((135) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((271) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((17) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((273) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((137) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((275) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((69) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((277) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((139) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((279) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((35) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((281) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((141) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((283) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((71) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((285) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((145) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((291) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((73) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((293) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((147) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((295) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((37) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((297) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((149) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((299) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((75) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((301) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((151) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((303) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((305) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((153) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((307) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((77) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((309) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((155) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((311) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((39) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((313) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((157) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((315) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((79) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((317) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((161) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((323) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((81) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((325) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((163) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((327) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((41) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((329) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((165) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((331) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((83) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((333) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((167) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((335) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((337) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((169) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((339) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((85) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((341) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((171) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((343) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((43) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((345) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((173) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((347) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((87) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((349) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((177) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((355) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((89) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((357) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((179) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((359) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((45) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((361) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((181) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((363) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((91) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((365) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((183) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((367) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((369) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((185) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((371) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((93) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((373) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((187) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((375) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((47) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((377) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((189) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((379) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((95) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((381) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((193) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((387) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((97) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((389) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((195) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((391) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((393) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((197) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((395) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((99) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((397) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((199) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((399) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((401) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((201) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((403) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((101) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((405) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((203) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((407) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((51) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((409) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((205) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((411) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((103) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((413) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((209) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((419) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((105) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((421) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((211) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((423) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((53) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((425) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((213) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((427) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((107) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((429) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((215) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((431) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((433) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((217) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((435) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((109) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((437) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((219) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((439) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((55) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((441) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((221) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((443) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((111) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((445) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((225) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((451) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((113) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((453) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((227) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((455) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((57) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((457) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((229) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((459) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((115) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((461) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((231) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((463) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((465) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((233) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((467) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((117) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((469) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((235) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((471) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((59) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((473) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((237) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((475) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((119) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((477) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((241) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((483) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((121) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((485) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((243) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((487) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((61) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((489) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((245) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((491) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((123) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((493) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((247) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((495) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((497) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((249) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((499) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((125) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((501) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((251) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((503) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((63) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((505) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((253) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((507) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((127) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((509) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((257) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((515) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((129) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((517) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((259) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((519) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((521) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((261) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((523) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((131) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((525) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((263) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((527) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((33) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((529) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((265) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((531) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((133) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((533) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((267) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((535) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((67) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((537) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((269) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((539) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((135) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((541) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((273) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((547) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((137) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((549) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((275) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((551) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((69) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((553) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((277) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((555) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((139) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((557) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((279) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((559) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((35) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((561) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((281) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((563) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((141) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((565) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((283) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((567) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((71) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((569) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((285) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((571) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((143) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((573) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((289) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((579) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((145) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((581) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((291) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((583) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((73) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((585) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((293) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((587) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((147) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((589) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((295) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((591) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((37) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((593) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((297) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((595) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((149) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((597) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((299) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((599) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((75) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((601) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((301) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((603) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((151) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((605) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((305) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((611) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((153) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((613) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((307) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((615) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((77) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((617) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((309) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((619) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((155) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((621) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((311) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((623) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((39) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((625) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((313) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((627) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((157) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((629) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((315) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((631) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((79) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((633) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((317) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((635) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((159) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((637) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((321) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((643) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((161) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((645) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((323) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((647) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((81) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((649) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((325) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((651) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((163) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((653) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((327) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((655) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((41) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((657) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((329) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((659) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((165) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((661) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((331) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((663) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((83) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((665) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((333) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((667) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((167) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((669) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((337) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((675) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((169) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((677) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((339) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((679) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((85) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((681) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((341) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((683) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((171) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((685) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((343) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((687) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((43) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((689) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((345) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((691) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((173) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((693) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((347) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((695) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((87) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((697) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((349) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((699) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((175) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((701) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((353) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((707) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((177) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((709) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((355) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((711) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((89) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((713) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((357) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((715) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((179) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((717) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((359) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((719) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((45) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((721) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((361) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((723) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((181) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((725) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((363) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((727) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((91) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((729) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((365) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((731) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((183) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((733) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((369) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((739) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((185) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((741) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((371) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((743) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((93) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((745) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((373) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((747) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((187) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((749) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((375) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((751) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((47) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((753) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((377) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((755) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((189) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((757) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((379) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((759) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((95) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((761) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((381) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((763) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((191) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((765) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((385) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((771) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((193) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((773) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((387) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((775) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((97) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((777) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((389) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((779) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((195) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((781) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((391) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((783) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((785) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((393) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((787) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((197) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((789) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((395) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((791) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((99) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((793) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((397) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((795) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((199) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((797) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((63489) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31745) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63491) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15873) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((63493) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31747) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63495) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7937) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((63497) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31749) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63499) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15875) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((63501) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31751) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63503) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3969) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((63505) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31753) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63507) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15877) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((63509) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31755) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((63511) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((62465) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31233) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62467) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15617) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((62469) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31235) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62471) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7809) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((62473) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31237) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62475) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15619) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((62477) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31239) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62479) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3905) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((62481) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31241) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62483) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15621) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((62485) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31243) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((62487) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((59393) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29697) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59395) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14849) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((59397) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29699) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59399) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((60417) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30209) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60419) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15105) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((60421) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30211) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60423) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((61441) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30721) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61443) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15361) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((61445) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30723) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61447) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7425) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((59401) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29701) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59403) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14851) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((59405) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29703) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59407) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3713) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((59409) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29705) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59411) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14853) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((59413) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29707) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((59415) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7553) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((60425) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30213) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60427) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15107) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((60429) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30215) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60431) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3777) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((60433) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30217) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60435) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15109) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((60437) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30219) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((60439) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7681) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((61449) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30725) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61451) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15363) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((61453) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30727) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61455) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3841) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((61457) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30729) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61459) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15365) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((61461) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((30731) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((61463) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((57345) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28673) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57347) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14337) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((57349) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28675) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57351) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((58369) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29185) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58371) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14593) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((58373) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29187) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58375) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7169) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((57353) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28677) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57355) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14339) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((57357) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28679) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57359) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3585) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((57361) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28681) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57363) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14341) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((57365) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28683) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((57367) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7297) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((58377) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29189) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58379) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14595) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((58381) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29191) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58383) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3649) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((58385) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29193) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58387) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14597) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((58389) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((29195) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((58391) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((56321) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28161) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56323) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14081) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((56325) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28163) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56327) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((55297) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27649) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55299) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13825) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((55301) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27651) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55303) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6913) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((55305) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27653) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55307) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13827) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((55309) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27655) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55311) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3457) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((55313) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27657) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55315) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13829) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((55317) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27659) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((55319) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7041) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((56329) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28165) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56331) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14083) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((56333) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28167) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56335) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3521) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((56337) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28169) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56339) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14085) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((56341) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((28171) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((56343) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((51201) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25601) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51203) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12801) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((51205) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25603) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51207) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((51) * (trace_length_), 64)),
+      uint64_t(SafeDiv((52225) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26113) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52227) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13057) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((52229) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26115) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52231) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((53249) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26625) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53251) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13313) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((53253) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26627) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53255) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((54273) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27137) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54275) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13569) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((54277) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27139) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54279) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6401) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((51209) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25605) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51211) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12803) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((51213) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25607) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51215) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3201) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((51217) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25609) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51219) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12805) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((51221) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25611) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((51223) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6529) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((52233) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26117) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52235) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13059) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((52237) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26119) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52239) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3265) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((52241) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26121) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52243) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13061) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((52245) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26123) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((52247) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6657) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((53257) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26629) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53259) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13315) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((53261) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26631) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53263) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3329) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((53265) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26633) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53267) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13317) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((53269) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((26635) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((53271) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6785) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((54281) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27141) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54283) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13571) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((54285) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27143) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54287) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3393) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((54289) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27145) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54291) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13573) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((54293) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27147) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((54295) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49) * (trace_length_), 64)),
+      uint64_t(SafeDiv((50177) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25089) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50179) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12545) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((50181) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25091) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50183) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6273) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((50185) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25093) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50187) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12547) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((50189) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25095) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50191) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3137) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((50193) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25097) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50195) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12549) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((50197) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25099) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((50199) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((47105) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23553) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47107) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11777) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((47109) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23555) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47111) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((47) * (trace_length_), 64)),
+      uint64_t(SafeDiv((48129) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24065) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48131) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12033) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((48133) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24067) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48135) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((49153) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24577) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49155) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12289) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((49157) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24579) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49159) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5889) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((47113) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23557) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47115) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11779) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((47117) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23559) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47119) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2945) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((47121) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23561) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47123) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11781) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((47125) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23563) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((47127) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6017) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((48137) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24069) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48139) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12035) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((48141) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24071) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48143) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3009) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((48145) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24073) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48147) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12037) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((48149) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24075) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((48151) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6145) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((49161) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24581) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49163) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12291) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((49165) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24583) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49167) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3073) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((49169) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24585) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49171) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12293) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((49173) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24587) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((49175) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((46081) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23041) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46083) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11521) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((46085) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23043) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46087) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5761) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((46089) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23045) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46091) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11523) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((46093) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23047) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46095) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2881) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((46097) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23049) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46099) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11525) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((46101) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23051) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((46103) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((45057) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22529) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45059) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11265) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((45061) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22531) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45063) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5633) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((45065) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22533) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45067) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11267) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((45069) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22535) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45071) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2817) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((45073) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22537) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45075) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11269) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((45077) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22539) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((45079) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((44033) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22017) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44035) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11009) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((44037) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22019) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44039) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5505) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((44041) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22021) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44043) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11011) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((44045) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22023) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44047) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2753) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((44049) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22025) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44051) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11013) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((44053) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22027) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((44055) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((41985) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20993) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((41987) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10497) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((41989) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20995) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((41991) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((43009) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21505) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43011) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10753) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((43013) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21507) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43015) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((39) * (trace_length_), 64)),
+      uint64_t(SafeDiv((39937) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19969) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39939) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9985) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((39941) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19971) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39943) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((40961) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20481) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40963) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10241) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((40965) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20483) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40967) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4993) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((39945) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19973) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39947) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9987) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((39949) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19975) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39951) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2497) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((39953) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19977) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39955) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9989) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((39957) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19979) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((39959) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5121) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((40969) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20485) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40971) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10243) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((40973) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20487) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40975) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2561) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((40977) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20489) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40979) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10245) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((40981) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20491) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((40983) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5249) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((41993) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20997) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((41995) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10499) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((41997) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20999) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((41999) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2625) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((42001) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21001) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((42003) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10501) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((42005) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21003) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((42007) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5377) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((43017) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21509) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43019) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10755) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((43021) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21511) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43023) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2689) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((43025) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21513) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43027) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10757) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((43029) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21515) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((43031) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((37) * (trace_length_), 64)),
+      uint64_t(SafeDiv((37889) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18945) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37891) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9473) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((37893) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18947) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37895) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4737) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((37897) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18949) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37899) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9475) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((37901) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18951) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37903) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2369) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((37905) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18953) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37907) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9477) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((37909) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18955) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((37911) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((38913) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19457) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38915) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9729) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((38917) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19459) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38919) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4865) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((38921) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19461) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38923) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9731) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((38925) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19463) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38927) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2433) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((38929) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19465) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38931) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9733) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((38933) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19467) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((38935) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 16)),
+      uint64_t(SafeDiv((36865) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18433) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36867) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9217) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((36869) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18435) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36871) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4609) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((36873) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18437) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36875) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9219) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((36877) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18439) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36879) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2305) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((36881) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18441) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36883) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9221) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((36885) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((18443) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((36887) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1025) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((513) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1027) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((257) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((1029) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((515) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1031) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((129) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((1033) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((517) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1035) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((259) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((1037) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((519) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1039) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((65) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((1041) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((521) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1043) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((261) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((1045) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((523) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((1047) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2049) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1025) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2051) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((513) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((2053) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1027) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2055) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3073) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1537) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3075) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((769) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((3077) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1539) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3079) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4097) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2049) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4099) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1025) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((4101) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2051) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4103) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5121) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2561) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5123) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1281) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((5125) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2563) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5127) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((257) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((2057) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1029) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2059) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((515) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((2061) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1031) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2063) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((129) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((2065) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1033) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2067) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((517) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((2069) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1035) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((2071) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((385) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((3081) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1541) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3083) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((771) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((3085) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1543) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3087) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((193) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((3089) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1545) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3091) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((773) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((3093) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1547) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((3095) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((513) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((4105) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2053) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4107) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1027) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((4109) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2055) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4111) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((257) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((4113) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2057) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4115) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1029) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((4117) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2059) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((4119) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((641) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((5129) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2565) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5131) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1283) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((5133) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2567) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5135) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((321) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((5137) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2569) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5139) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1285) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((5141) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2571) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((5143) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7169) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3585) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7171) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1793) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((7173) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3587) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7175) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6145) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3073) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6147) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1537) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((6149) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3075) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6151) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8193) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4097) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8195) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2049) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((8197) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4099) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8199) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9217) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4609) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9219) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2305) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((9221) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4611) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9223) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((897) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((7177) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3589) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7179) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1795) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((7181) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3591) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7183) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((449) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((7185) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3593) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7187) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1797) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((7189) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3595) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((7191) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((769) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((6153) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3077) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6155) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1539) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((6157) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3079) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6159) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((385) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((6161) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3081) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6163) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1541) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((6165) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3083) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((6167) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1025) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((8201) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4101) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8203) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2051) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((8205) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4103) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8207) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((513) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((8209) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4105) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8211) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2053) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((8213) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4107) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((8215) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1153) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((9225) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4613) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9227) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2307) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((9229) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4615) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9231) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((577) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((9233) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4617) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9235) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2309) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((9237) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4619) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((9239) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10241) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5121) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10243) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2561) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((10245) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5123) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10247) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11265) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5633) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11267) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2817) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((11269) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5635) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11271) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12289) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6145) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12291) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3073) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((12293) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6147) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12295) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13313) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6657) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13315) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3329) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((13317) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6659) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13319) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((14337) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7169) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14339) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3585) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((14341) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7171) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14343) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15361) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7681) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15363) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3841) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((15365) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7683) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15367) * (trace_length_), 65536)),
+      uint64_t(SafeDiv(trace_length_, 4)),
+      uint64_t(SafeDiv((16385) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8193) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16387) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4097) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((16389) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8195) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16391) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((17) * (trace_length_), 64)),
+      uint64_t(SafeDiv((17409) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8705) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17411) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4353) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((17413) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8707) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17415) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9) * (trace_length_), 32)),
+      uint64_t(SafeDiv((18433) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9217) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18435) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4609) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((18437) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9219) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18439) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((19) * (trace_length_), 64)),
+      uint64_t(SafeDiv((19457) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9729) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19459) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4865) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((19461) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9731) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19463) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1281) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((10249) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5125) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10251) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2563) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((10253) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5127) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10255) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((641) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((10257) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5129) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10259) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2565) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((10261) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5131) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((10263) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1409) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((11273) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5637) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11275) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2819) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((11277) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5639) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11279) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((705) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((11281) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5641) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11283) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2821) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((11285) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5643) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((11287) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1537) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((12297) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6149) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12299) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3075) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((12301) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6151) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12303) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((769) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((12305) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6153) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12307) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3077) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((12309) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6155) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((12311) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1665) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((13321) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6661) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13323) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3331) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((13325) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6663) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13327) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((833) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((13329) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6665) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13331) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3333) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((13333) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6667) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((13335) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1793) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((14345) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7173) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14347) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3587) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((14349) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7175) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14351) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((897) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((14353) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7177) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14355) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3589) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((14357) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7179) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((14359) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1921) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((15369) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7685) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15371) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3843) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((15373) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7687) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15375) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((961) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((15377) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7689) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15379) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3845) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((15381) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7691) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((15383) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2049) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((16393) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8197) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16395) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4099) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((16397) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8199) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16399) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1025) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((16401) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8201) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16403) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4101) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((16405) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8203) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((16407) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2177) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((17417) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8709) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17419) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4355) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((17421) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8711) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17423) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1089) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((17425) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8713) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17427) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4357) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((17429) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((8715) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((17431) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2305) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((18441) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9221) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18443) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4611) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((18445) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9223) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18447) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1153) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((18449) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9225) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18451) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4613) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((18453) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9227) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((18455) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2433) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((19465) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9733) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19467) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4867) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((19469) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9735) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19471) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1217) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((19473) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9737) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19475) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((4869) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((19477) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((9739) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((19479) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((20481) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10241) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20483) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5121) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((20485) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10243) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20487) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2561) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((20489) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10245) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20491) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5123) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((20493) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10247) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20495) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1281) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((20497) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10249) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20499) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5125) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((20501) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10251) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((20503) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((21505) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10753) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21507) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5377) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((21509) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10755) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21511) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((22529) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11265) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22531) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5633) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((22533) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11267) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22535) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((23553) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11777) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23555) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5889) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((23557) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11779) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23559) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((24577) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12289) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24579) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6145) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((24581) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12291) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24583) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2689) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((21513) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10757) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21515) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5379) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((21517) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10759) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21519) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1345) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((21521) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10761) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21523) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5381) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((21525) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((10763) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((21527) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2817) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((22537) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11269) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22539) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5635) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((22541) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11271) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22543) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1409) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((22545) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11273) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22547) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5637) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((22549) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11275) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((22551) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((2945) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((23561) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11781) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23563) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5891) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((23565) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11783) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23567) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1473) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((23569) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11785) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23571) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((5893) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((23573) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((11787) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((23575) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3073) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((24585) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12293) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24587) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6147) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((24589) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12295) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24591) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1537) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((24593) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12297) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24595) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6149) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((24597) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12299) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((24599) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((25601) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12801) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25603) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6401) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((25605) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12803) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25607) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3201) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((25609) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12805) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25611) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6403) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((25613) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12807) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25615) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1601) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((25617) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12809) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25619) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6405) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((25621) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((12811) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((25623) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13) * (trace_length_), 32)),
+      uint64_t(SafeDiv((26625) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13313) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26627) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6657) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((26629) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13315) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26631) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3329) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((26633) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13317) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26635) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6659) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((26637) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13319) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26639) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1665) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((26641) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13321) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26643) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6661) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((26645) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13323) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((26647) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((27) * (trace_length_), 64)),
+      uint64_t(SafeDiv((27649) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13825) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27651) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6913) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((27653) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13827) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27655) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3457) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((27657) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13829) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27659) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6915) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((27661) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13831) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27663) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1729) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((27665) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13833) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27667) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((6917) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((27669) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((13835) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((27671) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((31745) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15873) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31747) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7937) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((31749) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15875) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31751) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((3969) * (trace_length_), 8192)),
+      uint64_t(SafeDiv((31753) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15877) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31755) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7939) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((31757) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15879) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31759) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((1985) * (trace_length_), 4096)),
+      uint64_t(SafeDiv((31761) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15881) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31763) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((7941) * (trace_length_), 16384)),
+      uint64_t(SafeDiv((31765) * (trace_length_), 65536)),
+      uint64_t(SafeDiv((15883) * (trace_length_), 32768)),
+      uint64_t(SafeDiv((31767) * (trace_length_), 65536)),
+      uint64_t((trace_length_) - (1)),
+      uint64_t((trace_length_) - (16)),
+      uint64_t((trace_length_) - (2)),
+      uint64_t((trace_length_) - (4)),
+      uint64_t((trace_length_) - (256)),
+      uint64_t((trace_length_) - (512)),
+      uint64_t((trace_length_) - (32768)),
+      uint64_t((trace_length_) - (16384)),
+      uint64_t((trace_length_) - (1024)),
+      uint64_t((trace_length_) - (2048))};
 
   BuildAutoPeriodicColumns(gen, &builder);
 
@@ -3417,56 +3417,67 @@ void CpuAirDefinition<FieldElementT, 8>::BuildAutoPeriodicColumns(
           kKeccakKeccakKeccakRoundKey0PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey0PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey1PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey1PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey3PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey3PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey7PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey7PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey15PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey15PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey31PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey31PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kKeccakKeccakKeccakRoundKey63PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kKeccakKeccakKeccakRoundKey63PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonFullRoundKey0PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey0PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonFullRoundKey1PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey1PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonFullRoundKey2PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 64),
       kPoseidonPoseidonFullRoundKey2PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonPartialRoundKey0PeriodicColumnData, gen, FieldElementT::One(),
           this->trace_length_, 8),
       kPoseidonPoseidonPartialRoundKey0PeriodicColumn);
+
   builder->AddPeriodicColumn(
       PeriodicColumn<FieldElementT>(
           kPoseidonPoseidonPartialRoundKey1PeriodicColumnData, gen, FieldElementT::One(),
@@ -3479,7 +3490,7 @@ std::vector<std::vector<FieldElementT>>
 CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
     const FieldElementT& point, const FieldElementT& generator,
     gsl::span<const uint64_t> point_exponents,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
   const std::vector<FieldElementT> strict_point_powers = BatchPow(point, point_exponents);
   const std::vector<FieldElementT> gen_powers = BatchPow(generator, point_exponents);
 
@@ -3487,19 +3498,21 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
   for (size_t i = 0; i < point_exponents.size(); ++i) {
-    uint64_t size = SafeDiv(trace_length_, point_exponents[i]);
+    uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
     vec.reserve(size);
-    vec.push_back(power);
+    if (size > 0) {
+      vec.push_back(power);
+    }
     for (size_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
     }
   }
 
-  TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 524289;
+  [[maybe_unused]] TaskManager& task_manager = TaskManager::GetInstance();
+  constexpr size_t kPeriodUpperBound = 4194305;
   constexpr size_t kTaskSize = 1024;
   size_t period;
 
@@ -3513,16 +3526,14 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       FieldElementT::UninitializedVector(256),    FieldElementT::UninitializedVector(512),
       FieldElementT::UninitializedVector(512),    FieldElementT::UninitializedVector(512),
       FieldElementT::UninitializedVector(512),    FieldElementT::UninitializedVector(512),
-      FieldElementT::UninitializedVector(512),    FieldElementT::UninitializedVector(512),
-      FieldElementT::UninitializedVector(512),    FieldElementT::UninitializedVector(512),
+      FieldElementT::UninitializedVector(512),    FieldElementT::UninitializedVector(1024),
       FieldElementT::UninitializedVector(1024),   FieldElementT::UninitializedVector(1024),
-      FieldElementT::UninitializedVector(1024),   FieldElementT::UninitializedVector(2048),
+      FieldElementT::UninitializedVector(2048),   FieldElementT::UninitializedVector(8192),
       FieldElementT::UninitializedVector(8192),   FieldElementT::UninitializedVector(8192),
-      FieldElementT::UninitializedVector(8192),   FieldElementT::UninitializedVector(8192),
+      FieldElementT::UninitializedVector(8192),   FieldElementT::UninitializedVector(16384),
       FieldElementT::UninitializedVector(16384),  FieldElementT::UninitializedVector(16384),
-      FieldElementT::UninitializedVector(16384),  FieldElementT::UninitializedVector(16384),
+      FieldElementT::UninitializedVector(16384),  FieldElementT::UninitializedVector(32768),
       FieldElementT::UninitializedVector(32768),  FieldElementT::UninitializedVector(32768),
-      FieldElementT::UninitializedVector(32768),  FieldElementT::UninitializedVector(524288),
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
@@ -3574,6 +3585,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
       FieldElementT::UninitializedVector(524288), FieldElementT::UninitializedVector(524288),
+      FieldElementT::UninitializedVector(524288),
   };
 
   period = 1;
@@ -3737,8 +3749,16 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[14][i] = ((point_powers[8][i & (511)]) - (shifts[3])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[6]));
+          precomp_domains[14][i] = ((point_powers[8][i & (511)]) - (shifts[6])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[7])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[3])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[8])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[9])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[10])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[11])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[12])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[0])) *
+                                   (precomp_domains[13][i & (512 - 1)]);
         }
       },
       period, kTaskSize);
@@ -3749,14 +3769,9 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[15][i] = ((point_powers[8][i & (511)]) - (shifts[7])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[8])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[9])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[10])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[11])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[12])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[0])) *
-                                   (precomp_domains[13][i & (512 - 1)]) *
+          precomp_domains[15][i] = ((point_powers[8][i & (511)]) - (shifts[13])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[14])) *
+                                   ((point_powers[8][i & (511)]) - (shifts[15])) *
                                    (precomp_domains[14][i & (512 - 1)]);
         }
       },
@@ -3768,32 +3783,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[16][i] = (point_powers[8][i & (511)]) - (shifts[13]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[17][i] = ((point_powers[8][i & (511)]) - (shifts[14])) *
-                                   ((point_powers[8][i & (511)]) - (shifts[15])) *
-                                   (precomp_domains[15][i & (512 - 1)]) *
-                                   (precomp_domains[16][i & (512 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[18][i] = ((point_powers[8][i & (511)]) - (shifts[16])) *
+          precomp_domains[16][i] = ((point_powers[8][i & (511)]) - (shifts[16])) *
                                    ((point_powers[8][i & (511)]) - (shifts[2])) *
                                    (precomp_domains[13][i & (512 - 1)]);
         }
@@ -3806,7 +3796,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[19][i] = (point_powers[8][i & (511)]) - (shifts[17]);
+          precomp_domains[17][i] = (point_powers[8][i & (511)]) - (shifts[17]);
         }
       },
       period, kTaskSize);
@@ -3817,19 +3807,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[20][i] = (point_powers[8][i & (511)]) - (FieldElementT::One());
-        }
-      },
-      period, kTaskSize);
-
-  period = 512;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[21][i] =
-              (precomp_domains[14][i & (512 - 1)]) * (precomp_domains[16][i & (512 - 1)]);
+          precomp_domains[18][i] = (point_powers[8][i & (511)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -3840,7 +3818,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[22][i] = (point_powers[9][i & (1023)]) - (shifts[3]);
+          precomp_domains[19][i] = (point_powers[9][i & (1023)]) - (shifts[3]);
         }
       },
       period, kTaskSize);
@@ -3851,7 +3829,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[23][i] = (point_powers[9][i & (1023)]) - (FieldElementT::One());
+          precomp_domains[20][i] = (point_powers[9][i & (1023)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -3862,7 +3840,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[24][i] = ((point_powers[9][i & (1023)]) - (shifts[18])) *
+          precomp_domains[21][i] = ((point_powers[9][i & (1023)]) - (shifts[18])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[4])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[19])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[20])) *
@@ -3877,7 +3855,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[9][i & (1023)]) - (shifts[29])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[30])) *
                                    ((point_powers[9][i & (1023)]) - (shifts[31])) *
-                                   (precomp_domains[23][i & (1024 - 1)]);
+                                   (precomp_domains[20][i & (1024 - 1)]);
         }
       },
       period, kTaskSize);
@@ -3888,7 +3866,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[25][i] = (point_powers[10][i & (2047)]) - (FieldElementT::One());
+          precomp_domains[22][i] = (point_powers[10][i & (2047)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -3899,7 +3877,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[26][i] = ((point_powers[11][i & (8191)]) - (FieldElementT::One())) *
+          precomp_domains[23][i] = ((point_powers[11][i & (8191)]) - (FieldElementT::One())) *
                                    ((point_powers[11][i & (8191)]) - (shifts[32])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[33])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[34])) *
@@ -3917,7 +3895,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[27][i] = ((point_powers[11][i & (8191)]) - (shifts[39])) *
+          precomp_domains[24][i] = ((point_powers[11][i & (8191)]) - (shifts[39])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[40])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[41])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[42])) *
@@ -3933,7 +3911,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[11][i & (8191)]) - (shifts[51])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[52])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[53])) *
-                                   (precomp_domains[26][i & (8192 - 1)]);
+                                   (precomp_domains[23][i & (8192 - 1)]);
         }
       },
       period, kTaskSize);
@@ -3944,7 +3922,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[28][i] = ((point_powers[11][i & (8191)]) - (shifts[26])) *
+          precomp_domains[25][i] = ((point_powers[11][i & (8191)]) - (shifts[26])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[54])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[55])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[56])) *
@@ -4016,7 +3994,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[11][i & (8191)]) - (shifts[121])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[122])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[123])) *
-                                   ((point_powers[11][i & (8191)]) - (shifts[13])) *
+                                   ((point_powers[11][i & (8191)]) - (shifts[14])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[124])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[125])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[126])) *
@@ -4040,7 +4018,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[11][i & (8191)]) - (shifts[144])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[145])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[146])) *
-                                   (precomp_domains[27][i & (8192 - 1)]);
+                                   (precomp_domains[24][i & (8192 - 1)]);
         }
       },
       period, kTaskSize);
@@ -4051,7 +4029,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[29][i] = ((point_powers[11][i & (8191)]) - (shifts[4])) *
+          precomp_domains[26][i] = ((point_powers[11][i & (8191)]) - (shifts[4])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[147])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[148])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[149])) *
@@ -4267,7 +4245,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[11][i & (8191)]) - (shifts[350])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[351])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[352])) *
-                                   ((point_powers[11][i & (8191)]) - (shifts[7])) *
+                                   ((point_powers[11][i & (8191)]) - (shifts[6])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[353])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[354])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[355])) *
@@ -4291,7 +4269,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[11][i & (8191)]) - (shifts[373])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[374])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[375])) *
-                                   (precomp_domains[28][i & (8192 - 1)]);
+                                   (precomp_domains[25][i & (8192 - 1)]);
         }
       },
       period, kTaskSize);
@@ -4302,7 +4280,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[30][i] = (point_powers[12][i & (16383)]) - (shifts[1]);
+          precomp_domains[27][i] = (point_powers[12][i & (16383)]) - (shifts[1]);
         }
       },
       period, kTaskSize);
@@ -4313,7 +4291,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[31][i] = (point_powers[12][i & (16383)]) - (shifts[376]);
+          precomp_domains[28][i] = (point_powers[12][i & (16383)]) - (shifts[376]);
         }
       },
       period, kTaskSize);
@@ -4324,7 +4302,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[32][i] = (point_powers[12][i & (16383)]) - (FieldElementT::One());
+          precomp_domains[29][i] = (point_powers[12][i & (16383)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -4335,7 +4313,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[33][i] = (point_powers[12][i & (16383)]) - (shifts[2]);
+          precomp_domains[30][i] = (point_powers[12][i & (16383)]) - (shifts[2]);
         }
       },
       period, kTaskSize);
@@ -4346,7 +4324,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[34][i] = (point_powers[13][i & (32767)]) - (shifts[1]);
+          precomp_domains[31][i] = (point_powers[13][i & (32767)]) - (shifts[1]);
         }
       },
       period, kTaskSize);
@@ -4357,7 +4335,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[35][i] = (point_powers[13][i & (32767)]) - (shifts[376]);
+          precomp_domains[32][i] = (point_powers[13][i & (32767)]) - (shifts[376]);
         }
       },
       period, kTaskSize);
@@ -4368,7 +4346,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[36][i] = (point_powers[13][i & (32767)]) - (FieldElementT::One());
+          precomp_domains[33][i] = (point_powers[13][i & (32767)]) - (FieldElementT::One());
         }
       },
       period, kTaskSize);
@@ -4379,7 +4357,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[37][i] = (point_powers[14][i & (524287)]) - (shifts[2]);
+          precomp_domains[34][i] = (point_powers[14][i & (524287)]) - (shifts[2]);
         }
       },
       period, kTaskSize);
@@ -4390,9 +4368,9 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[38][i] = ((point_powers[11][i & (8191)]) - (shifts[10])) *
+          precomp_domains[35][i] = ((point_powers[11][i & (8191)]) - (shifts[9])) *
+                                   ((point_powers[11][i & (8191)]) - (shifts[10])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[11])) *
-                                   ((point_powers[11][i & (8191)]) - (shifts[6])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[12])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[0])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[5])) *
@@ -4420,7 +4398,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[398])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[399])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1])) *
-                                   (precomp_domains[37][i & (524288 - 1)]);
+                                   (precomp_domains[34][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -4431,7 +4409,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[39][i] = (point_powers[14][i & (524287)]) - (shifts[400]);
+          precomp_domains[36][i] = (point_powers[14][i & (524287)]) - (shifts[400]);
         }
       },
       period, kTaskSize);
@@ -4442,7 +4420,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[40][i] = ((point_powers[11][i & (8191)]) - (shifts[401])) *
+          precomp_domains[37][i] = ((point_powers[11][i & (8191)]) - (shifts[401])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[402])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[403])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[404])) *
@@ -4474,8 +4452,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[430])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[431])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[432])) *
-                                   (precomp_domains[38][i & (524288 - 1)]) *
-                                   (precomp_domains[39][i & (524288 - 1)]);
+                                   (precomp_domains[35][i & (524288 - 1)]) *
+                                   (precomp_domains[36][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -4486,7 +4464,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[41][i] = ((point_powers[14][i & (524287)]) - (shifts[433])) *
+          precomp_domains[38][i] = ((point_powers[14][i & (524287)]) - (shifts[433])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[434])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[435])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[436])) *
@@ -4502,7 +4480,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[42][i] = ((point_powers[14][i & (524287)]) - (shifts[439])) *
+          precomp_domains[39][i] = ((point_powers[14][i & (524287)]) - (shifts[439])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[440])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[441])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[442])) *
@@ -4518,7 +4496,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[452])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[453])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[454])) *
-                                   (precomp_domains[41][i & (524288 - 1)]);
+                                   (precomp_domains[38][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -4529,7 +4507,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[43][i] = ((point_powers[7][i & (255)]) - (shifts[0])) *
+          precomp_domains[40][i] = ((point_powers[7][i & (255)]) - (shifts[0])) *
                                    ((point_powers[7][i & (255)]) - (shifts[5])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[455])) *
                                    ((point_powers[11][i & (8191)]) - (shifts[456])) *
@@ -5405,7 +5383,42 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[1311])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1312])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1313])) *
-                                   (precomp_domains[40][i & (524288 - 1)]) *
+                                   (precomp_domains[37][i & (524288 - 1)]) *
+                                   (precomp_domains[39][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[41][i] = ((point_powers[11][i & (8191)]) - (shifts[8])) *
+                                   (precomp_domains[35][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[42][i] = (point_powers[14][i & (524287)]) - (FieldElementT::One());
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[43][i] = ((point_powers[14][i & (524287)]) - (shifts[1314])) *
                                    (precomp_domains[42][i & (524288 - 1)]);
         }
       },
@@ -5417,42 +5430,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[44][i] = ((point_powers[11][i & (8191)]) - (shifts[9])) *
-                                   (precomp_domains[38][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[45][i] = (point_powers[14][i & (524287)]) - (FieldElementT::One());
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[46][i] = ((point_powers[14][i & (524287)]) - (shifts[1314])) *
-                                   (precomp_domains[45][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[47][i] = ((point_powers[14][i & (524287)]) - (shifts[1315])) *
+          precomp_domains[44][i] = ((point_powers[14][i & (524287)]) - (shifts[1315])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1316])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1317])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1318])) *
@@ -5466,7 +5444,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[1326])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1327])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1328])) *
-                                   (precomp_domains[46][i & (524288 - 1)]);
+                                   (precomp_domains[43][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5477,13 +5455,13 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[48][i] = ((point_powers[14][i & (524287)]) - (shifts[1329])) *
+          precomp_domains[45][i] = ((point_powers[14][i & (524287)]) - (shifts[1329])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1330])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1331])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1332])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1333])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1334])) *
-                                   (precomp_domains[46][i & (524288 - 1)]);
+                                   (precomp_domains[43][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5494,7 +5472,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[49][i] = ((point_powers[14][i & (524287)]) - (shifts[1335])) *
+          precomp_domains[46][i] = ((point_powers[14][i & (524287)]) - (shifts[1335])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1336])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1337])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1338])) *
@@ -5510,7 +5488,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[1348])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1349])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1350])) *
-                                   (precomp_domains[48][i & (524288 - 1)]);
+                                   (precomp_domains[45][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5521,13 +5499,13 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[50][i] = ((point_powers[14][i & (524287)]) - (shifts[1351])) *
+          precomp_domains[47][i] = ((point_powers[14][i & (524287)]) - (shifts[1351])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1352])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1353])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1354])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1355])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1356])) *
-                                   (precomp_domains[49][i & (524288 - 1)]);
+                                   (precomp_domains[46][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5538,9 +5516,9 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[51][i] = ((point_powers[14][i & (524287)]) - (shifts[1357])) *
+          precomp_domains[48][i] = ((point_powers[14][i & (524287)]) - (shifts[1357])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1358])) *
-                                   (precomp_domains[50][i & (524288 - 1)]);
+                                   (precomp_domains[47][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5551,7 +5529,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[52][i] = ((point_powers[14][i & (524287)]) - (shifts[1359])) *
+          precomp_domains[49][i] = ((point_powers[14][i & (524287)]) - (shifts[1359])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[32])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1360])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[33])) *
@@ -5585,7 +5563,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[53][i] = ((point_powers[14][i & (524287)]) - (shifts[1371])) *
+          precomp_domains[50][i] = ((point_powers[14][i & (524287)]) - (shifts[1371])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1372])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1373])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1374])) *
@@ -5609,7 +5587,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[1392])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1393])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1394])) *
-                                   (precomp_domains[52][i & (524288 - 1)]);
+                                   (precomp_domains[49][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5620,8 +5598,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[54][i] =
-              (precomp_domains[46][i & (524288 - 1)]) * (precomp_domains[53][i & (524288 - 1)]);
+          precomp_domains[51][i] =
+              (precomp_domains[43][i & (524288 - 1)]) * (precomp_domains[50][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -5632,7 +5610,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[55][i] = ((point_powers[14][i & (524287)]) - (shifts[1395])) *
+          precomp_domains[52][i] = ((point_powers[14][i & (524287)]) - (shifts[1395])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1396])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1397])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[1398])) *
@@ -6304,8 +6282,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2064])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2065])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2066])) *
-                                   (precomp_domains[50][i & (524288 - 1)]) *
-                                   (precomp_domains[53][i & (524288 - 1)]);
+                                   (precomp_domains[47][i & (524288 - 1)]) *
+                                   (precomp_domains[50][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6316,8 +6294,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[56][i] =
-              (precomp_domains[45][i & (524288 - 1)]) * (precomp_domains[52][i & (524288 - 1)]);
+          precomp_domains[53][i] =
+              (precomp_domains[42][i & (524288 - 1)]) * (precomp_domains[49][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6328,8 +6306,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[57][i] =
-              (precomp_domains[37][i & (524288 - 1)]) * (precomp_domains[39][i & (524288 - 1)]);
+          precomp_domains[54][i] =
+              (precomp_domains[34][i & (524288 - 1)]) * (precomp_domains[36][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6340,8 +6318,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[58][i] =
-              (precomp_domains[42][i & (524288 - 1)]) * (precomp_domains[57][i & (524288 - 1)]);
+          precomp_domains[55][i] =
+              (precomp_domains[39][i & (524288 - 1)]) * (precomp_domains[54][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6352,7 +6330,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[59][i] = ((point_powers[14][i & (524287)]) - (shifts[5])) *
+          precomp_domains[56][i] = ((point_powers[14][i & (524287)]) - (shifts[5])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2067])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2068])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2069])) *
@@ -6370,7 +6348,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[60][i] = ((point_powers[14][i & (524287)]) - (shifts[2074])) *
+          precomp_domains[57][i] = ((point_powers[14][i & (524287)]) - (shifts[2074])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2075])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2076])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2077])) *
@@ -6386,8 +6364,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2087])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2088])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2089])) *
-                                   (precomp_domains[58][i & (524288 - 1)]) *
-                                   (precomp_domains[59][i & (524288 - 1)]);
+                                   (precomp_domains[55][i & (524288 - 1)]) *
+                                   (precomp_domains[56][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6398,7 +6376,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[61][i] = ((point_powers[14][i & (524287)]) - (shifts[16])) *
+          precomp_domains[58][i] = ((point_powers[14][i & (524287)]) - (shifts[16])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2090])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2091])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2092])) *
@@ -6416,7 +6394,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[62][i] = ((point_powers[14][i & (524287)]) - (shifts[2097])) *
+          precomp_domains[59][i] = ((point_powers[14][i & (524287)]) - (shifts[2097])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2098])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2099])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2100])) *
@@ -6432,8 +6410,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2110])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2111])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2112])) *
-                                   (precomp_domains[60][i & (524288 - 1)]) *
-                                   (precomp_domains[61][i & (524288 - 1)]);
+                                   (precomp_domains[57][i & (524288 - 1)]) *
+                                   (precomp_domains[58][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6444,7 +6422,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[63][i] = ((point_powers[14][i & (524287)]) - (shifts[12])) *
+          precomp_domains[60][i] = ((point_powers[14][i & (524287)]) - (shifts[12])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2113])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2114])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2115])) *
@@ -6478,7 +6456,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[64][i] = ((point_powers[14][i & (524287)]) - (shifts[2134])) *
+          precomp_domains[61][i] = ((point_powers[14][i & (524287)]) - (shifts[2134])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2135])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2136])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2137])) *
@@ -6526,8 +6504,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2179])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2180])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2181])) *
-                                   (precomp_domains[62][i & (524288 - 1)]) *
-                                   (precomp_domains[63][i & (524288 - 1)]);
+                                   (precomp_domains[59][i & (524288 - 1)]) *
+                                   (precomp_domains[60][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6538,7 +6516,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[65][i] = ((point_powers[14][i & (524287)]) - (shifts[6])) *
+          precomp_domains[62][i] = ((point_powers[14][i & (524287)]) - (shifts[11])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2182])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2183])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2184])) *
@@ -6564,7 +6542,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[66][i] = ((point_powers[14][i & (524287)]) - (shifts[2196])) *
+          precomp_domains[63][i] = ((point_powers[14][i & (524287)]) - (shifts[2196])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2197])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2198])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2199])) *
@@ -6596,8 +6574,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2225])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2226])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2227])) *
-                                   (precomp_domains[64][i & (524288 - 1)]) *
-                                   (precomp_domains[65][i & (524288 - 1)]);
+                                   (precomp_domains[61][i & (524288 - 1)]) *
+                                   (precomp_domains[62][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6608,7 +6586,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[67][i] = ((point_powers[14][i & (524287)]) - (shifts[497])) *
+          precomp_domains[64][i] = ((point_powers[14][i & (524287)]) - (shifts[497])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2228])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2229])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2230])) *
@@ -6626,7 +6604,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[68][i] = ((point_powers[14][i & (524287)]) - (shifts[11])) *
+          precomp_domains[65][i] = ((point_powers[14][i & (524287)]) - (shifts[10])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2235])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2236])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2237])) *
@@ -6634,7 +6612,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2239])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2240])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2241])) *
-                                   (precomp_domains[67][i & (524288 - 1)]);
+                                   (precomp_domains[64][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6645,7 +6623,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[69][i] = ((point_powers[14][i & (524287)]) - (shifts[2242])) *
+          precomp_domains[66][i] = ((point_powers[14][i & (524287)]) - (shifts[2242])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2243])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2244])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2245])) *
@@ -6677,8 +6655,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2271])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2272])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2273])) *
-                                   (precomp_domains[66][i & (524288 - 1)]) *
-                                   (precomp_domains[68][i & (524288 - 1)]);
+                                   (precomp_domains[63][i & (524288 - 1)]) *
+                                   (precomp_domains[65][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6689,7 +6667,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[70][i] = ((point_powers[14][i & (524287)]) - (shifts[9])) *
+          precomp_domains[67][i] = ((point_powers[14][i & (524287)]) - (shifts[8])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2274])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2275])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2276])) *
@@ -6705,7 +6683,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2286])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2287])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2288])) *
-                                   ((point_powers[14][i & (524287)]) - (shifts[10])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[9])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2289])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2290])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2291])) *
@@ -6731,7 +6709,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[71][i] = ((point_powers[14][i & (524287)]) - (shifts[2303])) *
+          precomp_domains[68][i] = ((point_powers[14][i & (524287)]) - (shifts[2303])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2304])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2305])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2306])) *
@@ -6795,8 +6773,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2364])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2365])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2366])) *
-                                   (precomp_domains[69][i & (524288 - 1)]) *
-                                   (precomp_domains[70][i & (524288 - 1)]);
+                                   (precomp_domains[66][i & (524288 - 1)]) *
+                                   (precomp_domains[67][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6807,7 +6785,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[72][i] = ((point_powers[14][i & (524287)]) - (shifts[2367])) *
+          precomp_domains[69][i] = ((point_powers[14][i & (524287)]) - (shifts[2367])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2368])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2369])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2370])) *
@@ -6825,7 +6803,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[73][i] = ((point_powers[14][i & (524287)]) - (shifts[2375])) *
+          precomp_domains[70][i] = ((point_powers[14][i & (524287)]) - (shifts[2375])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2376])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2377])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2378])) *
@@ -6841,8 +6819,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2388])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2389])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2390])) *
-                                   (precomp_domains[71][i & (524288 - 1)]) *
-                                   (precomp_domains[72][i & (524288 - 1)]);
+                                   (precomp_domains[68][i & (524288 - 1)]) *
+                                   (precomp_domains[69][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6853,7 +6831,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[74][i] = ((point_powers[14][i & (524287)]) - (shifts[8])) *
+          precomp_domains[71][i] = ((point_powers[14][i & (524287)]) - (shifts[7])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2391])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2392])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2393])) *
@@ -6887,7 +6865,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[75][i] = ((point_powers[14][i & (524287)]) - (shifts[2413])) *
+          precomp_domains[72][i] = ((point_powers[14][i & (524287)]) - (shifts[2413])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2414])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2415])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2416])) *
@@ -6935,8 +6913,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2458])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2459])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2460])) *
-                                   (precomp_domains[73][i & (524288 - 1)]) *
-                                   (precomp_domains[74][i & (524288 - 1)]);
+                                   (precomp_domains[70][i & (524288 - 1)]) *
+                                   (precomp_domains[71][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6947,7 +6925,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[76][i] = ((point_powers[14][i & (524287)]) - (shifts[368])) *
+          precomp_domains[73][i] = ((point_powers[14][i & (524287)]) - (shifts[368])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2461])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2462])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2463])) *
@@ -6965,7 +6943,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[77][i] = ((point_powers[14][i & (524287)]) - (shifts[2468])) *
+          precomp_domains[74][i] = ((point_powers[14][i & (524287)]) - (shifts[2468])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2469])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2470])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2471])) *
@@ -6981,8 +6959,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2481])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2482])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2483])) *
-                                   (precomp_domains[75][i & (524288 - 1)]) *
-                                   (precomp_domains[76][i & (524288 - 1)]);
+                                   (precomp_domains[72][i & (524288 - 1)]) *
+                                   (precomp_domains[73][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -6993,7 +6971,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[78][i] = ((point_powers[14][i & (524287)]) - (shifts[7])) *
+          precomp_domains[75][i] = ((point_powers[14][i & (524287)]) - (shifts[6])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2484])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2485])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2486])) *
@@ -7011,7 +6989,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[79][i] = ((point_powers[14][i & (524287)]) - (shifts[2491])) *
+          precomp_domains[76][i] = ((point_powers[14][i & (524287)]) - (shifts[2491])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2492])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2493])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2494])) *
@@ -7027,8 +7005,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2504])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2505])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2506])) *
-                                   (precomp_domains[77][i & (524288 - 1)]) *
-                                   (precomp_domains[78][i & (524288 - 1)]);
+                                   (precomp_domains[74][i & (524288 - 1)]) *
+                                   (precomp_domains[75][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7039,7 +7017,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[80][i] = ((point_powers[14][i & (524287)]) - (shifts[345])) *
+          precomp_domains[77][i] = ((point_powers[14][i & (524287)]) - (shifts[345])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2507])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2508])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2509])) *
@@ -7057,7 +7035,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[81][i] = ((point_powers[14][i & (524287)]) - (shifts[2514])) *
+          precomp_domains[78][i] = ((point_powers[14][i & (524287)]) - (shifts[2514])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2515])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2516])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2517])) *
@@ -7073,8 +7051,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2527])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2528])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2529])) *
-                                   (precomp_domains[79][i & (524288 - 1)]) *
-                                   (precomp_domains[80][i & (524288 - 1)]);
+                                   (precomp_domains[76][i & (524288 - 1)]) *
+                                   (precomp_domains[77][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7085,7 +7063,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[82][i] = ((point_powers[14][i & (524287)]) - (shifts[139])) *
+          precomp_domains[79][i] = ((point_powers[14][i & (524287)]) - (shifts[139])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2530])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2531])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2532])) *
@@ -7111,7 +7089,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[83][i] = ((point_powers[14][i & (524287)]) - (shifts[2544])) *
+          precomp_domains[80][i] = ((point_powers[14][i & (524287)]) - (shifts[2544])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2545])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2546])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2547])) *
@@ -7119,7 +7097,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2549])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2550])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2551])) *
-                                   ((point_powers[14][i & (524287)]) - (shifts[13])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[14])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2552])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2553])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2554])) *
@@ -7127,7 +7105,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2556])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2557])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2558])) *
-                                   (precomp_domains[82][i & (524288 - 1)]);
+                                   (precomp_domains[79][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7138,7 +7116,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[84][i] = ((point_powers[14][i & (524287)]) - (shifts[2559])) *
+          precomp_domains[81][i] = ((point_powers[14][i & (524287)]) - (shifts[2559])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2560])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2561])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2562])) *
@@ -7202,8 +7180,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2620])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2621])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2622])) *
-                                   (precomp_domains[81][i & (524288 - 1)]) *
-                                   (precomp_domains[83][i & (524288 - 1)]);
+                                   (precomp_domains[78][i & (524288 - 1)]) *
+                                   (precomp_domains[80][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7214,7 +7192,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[85][i] = ((point_powers[14][i & (524287)]) - (shifts[2623])) *
+          precomp_domains[82][i] = ((point_powers[14][i & (524287)]) - (shifts[2623])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2624])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2625])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2626])) *
@@ -7238,7 +7216,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2644])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2645])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2646])) *
-                                   ((point_powers[14][i & (524287)]) - (shifts[14])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[13])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2647])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2648])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2649])) *
@@ -7262,7 +7240,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2667])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2668])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2669])) *
-                                   (precomp_domains[84][i & (524288 - 1)]);
+                                   (precomp_domains[81][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7273,7 +7251,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[86][i] = ((point_powers[14][i & (524287)]) - (shifts[2670])) *
+          precomp_domains[83][i] = ((point_powers[14][i & (524287)]) - (shifts[2670])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2671])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2672])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2673])) *
@@ -7297,7 +7275,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2691])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2692])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2693])) *
-                                   (precomp_domains[85][i & (524288 - 1)]);
+                                   (precomp_domains[82][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7308,7 +7286,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[87][i] = ((point_powers[14][i & (524287)]) - (shifts[18])) *
+          precomp_domains[84][i] = ((point_powers[14][i & (524287)]) - (shifts[18])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2694])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2695])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2696])) *
@@ -7326,7 +7304,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[88][i] = ((point_powers[14][i & (524287)]) - (shifts[2701])) *
+          precomp_domains[85][i] = ((point_powers[14][i & (524287)]) - (shifts[2701])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2702])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2703])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2704])) *
@@ -7342,8 +7320,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2714])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2715])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2716])) *
-                                   (precomp_domains[49][i & (524288 - 1)]) *
-                                   (precomp_domains[87][i & (524288 - 1)]);
+                                   (precomp_domains[46][i & (524288 - 1)]) *
+                                   (precomp_domains[84][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7354,7 +7332,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[89][i] = ((point_powers[14][i & (524287)]) - (shifts[4])) *
+          precomp_domains[86][i] = ((point_powers[14][i & (524287)]) - (shifts[4])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2717])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2718])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2719])) *
@@ -7372,7 +7350,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[90][i] = ((point_powers[14][i & (524287)]) - (shifts[19])) *
+          precomp_domains[87][i] = ((point_powers[14][i & (524287)]) - (shifts[19])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2724])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2725])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2726])) *
@@ -7390,7 +7368,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[91][i] = ((point_powers[14][i & (524287)]) - (shifts[20])) *
+          precomp_domains[88][i] = ((point_powers[14][i & (524287)]) - (shifts[20])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2731])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2732])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2733])) *
@@ -7406,8 +7384,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2742])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2743])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2744])) *
-                                   (precomp_domains[89][i & (524288 - 1)]) *
-                                   (precomp_domains[90][i & (524288 - 1)]);
+                                   (precomp_domains[86][i & (524288 - 1)]) *
+                                   (precomp_domains[87][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7418,7 +7396,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[92][i] = ((point_powers[14][i & (524287)]) - (shifts[2745])) *
+          precomp_domains[89][i] = ((point_powers[14][i & (524287)]) - (shifts[2745])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2746])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2747])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2748])) *
@@ -7434,7 +7412,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2758])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2759])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2760])) *
-                                   (precomp_domains[88][i & (524288 - 1)]);
+                                   (precomp_domains[85][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7445,7 +7423,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[93][i] = ((point_powers[14][i & (524287)]) - (shifts[2761])) *
+          precomp_domains[90][i] = ((point_powers[14][i & (524287)]) - (shifts[2761])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2762])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2763])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2764])) *
@@ -7471,7 +7449,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[94][i] = ((point_powers[14][i & (524287)]) - (shifts[2777])) *
+          precomp_domains[91][i] = ((point_powers[14][i & (524287)]) - (shifts[2777])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2778])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2779])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2780])) *
@@ -7503,9 +7481,9 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2806])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2807])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2808])) *
-                                   (precomp_domains[91][i & (524288 - 1)]) *
-                                   (precomp_domains[92][i & (524288 - 1)]) *
-                                   (precomp_domains[93][i & (524288 - 1)]);
+                                   (precomp_domains[88][i & (524288 - 1)]) *
+                                   (precomp_domains[89][i & (524288 - 1)]) *
+                                   (precomp_domains[90][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7516,7 +7494,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[95][i] = ((point_powers[14][i & (524287)]) - (shifts[23])) *
+          precomp_domains[92][i] = ((point_powers[14][i & (524287)]) - (shifts[23])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2809])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2810])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2811])) *
@@ -7534,7 +7512,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[96][i] = ((point_powers[14][i & (524287)]) - (shifts[22])) *
+          precomp_domains[93][i] = ((point_powers[14][i & (524287)]) - (shifts[22])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2816])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2817])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2818])) *
@@ -7542,7 +7520,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2820])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2821])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2822])) *
-                                   (precomp_domains[95][i & (524288 - 1)]);
+                                   (precomp_domains[92][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7553,7 +7531,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[97][i] = ((point_powers[14][i & (524287)]) - (shifts[24])) *
+          precomp_domains[94][i] = ((point_powers[14][i & (524287)]) - (shifts[24])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2823])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2824])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2825])) *
@@ -7561,7 +7539,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2827])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2828])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2829])) *
-                                   (precomp_domains[96][i & (524288 - 1)]);
+                                   (precomp_domains[93][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7572,7 +7550,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[98][i] = ((point_powers[14][i & (524287)]) - (shifts[25])) *
+          precomp_domains[95][i] = ((point_powers[14][i & (524287)]) - (shifts[25])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2830])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2831])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2832])) *
@@ -7580,7 +7558,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                    ((point_powers[14][i & (524287)]) - (shifts[2834])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2835])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2836])) *
-                                   (precomp_domains[97][i & (524288 - 1)]);
+                                   (precomp_domains[94][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7591,7 +7569,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[99][i] = ((point_powers[14][i & (524287)]) - (shifts[2837])) *
+          precomp_domains[96][i] = ((point_powers[14][i & (524287)]) - (shifts[2837])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2838])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2839])) *
                                    ((point_powers[14][i & (524287)]) - (shifts[2840])) *
@@ -7617,23 +7595,128 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[100][i] = ((point_powers[14][i & (524287)]) - (shifts[2853])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2854])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2855])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2856])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2857])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2858])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2859])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2860])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2861])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2862])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2863])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2864])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2865])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2866])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2867])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2868])) *
-                                    (precomp_domains[94][i & (524288 - 1)]) *
+          precomp_domains[97][i] = ((point_powers[14][i & (524287)]) - (shifts[2853])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2854])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2855])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2856])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2857])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2858])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2859])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2860])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2861])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2862])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2863])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2864])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2865])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2866])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2867])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2868])) *
+                                   (precomp_domains[91][i & (524288 - 1)]) *
+                                   (precomp_domains[96][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[98][i] = ((point_powers[14][i & (524287)]) - (shifts[2869])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2870])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2871])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2872])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2873])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2874])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2875])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2876])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2877])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2878])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2879])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2880])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2881])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2882])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2883])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2884])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2885])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2886])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2887])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2888])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2889])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2890])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2891])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2892])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2893])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2894])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2895])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2896])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2897])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2898])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2899])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2900])) *
+                                   (precomp_domains[95][i & (524288 - 1)]) *
+                                   (precomp_domains[97][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[99][i] = ((point_powers[14][i & (524287)]) - (shifts[26])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2901])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2902])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2903])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2904])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2905])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2906])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2907])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[27])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2908])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2909])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2910])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2911])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2912])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2913])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2914])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[28])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2915])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2916])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2917])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2918])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2919])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2920])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2921])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[29])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2922])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2923])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2924])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2925])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2926])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2927])) *
+                                   ((point_powers[14][i & (524287)]) - (shifts[2928]));
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[100][i] = ((point_powers[14][i & (524287)]) - (shifts[30])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2929])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2930])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2931])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2932])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2933])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2934])) *
+                                    ((point_powers[14][i & (524287)]) - (shifts[2935])) *
                                     (precomp_domains[99][i & (524288 - 1)]);
         }
       },
@@ -7645,112 +7728,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[101][i] = ((point_powers[14][i & (524287)]) - (shifts[2869])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2870])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2871])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2872])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2873])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2874])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2875])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2876])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2877])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2878])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2879])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2880])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2881])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2882])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2883])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2884])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2885])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2886])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2887])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2888])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2889])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2890])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2891])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2892])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2893])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2894])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2895])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2896])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2897])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2898])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2899])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2900])) *
-                                    (precomp_domains[98][i & (524288 - 1)]) *
-                                    (precomp_domains[100][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[102][i] = ((point_powers[14][i & (524287)]) - (shifts[26])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2901])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2902])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2903])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2904])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2905])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2906])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2907])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[27])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2908])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2909])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2910])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2911])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2912])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2913])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2914])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[28])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2915])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2916])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2917])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2918])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2919])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2920])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2921])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[29])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2922])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2923])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2924])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2925])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2926])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2927])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2928]));
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[103][i] = ((point_powers[14][i & (524287)]) - (shifts[30])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2929])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2930])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2931])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2932])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2933])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2934])) *
-                                    ((point_powers[14][i & (524287)]) - (shifts[2935])) *
-                                    (precomp_domains[102][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[104][i] = ((point_powers[14][i & (524287)]) - (shifts[31])) *
+          precomp_domains[101][i] = ((point_powers[14][i & (524287)]) - (shifts[31])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2936])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2937])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2938])) *
@@ -7768,7 +7746,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[105][i] = ((point_powers[14][i & (524287)]) - (shifts[2943])) *
+          precomp_domains[102][i] = ((point_powers[14][i & (524287)]) - (shifts[2943])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2944])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2945])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2946])) *
@@ -7784,8 +7762,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[2956])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2957])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2958])) *
-                                    (precomp_domains[103][i & (524288 - 1)]) *
-                                    (precomp_domains[104][i & (524288 - 1)]);
+                                    (precomp_domains[100][i & (524288 - 1)]) *
+                                    (precomp_domains[101][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7796,7 +7774,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[106][i] = ((point_powers[14][i & (524287)]) - (shifts[2959])) *
+          precomp_domains[103][i] = ((point_powers[14][i & (524287)]) - (shifts[2959])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2960])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2961])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2962])) *
@@ -7804,7 +7782,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[2964])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2965])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2966])) *
-                                    (precomp_domains[105][i & (524288 - 1)]);
+                                    (precomp_domains[102][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7815,7 +7793,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[107][i] = ((point_powers[14][i & (524287)]) - (shifts[2967])) *
+          precomp_domains[104][i] = ((point_powers[14][i & (524287)]) - (shifts[2967])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2968])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2969])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2970])) *
@@ -7823,7 +7801,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[2972])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2973])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2974])) *
-                                    (precomp_domains[106][i & (524288 - 1)]);
+                                    (precomp_domains[103][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7834,7 +7812,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[108][i] = ((point_powers[14][i & (524287)]) - (shifts[2975])) *
+          precomp_domains[105][i] = ((point_powers[14][i & (524287)]) - (shifts[2975])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2976])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2977])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[2978])) *
@@ -7898,7 +7876,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3036])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3037])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3038])) *
-                                    (precomp_domains[101][i & (524288 - 1)]);
+                                    (precomp_domains[98][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7909,7 +7887,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[109][i] = ((point_powers[14][i & (524287)]) - (shifts[3039])) *
+          precomp_domains[106][i] = ((point_powers[14][i & (524287)]) - (shifts[3039])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3040])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3041])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3042])) *
@@ -7925,7 +7903,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3052])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3053])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3054])) *
-                                    (precomp_domains[108][i & (524288 - 1)]);
+                                    (precomp_domains[105][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -7936,7 +7914,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[110][i] = ((point_powers[14][i & (524287)]) - (shifts[3055])) *
+          precomp_domains[107][i] = ((point_powers[14][i & (524287)]) - (shifts[3055])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3056])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3057])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3058])) *
@@ -7962,7 +7940,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[111][i] = ((point_powers[14][i & (524287)]) - (shifts[3071])) *
+          precomp_domains[108][i] = ((point_powers[14][i & (524287)]) - (shifts[3071])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3072])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3073])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3074])) *
@@ -7994,8 +7972,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3100])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3101])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3102])) *
-                                    (precomp_domains[109][i & (524288 - 1)]) *
-                                    (precomp_domains[110][i & (524288 - 1)]);
+                                    (precomp_domains[106][i & (524288 - 1)]) *
+                                    (precomp_domains[107][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8006,7 +7984,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[112][i] = ((point_powers[14][i & (524287)]) - (shifts[3103])) *
+          precomp_domains[109][i] = ((point_powers[14][i & (524287)]) - (shifts[3103])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3104])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3105])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3106])) *
@@ -8022,7 +8000,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3116])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3117])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3118])) *
-                                    (precomp_domains[111][i & (524288 - 1)]);
+                                    (precomp_domains[108][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8033,7 +8011,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[113][i] = ((point_powers[14][i & (524287)]) - (shifts[3119])) *
+          precomp_domains[110][i] = ((point_powers[14][i & (524287)]) - (shifts[3119])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3120])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3121])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3122])) *
@@ -8049,8 +8027,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3132])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3133])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3134])) *
-                                    (precomp_domains[107][i & (524288 - 1)]) *
-                                    (precomp_domains[112][i & (524288 - 1)]);
+                                    (precomp_domains[104][i & (524288 - 1)]) *
+                                    (precomp_domains[109][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8061,7 +8039,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[114][i] = ((point_powers[14][i & (524287)]) - (shifts[76])) *
+          precomp_domains[111][i] = ((point_powers[14][i & (524287)]) - (shifts[76])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3135])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3136])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3137])) *
@@ -8079,7 +8057,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[115][i] = ((point_powers[14][i & (524287)]) - (shifts[3142])) *
+          precomp_domains[112][i] = ((point_powers[14][i & (524287)]) - (shifts[3142])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3143])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3144])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3145])) *
@@ -8095,8 +8073,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3155])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3156])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3157])) *
-                                    (precomp_domains[113][i & (524288 - 1)]) *
-                                    (precomp_domains[114][i & (524288 - 1)]);
+                                    (precomp_domains[110][i & (524288 - 1)]) *
+                                    (precomp_domains[111][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8107,7 +8085,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[116][i] = ((point_powers[14][i & (524287)]) - (shifts[92])) *
+          precomp_domains[113][i] = ((point_powers[14][i & (524287)]) - (shifts[92])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3158])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3159])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3160])) *
@@ -8133,7 +8111,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[117][i] = ((point_powers[14][i & (524287)]) - (shifts[251])) *
+          precomp_domains[114][i] = ((point_powers[14][i & (524287)]) - (shifts[251])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3172])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3173])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3174])) *
@@ -8149,7 +8127,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3183])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3184])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3185])) *
-                                    (precomp_domains[116][i & (524288 - 1)]);
+                                    (precomp_domains[113][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8160,7 +8138,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[118][i] = ((point_powers[14][i & (524287)]) - (shifts[3186])) *
+          precomp_domains[115][i] = ((point_powers[14][i & (524287)]) - (shifts[3186])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3187])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3188])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3189])) *
@@ -8224,8 +8202,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3247])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3248])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3249])) *
-                                    (precomp_domains[115][i & (524288 - 1)]) *
-                                    (precomp_domains[117][i & (524288 - 1)]);
+                                    (precomp_domains[112][i & (524288 - 1)]) *
+                                    (precomp_domains[114][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8236,7 +8214,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[119][i] = ((point_powers[14][i & (524287)]) - (shifts[275])) *
+          precomp_domains[116][i] = ((point_powers[14][i & (524287)]) - (shifts[275])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3250])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3251])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3252])) *
@@ -8284,7 +8262,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3294])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3295])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3296])) *
-                                    (precomp_domains[118][i & (524288 - 1)]);
+                                    (precomp_domains[115][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8295,7 +8273,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[120][i] = ((point_powers[14][i & (524287)]) - (shifts[3297])) *
+          precomp_domains[117][i] = ((point_powers[14][i & (524287)]) - (shifts[3297])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3298])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3299])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3300])) *
@@ -8319,7 +8297,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
                                     ((point_powers[14][i & (524287)]) - (shifts[3318])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3319])) *
                                     ((point_powers[14][i & (524287)]) - (shifts[3320])) *
-                                    (precomp_domains[119][i & (524288 - 1)]);
+                                    (precomp_domains[116][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8330,8 +8308,45 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[121][i] =
-              (precomp_domains[48][i & (524288 - 1)]) * (precomp_domains[87][i & (524288 - 1)]);
+          precomp_domains[118][i] =
+              (precomp_domains[45][i & (524288 - 1)]) * (precomp_domains[84][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[119][i] =
+              (precomp_domains[88][i & (524288 - 1)]) * (precomp_domains[118][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[120][i] =
+              (precomp_domains[94][i & (524288 - 1)]) * (precomp_domains[119][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[121][i] = (precomp_domains[38][i & (524288 - 1)]) *
+                                    (precomp_domains[54][i & (524288 - 1)]) *
+                                    (precomp_domains[56][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8343,7 +8358,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[122][i] =
-              (precomp_domains[91][i & (524288 - 1)]) * (precomp_domains[121][i & (524288 - 1)]);
+              (precomp_domains[58][i & (524288 - 1)]) * (precomp_domains[60][i & (524288 - 1)]) *
+              (precomp_domains[62][i & (524288 - 1)]) * (precomp_domains[121][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8355,7 +8371,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[123][i] =
-              (precomp_domains[97][i & (524288 - 1)]) * (precomp_domains[122][i & (524288 - 1)]);
+              (precomp_domains[64][i & (524288 - 1)]) * (precomp_domains[122][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8366,9 +8382,11 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[124][i] = (precomp_domains[41][i & (524288 - 1)]) *
-                                    (precomp_domains[57][i & (524288 - 1)]) *
-                                    (precomp_domains[59][i & (524288 - 1)]);
+          precomp_domains[124][i] =
+              (precomp_domains[65][i & (524288 - 1)]) * (precomp_domains[67][i & (524288 - 1)]) *
+              (precomp_domains[69][i & (524288 - 1)]) * (precomp_domains[71][i & (524288 - 1)]) *
+              (precomp_domains[73][i & (524288 - 1)]) * (precomp_domains[75][i & (524288 - 1)]) *
+              (precomp_domains[77][i & (524288 - 1)]) * (precomp_domains[122][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8380,8 +8398,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[125][i] =
-              (precomp_domains[61][i & (524288 - 1)]) * (precomp_domains[63][i & (524288 - 1)]) *
-              (precomp_domains[65][i & (524288 - 1)]) * (precomp_domains[124][i & (524288 - 1)]);
+              (precomp_domains[80][i & (524288 - 1)]) * (precomp_domains[124][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8393,7 +8410,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[126][i] =
-              (precomp_domains[67][i & (524288 - 1)]) * (precomp_domains[125][i & (524288 - 1)]);
+              (precomp_domains[79][i & (524288 - 1)]) * (precomp_domains[124][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8405,10 +8422,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[127][i] =
-              (precomp_domains[68][i & (524288 - 1)]) * (precomp_domains[70][i & (524288 - 1)]) *
-              (precomp_domains[72][i & (524288 - 1)]) * (precomp_domains[74][i & (524288 - 1)]) *
-              (precomp_domains[76][i & (524288 - 1)]) * (precomp_domains[78][i & (524288 - 1)]) *
-              (precomp_domains[80][i & (524288 - 1)]) * (precomp_domains[125][i & (524288 - 1)]);
+              (precomp_domains[86][i & (524288 - 1)]) * (precomp_domains[89][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8420,7 +8434,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[128][i] =
-              (precomp_domains[83][i & (524288 - 1)]) * (precomp_domains[127][i & (524288 - 1)]);
+              (precomp_domains[95][i & (524288 - 1)]) * (precomp_domains[104][i & (524288 - 1)]) *
+              (precomp_domains[111][i & (524288 - 1)]) * (precomp_domains[119][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8432,7 +8447,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[129][i] =
-              (precomp_domains[82][i & (524288 - 1)]) * (precomp_domains[127][i & (524288 - 1)]);
+              (precomp_domains[114][i & (524288 - 1)]) * (precomp_domains[128][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8444,7 +8459,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[130][i] =
-              (precomp_domains[89][i & (524288 - 1)]) * (precomp_domains[92][i & (524288 - 1)]);
+              (precomp_domains[113][i & (524288 - 1)]) * (precomp_domains[128][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8456,55 +8471,6 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[131][i] =
-              (precomp_domains[98][i & (524288 - 1)]) * (precomp_domains[107][i & (524288 - 1)]) *
-              (precomp_domains[114][i & (524288 - 1)]) * (precomp_domains[122][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[132][i] =
-              (precomp_domains[117][i & (524288 - 1)]) * (precomp_domains[131][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[133][i] =
-              (precomp_domains[116][i & (524288 - 1)]) * (precomp_domains[131][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[134][i] =
-              (precomp_domains[106][i & (524288 - 1)]) * (precomp_domains[112][i & (524288 - 1)]);
-        }
-      },
-      period, kTaskSize);
-
-  period = 524288;
-  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
-  task_manager.ParallelFor(
-      period,
-      [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[135][i] =
               (precomp_domains[103][i & (524288 - 1)]) * (precomp_domains[109][i & (524288 - 1)]);
         }
       },
@@ -8516,8 +8482,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[136][i] =
-              (precomp_domains[96][i & (524288 - 1)]) * (precomp_domains[100][i & (524288 - 1)]);
+          precomp_domains[132][i] =
+              (precomp_domains[100][i & (524288 - 1)]) * (precomp_domains[106][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8528,8 +8494,8 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[137][i] =
-              (precomp_domains[105][i & (524288 - 1)]) * (precomp_domains[111][i & (524288 - 1)]);
+          precomp_domains[133][i] =
+              (precomp_domains[93][i & (524288 - 1)]) * (precomp_domains[97][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8540,7 +8506,7 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[138][i] =
+          precomp_domains[134][i] =
               (precomp_domains[102][i & (524288 - 1)]) * (precomp_domains[108][i & (524288 - 1)]);
         }
       },
@@ -8552,7 +8518,19 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
       period,
       [&](const TaskInfo& task_info) {
         for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
-          precomp_domains[139][i] =
+          precomp_domains[135][i] =
+              (precomp_domains[99][i & (524288 - 1)]) * (precomp_domains[105][i & (524288 - 1)]);
+        }
+      },
+      period, kTaskSize);
+
+  period = 524288;
+  ASSERT_RELEASE(period < kPeriodUpperBound, "Precomp evals: large dynamic size.");
+  task_manager.ParallelFor(
+      period,
+      [&](const TaskInfo& task_info) {
+        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+          precomp_domains[136][i] =
               ((point_powers[14][i & (524287)]) - (shifts[116])) *
               ((point_powers[14][i & (524287)]) - (shifts[3321])) *
               ((point_powers[14][i & (524287)]) - (shifts[3322])) *
@@ -8577,10 +8555,10 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
               ((point_powers[14][i & (524287)]) - (shifts[3341])) *
               ((point_powers[14][i & (524287)]) - (shifts[3342])) *
               ((point_powers[14][i & (524287)]) - (shifts[3343])) *
-              (precomp_domains[58][i & (524288 - 1)]) * (precomp_domains[88][i & (524288 - 1)]) *
-              (precomp_domains[90][i & (524288 - 1)]) * (precomp_domains[93][i & (524288 - 1)]) *
-              (precomp_domains[95][i & (524288 - 1)]) * (precomp_domains[99][i & (524288 - 1)]) *
-              (precomp_domains[104][i & (524288 - 1)]) * (precomp_domains[110][i & (524288 - 1)]);
+              (precomp_domains[55][i & (524288 - 1)]) * (precomp_domains[85][i & (524288 - 1)]) *
+              (precomp_domains[87][i & (524288 - 1)]) * (precomp_domains[90][i & (524288 - 1)]) *
+              (precomp_domains[92][i & (524288 - 1)]) * (precomp_domains[96][i & (524288 - 1)]) *
+              (precomp_domains[101][i & (524288 - 1)]) * (precomp_domains[107][i & (524288 - 1)]);
         }
       },
       period, kTaskSize);
@@ -8590,59 +8568,62 @@ CpuAirDefinition<FieldElementT, 8>::PrecomputeDomainEvalsOnCoset(
 template <typename FieldElementT>
 FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::ConstraintsEval(
     gsl::span<const FieldElementT> neighbors, gsl::span<const FieldElementT> periodic_columns,
-    gsl::span<const FieldElementT> random_coefficients, const FieldElementT& point,
+    gsl::span<const FieldElementT> random_coefficients, [[maybe_unused]] const FieldElementT& point,
     gsl::span<const FieldElementT> shifts, gsl::span<const FieldElementT> precomp_domains) const {
   ASSERT_VERIFIER(shifts.size() == 3354, "shifts should contain 3354 elements.");
 
   // domain0 = point^trace_length - 1.
-  const FieldElementT& domain0 = precomp_domains[0];
+  [[maybe_unused]] const FieldElementT& domain0 = precomp_domains[0];
   // domain1 = point^(trace_length / 2) - 1.
-  const FieldElementT& domain1 = precomp_domains[1];
+  [[maybe_unused]] const FieldElementT& domain1 = precomp_domains[1];
   // domain2 = point^(trace_length / 4) - 1.
-  const FieldElementT& domain2 = precomp_domains[2];
+  [[maybe_unused]] const FieldElementT& domain2 = precomp_domains[2];
   // domain3 = point^(trace_length / 8) - 1.
-  const FieldElementT& domain3 = precomp_domains[3];
+  [[maybe_unused]] const FieldElementT& domain3 = precomp_domains[3];
   // domain4 = point^(trace_length / 16) - gen^(15 * trace_length / 16).
-  const FieldElementT& domain4 = precomp_domains[4];
+  [[maybe_unused]] const FieldElementT& domain4 = precomp_domains[4];
   // domain5 = point^(trace_length / 16) - 1.
-  const FieldElementT& domain5 = precomp_domains[5];
+  [[maybe_unused]] const FieldElementT& domain5 = precomp_domains[5];
   // domain6 = point^(trace_length / 64) - 1.
-  const FieldElementT& domain6 = precomp_domains[6];
+  [[maybe_unused]] const FieldElementT& domain6 = precomp_domains[6];
   // domain7 = point^(trace_length / 128) - 1.
-  const FieldElementT& domain7 = precomp_domains[7];
+  [[maybe_unused]] const FieldElementT& domain7 = precomp_domains[7];
   // domain8 = point^(trace_length / 256) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain8 = precomp_domains[8];
+  [[maybe_unused]] const FieldElementT& domain8 = precomp_domains[8];
   // domain9 = point^(trace_length / 256) - 1.
-  const FieldElementT& domain9 = precomp_domains[9];
+  [[maybe_unused]] const FieldElementT& domain9 = precomp_domains[9];
   // domain10 = point^(trace_length / 256) - gen^(63 * trace_length / 64).
-  const FieldElementT& domain10 = precomp_domains[10];
+  [[maybe_unused]] const FieldElementT& domain10 = precomp_domains[10];
   // domain11 = point^(trace_length / 256) - gen^(3 * trace_length / 4).
-  const FieldElementT& domain11 = precomp_domains[11];
+  [[maybe_unused]] const FieldElementT& domain11 = precomp_domains[11];
   // domain12 = (point^(trace_length / 256) - gen^(trace_length / 32)) * domain9.
-  const FieldElementT& domain12 = precomp_domains[12];
-  // domain15 = (point^(trace_length / 512) - gen^(11 * trace_length / 16)) * (point^(trace_length /
-  // 512) - gen^(23 * trace_length / 32)) * (point^(trace_length / 512) - gen^(25 * trace_length /
-  // 32)) * (point^(trace_length / 512) - gen^(13 * trace_length / 16)) * (point^(trace_length /
-  // 512) - gen^(27 * trace_length / 32)) * (point^(trace_length / 512) - gen^(29 * trace_length /
-  // 32)) * (point^(trace_length / 512) - gen^(15 * trace_length / 16)) * domain13 * domain14.
-  const FieldElementT& domain15 = precomp_domains[15];
-  // domain17 = (point^(trace_length / 512) - gen^(19 * trace_length / 32)) * (point^(trace_length /
-  // 512) - gen^(21 * trace_length / 32)) * domain15 * domain16.
-  const FieldElementT& domain17 = precomp_domains[17];
-  // domain18 = (point^(trace_length / 512) - gen^(61 * trace_length / 64)) * (point^(trace_length /
+  [[maybe_unused]] const FieldElementT& domain12 = precomp_domains[12];
+  // domain13 = point^(trace_length / 512) - gen^(31 * trace_length / 32).
+  [[maybe_unused]] const FieldElementT& domain13 = precomp_domains[13];
+  // domain14 = (point^(trace_length / 512) - gen^(11 * trace_length / 16)) * (point^(trace_length /
+  // 512) - gen^(23 * trace_length / 32)) * (point^(trace_length / 512) - gen^(3 * trace_length /
+  // 4)) * (point^(trace_length / 512) - gen^(25 * trace_length / 32)) * (point^(trace_length / 512)
+  // - gen^(13 * trace_length / 16)) * (point^(trace_length / 512) - gen^(27 * trace_length / 32)) *
+  // (point^(trace_length / 512) - gen^(7 * trace_length / 8)) * (point^(trace_length / 512) -
+  // gen^(29 * trace_length / 32)) * (point^(trace_length / 512) - gen^(15 * trace_length / 16)) *
+  // domain13.
+  [[maybe_unused]] const FieldElementT& domain14 = precomp_domains[14];
+  // domain15 = (point^(trace_length / 512) - gen^(19 * trace_length / 32)) * (point^(trace_length /
+  // 512) - gen^(5 * trace_length / 8)) * (point^(trace_length / 512) - gen^(21 * trace_length /
+  // 32)) * domain14.
+  [[maybe_unused]] const FieldElementT& domain15 = precomp_domains[15];
+  // domain16 = (point^(trace_length / 512) - gen^(61 * trace_length / 64)) * (point^(trace_length /
   // 512) - gen^(63 * trace_length / 64)) * domain13.
-  const FieldElementT& domain18 = precomp_domains[18];
-  // domain19 = point^(trace_length / 512) - gen^(trace_length / 2).
-  const FieldElementT& domain19 = precomp_domains[19];
-  // domain20 = point^(trace_length / 512) - 1.
-  const FieldElementT& domain20 = precomp_domains[20];
-  // domain21 = domain14 * domain16.
-  const FieldElementT& domain21 = precomp_domains[21];
-  // domain22 = point^(trace_length / 1024) - gen^(3 * trace_length / 4).
-  const FieldElementT& domain22 = precomp_domains[22];
-  // domain23 = point^(trace_length / 1024) - 1.
-  const FieldElementT& domain23 = precomp_domains[23];
-  // domain24 = (point^(trace_length / 1024) - gen^(trace_length / 64)) * (point^(trace_length /
+  [[maybe_unused]] const FieldElementT& domain16 = precomp_domains[16];
+  // domain17 = point^(trace_length / 512) - gen^(trace_length / 2).
+  [[maybe_unused]] const FieldElementT& domain17 = precomp_domains[17];
+  // domain18 = point^(trace_length / 512) - 1.
+  [[maybe_unused]] const FieldElementT& domain18 = precomp_domains[18];
+  // domain19 = point^(trace_length / 1024) - gen^(3 * trace_length / 4).
+  [[maybe_unused]] const FieldElementT& domain19 = precomp_domains[19];
+  // domain20 = point^(trace_length / 1024) - 1.
+  [[maybe_unused]] const FieldElementT& domain20 = precomp_domains[20];
+  // domain21 = (point^(trace_length / 1024) - gen^(trace_length / 64)) * (point^(trace_length /
   // 1024) - gen^(trace_length / 32)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 64))
   // * (point^(trace_length / 1024) - gen^(trace_length / 16)) * (point^(trace_length / 1024) -
   // gen^(5 * trace_length / 64)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 32)) *
@@ -8652,18 +8633,18 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // gen^(11 * trace_length / 64)) * (point^(trace_length / 1024) - gen^(3 * trace_length / 16)) *
   // (point^(trace_length / 1024) - gen^(13 * trace_length / 64)) * (point^(trace_length / 1024) -
   // gen^(7 * trace_length / 32)) * (point^(trace_length / 1024) - gen^(15 * trace_length / 64)) *
-  // domain23.
-  const FieldElementT& domain24 = precomp_domains[24];
-  // domain25 = point^(trace_length / 2048) - 1.
-  const FieldElementT& domain25 = precomp_domains[25];
-  // domain26 = (point^(trace_length / 8192) - 1) * (point^(trace_length / 8192) - gen^(trace_length
+  // domain20.
+  [[maybe_unused]] const FieldElementT& domain21 = precomp_domains[21];
+  // domain22 = point^(trace_length / 2048) - 1.
+  [[maybe_unused]] const FieldElementT& domain22 = precomp_domains[22];
+  // domain23 = (point^(trace_length / 8192) - 1) * (point^(trace_length / 8192) - gen^(trace_length
   // / 1024)) * (point^(trace_length / 8192) - gen^(trace_length / 512)) * (point^(trace_length /
   // 8192) - gen^(3 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(trace_length /
   // 256)) * (point^(trace_length / 8192) - gen^(5 * trace_length / 1024)) * (point^(trace_length /
   // 8192) - gen^(3 * trace_length / 512)) * (point^(trace_length / 8192) - gen^(7 * trace_length /
   // 1024)).
-  const FieldElementT& domain26 = precomp_domains[26];
-  // domain27 = (point^(trace_length / 8192) - gen^(trace_length / 128)) * (point^(trace_length /
+  [[maybe_unused]] const FieldElementT& domain23 = precomp_domains[23];
+  // domain24 = (point^(trace_length / 8192) - gen^(trace_length / 128)) * (point^(trace_length /
   // 8192) - gen^(9 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(5 * trace_length /
   // 512)) * (point^(trace_length / 8192) - gen^(11 * trace_length / 1024)) * (point^(trace_length /
   // 8192) - gen^(3 * trace_length / 256)) * (point^(trace_length / 8192) - gen^(13 * trace_length /
@@ -8673,9 +8654,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // 8192) - gen^(9 * trace_length / 512)) * (point^(trace_length / 8192) - gen^(19 * trace_length /
   // 1024)) * (point^(trace_length / 8192) - gen^(5 * trace_length / 256)) * (point^(trace_length /
   // 8192) - gen^(21 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(11 * trace_length
-  // / 512)) * (point^(trace_length / 8192) - gen^(23 * trace_length / 1024)) * domain26.
-  const FieldElementT& domain27 = precomp_domains[27];
-  // domain28 = (point^(trace_length / 8192) - gen^(5 * trace_length / 32)) * (point^(trace_length /
+  // / 512)) * (point^(trace_length / 8192) - gen^(23 * trace_length / 1024)) * domain23.
+  [[maybe_unused]] const FieldElementT& domain24 = precomp_domains[24];
+  // domain25 = (point^(trace_length / 8192) - gen^(5 * trace_length / 32)) * (point^(trace_length /
   // 8192) - gen^(161 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(81 *
   // trace_length / 512)) * (point^(trace_length / 8192) - gen^(163 * trace_length / 1024)) *
   // (point^(trace_length / 8192) - gen^(41 * trace_length / 256)) * (point^(trace_length / 8192) -
@@ -8743,9 +8724,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // 512)) * (point^(trace_length / 8192) - gen^(659 * trace_length / 1024)) * (point^(trace_length
   // / 8192) - gen^(165 * trace_length / 256)) * (point^(trace_length / 8192) - gen^(661 *
   // trace_length / 1024)) * (point^(trace_length / 8192) - gen^(331 * trace_length / 512)) *
-  // (point^(trace_length / 8192) - gen^(663 * trace_length / 1024)) * domain27.
-  const FieldElementT& domain28 = precomp_domains[28];
-  // domain29 = (point^(trace_length / 8192) - gen^(trace_length / 32)) * (point^(trace_length /
+  // (point^(trace_length / 8192) - gen^(663 * trace_length / 1024)) * domain24.
+  [[maybe_unused]] const FieldElementT& domain25 = precomp_domains[25];
+  // domain26 = (point^(trace_length / 8192) - gen^(trace_length / 32)) * (point^(trace_length /
   // 8192) - gen^(33 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(17 * trace_length
   // / 512)) * (point^(trace_length / 8192) - gen^(35 * trace_length / 1024)) * (point^(trace_length
   // / 8192) - gen^(9 * trace_length / 256)) * (point^(trace_length / 8192) - gen^(37 * trace_length
@@ -8915,23 +8896,51 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 1024)) * (point^(trace_length / 8192) - gen^(181 * trace_length / 256)) *
   // (point^(trace_length / 8192) - gen^(725 * trace_length / 1024)) * (point^(trace_length / 8192)
   // - gen^(363 * trace_length / 512)) * (point^(trace_length / 8192) - gen^(727 * trace_length /
-  // 1024)) * domain28.
-  const FieldElementT& domain29 = precomp_domains[29];
-  // domain30 = point^(trace_length / 16384) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain30 = precomp_domains[30];
-  // domain31 = point^(trace_length / 16384) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain31 = precomp_domains[31];
-  // domain32 = point^(trace_length / 16384) - 1.
-  const FieldElementT& domain32 = precomp_domains[32];
-  // domain33 = point^(trace_length / 16384) - gen^(63 * trace_length / 64).
-  const FieldElementT& domain33 = precomp_domains[33];
-  // domain34 = point^(trace_length / 32768) - gen^(255 * trace_length / 256).
-  const FieldElementT& domain34 = precomp_domains[34];
-  // domain35 = point^(trace_length / 32768) - gen^(251 * trace_length / 256).
-  const FieldElementT& domain35 = precomp_domains[35];
-  // domain36 = point^(trace_length / 32768) - 1.
-  const FieldElementT& domain36 = precomp_domains[36];
-  // domain40 = (point^(trace_length / 8192) - gen^(833 * trace_length / 1024)) *
+  // 1024)) * domain25.
+  [[maybe_unused]] const FieldElementT& domain26 = precomp_domains[26];
+  // domain27 = point^(trace_length / 16384) - gen^(255 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain27 = precomp_domains[27];
+  // domain28 = point^(trace_length / 16384) - gen^(251 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain28 = precomp_domains[28];
+  // domain29 = point^(trace_length / 16384) - 1.
+  [[maybe_unused]] const FieldElementT& domain29 = precomp_domains[29];
+  // domain30 = point^(trace_length / 16384) - gen^(63 * trace_length / 64).
+  [[maybe_unused]] const FieldElementT& domain30 = precomp_domains[30];
+  // domain31 = point^(trace_length / 32768) - gen^(255 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain31 = precomp_domains[31];
+  // domain32 = point^(trace_length / 32768) - gen^(251 * trace_length / 256).
+  [[maybe_unused]] const FieldElementT& domain32 = precomp_domains[32];
+  // domain33 = point^(trace_length / 32768) - 1.
+  [[maybe_unused]] const FieldElementT& domain33 = precomp_domains[33];
+  // domain34 = point^(trace_length / 524288) - gen^(63 * trace_length / 64).
+  [[maybe_unused]] const FieldElementT& domain34 = precomp_domains[34];
+  // domain35 = (point^(trace_length / 8192) - gen^(13 * trace_length / 16)) * (point^(trace_length
+  // / 8192) - gen^(27 * trace_length / 32)) * (point^(trace_length / 8192) - gen^(7 * trace_length
+  // / 8)) * (point^(trace_length / 8192) - gen^(29 * trace_length / 32)) * (point^(trace_length /
+  // 8192) - gen^(15 * trace_length / 16)) * (point^(trace_length / 8192) - gen^(31 * trace_length /
+  // 32)) * (point^(trace_length / 524288) - gen^(2017 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1009 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2019 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(505 *
+  // trace_length / 512)) * (point^(trace_length / 524288) - gen^(2021 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1011 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2023 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(253 *
+  // trace_length / 256)) * (point^(trace_length / 524288) - gen^(2025 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1013 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2027 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(507 *
+  // trace_length / 512)) * (point^(trace_length / 524288) - gen^(2029 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1015 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2031 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(127 *
+  // trace_length / 128)) * (point^(trace_length / 524288) - gen^(2033 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1017 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2035 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(509 *
+  // trace_length / 512)) * (point^(trace_length / 524288) - gen^(2037 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(1019 * trace_length / 1024)) * (point^(trace_length /
+  // 524288) - gen^(2039 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(255 *
+  // trace_length / 256)) * domain34.
+  [[maybe_unused]] const FieldElementT& domain35 = precomp_domains[35];
+  // domain36 = point^(trace_length / 524288) - gen^(64513 * trace_length / 65536).
+  [[maybe_unused]] const FieldElementT& domain36 = precomp_domains[36];
+  // domain37 = (point^(trace_length / 8192) - gen^(833 * trace_length / 1024)) *
   // (point^(trace_length / 8192) - gen^(865 * trace_length / 1024)) * (point^(trace_length / 8192)
   // - gen^(897 * trace_length / 1024)) * (point^(trace_length / 8192) - gen^(929 * trace_length /
   // 1024)) * (point^(trace_length / 8192) - gen^(961 * trace_length / 1024)) * (point^(trace_length
@@ -8955,9 +8964,29 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // (point^(trace_length / 524288) - gen^(65249 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(65281 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2041 *
   // trace_length / 2048)) * (point^(trace_length / 524288) - gen^(65313 * trace_length / 65536)) *
-  // domain38 * domain39.
-  const FieldElementT& domain40 = precomp_domains[40];
-  // domain43 = (point^(trace_length / 256) - gen^(15 * trace_length / 16)) * (point^(trace_length /
+  // domain35 * domain36.
+  [[maybe_unused]] const FieldElementT& domain37 = precomp_domains[37];
+  // domain38 = (point^(trace_length / 524288) - gen^(32257 * trace_length / 32768)) *
+  // (point^(trace_length / 524288) - gen^(64515 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(16129 * trace_length / 16384)) * (point^(trace_length / 524288) - gen^(64517 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(32259 * trace_length / 32768)) *
+  // (point^(trace_length / 524288) - gen^(64519 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain38 = precomp_domains[38];
+  // domain39 = (point^(trace_length / 524288) - gen^(8065 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(64521 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(32261 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(64523 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(16131 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(64525 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(32263 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(64527 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4033 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(64529 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(32265 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(64531 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(16133 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(64533 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(32267 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(64535 *
+  // trace_length / 65536)) * domain38.
+  [[maybe_unused]] const FieldElementT& domain39 = precomp_domains[39];
+  // domain40 = (point^(trace_length / 256) - gen^(15 * trace_length / 16)) * (point^(trace_length /
   // 256) - gen^(31 * trace_length / 32)) * (point^(trace_length / 8192) - gen^(417 * trace_length /
   // 512)) * (point^(trace_length / 8192) - gen^(835 * trace_length / 1024)) * (point^(trace_length
   // / 8192) - gen^(209 * trace_length / 256)) * (point^(trace_length / 8192) - gen^(837 *
@@ -9608,13 +9637,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // (point^(trace_length / 524288) - gen^(32669 * trace_length / 32768)) * (point^(trace_length /
   // 524288) - gen^(65339 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(16335 *
   // trace_length / 16384)) * (point^(trace_length / 524288) - gen^(65341 * trace_length / 65536)) *
-  // domain40 * domain42.
-  const FieldElementT& domain43 = precomp_domains[43];
-  // domain44 = (point^(trace_length / 8192) - gen^(25 * trace_length / 32)) * domain38.
-  const FieldElementT& domain44 = precomp_domains[44];
-  // domain46 = (point^(trace_length / 524288) - gen^(trace_length / 65536)) * domain45.
-  const FieldElementT& domain46 = precomp_domains[46];
-  // domain47 = (point^(trace_length / 524288) - gen^(trace_length / 524288)) * (point^(trace_length
+  // domain37 * domain39.
+  [[maybe_unused]] const FieldElementT& domain40 = precomp_domains[40];
+  // domain41 = (point^(trace_length / 8192) - gen^(25 * trace_length / 32)) * domain35.
+  [[maybe_unused]] const FieldElementT& domain41 = precomp_domains[41];
+  // domain42 = point^(trace_length / 524288) - 1.
+  [[maybe_unused]] const FieldElementT& domain42 = precomp_domains[42];
+  // domain43 = (point^(trace_length / 524288) - gen^(trace_length / 65536)) * domain42.
+  [[maybe_unused]] const FieldElementT& domain43 = precomp_domains[43];
+  // domain44 = (point^(trace_length / 524288) - gen^(trace_length / 524288)) * (point^(trace_length
   // / 524288) - gen^(trace_length / 262144)) * (point^(trace_length / 524288) - gen^(3 *
   // trace_length / 524288)) * (point^(trace_length / 524288) - gen^(trace_length / 131072)) *
   // (point^(trace_length / 524288) - gen^(5 * trace_length / 524288)) * (point^(trace_length /
@@ -9624,9 +9655,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // 524288) - gen^(11 * trace_length / 524288)) * (point^(trace_length / 524288) - gen^(3 *
   // trace_length / 131072)) * (point^(trace_length / 524288) - gen^(13 * trace_length / 524288)) *
   // (point^(trace_length / 524288) - gen^(7 * trace_length / 262144)) * (point^(trace_length /
-  // 524288) - gen^(15 * trace_length / 524288)) * domain46.
-  const FieldElementT& domain47 = precomp_domains[47];
-  // domain49 = (point^(trace_length / 524288) - gen^(trace_length / 8192)) * (point^(trace_length /
+  // 524288) - gen^(15 * trace_length / 524288)) * domain43.
+  [[maybe_unused]] const FieldElementT& domain44 = precomp_domains[44];
+  // domain45 = (point^(trace_length / 524288) - gen^(trace_length / 32768)) * (point^(trace_length
+  // / 524288) - gen^(3 * trace_length / 65536)) * (point^(trace_length / 524288) -
+  // gen^(trace_length / 16384)) * (point^(trace_length / 524288) - gen^(5 * trace_length / 65536))
+  // * (point^(trace_length / 524288) - gen^(3 * trace_length / 32768)) * (point^(trace_length /
+  // 524288) - gen^(7 * trace_length / 65536)) * domain43.
+  [[maybe_unused]] const FieldElementT& domain45 = precomp_domains[45];
+  // domain46 = (point^(trace_length / 524288) - gen^(trace_length / 8192)) * (point^(trace_length /
   // 524288) - gen^(9 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5 *
   // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11 * trace_length / 65536)) *
   // (point^(trace_length / 524288) - gen^(3 * trace_length / 16384)) * (point^(trace_length /
@@ -9638,20 +9675,59 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // (point^(trace_length / 524288) - gen^(5 * trace_length / 16384)) * (point^(trace_length /
   // 524288) - gen^(21 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11 *
   // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(23 * trace_length / 65536)) *
-  // domain48.
-  const FieldElementT& domain49 = precomp_domains[49];
-  // domain50 = (point^(trace_length / 524288) - gen^(3 * trace_length / 8192)) *
+  // domain45.
+  [[maybe_unused]] const FieldElementT& domain46 = precomp_domains[46];
+  // domain47 = (point^(trace_length / 524288) - gen^(3 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(25 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(13 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(27 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(7 * trace_length / 16384)) *
-  // (point^(trace_length / 524288) - gen^(29 * trace_length / 65536)) * domain49.
-  const FieldElementT& domain50 = precomp_domains[50];
-  // domain51 = (point^(trace_length / 524288) - gen^(15 * trace_length / 32768)) *
-  // (point^(trace_length / 524288) - gen^(31 * trace_length / 65536)) * domain50.
-  const FieldElementT& domain51 = precomp_domains[51];
-  // domain54 = domain46 * domain53.
-  const FieldElementT& domain54 = precomp_domains[54];
-  // domain55 = (point^(trace_length / 524288) - gen^(17 * trace_length / 32768)) *
+  // (point^(trace_length / 524288) - gen^(29 * trace_length / 65536)) * domain46.
+  [[maybe_unused]] const FieldElementT& domain47 = precomp_domains[47];
+  // domain48 = (point^(trace_length / 524288) - gen^(15 * trace_length / 32768)) *
+  // (point^(trace_length / 524288) - gen^(31 * trace_length / 65536)) * domain47.
+  [[maybe_unused]] const FieldElementT& domain48 = precomp_domains[48];
+  // domain49 = (point^(trace_length / 524288) - gen^(trace_length / 2048)) * (point^(trace_length /
+  // 524288) - gen^(trace_length / 1024)) * (point^(trace_length / 524288) - gen^(3 * trace_length /
+  // 2048)) * (point^(trace_length / 524288) - gen^(trace_length / 512)) * (point^(trace_length /
+  // 524288) - gen^(5 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(3 *
+  // trace_length / 1024)) * (point^(trace_length / 524288) - gen^(7 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(trace_length / 256)) * (point^(trace_length / 524288) -
+  // gen^(9 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(5 * trace_length /
+  // 1024)) * (point^(trace_length / 524288) - gen^(11 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(3 * trace_length / 512)) * (point^(trace_length / 524288)
+  // - gen^(13 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(7 * trace_length /
+  // 1024)) * (point^(trace_length / 524288) - gen^(15 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(trace_length / 128)) * (point^(trace_length / 524288) -
+  // gen^(17 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(9 * trace_length /
+  // 1024)) * (point^(trace_length / 524288) - gen^(19 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(5 * trace_length / 512)) * (point^(trace_length / 524288)
+  // - gen^(21 * trace_length / 2048)) * (point^(trace_length / 524288) - gen^(11 * trace_length /
+  // 1024)) * (point^(trace_length / 524288) - gen^(23 * trace_length / 2048)) *
+  // (point^(trace_length / 524288) - gen^(3 * trace_length / 256)).
+  [[maybe_unused]] const FieldElementT& domain49 = precomp_domains[49];
+  // domain50 = (point^(trace_length / 524288) - gen^(33 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(65 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(97 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(129 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(161 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(193 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(225 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(257 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(289 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(321 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(353 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(385 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(417 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(449 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(481 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(513 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(545 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(577 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(609 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(641 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(673 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(705 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(737 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(769 *
+  // trace_length / 65536)) * domain49.
+  [[maybe_unused]] const FieldElementT& domain50 = precomp_domains[50];
+  // domain51 = domain43 * domain50.
+  [[maybe_unused]] const FieldElementT& domain51 = precomp_domains[51];
+  // domain52 = (point^(trace_length / 524288) - gen^(17 * trace_length / 32768)) *
   // (point^(trace_length / 524288) - gen^(35 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(9 * trace_length / 16384)) * (point^(trace_length / 524288) - gen^(37 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(19 * trace_length / 32768)) *
@@ -10155,13 +10231,23 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(397 * trace_length / 32768)) *
   // (point^(trace_length / 524288) - gen^(795 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(199 * trace_length / 16384)) * (point^(trace_length / 524288) - gen^(797 *
-  // trace_length / 65536)) * domain50 * domain53.
-  const FieldElementT& domain55 = precomp_domains[55];
-  // domain56 = domain45 * domain52.
-  const FieldElementT& domain56 = precomp_domains[56];
-  // domain58 = domain42 * domain57.
-  const FieldElementT& domain58 = precomp_domains[58];
-  // domain60 = (point^(trace_length / 524288) - gen^(7937 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain47 * domain50.
+  [[maybe_unused]] const FieldElementT& domain52 = precomp_domains[52];
+  // domain53 = domain42 * domain49.
+  [[maybe_unused]] const FieldElementT& domain53 = precomp_domains[53];
+  // domain54 = domain34 * domain36.
+  [[maybe_unused]] const FieldElementT& domain54 = precomp_domains[54];
+  // domain55 = domain39 * domain54.
+  [[maybe_unused]] const FieldElementT& domain55 = precomp_domains[55];
+  // domain56 = (point^(trace_length / 524288) - gen^(31 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(63489 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(31745 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(63491 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15873 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(63493 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(31747 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(63495 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain56 = precomp_domains[56];
+  // domain57 = (point^(trace_length / 524288) - gen^(7937 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(63497 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(31749 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(63499 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15875 * trace_length / 16384)) *
@@ -10173,9 +10259,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15877 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(63509 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(31755 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(63511 *
-  // trace_length / 65536)) * domain58 * domain59.
-  const FieldElementT& domain60 = precomp_domains[60];
-  // domain62 = (point^(trace_length / 524288) - gen^(7809 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain55 * domain56.
+  [[maybe_unused]] const FieldElementT& domain57 = precomp_domains[57];
+  // domain58 = (point^(trace_length / 524288) - gen^(61 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(62465 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(31233 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(62467 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15617 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(62469 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(31235 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(62471 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain58 = precomp_domains[58];
+  // domain59 = (point^(trace_length / 524288) - gen^(7809 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(62473 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(31237 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(62475 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15619 * trace_length / 16384)) *
@@ -10187,9 +10281,29 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15621 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(62485 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(31243 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(62487 *
-  // trace_length / 65536)) * domain60 * domain61.
-  const FieldElementT& domain62 = precomp_domains[62];
-  // domain64 = (point^(trace_length / 524288) - gen^(7425 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain57 * domain58.
+  [[maybe_unused]] const FieldElementT& domain59 = precomp_domains[59];
+  // domain60 = (point^(trace_length / 524288) - gen^(29 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(59393 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(29697 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(59395 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14849 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(59397 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(29699 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(59399 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(59 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(60417 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(30209 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(60419 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15105 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(60421 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(30211 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(60423 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15 * trace_length / 16)) *
+  // (point^(trace_length / 524288) - gen^(61441 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(30721 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(61443 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15361 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(61445 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(30723 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(61447 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain60 = precomp_domains[60];
+  // domain61 = (point^(trace_length / 524288) - gen^(7425 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(59401 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(29701 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(59403 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14851 * trace_length / 16384)) *
@@ -10225,9 +10339,22 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(15365 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(61461 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(30731 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(61463 *
-  // trace_length / 65536)) * domain62 * domain63.
-  const FieldElementT& domain64 = precomp_domains[64];
-  // domain66 = (point^(trace_length / 524288) - gen^(7169 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain59 * domain60.
+  [[maybe_unused]] const FieldElementT& domain61 = precomp_domains[61];
+  // domain62 = (point^(trace_length / 524288) - gen^(7 * trace_length / 8)) * (point^(trace_length
+  // / 524288) - gen^(57345 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(28673 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(57347 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(14337 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(57349 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(28675 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(57351 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(57 * trace_length / 64)) * (point^(trace_length / 524288)
+  // - gen^(58369 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(29185 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(58371 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(14593 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(58373 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(29187 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(58375 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain62 = precomp_domains[62];
+  // domain63 = (point^(trace_length / 524288) - gen^(7169 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(57353 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(28677 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(57355 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14339 * trace_length / 16384)) *
@@ -10251,9 +10378,25 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14597 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(58389 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(29195 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(58391 *
-  // trace_length / 65536)) * domain64 * domain65.
-  const FieldElementT& domain66 = precomp_domains[66];
-  // domain69 = (point^(trace_length / 524288) - gen^(6913 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain61 * domain62.
+  [[maybe_unused]] const FieldElementT& domain63 = precomp_domains[63];
+  // domain64 = (point^(trace_length / 524288) - gen^(55 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(56321 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(28161 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(56323 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14081 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(56325 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(28163 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(56327 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain64 = precomp_domains[64];
+  // domain65 = (point^(trace_length / 524288) - gen^(27 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(55297 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(27649 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(55299 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13825 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(55301 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(27651 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(55303 *
+  // trace_length / 65536)) * domain64.
+  [[maybe_unused]] const FieldElementT& domain65 = precomp_domains[65];
+  // domain66 = (point^(trace_length / 524288) - gen^(6913 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(55305 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(27653 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(55307 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13827 * trace_length / 16384)) *
@@ -10277,9 +10420,35 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(14085 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(56341 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(28171 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(56343 *
-  // trace_length / 65536)) * domain66 * domain68.
-  const FieldElementT& domain69 = precomp_domains[69];
-  // domain71 = (point^(trace_length / 524288) - gen^(6401 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain63 * domain65.
+  [[maybe_unused]] const FieldElementT& domain66 = precomp_domains[66];
+  // domain67 = (point^(trace_length / 524288) - gen^(25 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(51201 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(25601 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(51203 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12801 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(51205 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(25603 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(51207 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(51 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(52225 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(26113 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(52227 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13057 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(52229 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(26115 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(52231 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13 * trace_length / 16)) *
+  // (point^(trace_length / 524288) - gen^(53249 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(26625 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(53251 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13313 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(53253 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(26627 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(53255 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(53 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(54273 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(27137 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(54275 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13569 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(54277 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(27139 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(54279 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain67 = precomp_domains[67];
+  // domain68 = (point^(trace_length / 524288) - gen^(6401 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(51209 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(25605 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(51211 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12803 * trace_length / 16384)) *
@@ -10327,9 +10496,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(13573 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(54293 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(27147 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(54295 *
-  // trace_length / 65536)) * domain69 * domain70.
-  const FieldElementT& domain71 = precomp_domains[71];
-  // domain73 = (point^(trace_length / 524288) - gen^(6273 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain66 * domain67.
+  [[maybe_unused]] const FieldElementT& domain68 = precomp_domains[68];
+  // domain69 = (point^(trace_length / 524288) - gen^(49 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(50177 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(25089 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(50179 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12545 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(50181 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(25091 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(50183 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain69 = precomp_domains[69];
+  // domain70 = (point^(trace_length / 524288) - gen^(6273 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(50185 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(25093 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(50187 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12547 * trace_length / 16384)) *
@@ -10341,9 +10518,29 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12549 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(50197 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(25099 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(50199 *
-  // trace_length / 65536)) * domain71 * domain72.
-  const FieldElementT& domain73 = precomp_domains[73];
-  // domain75 = (point^(trace_length / 524288) - gen^(5889 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain68 * domain69.
+  [[maybe_unused]] const FieldElementT& domain70 = precomp_domains[70];
+  // domain71 = (point^(trace_length / 524288) - gen^(23 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(47105 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(23553 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(47107 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11777 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(47109 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(23555 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(47111 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(47 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(48129 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(24065 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(48131 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12033 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(48133 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(24067 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(48135 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3 * trace_length / 4)) *
+  // (point^(trace_length / 524288) - gen^(49153 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(24577 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(49155 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12289 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(49157 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(24579 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(49159 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain71 = precomp_domains[71];
+  // domain72 = (point^(trace_length / 524288) - gen^(5889 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(47113 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(23557 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(47115 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11779 * trace_length / 16384)) *
@@ -10379,9 +10576,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(12293 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(49173 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(24587 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(49175 *
-  // trace_length / 65536)) * domain73 * domain74.
-  const FieldElementT& domain75 = precomp_domains[75];
-  // domain77 = (point^(trace_length / 524288) - gen^(5761 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain70 * domain71.
+  [[maybe_unused]] const FieldElementT& domain72 = precomp_domains[72];
+  // domain73 = (point^(trace_length / 524288) - gen^(45 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(46081 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(23041 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(46083 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11521 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(46085 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(23043 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(46087 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain73 = precomp_domains[73];
+  // domain74 = (point^(trace_length / 524288) - gen^(5761 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(46089 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(23045 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(46091 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11523 * trace_length / 16384)) *
@@ -10393,9 +10598,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11525 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(46101 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(23051 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(46103 *
-  // trace_length / 65536)) * domain75 * domain76.
-  const FieldElementT& domain77 = precomp_domains[77];
-  // domain79 = (point^(trace_length / 524288) - gen^(5633 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain72 * domain73.
+  [[maybe_unused]] const FieldElementT& domain74 = precomp_domains[74];
+  // domain75 = (point^(trace_length / 524288) - gen^(11 * trace_length / 16)) *
+  // (point^(trace_length / 524288) - gen^(45057 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(22529 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(45059 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11265 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(45061 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(22531 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(45063 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain75 = precomp_domains[75];
+  // domain76 = (point^(trace_length / 524288) - gen^(5633 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(45065 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(22533 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(45067 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11267 * trace_length / 16384)) *
@@ -10407,9 +10620,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11269 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(45077 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(22539 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(45079 *
-  // trace_length / 65536)) * domain77 * domain78.
-  const FieldElementT& domain79 = precomp_domains[79];
-  // domain81 = (point^(trace_length / 524288) - gen^(5505 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain74 * domain75.
+  [[maybe_unused]] const FieldElementT& domain76 = precomp_domains[76];
+  // domain77 = (point^(trace_length / 524288) - gen^(43 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(44033 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(22017 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(44035 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11009 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(44037 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(22019 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(44039 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain77 = precomp_domains[77];
+  // domain78 = (point^(trace_length / 524288) - gen^(5505 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(44041 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(22021 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(44043 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11011 * trace_length / 16384)) *
@@ -10421,9 +10642,37 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11013 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(44053 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(22027 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(44055 *
-  // trace_length / 65536)) * domain79 * domain80.
-  const FieldElementT& domain81 = precomp_domains[81];
-  // domain84 = (point^(trace_length / 524288) - gen^(4993 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain76 * domain77.
+  [[maybe_unused]] const FieldElementT& domain78 = precomp_domains[78];
+  // domain79 = (point^(trace_length / 524288) - gen^(41 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(41985 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(20993 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(41987 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(10497 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(41989 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(20995 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(41991 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(21 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(43009 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(21505 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(43011 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(10753 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(43013 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(21507 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(43015 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain79 = precomp_domains[79];
+  // domain80 = (point^(trace_length / 524288) - gen^(39 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(39937 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(19969 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(39939 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(9985 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(39941 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(19971 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(39943 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5 * trace_length / 8)) *
+  // (point^(trace_length / 524288) - gen^(40961 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(20481 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(40963 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(10241 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(40965 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(20483 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(40967 *
+  // trace_length / 65536)) * domain79.
+  [[maybe_unused]] const FieldElementT& domain80 = precomp_domains[80];
+  // domain81 = (point^(trace_length / 524288) - gen^(4993 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(39945 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(19973 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(39947 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(9987 * trace_length / 16384)) *
@@ -10471,9 +10720,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(10757 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(43029 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(21515 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(43031 *
-  // trace_length / 65536)) * domain81 * domain83.
-  const FieldElementT& domain84 = precomp_domains[84];
-  // domain85 = (point^(trace_length / 524288) - gen^(37 * trace_length / 64)) *
+  // trace_length / 65536)) * domain78 * domain80.
+  [[maybe_unused]] const FieldElementT& domain81 = precomp_domains[81];
+  // domain82 = (point^(trace_length / 524288) - gen^(37 * trace_length / 64)) *
   // (point^(trace_length / 524288) - gen^(37889 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(18945 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(37891 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(9473 * trace_length / 16384)) *
@@ -10509,9 +10758,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(9733 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(38933 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(19467 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(38935 *
-  // trace_length / 65536)) * domain84.
-  const FieldElementT& domain85 = precomp_domains[85];
-  // domain86 = (point^(trace_length / 524288) - gen^(9 * trace_length / 16)) * (point^(trace_length
+  // trace_length / 65536)) * domain81.
+  [[maybe_unused]] const FieldElementT& domain82 = precomp_domains[82];
+  // domain83 = (point^(trace_length / 524288) - gen^(9 * trace_length / 16)) * (point^(trace_length
   // / 524288) - gen^(36865 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(18433 *
   // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(36867 * trace_length / 65536)) *
   // (point^(trace_length / 524288) - gen^(9217 * trace_length / 16384)) * (point^(trace_length /
@@ -10529,9 +10778,16 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // (point^(trace_length / 524288) - gen^(9221 * trace_length / 16384)) * (point^(trace_length /
   // 524288) - gen^(36885 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(18443 *
   // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(36887 * trace_length / 65536)) *
-  // domain85.
-  const FieldElementT& domain86 = precomp_domains[86];
-  // domain88 = (point^(trace_length / 524288) - gen^(129 * trace_length / 8192)) *
+  // domain82.
+  [[maybe_unused]] const FieldElementT& domain83 = precomp_domains[83];
+  // domain84 = (point^(trace_length / 524288) - gen^(trace_length / 64)) * (point^(trace_length /
+  // 524288) - gen^(1025 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(513 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(1027 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(257 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(1029 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(515 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(1031 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain84 = precomp_domains[84];
+  // domain85 = (point^(trace_length / 524288) - gen^(129 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(1033 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(517 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(1035 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(259 * trace_length / 16384)) *
@@ -10543,9 +10799,65 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(261 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(1045 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(523 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(1047 *
-  // trace_length / 65536)) * domain49 * domain87.
-  const FieldElementT& domain88 = precomp_domains[88];
-  // domain94 = (point^(trace_length / 524288) - gen^(513 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain46 * domain84.
+  [[maybe_unused]] const FieldElementT& domain85 = precomp_domains[85];
+  // domain86 = (point^(trace_length / 524288) - gen^(trace_length / 32)) * (point^(trace_length /
+  // 524288) - gen^(2049 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1025 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2051 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(513 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(2053 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1027 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2055 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain86 = precomp_domains[86];
+  // domain87 = (point^(trace_length / 524288) - gen^(3 * trace_length / 64)) * (point^(trace_length
+  // / 524288) - gen^(3073 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1537 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3075 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(769 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(3077 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1539 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3079 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain87 = precomp_domains[87];
+  // domain88 = (point^(trace_length / 524288) - gen^(trace_length / 16)) * (point^(trace_length /
+  // 524288) - gen^(4097 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2049 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(4099 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(1025 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(4101 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2051 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(4103 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(5 * trace_length / 64)) * (point^(trace_length / 524288)
+  // - gen^(5121 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2561 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(5123 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(1281 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(5125 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2563 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(5127 * trace_length / 65536)) *
+  // domain86 * domain87.
+  [[maybe_unused]] const FieldElementT& domain88 = precomp_domains[88];
+  // domain89 = (point^(trace_length / 524288) - gen^(257 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(2057 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1029 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2059 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(515 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(2061 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1031 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2063 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(129 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(2065 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1033 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2067 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(517 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(2069 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1035 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(2071 *
+  // trace_length / 65536)) * domain85.
+  [[maybe_unused]] const FieldElementT& domain89 = precomp_domains[89];
+  // domain90 = (point^(trace_length / 524288) - gen^(385 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(3081 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1541 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3083 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(771 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(3085 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1543 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3087 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(193 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(3089 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1545 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3091 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(773 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(3093 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(1547 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(3095 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain90 = precomp_domains[90];
+  // domain91 = (point^(trace_length / 524288) - gen^(513 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(4105 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(2053 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(4107 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1027 * trace_length / 16384)) *
@@ -10569,9 +10881,68 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1285 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(5141 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(2571 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(5143 *
-  // trace_length / 65536)) * domain91 * domain92 * domain93.
-  const FieldElementT& domain94 = precomp_domains[94];
-  // domain101 = (point^(trace_length / 524288) - gen^(1025 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain88 * domain89 * domain90.
+  [[maybe_unused]] const FieldElementT& domain91 = precomp_domains[91];
+  // domain92 = (point^(trace_length / 524288) - gen^(7 * trace_length / 64)) * (point^(trace_length
+  // / 524288) - gen^(7169 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3585 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7171 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(1793 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(7173 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3587 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7175 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain92 = precomp_domains[92];
+  // domain93 = (point^(trace_length / 524288) - gen^(3 * trace_length / 32)) * (point^(trace_length
+  // / 524288) - gen^(6145 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3073 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6147 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(1537 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(6149 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3075 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6151 * trace_length / 65536)) *
+  // domain92.
+  [[maybe_unused]] const FieldElementT& domain93 = precomp_domains[93];
+  // domain94 = (point^(trace_length / 524288) - gen^(trace_length / 8)) * (point^(trace_length /
+  // 524288) - gen^(8193 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4097 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(8195 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(2049 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(8197 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4099 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(8199 * trace_length / 65536)) *
+  // domain93.
+  [[maybe_unused]] const FieldElementT& domain94 = precomp_domains[94];
+  // domain95 = (point^(trace_length / 524288) - gen^(9 * trace_length / 64)) * (point^(trace_length
+  // / 524288) - gen^(9217 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4609 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(9219 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(2305 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(9221 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4611 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(9223 * trace_length / 65536)) *
+  // domain94.
+  [[maybe_unused]] const FieldElementT& domain95 = precomp_domains[95];
+  // domain96 = (point^(trace_length / 524288) - gen^(897 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(7177 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3589 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7179 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1795 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(7181 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3591 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7183 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(449 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(7185 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3593 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7187 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1797 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(7189 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3595 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(7191 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain96 = precomp_domains[96];
+  // domain97 = (point^(trace_length / 524288) - gen^(769 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(6153 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3077 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6155 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1539 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(6157 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3079 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6159 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(385 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(6161 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3081 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6163 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1541 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(6165 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(3083 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(6167 *
+  // trace_length / 65536)) * domain91 * domain96.
+  [[maybe_unused]] const FieldElementT& domain97 = precomp_domains[97];
+  // domain98 = (point^(trace_length / 524288) - gen^(1025 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(8201 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(4101 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(8203 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2051 * trace_length / 16384)) *
@@ -10595,9 +10966,198 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2309 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(9237 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(4619 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(9239 *
-  // trace_length / 65536)) * domain98 * domain100.
-  const FieldElementT& domain101 = precomp_domains[101];
-  // domain113 = (point^(trace_length / 524288) - gen^(2433 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain95 * domain97.
+  [[maybe_unused]] const FieldElementT& domain98 = precomp_domains[98];
+  // domain99 = (point^(trace_length / 524288) - gen^(5 * trace_length / 32)) * (point^(trace_length
+  // / 524288) - gen^(10241 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5121 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10243 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(2561 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(10245 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5123 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10247 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(11 * trace_length / 64)) * (point^(trace_length / 524288)
+  // - gen^(11265 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5633 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11267 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(2817 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(11269 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5635 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11271 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(3 * trace_length / 16)) * (point^(trace_length / 524288)
+  // - gen^(12289 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6145 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12291 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(3073 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(12293 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6147 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12295 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(13 * trace_length / 64)) * (point^(trace_length / 524288)
+  // - gen^(13313 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6657 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13315 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(3329 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(13317 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6659 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13319 * trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain99 = precomp_domains[99];
+  // domain100 = (point^(trace_length / 524288) - gen^(7 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(14337 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7169 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14339 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3585 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(14341 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7171 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14343 *
+  // trace_length / 65536)) * domain99.
+  [[maybe_unused]] const FieldElementT& domain100 = precomp_domains[100];
+  // domain101 = (point^(trace_length / 524288) - gen^(15 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(15361 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7681 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15363 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3841 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(15365 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7683 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15367 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain101 = precomp_domains[101];
+  // domain102 = (point^(trace_length / 524288) - gen^(trace_length / 4)) * (point^(trace_length /
+  // 524288) - gen^(16385 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(8193 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16387 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(4097 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(16389 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(8195 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16391 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(17 * trace_length / 64)) * (point^(trace_length / 524288)
+  // - gen^(17409 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(8705 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17411 * trace_length / 65536)) *
+  // (point^(trace_length / 524288) - gen^(4353 * trace_length / 16384)) * (point^(trace_length /
+  // 524288) - gen^(17413 * trace_length / 65536)) * (point^(trace_length / 524288) - gen^(8707 *
+  // trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17415 * trace_length / 65536)) *
+  // domain100 * domain101.
+  [[maybe_unused]] const FieldElementT& domain102 = precomp_domains[102];
+  // domain103 = (point^(trace_length / 524288) - gen^(9 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(18433 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9217 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18435 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4609 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(18437 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9219 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18439 *
+  // trace_length / 65536)) * domain102.
+  [[maybe_unused]] const FieldElementT& domain103 = precomp_domains[103];
+  // domain104 = (point^(trace_length / 524288) - gen^(19 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(19457 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9729 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(19459 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4865 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(19461 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9731 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(19463 *
+  // trace_length / 65536)) * domain103.
+  [[maybe_unused]] const FieldElementT& domain104 = precomp_domains[104];
+  // domain105 = (point^(trace_length / 524288) - gen^(1281 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(10249 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5125 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10251 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2563 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(10253 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5127 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10255 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(641 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(10257 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5129 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10259 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2565 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(10261 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5131 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(10263 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1409 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(11273 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5637 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11275 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2819 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(11277 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5639 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11279 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(705 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(11281 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5641 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11283 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2821 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(11285 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(5643 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(11287 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1537 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(12297 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6149 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12299 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3075 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(12301 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6151 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12303 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(769 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(12305 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6153 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12307 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3077 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(12309 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6155 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(12311 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1665 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(13321 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6661 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13323 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3331 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(13325 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6663 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13327 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(833 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(13329 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6665 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13331 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3333 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(13333 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(6667 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(13335 *
+  // trace_length / 65536)) * domain98.
+  [[maybe_unused]] const FieldElementT& domain105 = precomp_domains[105];
+  // domain106 = (point^(trace_length / 524288) - gen^(1793 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(14345 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7173 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14347 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3587 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(14349 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7175 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14351 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(897 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(14353 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7177 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14355 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3589 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(14357 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7179 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(14359 *
+  // trace_length / 65536)) * domain105.
+  [[maybe_unused]] const FieldElementT& domain106 = precomp_domains[106];
+  // domain107 = (point^(trace_length / 524288) - gen^(1921 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(15369 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7685 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15371 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3843 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(15373 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7687 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15375 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(961 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(15377 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7689 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15379 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3845 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(15381 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(7691 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(15383 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain107 = precomp_domains[107];
+  // domain108 = (point^(trace_length / 524288) - gen^(2049 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(16393 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8197 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16395 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4099 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(16397 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8199 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16399 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1025 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(16401 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8201 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16403 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4101 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(16405 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8203 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(16407 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(2177 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(17417 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8709 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17419 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4355 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(17421 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8711 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17423 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1089 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(17425 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8713 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17427 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4357 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(17429 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(8715 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(17431 *
+  // trace_length / 65536)) * domain106 * domain107.
+  [[maybe_unused]] const FieldElementT& domain108 = precomp_domains[108];
+  // domain109 = (point^(trace_length / 524288) - gen^(2305 * trace_length / 8192)) *
+  // (point^(trace_length / 524288) - gen^(18441 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9221 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18443 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4611 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(18445 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9223 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18447 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(1153 * trace_length / 4096)) *
+  // (point^(trace_length / 524288) - gen^(18449 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9225 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18451 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4613 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(18453 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(9227 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(18455 *
+  // trace_length / 65536)) * domain108.
+  [[maybe_unused]] const FieldElementT& domain109 = precomp_domains[109];
+  // domain110 = (point^(trace_length / 524288) - gen^(2433 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(19465 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(9733 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(19467 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4867 * trace_length / 16384)) *
@@ -10609,9 +11169,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(4869 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(19477 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(9739 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(19479 *
-  // trace_length / 65536)) * domain107 * domain112.
-  const FieldElementT& domain113 = precomp_domains[113];
-  // domain115 = (point^(trace_length / 524288) - gen^(2561 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain104 * domain109.
+  [[maybe_unused]] const FieldElementT& domain110 = precomp_domains[110];
+  // domain111 = (point^(trace_length / 524288) - gen^(5 * trace_length / 16)) *
+  // (point^(trace_length / 524288) - gen^(20481 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(10241 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(20483 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5121 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(20485 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(10243 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(20487 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain111 = precomp_domains[111];
+  // domain112 = (point^(trace_length / 524288) - gen^(2561 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(20489 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(10245 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(20491 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5123 * trace_length / 16384)) *
@@ -10623,9 +11191,37 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5125 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(20501 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(10251 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(20503 *
-  // trace_length / 65536)) * domain113 * domain114.
-  const FieldElementT& domain115 = precomp_domains[115];
-  // domain118 = (point^(trace_length / 524288) - gen^(2689 * trace_length / 8192)) *
+  // trace_length / 65536)) * domain110 * domain111.
+  [[maybe_unused]] const FieldElementT& domain112 = precomp_domains[112];
+  // domain113 = (point^(trace_length / 524288) - gen^(21 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(21505 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(10753 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(21507 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5377 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(21509 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(10755 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(21511 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(11 * trace_length / 32)) *
+  // (point^(trace_length / 524288) - gen^(22529 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(11265 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(22531 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5633 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(22533 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(11267 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(22535 *
+  // trace_length / 65536)).
+  [[maybe_unused]] const FieldElementT& domain113 = precomp_domains[113];
+  // domain114 = (point^(trace_length / 524288) - gen^(23 * trace_length / 64)) *
+  // (point^(trace_length / 524288) - gen^(23553 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(11777 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(23555 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5889 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(23557 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(11779 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(23559 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(3 * trace_length / 8)) *
+  // (point^(trace_length / 524288) - gen^(24577 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(12289 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(24579 *
+  // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6145 * trace_length / 16384)) *
+  // (point^(trace_length / 524288) - gen^(24581 * trace_length / 65536)) * (point^(trace_length /
+  // 524288) - gen^(12291 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(24583 *
+  // trace_length / 65536)) * domain113.
+  [[maybe_unused]] const FieldElementT& domain114 = precomp_domains[114];
+  // domain115 = (point^(trace_length / 524288) - gen^(2689 * trace_length / 8192)) *
   // (point^(trace_length / 524288) - gen^(21513 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(10757 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(21515 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(5379 * trace_length / 16384)) *
@@ -10673,9 +11269,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6149 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(24597 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(12299 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(24599 *
-  // trace_length / 65536)) * domain115 * domain117.
-  const FieldElementT& domain118 = precomp_domains[118];
-  // domain119 = (point^(trace_length / 524288) - gen^(25 * trace_length / 64)) *
+  // trace_length / 65536)) * domain112 * domain114.
+  [[maybe_unused]] const FieldElementT& domain115 = precomp_domains[115];
+  // domain116 = (point^(trace_length / 524288) - gen^(25 * trace_length / 64)) *
   // (point^(trace_length / 524288) - gen^(25601 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(12801 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(25603 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6401 * trace_length / 16384)) *
@@ -10711,9 +11307,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6661 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(26645 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(13323 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(26647 *
-  // trace_length / 65536)) * domain118.
-  const FieldElementT& domain119 = precomp_domains[119];
-  // domain120 = (point^(trace_length / 524288) - gen^(27 * trace_length / 64)) *
+  // trace_length / 65536)) * domain115.
+  [[maybe_unused]] const FieldElementT& domain116 = precomp_domains[116];
+  // domain117 = (point^(trace_length / 524288) - gen^(27 * trace_length / 64)) *
   // (point^(trace_length / 524288) - gen^(27649 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(13825 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(27651 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6913 * trace_length / 16384)) *
@@ -10731,37 +11327,46 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(6917 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(27669 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(13835 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(27671 *
-  // trace_length / 65536)) * domain119.
-  const FieldElementT& domain120 = precomp_domains[120];
-  // domain121 = domain48 * domain87.
-  const FieldElementT& domain121 = precomp_domains[121];
-  // domain123 = domain97 * domain122.
-  const FieldElementT& domain123 = precomp_domains[123];
-  // domain124 = domain41 * domain57 * domain59.
-  const FieldElementT& domain124 = precomp_domains[124];
-  // domain126 = domain67 * domain125.
-  const FieldElementT& domain126 = precomp_domains[126];
-  // domain128 = domain83 * domain127.
-  const FieldElementT& domain128 = precomp_domains[128];
-  // domain129 = domain82 * domain127.
-  const FieldElementT& domain129 = precomp_domains[129];
-  // domain130 = domain89 * domain92.
-  const FieldElementT& domain130 = precomp_domains[130];
-  // domain132 = domain117 * domain131.
-  const FieldElementT& domain132 = precomp_domains[132];
-  // domain133 = domain116 * domain131.
-  const FieldElementT& domain133 = precomp_domains[133];
-  // domain134 = domain106 * domain112.
-  const FieldElementT& domain134 = precomp_domains[134];
-  // domain135 = domain103 * domain109.
-  const FieldElementT& domain135 = precomp_domains[135];
-  // domain136 = domain96 * domain100.
-  const FieldElementT& domain136 = precomp_domains[136];
-  // domain137 = domain105 * domain111.
-  const FieldElementT& domain137 = precomp_domains[137];
-  // domain138 = domain102 * domain108.
-  const FieldElementT& domain138 = precomp_domains[138];
-  // domain139 = (point^(trace_length / 524288) - gen^(31 * trace_length / 64)) *
+  // trace_length / 65536)) * domain116.
+  [[maybe_unused]] const FieldElementT& domain117 = precomp_domains[117];
+  // domain118 = domain45 * domain84.
+  [[maybe_unused]] const FieldElementT& domain118 = precomp_domains[118];
+  // domain119 = domain88 * domain118.
+  [[maybe_unused]] const FieldElementT& domain119 = precomp_domains[119];
+  // domain120 = domain94 * domain119.
+  [[maybe_unused]] const FieldElementT& domain120 = precomp_domains[120];
+  // domain121 = domain38 * domain54 * domain56.
+  [[maybe_unused]] const FieldElementT& domain121 = precomp_domains[121];
+  // domain122 = domain58 * domain60 * domain62 * domain121.
+  [[maybe_unused]] const FieldElementT& domain122 = precomp_domains[122];
+  // domain123 = domain64 * domain122.
+  [[maybe_unused]] const FieldElementT& domain123 = precomp_domains[123];
+  // domain124 = domain65 * domain67 * domain69 * domain71 * domain73 * domain75 * domain77 *
+  // domain122.
+  [[maybe_unused]] const FieldElementT& domain124 = precomp_domains[124];
+  // domain125 = domain80 * domain124.
+  [[maybe_unused]] const FieldElementT& domain125 = precomp_domains[125];
+  // domain126 = domain79 * domain124.
+  [[maybe_unused]] const FieldElementT& domain126 = precomp_domains[126];
+  // domain127 = domain86 * domain89.
+  [[maybe_unused]] const FieldElementT& domain127 = precomp_domains[127];
+  // domain128 = domain95 * domain104 * domain111 * domain119.
+  [[maybe_unused]] const FieldElementT& domain128 = precomp_domains[128];
+  // domain129 = domain114 * domain128.
+  [[maybe_unused]] const FieldElementT& domain129 = precomp_domains[129];
+  // domain130 = domain113 * domain128.
+  [[maybe_unused]] const FieldElementT& domain130 = precomp_domains[130];
+  // domain131 = domain103 * domain109.
+  [[maybe_unused]] const FieldElementT& domain131 = precomp_domains[131];
+  // domain132 = domain100 * domain106.
+  [[maybe_unused]] const FieldElementT& domain132 = precomp_domains[132];
+  // domain133 = domain93 * domain97.
+  [[maybe_unused]] const FieldElementT& domain133 = precomp_domains[133];
+  // domain134 = domain102 * domain108.
+  [[maybe_unused]] const FieldElementT& domain134 = precomp_domains[134];
+  // domain135 = domain99 * domain105.
+  [[maybe_unused]] const FieldElementT& domain135 = precomp_domains[135];
+  // domain136 = (point^(trace_length / 524288) - gen^(31 * trace_length / 64)) *
   // (point^(trace_length / 524288) - gen^(31745 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(15873 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(31747 *
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(7937 * trace_length / 16384)) *
@@ -10779,33 +11384,34 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   // trace_length / 65536)) * (point^(trace_length / 524288) - gen^(7941 * trace_length / 16384)) *
   // (point^(trace_length / 524288) - gen^(31765 * trace_length / 65536)) * (point^(trace_length /
   // 524288) - gen^(15883 * trace_length / 32768)) * (point^(trace_length / 524288) - gen^(31767 *
-  // trace_length / 65536)) * domain58 * domain88 * domain90 * domain93 * domain95 * domain99 *
-  // domain104 * domain110.
-  const FieldElementT& domain139 = precomp_domains[139];
-  // domain140 = point - gen^(trace_length - 1).
-  const FieldElementT& domain140 = (point) - (shifts[3344]);
-  // domain141 = point - gen^(16 * (trace_length / 16 - 1)).
-  const FieldElementT& domain141 = (point) - (shifts[3345]);
-  // domain142 = point - 1.
-  const FieldElementT& domain142 = (point) - (FieldElementT::One());
-  // domain143 = point - gen^(2 * (trace_length / 2 - 1)).
-  const FieldElementT& domain143 = (point) - (shifts[3346]);
-  // domain144 = point - gen^(4 * (trace_length / 4 - 1)).
-  const FieldElementT& domain144 = (point) - (shifts[3347]);
-  // domain145 = point - gen^(256 * (trace_length / 256 - 1)).
-  const FieldElementT& domain145 = (point) - (shifts[3348]);
-  // domain146 = point - gen^(512 * (trace_length / 512 - 1)).
-  const FieldElementT& domain146 = (point) - (shifts[3349]);
-  // domain147 = point - gen^(32768 * (trace_length / 32768 - 1)).
-  const FieldElementT& domain147 = (point) - (shifts[3350]);
-  // domain148 = point - gen^(16384 * (trace_length / 16384 - 1)).
-  const FieldElementT& domain148 = (point) - (shifts[3351]);
-  // domain149 = point - gen^(1024 * (trace_length / 1024 - 1)).
-  const FieldElementT& domain149 = (point) - (shifts[3352]);
-  // domain150 = point - gen^(2048 * (trace_length / 2048 - 1)).
-  const FieldElementT& domain150 = (point) - (shifts[3353]);
+  // trace_length / 65536)) * domain55 * domain85 * domain87 * domain90 * domain92 * domain96 *
+  // domain101 * domain107.
+  [[maybe_unused]] const FieldElementT& domain136 = precomp_domains[136];
+  // domain137 = point - gen^(trace_length - 1).
+  const FieldElementT& domain137 = (point) - (shifts[3344]);
+  // domain138 = point - gen^(trace_length - 16).
+  const FieldElementT& domain138 = (point) - (shifts[3345]);
+  // domain139 = point - 1.
+  const FieldElementT& domain139 = (point) - (FieldElementT::One());
+  // domain140 = point - gen^(trace_length - 2).
+  const FieldElementT& domain140 = (point) - (shifts[3346]);
+  // domain141 = point - gen^(trace_length - 4).
+  const FieldElementT& domain141 = (point) - (shifts[3347]);
+  // domain142 = point - gen^(trace_length - 256).
+  const FieldElementT& domain142 = (point) - (shifts[3348]);
+  // domain143 = point - gen^(trace_length - 512).
+  const FieldElementT& domain143 = (point) - (shifts[3349]);
+  // domain144 = point - gen^(trace_length - 32768).
+  const FieldElementT& domain144 = (point) - (shifts[3350]);
+  // domain145 = point - gen^(trace_length - 16384).
+  const FieldElementT& domain145 = (point) - (shifts[3351]);
+  // domain146 = point - gen^(trace_length - 1024).
+  const FieldElementT& domain146 = (point) - (shifts[3352]);
+  // domain147 = point - gen^(trace_length - 2048).
+  const FieldElementT& domain147 = (point) - (shifts[3353]);
 
-  ASSERT_VERIFIER(neighbors.size() == 732, "Neighbors must contain 732 elements.");
+  ASSERT_VERIFIER(neighbors.size() == 734, "neighbors should contain 734 elements.");
+
   const FieldElementT& column0_row0 = neighbors[kColumn0Row0Neighbor];
   const FieldElementT& column0_row1 = neighbors[kColumn0Row1Neighbor];
   const FieldElementT& column0_row2 = neighbors[kColumn0Row2Neighbor];
@@ -11259,21 +11865,23 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   const FieldElementT& column8_row103 = neighbors[kColumn8Row103Neighbor];
   const FieldElementT& column8_row134 = neighbors[kColumn8Row134Neighbor];
   const FieldElementT& column8_row135 = neighbors[kColumn8Row135Neighbor];
+  const FieldElementT& column8_row166 = neighbors[kColumn8Row166Neighbor];
   const FieldElementT& column8_row167 = neighbors[kColumn8Row167Neighbor];
   const FieldElementT& column8_row198 = neighbors[kColumn8Row198Neighbor];
   const FieldElementT& column8_row199 = neighbors[kColumn8Row199Neighbor];
-  const FieldElementT& column8_row231 = neighbors[kColumn8Row231Neighbor];
   const FieldElementT& column8_row262 = neighbors[kColumn8Row262Neighbor];
   const FieldElementT& column8_row263 = neighbors[kColumn8Row263Neighbor];
+  const FieldElementT& column8_row294 = neighbors[kColumn8Row294Neighbor];
   const FieldElementT& column8_row295 = neighbors[kColumn8Row295Neighbor];
   const FieldElementT& column8_row326 = neighbors[kColumn8Row326Neighbor];
   const FieldElementT& column8_row358 = neighbors[kColumn8Row358Neighbor];
   const FieldElementT& column8_row359 = neighbors[kColumn8Row359Neighbor];
   const FieldElementT& column8_row390 = neighbors[kColumn8Row390Neighbor];
   const FieldElementT& column8_row391 = neighbors[kColumn8Row391Neighbor];
+  const FieldElementT& column8_row422 = neighbors[kColumn8Row422Neighbor];
+  const FieldElementT& column8_row423 = neighbors[kColumn8Row423Neighbor];
   const FieldElementT& column8_row454 = neighbors[kColumn8Row454Neighbor];
   const FieldElementT& column8_row518 = neighbors[kColumn8Row518Neighbor];
-  const FieldElementT& column8_row550 = neighbors[kColumn8Row550Neighbor];
   const FieldElementT& column8_row711 = neighbors[kColumn8Row711Neighbor];
   const FieldElementT& column8_row902 = neighbors[kColumn8Row902Neighbor];
   const FieldElementT& column8_row903 = neighbors[kColumn8Row903Neighbor];
@@ -11571,74 +12179,74 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   const FieldElementT& poseidon__poseidon__partial_round_key1 =
       periodic_columns[kPoseidonPoseidonPartialRoundKey1PeriodicColumn];
 
-  const FieldElementT cpu__decode__opcode_rc__bit_0 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_0 =
       (column0_row0) - ((column0_row1) + (column0_row1));
-  const FieldElementT cpu__decode__opcode_rc__bit_2 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_2 =
       (column0_row2) - ((column0_row3) + (column0_row3));
-  const FieldElementT cpu__decode__opcode_rc__bit_4 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_4 =
       (column0_row4) - ((column0_row5) + (column0_row5));
-  const FieldElementT cpu__decode__opcode_rc__bit_3 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_3 =
       (column0_row3) - ((column0_row4) + (column0_row4));
   const FieldElementT cpu__decode__flag_op1_base_op0_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_2) + (cpu__decode__opcode_rc__bit_4)) +
-       (cpu__decode__opcode_rc__bit_3));
-  const FieldElementT cpu__decode__opcode_rc__bit_5 =
+      (((cpu__decode__opcode_range_check__bit_2) + (cpu__decode__opcode_range_check__bit_4)) +
+       (cpu__decode__opcode_range_check__bit_3));
+  const FieldElementT cpu__decode__opcode_range_check__bit_5 =
       (column0_row5) - ((column0_row6) + (column0_row6));
-  const FieldElementT cpu__decode__opcode_rc__bit_6 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_6 =
       (column0_row6) - ((column0_row7) + (column0_row7));
-  const FieldElementT cpu__decode__opcode_rc__bit_9 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_9 =
       (column0_row9) - ((column0_row10) + (column0_row10));
   const FieldElementT cpu__decode__flag_res_op1_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_5) + (cpu__decode__opcode_rc__bit_6)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_7 =
+      (((cpu__decode__opcode_range_check__bit_5) + (cpu__decode__opcode_range_check__bit_6)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_7 =
       (column0_row7) - ((column0_row8) + (column0_row8));
-  const FieldElementT cpu__decode__opcode_rc__bit_8 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_8 =
       (column0_row8) - ((column0_row9) + (column0_row9));
   const FieldElementT cpu__decode__flag_pc_update_regular_0 =
       (FieldElementT::One()) -
-      (((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_8)) +
-       (cpu__decode__opcode_rc__bit_9));
-  const FieldElementT cpu__decode__opcode_rc__bit_12 =
+      (((cpu__decode__opcode_range_check__bit_7) + (cpu__decode__opcode_range_check__bit_8)) +
+       (cpu__decode__opcode_range_check__bit_9));
+  const FieldElementT cpu__decode__opcode_range_check__bit_12 =
       (column0_row12) - ((column0_row13) + (column0_row13));
-  const FieldElementT cpu__decode__opcode_rc__bit_13 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_13 =
       (column0_row13) - ((column0_row14) + (column0_row14));
   const FieldElementT cpu__decode__fp_update_regular_0 =
       (FieldElementT::One()) -
-      ((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_13));
-  const FieldElementT cpu__decode__opcode_rc__bit_1 =
+      ((cpu__decode__opcode_range_check__bit_12) + (cpu__decode__opcode_range_check__bit_13));
+  const FieldElementT cpu__decode__opcode_range_check__bit_1 =
       (column0_row1) - ((column0_row2) + (column0_row2));
   const FieldElementT npc_reg_0 =
-      ((column8_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One());
-  const FieldElementT cpu__decode__opcode_rc__bit_10 =
+      ((column8_row0) + (cpu__decode__opcode_range_check__bit_2)) + (FieldElementT::One());
+  const FieldElementT cpu__decode__opcode_range_check__bit_10 =
       (column0_row10) - ((column0_row11) + (column0_row11));
-  const FieldElementT cpu__decode__opcode_rc__bit_11 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_11 =
       (column0_row11) - ((column0_row12) + (column0_row12));
-  const FieldElementT cpu__decode__opcode_rc__bit_14 =
+  const FieldElementT cpu__decode__opcode_range_check__bit_14 =
       (column0_row14) - ((column0_row15) + (column0_row15));
   const FieldElementT memory__address_diff_0 = (column9_row2) - (column9_row0);
-  const FieldElementT rc16__diff_0 = (column10_row6) - (column10_row2);
+  const FieldElementT range_check16__diff_0 = (column10_row6) - (column10_row2);
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_0 =
       (column5_row0) - ((column5_row1) + (column5_row1));
   const FieldElementT pedersen__hash0__ec_subset_sum__bit_neg_0 =
       (FieldElementT::One()) - (pedersen__hash0__ec_subset_sum__bit_0);
-  const FieldElementT rc_builtin__value0_0 = column10_row12;
-  const FieldElementT rc_builtin__value1_0 =
-      ((rc_builtin__value0_0) * (offset_size_)) + (column10_row44);
-  const FieldElementT rc_builtin__value2_0 =
-      ((rc_builtin__value1_0) * (offset_size_)) + (column10_row76);
-  const FieldElementT rc_builtin__value3_0 =
-      ((rc_builtin__value2_0) * (offset_size_)) + (column10_row108);
-  const FieldElementT rc_builtin__value4_0 =
-      ((rc_builtin__value3_0) * (offset_size_)) + (column10_row140);
-  const FieldElementT rc_builtin__value5_0 =
-      ((rc_builtin__value4_0) * (offset_size_)) + (column10_row172);
-  const FieldElementT rc_builtin__value6_0 =
-      ((rc_builtin__value5_0) * (offset_size_)) + (column10_row204);
-  const FieldElementT rc_builtin__value7_0 =
-      ((rc_builtin__value6_0) * (offset_size_)) + (column10_row236);
+  const FieldElementT range_check_builtin__value0_0 = column10_row12;
+  const FieldElementT range_check_builtin__value1_0 =
+      ((range_check_builtin__value0_0) * (offset_size_)) + (column10_row44);
+  const FieldElementT range_check_builtin__value2_0 =
+      ((range_check_builtin__value1_0) * (offset_size_)) + (column10_row76);
+  const FieldElementT range_check_builtin__value3_0 =
+      ((range_check_builtin__value2_0) * (offset_size_)) + (column10_row108);
+  const FieldElementT range_check_builtin__value4_0 =
+      ((range_check_builtin__value3_0) * (offset_size_)) + (column10_row140);
+  const FieldElementT range_check_builtin__value5_0 =
+      ((range_check_builtin__value4_0) * (offset_size_)) + (column10_row172);
+  const FieldElementT range_check_builtin__value6_0 =
+      ((range_check_builtin__value5_0) * (offset_size_)) + (column10_row204);
+  const FieldElementT range_check_builtin__value7_0 =
+      ((range_check_builtin__value6_0) * (offset_size_)) + (column10_row236);
   const FieldElementT ecdsa__signature0__doubling_key__x_squared =
       (column11_row1) * (column11_row1);
   const FieldElementT ecdsa__signature0__exponentiate_generator__bit_0 =
@@ -11901,17 +12509,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       // Compute a sum of constraints with numerator = domain4.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/bit:
+        // Constraint expression for cpu/decode/opcode_range_check/bit:
         const FieldElementT constraint =
-            ((cpu__decode__opcode_rc__bit_0) * (cpu__decode__opcode_rc__bit_0)) -
-            (cpu__decode__opcode_rc__bit_0);
+            ((cpu__decode__opcode_range_check__bit_0) * (cpu__decode__opcode_range_check__bit_0)) -
+            (cpu__decode__opcode_range_check__bit_0);
         inner_sum += random_coefficients[0] * constraint;
       }
       outer_sum += inner_sum * domain4;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain140.
+      // Compute a sum of constraints with numerator = domain137.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for diluted_check/permutation/step0:
@@ -11933,7 +12541,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
               ((column2_row1) - (column2_row0))));
         inner_sum += random_coefficients[52] * constraint;
       }
-      outer_sum += inner_sum * domain140;
+      outer_sum += inner_sum * domain137;
     }
 
     {
@@ -11993,7 +12601,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc/zero:
+        // Constraint expression for cpu/decode/opcode_range_check/zero:
         const FieldElementT constraint = column0_row0;
         inner_sum += random_coefficients[1] * constraint;
       }
@@ -12010,7 +12618,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for cpu/decode/opcode_rc_input:
+        // Constraint expression for cpu/decode/opcode_range_check_input:
         const FieldElementT constraint =
             (column8_row1) -
             (((((((column0_row0) * (offset_size_)) + (column10_row4)) * (offset_size_)) +
@@ -12051,8 +12659,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         // Constraint expression for cpu/operands/mem_dst_addr:
         const FieldElementT constraint =
             ((column8_row8) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_0) * (column11_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_0)) * (column11_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_0) * (column11_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_0)) *
+               (column11_row0))) +
              (column10_row0));
         inner_sum += random_coefficients[7] * constraint;
       }
@@ -12060,19 +12669,21 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         // Constraint expression for cpu/operands/mem0_addr:
         const FieldElementT constraint =
             ((column8_row4) + (half_offset_size_)) -
-            ((((cpu__decode__opcode_rc__bit_1) * (column11_row8)) +
-              (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_1)) * (column11_row0))) +
+            ((((cpu__decode__opcode_range_check__bit_1) * (column11_row8)) +
+              (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_1)) *
+               (column11_row0))) +
              (column10_row8));
         inner_sum += random_coefficients[8] * constraint;
       }
       {
         // Constraint expression for cpu/operands/mem1_addr:
-        const FieldElementT constraint = ((column8_row12) + (half_offset_size_)) -
-                                         ((((((cpu__decode__opcode_rc__bit_2) * (column8_row0)) +
-                                             ((cpu__decode__opcode_rc__bit_4) * (column11_row0))) +
-                                            ((cpu__decode__opcode_rc__bit_3) * (column11_row8))) +
-                                           ((cpu__decode__flag_op1_base_op0_0) * (column8_row5))) +
-                                          (column10_row4));
+        const FieldElementT constraint =
+            ((column8_row12) + (half_offset_size_)) -
+            ((((((cpu__decode__opcode_range_check__bit_2) * (column8_row0)) +
+                ((cpu__decode__opcode_range_check__bit_4) * (column11_row0))) +
+               ((cpu__decode__opcode_range_check__bit_3) * (column11_row8))) +
+              ((cpu__decode__flag_op1_base_op0_0) * (column8_row5))) +
+             (column10_row4));
         inner_sum += random_coefficients[9] * constraint;
       }
       {
@@ -12083,90 +12694,92 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       {
         // Constraint expression for cpu/operands/res:
         const FieldElementT constraint =
-            (((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column11_row12)) -
-            ((((cpu__decode__opcode_rc__bit_5) * ((column8_row5) + (column8_row13))) +
-              ((cpu__decode__opcode_rc__bit_6) * (column11_row4))) +
+            (((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+             (column11_row12)) -
+            ((((cpu__decode__opcode_range_check__bit_5) * ((column8_row5) + (column8_row13))) +
+              ((cpu__decode__opcode_range_check__bit_6) * (column11_row4))) +
              ((cpu__decode__flag_res_op1_0) * (column8_row13)));
         inner_sum += random_coefficients[11] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_fp:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column8_row9) - (column11_row8));
+            (cpu__decode__opcode_range_check__bit_12) * ((column8_row9) - (column11_row8));
         inner_sum += random_coefficients[18] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/push_pc:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            ((column8_row5) -
-             (((column8_row0) + (cpu__decode__opcode_rc__bit_2)) + (FieldElementT::One())));
+            (cpu__decode__opcode_range_check__bit_12) *
+            ((column8_row5) - (((column8_row0) + (cpu__decode__opcode_range_check__bit_2)) +
+                               (FieldElementT::One())));
         inner_sum += random_coefficients[19] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) * ((column10_row0) - (half_offset_size_));
+            (cpu__decode__opcode_range_check__bit_12) * ((column10_row0) - (half_offset_size_));
         inner_sum += random_coefficients[20] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/off1:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
+            (cpu__decode__opcode_range_check__bit_12) *
             ((column10_row8) - ((half_offset_size_) + (FieldElementT::One())));
         inner_sum += random_coefficients[21] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/call/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_12) *
-            (((((cpu__decode__opcode_rc__bit_12) + (cpu__decode__opcode_rc__bit_12)) +
-               (FieldElementT::One())) +
-              (FieldElementT::One())) -
-             (((cpu__decode__opcode_rc__bit_0) + (cpu__decode__opcode_rc__bit_1)) +
-              (FieldElementT::ConstexprFromBigInt(0x4_Z))));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_12) *
+                                         (((((cpu__decode__opcode_range_check__bit_12) +
+                                             (cpu__decode__opcode_range_check__bit_12)) +
+                                            (FieldElementT::One())) +
+                                           (FieldElementT::One())) -
+                                          (((cpu__decode__opcode_range_check__bit_0) +
+                                            (cpu__decode__opcode_range_check__bit_1)) +
+                                           (FieldElementT::ConstexprFromBigInt(0x4_Z))));
         inner_sum += random_coefficients[22] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off0:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column10_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z))) - (half_offset_size_));
         inner_sum += random_coefficients[23] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/off2:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
+            (cpu__decode__opcode_range_check__bit_13) *
             (((column10_row4) + (FieldElementT::One())) - (half_offset_size_));
         inner_sum += random_coefficients[24] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/ret/flags:
-        const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_13) *
-            (((((cpu__decode__opcode_rc__bit_7) + (cpu__decode__opcode_rc__bit_0)) +
-               (cpu__decode__opcode_rc__bit_3)) +
-              (cpu__decode__flag_res_op1_0)) -
-             (FieldElementT::ConstexprFromBigInt(0x4_Z)));
+        const FieldElementT constraint = (cpu__decode__opcode_range_check__bit_13) *
+                                         (((((cpu__decode__opcode_range_check__bit_7) +
+                                             (cpu__decode__opcode_range_check__bit_0)) +
+                                            (cpu__decode__opcode_range_check__bit_3)) +
+                                           (cpu__decode__flag_res_op1_0)) -
+                                          (FieldElementT::ConstexprFromBigInt(0x4_Z)));
         inner_sum += random_coefficients[25] * constraint;
       }
       {
         // Constraint expression for cpu/opcodes/assert_eq/assert_eq:
         const FieldElementT constraint =
-            (cpu__decode__opcode_rc__bit_14) * ((column8_row9) - (column11_row12));
+            (cpu__decode__opcode_range_check__bit_14) * ((column8_row9) - (column11_row12));
         inner_sum += random_coefficients[26] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain141.
+      // Compute a sum of constraints with numerator = domain138.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for cpu/update_registers/update_pc/tmp0:
         const FieldElementT constraint =
-            (column11_row2) - ((cpu__decode__opcode_rc__bit_9) * (column8_row9));
+            (column11_row2) - ((cpu__decode__opcode_range_check__bit_9) * (column8_row9));
         inner_sum += random_coefficients[12] * constraint;
       }
       {
@@ -12177,53 +12790,56 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_negative:
         const FieldElementT constraint =
-            ((((FieldElementT::One()) - (cpu__decode__opcode_rc__bit_9)) * (column8_row16)) +
+            ((((FieldElementT::One()) - (cpu__decode__opcode_range_check__bit_9)) *
+              (column8_row16)) +
              ((column11_row2) * ((column8_row16) - ((column8_row0) + (column8_row13))))) -
             ((((cpu__decode__flag_pc_update_regular_0) * (npc_reg_0)) +
-              ((cpu__decode__opcode_rc__bit_7) * (column11_row12))) +
-             ((cpu__decode__opcode_rc__bit_8) * ((column8_row0) + (column11_row12))));
+              ((cpu__decode__opcode_range_check__bit_7) * (column11_row12))) +
+             ((cpu__decode__opcode_range_check__bit_8) * ((column8_row0) + (column11_row12))));
         inner_sum += random_coefficients[14] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_pc/pc_cond_positive:
         const FieldElementT constraint =
-            ((column11_row10) - (cpu__decode__opcode_rc__bit_9)) * ((column8_row16) - (npc_reg_0));
+            ((column11_row10) - (cpu__decode__opcode_range_check__bit_9)) *
+            ((column8_row16) - (npc_reg_0));
         inner_sum += random_coefficients[15] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_ap/ap_update:
         const FieldElementT constraint =
             (column11_row16) -
-            ((((column11_row0) + ((cpu__decode__opcode_rc__bit_10) * (column11_row12))) +
-              (cpu__decode__opcode_rc__bit_11)) +
-             ((cpu__decode__opcode_rc__bit_12) * (FieldElementT::ConstexprFromBigInt(0x2_Z))));
+            ((((column11_row0) + ((cpu__decode__opcode_range_check__bit_10) * (column11_row12))) +
+              (cpu__decode__opcode_range_check__bit_11)) +
+             ((cpu__decode__opcode_range_check__bit_12) *
+              (FieldElementT::ConstexprFromBigInt(0x2_Z))));
         inner_sum += random_coefficients[16] * constraint;
       }
       {
         // Constraint expression for cpu/update_registers/update_fp/fp_update:
         const FieldElementT constraint =
             (column11_row24) - ((((cpu__decode__fp_update_regular_0) * (column11_row8)) +
-                                 ((cpu__decode__opcode_rc__bit_13) * (column8_row9))) +
-                                ((cpu__decode__opcode_rc__bit_12) *
+                                 ((cpu__decode__opcode_range_check__bit_13) * (column8_row9))) +
+                                ((cpu__decode__opcode_range_check__bit_12) *
                                  ((column11_row0) + (FieldElementT::ConstexprFromBigInt(0x2_Z)))));
         inner_sum += random_coefficients[17] * constraint;
       }
-      outer_sum += inner_sum * domain141;
+      outer_sum += inner_sum * domain138;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain15.
+      // Compute a sum of constraints with numerator = domain14.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_rounds_state1_squaring:
         const FieldElementT constraint = ((column11_row6) * (column11_row6)) - (column11_row14);
-        inner_sum += random_coefficients[323] * constraint;
+        inner_sum += random_coefficients[326] * constraint;
       }
-      outer_sum += inner_sum * domain15;
+      outer_sum += inner_sum * domain14;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain17.
+      // Compute a sum of constraints with numerator = domain15.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_round1:
@@ -12240,15 +12856,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                    0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffff_Z)) *
                (poseidon__poseidon__partial_rounds_state1_cubed_2))) +
              (poseidon__poseidon__partial_round_key1));
-        inner_sum += random_coefficients[340] * constraint;
+        inner_sum += random_coefficients[343] * constraint;
       }
-      outer_sum += inner_sum * domain17;
+      outer_sum += inner_sum * domain15;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain5);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain142.
+    // Compute a sum of constraints with denominator = domain139.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -12287,16 +12903,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         inner_sum += random_coefficients[38] * constraint;
       }
       {
-        // Constraint expression for rc16/perm/init0:
+        // Constraint expression for range_check16/perm/init0:
         const FieldElementT constraint =
-            ((((rc16__perm__interaction_elm_) - (column10_row2)) * (column14_inter1_row1)) +
+            ((((range_check16__perm__interaction_elm_) - (column10_row2)) *
+              (column14_inter1_row1)) +
              (column10_row0)) -
-            (rc16__perm__interaction_elm_);
+            (range_check16__perm__interaction_elm_);
         inner_sum += random_coefficients[41] * constraint;
       }
       {
-        // Constraint expression for rc16/minimum:
-        const FieldElementT constraint = (column10_row2) - (rc_min_);
+        // Constraint expression for range_check16/minimum:
+        const FieldElementT constraint = (column10_row2) - (range_check_min_);
         inner_sum += random_coefficients[45] * constraint;
       }
       {
@@ -12324,8 +12941,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         inner_sum += random_coefficients[74] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/init_addr:
-        const FieldElementT constraint = (column8_row70) - (initial_rc_addr_);
+        // Constraint expression for range_check_builtin/init_addr:
+        const FieldElementT constraint = (column8_row70) - (initial_range_check_addr_);
         inner_sum += random_coefficients[81] * constraint;
       }
       {
@@ -12349,17 +12966,30 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         inner_sum += random_coefficients[167] * constraint;
       }
       {
-        // Constraint expression for poseidon/init_input_output_addr:
+        // Constraint expression for poseidon/param_0/init_input_output_addr:
         const FieldElementT constraint = (column8_row38) - (initial_poseidon_addr_);
         inner_sum += random_coefficients[316] * constraint;
       }
+      {
+        // Constraint expression for poseidon/param_1/init_input_output_addr:
+        const FieldElementT constraint =
+            (column8_row166) - ((initial_poseidon_addr_) + (FieldElementT::One()));
+        inner_sum += random_coefficients[318] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_2/init_input_output_addr:
+        const FieldElementT constraint =
+            (column8_row102) -
+            ((initial_poseidon_addr_) + (FieldElementT::ConstexprFromBigInt(0x2_Z)));
+        inner_sum += random_coefficients[320] * constraint;
+      }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain142);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain139);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain141.
+    // Compute a sum of constraints with denominator = domain138.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -12382,7 +13012,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain141);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain138);
   }
 
   {
@@ -12390,7 +13020,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain143.
+      // Compute a sum of constraints with numerator = domain140.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for memory/multi_column_perm/perm/step0:
@@ -12417,13 +13047,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             ((memory__address_diff_0) - (FieldElementT::One())) * ((column9_row1) - (column9_row3));
         inner_sum += random_coefficients[37] * constraint;
       }
-      outer_sum += inner_sum * domain143;
+      outer_sum += inner_sum * domain140;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain1);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain143.
+    // Compute a sum of constraints with denominator = domain140.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -12437,7 +13067,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain143);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain140);
   }
 
   {
@@ -12460,13 +13090,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       {
         // Constraint expression for poseidon/poseidon/partial_rounds_state0_squaring:
         const FieldElementT constraint = ((column10_row1) * (column10_row1)) - (column10_row5);
-        inner_sum += random_coefficients[322] * constraint;
+        inner_sum += random_coefficients[325] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain43.
+      // Compute a sum of constraints with numerator = domain40.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/parse_to_diluted/extract_bit_other_invocations0:
@@ -12475,11 +13105,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                                          (keccak__keccak__parse_to_diluted__bit_other0_0);
         inner_sum += random_coefficients[223] * constraint;
       }
-      outer_sum += inner_sum * domain43;
+      outer_sum += inner_sum * domain40;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain18.
+      // Compute a sum of constraints with numerator = domain16.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for poseidon/poseidon/partial_round0:
@@ -12496,9 +13126,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                    0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffff_Z)) *
                (poseidon__poseidon__partial_rounds_state0_cubed_2))) +
              (poseidon__poseidon__partial_round_key0));
-        inner_sum += random_coefficients[339] * constraint;
+        inner_sum += random_coefficients[342] * constraint;
       }
-      outer_sum += inner_sum * domain18;
+      outer_sum += inner_sum * domain16;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain3);
   }
@@ -12508,49 +13138,51 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain144.
+      // Compute a sum of constraints with numerator = domain141.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/step0:
+        // Constraint expression for range_check16/perm/step0:
         const FieldElementT constraint =
-            (((rc16__perm__interaction_elm_) - (column10_row6)) * (column14_inter1_row5)) -
-            (((rc16__perm__interaction_elm_) - (column10_row4)) * (column14_inter1_row1));
+            (((range_check16__perm__interaction_elm_) - (column10_row6)) * (column14_inter1_row5)) -
+            (((range_check16__perm__interaction_elm_) - (column10_row4)) * (column14_inter1_row1));
         inner_sum += random_coefficients[42] * constraint;
       }
       {
-        // Constraint expression for rc16/diff_is_bit:
-        const FieldElementT constraint = ((rc16__diff_0) * (rc16__diff_0)) - (rc16__diff_0);
+        // Constraint expression for range_check16/diff_is_bit:
+        const FieldElementT constraint =
+            ((range_check16__diff_0) * (range_check16__diff_0)) - (range_check16__diff_0);
         inner_sum += random_coefficients[44] * constraint;
       }
-      outer_sum += inner_sum * domain144;
+      outer_sum += inner_sum * domain141;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain2);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain144.
+    // Compute a sum of constraints with denominator = domain141.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
       // Compute a sum of constraints with numerator = FieldElementT::One().
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc16/perm/last:
-        const FieldElementT constraint = (column14_inter1_row1) - (rc16__perm__public_memory_prod_);
+        // Constraint expression for range_check16/perm/last:
+        const FieldElementT constraint =
+            (column14_inter1_row1) - (range_check16__perm__public_memory_prod_);
         inner_sum += random_coefficients[43] * constraint;
       }
       {
-        // Constraint expression for rc16/maximum:
-        const FieldElementT constraint = (column10_row2) - (rc_max_);
+        // Constraint expression for range_check16/maximum:
+        const FieldElementT constraint = (column10_row2) - (range_check_max_);
         inner_sum += random_coefficients[46] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain144);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain141);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain140.
+    // Compute a sum of constraints with denominator = domain137.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -12569,7 +13201,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain140);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain137);
   }
 
   {
@@ -12627,8 +13259,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         inner_sum += random_coefficients[59] * constraint;
       }
       {
-        // Constraint expression for rc_builtin/value:
-        const FieldElementT constraint = (rc_builtin__value7_0) - (column8_row71);
+        // Constraint expression for range_check_builtin/value:
+        const FieldElementT constraint = (range_check_builtin__value7_0) - (column8_row71);
         inner_sum += random_coefficients[79] * constraint;
       }
       {
@@ -12641,7 +13273,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain19.
+      // Compute a sum of constraints with numerator = domain17.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for pedersen/hash0/copy_point/x:
@@ -12653,23 +13285,41 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
         const FieldElementT constraint = (column4_row256) - (column4_row255);
         inner_sum += random_coefficients[69] * constraint;
       }
-      outer_sum += inner_sum * domain19;
+      outer_sum += inner_sum * domain17;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain145.
+      // Compute a sum of constraints with numerator = domain142.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
-        // Constraint expression for rc_builtin/addr_step:
+        // Constraint expression for range_check_builtin/addr_step:
         const FieldElementT constraint =
             (column8_row326) - ((column8_row70) + (FieldElementT::One()));
         inner_sum += random_coefficients[80] * constraint;
       }
-      outer_sum += inner_sum * domain145;
+      {
+        // Constraint expression for poseidon/param_0/addr_input_output_step:
+        const FieldElementT constraint =
+            (column8_row294) - ((column8_row38) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[317] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_1/addr_input_output_step:
+        const FieldElementT constraint =
+            (column8_row422) - ((column8_row166) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[319] * constraint;
+      }
+      {
+        // Constraint expression for poseidon/param_2/addr_input_output_step:
+        const FieldElementT constraint =
+            (column8_row358) - ((column8_row102) + (FieldElementT::ConstexprFromBigInt(0x3_Z)));
+        inner_sum += random_coefficients[321] * constraint;
+      }
+      outer_sum += inner_sum * domain142;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain22.
+      // Compute a sum of constraints with numerator = domain19.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for bitwise/step_var_pool_addr:
@@ -12677,11 +13327,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row454) - ((column8_row198) + (FieldElementT::One()));
         inner_sum += random_coefficients[124] * constraint;
       }
-      outer_sum += inner_sum * domain22;
+      outer_sum += inner_sum * domain19;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain44.
+      // Compute a sum of constraints with numerator = domain41.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/parse_to_diluted/to_diluted0_p0:
@@ -12695,7 +13345,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (keccak__keccak__parse_to_diluted__partial_diluted0_31) - (column1_row196);
         inner_sum += random_coefficients[225] * constraint;
       }
-      outer_sum += inner_sum * domain44;
+      outer_sum += inner_sum * domain41;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain9);
   }
@@ -12735,7 +13385,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
   }
 
   {
-    // Compute a sum of constraints with denominator = domain20.
+    // Compute a sum of constraints with denominator = domain18.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -12785,43 +13435,43 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
              (FieldElementT::ConstexprFromBigInt(
                  0x6861759ea556a2339dd92f9562a30b9e58e2ad98109ae4780b7fd8eac77fe6f_Z))) -
             (column11_row53);
-        inner_sum += random_coefficients[324] * constraint;
+        inner_sum += random_coefficients[327] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/add_first_round_key1:
         const FieldElementT constraint =
-            ((column8_row103) +
+            ((column8_row167) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3827681995d5af9ffc8397a3d00425a3da43f76abf28a64e4ab1a22f27508c4_Z))) -
             (column11_row13);
-        inner_sum += random_coefficients[325] * constraint;
+        inner_sum += random_coefficients[328] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/add_first_round_key2:
         const FieldElementT constraint =
-            ((column8_row167) +
+            ((column8_row103) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3a3956d2fad44d0e7f760a2277dc7cb2cac75dc279b2d687a0dbe17704a8309_Z))) -
             (column11_row45);
-        inner_sum += random_coefficients[326] * constraint;
+        inner_sum += random_coefficients[329] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round0:
         const FieldElementT constraint =
-            (column8_row231) - (((((poseidon__poseidon__full_rounds_state0_cubed_7) +
+            (column8_row295) - (((((poseidon__poseidon__full_rounds_state0_cubed_7) +
                                    (poseidon__poseidon__full_rounds_state0_cubed_7)) +
                                   (poseidon__poseidon__full_rounds_state0_cubed_7)) +
                                  (poseidon__poseidon__full_rounds_state1_cubed_7)) +
                                 (poseidon__poseidon__full_rounds_state2_cubed_7));
-        inner_sum += random_coefficients[330] * constraint;
+        inner_sum += random_coefficients[333] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round1:
         const FieldElementT constraint =
-            ((column8_row295) + (poseidon__poseidon__full_rounds_state1_cubed_7)) -
+            ((column8_row423) + (poseidon__poseidon__full_rounds_state1_cubed_7)) -
             ((poseidon__poseidon__full_rounds_state0_cubed_7) +
              (poseidon__poseidon__full_rounds_state2_cubed_7));
-        inner_sum += random_coefficients[331] * constraint;
+        inner_sum += random_coefficients[334] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/last_full_round2:
@@ -12830,22 +13480,22 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
              (poseidon__poseidon__full_rounds_state2_cubed_7)) -
             ((poseidon__poseidon__full_rounds_state0_cubed_7) +
              (poseidon__poseidon__full_rounds_state1_cubed_7));
-        inner_sum += random_coefficients[332] * constraint;
+        inner_sum += random_coefficients[335] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i0:
         const FieldElementT constraint = (column10_row489) - (column11_row6);
-        inner_sum += random_coefficients[333] * constraint;
+        inner_sum += random_coefficients[336] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i1:
         const FieldElementT constraint = (column10_row497) - (column11_row22);
-        inner_sum += random_coefficients[334] * constraint;
+        inner_sum += random_coefficients[337] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/copy_partial_rounds0_i2:
         const FieldElementT constraint = (column10_row505) - (column11_row38);
-        inner_sum += random_coefficients[335] * constraint;
+        inner_sum += random_coefficients[338] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial0:
@@ -12856,7 +13506,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
               (poseidon__poseidon__full_rounds_state1_cubed_3)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x4b085eb1df4258c3453cc97445954bf3433b6ab9dd5a99592864c00f54a3f9a_Z)));
-        inner_sum += random_coefficients[336] * constraint;
+        inner_sum += random_coefficients[339] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial1:
@@ -12873,7 +13523,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                (poseidon__poseidon__partial_rounds_state0_cubed_0))) +
              (FieldElementT::ConstexprFromBigInt(
                  0x46fb825257fec76c50fe043684d4e6d2d2f2fdfe9b7c8d7128ca7acc0f66f30_Z)));
-        inner_sum += random_coefficients[337] * constraint;
+        inner_sum += random_coefficients[340] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_full_to_partial2:
@@ -12891,7 +13541,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                (poseidon__poseidon__partial_rounds_state0_cubed_1))) +
              (FieldElementT::ConstexprFromBigInt(
                  0xf2193ba0c7ea33ce6222d9446c1e166202ae5461005292f4a2bcb93420151a_Z)));
-        inner_sum += random_coefficients[338] * constraint;
+        inner_sum += random_coefficients[341] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full0:
@@ -12906,7 +13556,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
               (poseidon__poseidon__partial_rounds_state1_cubed_21)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x13d1b5cfd87693224f0ac561ab2c15ca53365d768311af59cefaf701bc53b37_Z)));
-        inner_sum += random_coefficients[341] * constraint;
+        inner_sum += random_coefficients[344] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full1:
@@ -12919,7 +13569,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
               (poseidon__poseidon__partial_rounds_state1_cubed_21)) +
              (FieldElementT::ConstexprFromBigInt(
                  0x3195d6b2d930e71cede286d5b8b41d49296ddf222bcd3bf3717a12a9a6947ff_Z)));
-        inner_sum += random_coefficients[342] * constraint;
+        inner_sum += random_coefficients[345] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/margin_partial_to_full2:
@@ -12937,13 +13587,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                (poseidon__poseidon__partial_rounds_state1_cubed_21))) +
              (FieldElementT::ConstexprFromBigInt(
                  0x2c14fccabc26929170cc7ac9989c823608b9008bef3b8e16b6089a5d33cd72e_Z)));
-        inner_sum += random_coefficients[343] * constraint;
+        inner_sum += random_coefficients[346] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
 
     {
-      // Compute a sum of constraints with numerator = domain146.
+      // Compute a sum of constraints with numerator = domain143.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for pedersen/input0_addr:
@@ -12951,15 +13601,9 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row518) - ((column8_row134) + (FieldElementT::One()));
         inner_sum += random_coefficients[73] * constraint;
       }
-      {
-        // Constraint expression for poseidon/addr_input_output_step_outter:
-        const FieldElementT constraint =
-            (column8_row550) - ((column8_row358) + (FieldElementT::One()));
-        inner_sum += random_coefficients[318] * constraint;
-      }
-      outer_sum += inner_sum * domain146;
+      outer_sum += inner_sum * domain143;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain20);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain18);
   }
 
   {
@@ -12967,7 +13611,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain30.
+      // Compute a sum of constraints with numerator = domain27.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/signature0/doubling_key/slope:
@@ -13106,19 +13750,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (ec_op__ec_subset_sum__bit_neg_0) * ((column11_row101) - (column11_row37));
         inner_sum += random_coefficients[161] * constraint;
       }
-      outer_sum += inner_sum * domain30;
-    }
-
-    {
-      // Compute a sum of constraints with numerator = domain21.
-      FieldElementT inner_sum = FieldElementT::Zero();
-      {
-        // Constraint expression for poseidon/addr_input_output_step_inner:
-        const FieldElementT constraint =
-            (column8_row102) - ((column8_row38) + (FieldElementT::One()));
-        inner_sum += random_coefficients[317] * constraint;
-      }
-      outer_sum += inner_sum * domain21;
+      outer_sum += inner_sum * domain27;
     }
 
     {
@@ -13127,17 +13759,17 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state0_squaring:
         const FieldElementT constraint = ((column11_row53) * (column11_row53)) - (column11_row29);
-        inner_sum += random_coefficients[319] * constraint;
+        inner_sum += random_coefficients[322] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state1_squaring:
         const FieldElementT constraint = ((column11_row13) * (column11_row13)) - (column11_row61);
-        inner_sum += random_coefficients[320] * constraint;
+        inner_sum += random_coefficients[323] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_rounds_state2_squaring:
         const FieldElementT constraint = ((column11_row45) * (column11_row45)) - (column11_row3);
-        inner_sum += random_coefficients[321] * constraint;
+        inner_sum += random_coefficients[324] * constraint;
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
@@ -13154,7 +13786,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                                    (poseidon__poseidon__full_rounds_state1_cubed_0)) +
                                   (poseidon__poseidon__full_rounds_state2_cubed_0)) +
                                  (poseidon__poseidon__full_round_key0));
-        inner_sum += random_coefficients[327] * constraint;
+        inner_sum += random_coefficients[330] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_round1:
@@ -13163,7 +13795,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((poseidon__poseidon__full_rounds_state0_cubed_0) +
               (poseidon__poseidon__full_rounds_state2_cubed_0)) +
              (poseidon__poseidon__full_round_key1));
-        inner_sum += random_coefficients[328] * constraint;
+        inner_sum += random_coefficients[331] * constraint;
       }
       {
         // Constraint expression for poseidon/poseidon/full_round2:
@@ -13173,7 +13805,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((poseidon__poseidon__full_rounds_state0_cubed_0) +
               (poseidon__poseidon__full_rounds_state1_cubed_0)) +
              (poseidon__poseidon__full_round_key2));
-        inner_sum += random_coefficients[329] * constraint;
+        inner_sum += random_coefficients[332] * constraint;
       }
       outer_sum += inner_sum * domain11;
     }
@@ -13185,7 +13817,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain34.
+      // Compute a sum of constraints with numerator = domain31.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/signature0/exponentiate_generator/booleanity_test:
@@ -13237,13 +13869,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                                          ((column11_row219) - (column11_row91));
         inner_sum += random_coefficients[93] * constraint;
       }
-      outer_sum += inner_sum * domain34;
+      outer_sum += inner_sum * domain31;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain7);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain35.
+    // Compute a sum of constraints with denominator = domain32.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13256,11 +13888,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain35);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain32);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain34.
+    // Compute a sum of constraints with denominator = domain31.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13273,11 +13905,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain34);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain31);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain31.
+    // Compute a sum of constraints with denominator = domain28.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13290,11 +13922,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain31);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain28);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain30.
+    // Compute a sum of constraints with denominator = domain27.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13312,11 +13944,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain30);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain27);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain36.
+    // Compute a sum of constraints with denominator = domain33.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13501,7 +14133,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain147.
+      // Compute a sum of constraints with numerator = domain144.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ecdsa/pubkey_addr:
@@ -13509,13 +14141,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row33158) - ((column8_row16774) + (FieldElementT::One()));
         inner_sum += random_coefficients[120] * constraint;
       }
-      outer_sum += inner_sum * domain147;
+      outer_sum += inner_sum * domain144;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain36);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain33);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain32.
+    // Compute a sum of constraints with denominator = domain29.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13659,7 +14291,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain148.
+      // Compute a sum of constraints with numerator = domain145.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for ec_op/p_x_addr:
@@ -13667,13 +14299,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row24966) - ((column8_row8582) + (FieldElementT::ConstexprFromBigInt(0x7_Z)));
         inner_sum += random_coefficients[135] * constraint;
       }
-      outer_sum += inner_sum * domain148;
+      outer_sum += inner_sum * domain145;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain32);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain29);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain23.
+    // Compute a sum of constraints with denominator = domain20.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13722,7 +14354,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain149.
+      // Compute a sum of constraints with numerator = domain146.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for bitwise/next_var_pool_addr:
@@ -13730,13 +14362,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row1222) - ((column8_row902) + (FieldElementT::One()));
         inner_sum += random_coefficients[126] * constraint;
       }
-      outer_sum += inner_sum * domain149;
+      outer_sum += inner_sum * domain146;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain23);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain20);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain24.
+    // Compute a sum of constraints with denominator = domain21.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13750,11 +14382,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain24);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain21);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain33.
+    // Compute a sum of constraints with denominator = domain30.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13767,15 +14399,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain33);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain30);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain25.
+    // Compute a sum of constraints with denominator = domain22.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain150.
+      // Compute a sum of constraints with numerator = domain147.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/addr_input_output_step:
@@ -13783,13 +14415,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (column8_row3462) - ((column8_row1414) + (FieldElementT::One()));
         inner_sum += random_coefficients[168] * constraint;
       }
-      outer_sum += inner_sum * domain150;
+      outer_sum += inner_sum * domain147;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain25);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain22);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain47.
+    // Compute a sum of constraints with denominator = domain44.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13877,11 +14509,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain47);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain44);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain51.
+    // Compute a sum of constraints with denominator = domain48.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13894,11 +14526,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain51);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain48);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain46.
+    // Compute a sum of constraints with denominator = domain43.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -13954,11 +14586,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain46);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain43);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain50.
+    // Compute a sum of constraints with denominator = domain47.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14030,11 +14662,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain50);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain47);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain54.
+    // Compute a sum of constraints with denominator = domain51.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14049,11 +14681,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain54);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain51);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain55.
+    // Compute a sum of constraints with denominator = domain52.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14068,11 +14700,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain55);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain52);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain56.
+    // Compute a sum of constraints with denominator = domain53.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14092,7 +14724,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain56);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain53);
   }
 
   {
@@ -14100,7 +14732,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain40.
+      // Compute a sum of constraints with numerator = domain37.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/parse_to_diluted/extract_bit_first_invocation0:
@@ -14109,13 +14741,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
                                          (keccak__keccak__parse_to_diluted__partial_diluted0_0);
         inner_sum += random_coefficients[222] * constraint;
       }
-      outer_sum += inner_sum * domain40;
+      outer_sum += inner_sum * domain37;
     }
     res += FractionFieldElement<FieldElementT>(outer_sum, domain12);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain27.
+    // Compute a sum of constraints with denominator = domain24.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14176,7 +14808,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
     }
 
     {
-      // Compute a sum of constraints with numerator = domain58.
+      // Compute a sum of constraints with numerator = domain55.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/rotate_parity0/n1:
@@ -14210,11 +14842,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row10753) + (column1_row15942)) + (column1_row15942));
         inner_sum += random_coefficients[242] * constraint;
       }
-      outer_sum += inner_sum * domain58;
+      outer_sum += inner_sum * domain55;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain60.
+      // Compute a sum of constraints with numerator = domain57.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i0_j2/n1:
@@ -14223,11 +14855,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row5121) + (column1_row7937)) + (column1_row7937));
         inner_sum += random_coefficients[245] * constraint;
       }
-      outer_sum += inner_sum * domain60;
+      outer_sum += inner_sum * domain57;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain86.
+      // Compute a sum of constraints with numerator = domain83.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i0_j3/n0:
@@ -14243,11 +14875,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row4097) + (column1_row7169)) + (column1_row7169));
         inner_sum += random_coefficients[251] * constraint;
       }
-      outer_sum += inner_sum * domain86;
+      outer_sum += inner_sum * domain83;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain85.
+      // Compute a sum of constraints with numerator = domain82.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i0_j4/n0:
@@ -14256,11 +14888,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row225025) + (column1_row228161)) + (column1_row228161));
         inner_sum += random_coefficients[248] * constraint;
       }
-      outer_sum += inner_sum * domain85;
+      outer_sum += inner_sum * domain82;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain79.
+      // Compute a sum of constraints with numerator = domain76.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i1_j1/n1:
@@ -14276,11 +14908,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row165377) + (column1_row171398)) + (column1_row171398));
         inner_sum += random_coefficients[262] * constraint;
       }
-      outer_sum += inner_sum * domain79;
+      outer_sum += inner_sum * domain76;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain64.
+      // Compute a sum of constraints with numerator = domain61.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i1_j2/n0:
@@ -14289,11 +14921,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row51969) + (column1_row55937)) + (column1_row55937));
         inner_sum += random_coefficients[254] * constraint;
       }
-      outer_sum += inner_sum * domain64;
+      outer_sum += inner_sum * domain61;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain62.
+      // Compute a sum of constraints with numerator = domain59.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i2_j0/n0:
@@ -14309,11 +14941,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row2305) + (column1_row7746)) + (column1_row7746));
         inner_sum += random_coefficients[301] * constraint;
       }
-      outer_sum += inner_sum * domain62;
+      outer_sum += inner_sum * domain59;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain69.
+      // Compute a sum of constraints with numerator = domain66.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i2_j1/n0:
@@ -14322,11 +14954,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row86273) + (column1_row89281)) + (column1_row89281));
         inner_sum += random_coefficients[266] * constraint;
       }
-      outer_sum += inner_sum * domain69;
+      outer_sum += inner_sum * domain66;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain81.
+      // Compute a sum of constraints with numerator = domain78.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i2_j2/n1:
@@ -14342,11 +14974,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row172801) + (column1_row178433)) + (column1_row178433));
         inner_sum += random_coefficients[288] * constraint;
       }
-      outer_sum += inner_sum * domain81;
+      outer_sum += inner_sum * domain78;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain84.
+      // Compute a sum of constraints with numerator = domain81.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i2_j3/n0:
@@ -14355,11 +14987,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row207873) + (column1_row212740)) + (column1_row212740));
         inner_sum += random_coefficients[270] * constraint;
       }
-      outer_sum += inner_sum * domain84;
+      outer_sum += inner_sum * domain81;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain77.
+      // Compute a sum of constraints with numerator = domain74.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i3_j1/n1:
@@ -14368,11 +15000,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row2049) + (column1_row7748)) + (column1_row7748));
         inner_sum += random_coefficients[285] * constraint;
       }
-      outer_sum += inner_sum * domain77;
+      outer_sum += inner_sum * domain74;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain73.
+      // Compute a sum of constraints with numerator = domain70.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i3_j2/n0:
@@ -14381,11 +15013,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row127489) + (column1_row130433)) + (column1_row130433));
         inner_sum += random_coefficients[286] * constraint;
       }
-      outer_sum += inner_sum * domain73;
+      outer_sum += inner_sum * domain70;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain66.
+      // Compute a sum of constraints with numerator = domain63.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i3_j4/n0:
@@ -14401,11 +15033,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row4865) + (column1_row7745)) + (column1_row7745));
         inner_sum += random_coefficients[303] * constraint;
       }
-      outer_sum += inner_sum * domain66;
+      outer_sum += inner_sum * domain63;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain75.
+      // Compute a sum of constraints with numerator = domain72.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i4_j0/n0:
@@ -14414,11 +15046,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row151041) + (column1_row155398)) + (column1_row155398));
         inner_sum += random_coefficients[292] * constraint;
       }
-      outer_sum += inner_sum * domain75;
+      outer_sum += inner_sum * domain72;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain71.
+      // Compute a sum of constraints with numerator = domain68.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i4_j4/n0:
@@ -14427,13 +15059,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row115713) + (column1_row122244)) + (column1_row122244));
         inner_sum += random_coefficients[304] * constraint;
       }
-      outer_sum += inner_sum * domain71;
+      outer_sum += inner_sum * domain68;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain27);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain24);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain49.
+    // Compute a sum of constraints with denominator = domain46.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14543,11 +15175,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain49);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain46);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain88.
+    // Compute a sum of constraints with denominator = domain85.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14562,11 +15194,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain88);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain85);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain120.
+    // Compute a sum of constraints with denominator = domain117.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14588,11 +15220,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain120);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain117);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain119.
+    // Compute a sum of constraints with denominator = domain116.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14607,11 +15239,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain119);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain116);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain113.
+    // Compute a sum of constraints with denominator = domain110.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14633,11 +15265,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain113);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain110);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain94.
+    // Compute a sum of constraints with denominator = domain91.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14652,11 +15284,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain94);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain91);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain123.
+    // Compute a sum of constraints with denominator = domain120.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14685,15 +15317,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain123);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain120);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain26.
+    // Compute a sum of constraints with denominator = domain23.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain126.
+      // Compute a sum of constraints with numerator = domain123.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i1_j3/n3:
@@ -14716,11 +15348,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row5505) + (column1_row705)) + (column1_row705));
         inner_sum += random_coefficients[261] * constraint;
       }
-      outer_sum += inner_sum * domain126;
+      outer_sum += inner_sum * domain123;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain128.
+      // Compute a sum of constraints with numerator = domain125.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i2_j4/n3:
@@ -14743,11 +15375,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row5761) + (column1_row1473)) + (column1_row1473));
         inner_sum += random_coefficients[277] * constraint;
       }
-      outer_sum += inner_sum * domain128;
+      outer_sum += inner_sum * domain125;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain129.
+      // Compute a sum of constraints with numerator = domain126.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i3_j0/n3:
@@ -14770,11 +15402,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row6017) + (column1_row2241)) + (column1_row2241));
         inner_sum += random_coefficients[283] * constraint;
       }
-      outer_sum += inner_sum * domain129;
+      outer_sum += inner_sum * domain126;
     }
 
     {
-      // Compute a sum of constraints with numerator = domain124.
+      // Compute a sum of constraints with numerator = domain121.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/theta_rho_pi_i4_j1/n0:
@@ -14797,13 +15429,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
             (((column1_row22657) + (column1_row19393)) + (column1_row19393));
         inner_sum += random_coefficients[296] * constraint;
       }
-      outer_sum += inner_sum * domain124;
+      outer_sum += inner_sum * domain121;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain26);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain23);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain130.
+    // Compute a sum of constraints with denominator = domain127.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14825,11 +15457,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain130);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain127);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain101.
+    // Compute a sum of constraints with denominator = domain98.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14844,11 +15476,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain101);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain98);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain115.
+    // Compute a sum of constraints with denominator = domain112.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14870,11 +15502,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain115);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain112);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain118.
+    // Compute a sum of constraints with denominator = domain115.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14889,11 +15521,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain118);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain115);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain132.
+    // Compute a sum of constraints with denominator = domain129.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14922,11 +15554,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain132);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain129);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain133.
+    // Compute a sum of constraints with denominator = domain130.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14955,11 +15587,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain133);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain130);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain134.
+    // Compute a sum of constraints with denominator = domain131.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14974,11 +15606,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain134);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain131);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain135.
+    // Compute a sum of constraints with denominator = domain132.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -14993,11 +15625,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain135);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain132);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain136.
+    // Compute a sum of constraints with denominator = domain133.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -15019,11 +15651,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain136);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain133);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain137.
+    // Compute a sum of constraints with denominator = domain134.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -15038,11 +15670,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain137);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain134);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain121.
+    // Compute a sum of constraints with denominator = domain118.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -15071,11 +15703,11 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain121);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain118);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain138.
+    // Compute a sum of constraints with denominator = domain135.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -15090,15 +15722,15 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain138);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain135);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain29.
+    // Compute a sum of constraints with denominator = domain26.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
-      // Compute a sum of constraints with numerator = domain139.
+      // Compute a sum of constraints with numerator = domain136.
       FieldElementT inner_sum = FieldElementT::Zero();
       {
         // Constraint expression for keccak/keccak/chi0:
@@ -15109,13 +15741,13 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
              ((column1_row6) * (FieldElementT::ConstexprFromBigInt(0x4_Z))));
         inner_sum += random_coefficients[313] * constraint;
       }
-      outer_sum += inner_sum * domain139;
+      outer_sum += inner_sum * domain136;
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain29);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain26);
   }
 
   {
-    // Compute a sum of constraints with denominator = domain28.
+    // Compute a sum of constraints with denominator = domain25.
     FieldElementT outer_sum = FieldElementT::Zero();
 
     {
@@ -15143,7 +15775,7 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
       }
       outer_sum += inner_sum;  // domain == FieldElementT::One()
     }
-    res += FractionFieldElement<FieldElementT>(outer_sum, domain28);
+    res += FractionFieldElement<FieldElementT>(outer_sum, domain25);
   }
   return res;
 }
@@ -15151,7 +15783,8 @@ FractionFieldElement<FieldElementT> CpuAirDefinition<FieldElementT, 8>::Constrai
 template <typename FieldElementT>
 std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoint(
     gsl::span<const FieldElementT> point_powers,
-    gsl::span<const FieldElementT> shifts) const {
+    [[maybe_unused]] gsl::span<const FieldElementT> shifts) const {
+  [[maybe_unused]] const FieldElementT& point = point_powers[0];
   const FieldElementT& domain0 = (point_powers[1]) - (FieldElementT::One());
   const FieldElementT& domain1 = (point_powers[2]) - (FieldElementT::One());
   const FieldElementT& domain2 = (point_powers[3]) - (FieldElementT::One());
@@ -15167,23 +15800,21 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
   const FieldElementT& domain12 = ((point_powers[8]) - (shifts[4])) * (domain9);
   const FieldElementT& domain13 = (point_powers[9]) - (shifts[5]);
   const FieldElementT& domain14 =
-      ((point_powers[9]) - (shifts[3])) * ((point_powers[9]) - (shifts[6]));
-  const FieldElementT& domain15 =
-      ((point_powers[9]) - (shifts[7])) * ((point_powers[9]) - (shifts[8])) *
+      ((point_powers[9]) - (shifts[6])) * ((point_powers[9]) - (shifts[7])) *
+      ((point_powers[9]) - (shifts[3])) * ((point_powers[9]) - (shifts[8])) *
       ((point_powers[9]) - (shifts[9])) * ((point_powers[9]) - (shifts[10])) *
       ((point_powers[9]) - (shifts[11])) * ((point_powers[9]) - (shifts[12])) *
-      ((point_powers[9]) - (shifts[0])) * (domain13) * (domain14);
-  const FieldElementT& domain16 = (point_powers[9]) - (shifts[13]);
-  const FieldElementT& domain17 = ((point_powers[9]) - (shifts[14])) *
-                                  ((point_powers[9]) - (shifts[15])) * (domain15) * (domain16);
-  const FieldElementT& domain18 =
+      ((point_powers[9]) - (shifts[0])) * (domain13);
+  const FieldElementT& domain15 = ((point_powers[9]) - (shifts[13])) *
+                                  ((point_powers[9]) - (shifts[14])) *
+                                  ((point_powers[9]) - (shifts[15])) * (domain14);
+  const FieldElementT& domain16 =
       ((point_powers[9]) - (shifts[16])) * ((point_powers[9]) - (shifts[2])) * (domain13);
-  const FieldElementT& domain19 = (point_powers[9]) - (shifts[17]);
-  const FieldElementT& domain20 = (point_powers[9]) - (FieldElementT::One());
-  const FieldElementT& domain21 = (domain14) * (domain16);
-  const FieldElementT& domain22 = (point_powers[10]) - (shifts[3]);
-  const FieldElementT& domain23 = (point_powers[10]) - (FieldElementT::One());
-  const FieldElementT& domain24 =
+  const FieldElementT& domain17 = (point_powers[9]) - (shifts[17]);
+  const FieldElementT& domain18 = (point_powers[9]) - (FieldElementT::One());
+  const FieldElementT& domain19 = (point_powers[10]) - (shifts[3]);
+  const FieldElementT& domain20 = (point_powers[10]) - (FieldElementT::One());
+  const FieldElementT& domain21 =
       ((point_powers[10]) - (shifts[18])) * ((point_powers[10]) - (shifts[4])) *
       ((point_powers[10]) - (shifts[19])) * ((point_powers[10]) - (shifts[20])) *
       ((point_powers[10]) - (shifts[21])) * ((point_powers[10]) - (shifts[22])) *
@@ -15191,14 +15822,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[10]) - (shifts[25])) * ((point_powers[10]) - (shifts[26])) *
       ((point_powers[10]) - (shifts[27])) * ((point_powers[10]) - (shifts[28])) *
       ((point_powers[10]) - (shifts[29])) * ((point_powers[10]) - (shifts[30])) *
-      ((point_powers[10]) - (shifts[31])) * (domain23);
-  const FieldElementT& domain25 = (point_powers[11]) - (FieldElementT::One());
-  const FieldElementT& domain26 =
+      ((point_powers[10]) - (shifts[31])) * (domain20);
+  const FieldElementT& domain22 = (point_powers[11]) - (FieldElementT::One());
+  const FieldElementT& domain23 =
       ((point_powers[12]) - (FieldElementT::One())) * ((point_powers[12]) - (shifts[32])) *
       ((point_powers[12]) - (shifts[33])) * ((point_powers[12]) - (shifts[34])) *
       ((point_powers[12]) - (shifts[35])) * ((point_powers[12]) - (shifts[36])) *
       ((point_powers[12]) - (shifts[37])) * ((point_powers[12]) - (shifts[38]));
-  const FieldElementT& domain27 =
+  const FieldElementT& domain24 =
       ((point_powers[12]) - (shifts[39])) * ((point_powers[12]) - (shifts[40])) *
       ((point_powers[12]) - (shifts[41])) * ((point_powers[12]) - (shifts[42])) *
       ((point_powers[12]) - (shifts[43])) * ((point_powers[12]) - (shifts[44])) *
@@ -15206,8 +15837,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[12]) - (shifts[18])) * ((point_powers[12]) - (shifts[47])) *
       ((point_powers[12]) - (shifts[48])) * ((point_powers[12]) - (shifts[49])) *
       ((point_powers[12]) - (shifts[50])) * ((point_powers[12]) - (shifts[51])) *
-      ((point_powers[12]) - (shifts[52])) * ((point_powers[12]) - (shifts[53])) * (domain26);
-  const FieldElementT& domain28 =
+      ((point_powers[12]) - (shifts[52])) * ((point_powers[12]) - (shifts[53])) * (domain23);
+  const FieldElementT& domain25 =
       ((point_powers[12]) - (shifts[26])) * ((point_powers[12]) - (shifts[54])) *
       ((point_powers[12]) - (shifts[55])) * ((point_powers[12]) - (shifts[56])) *
       ((point_powers[12]) - (shifts[57])) * ((point_powers[12]) - (shifts[58])) *
@@ -15244,7 +15875,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[12]) - (shifts[118])) * ((point_powers[12]) - (shifts[119])) *
       ((point_powers[12]) - (shifts[120])) * ((point_powers[12]) - (shifts[121])) *
       ((point_powers[12]) - (shifts[122])) * ((point_powers[12]) - (shifts[123])) *
-      ((point_powers[12]) - (shifts[13])) * ((point_powers[12]) - (shifts[124])) *
+      ((point_powers[12]) - (shifts[14])) * ((point_powers[12]) - (shifts[124])) *
       ((point_powers[12]) - (shifts[125])) * ((point_powers[12]) - (shifts[126])) *
       ((point_powers[12]) - (shifts[127])) * ((point_powers[12]) - (shifts[128])) *
       ((point_powers[12]) - (shifts[129])) * ((point_powers[12]) - (shifts[130])) *
@@ -15255,8 +15886,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[12]) - (shifts[139])) * ((point_powers[12]) - (shifts[140])) *
       ((point_powers[12]) - (shifts[141])) * ((point_powers[12]) - (shifts[142])) *
       ((point_powers[12]) - (shifts[143])) * ((point_powers[12]) - (shifts[144])) *
-      ((point_powers[12]) - (shifts[145])) * ((point_powers[12]) - (shifts[146])) * (domain27);
-  const FieldElementT& domain29 =
+      ((point_powers[12]) - (shifts[145])) * ((point_powers[12]) - (shifts[146])) * (domain24);
+  const FieldElementT& domain26 =
       ((point_powers[12]) - (shifts[4])) * ((point_powers[12]) - (shifts[147])) *
       ((point_powers[12]) - (shifts[148])) * ((point_powers[12]) - (shifts[149])) *
       ((point_powers[12]) - (shifts[150])) * ((point_powers[12]) - (shifts[151])) *
@@ -15365,7 +15996,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[12]) - (shifts[347])) * ((point_powers[12]) - (shifts[348])) *
       ((point_powers[12]) - (shifts[349])) * ((point_powers[12]) - (shifts[350])) *
       ((point_powers[12]) - (shifts[351])) * ((point_powers[12]) - (shifts[352])) *
-      ((point_powers[12]) - (shifts[7])) * ((point_powers[12]) - (shifts[353])) *
+      ((point_powers[12]) - (shifts[6])) * ((point_powers[12]) - (shifts[353])) *
       ((point_powers[12]) - (shifts[354])) * ((point_powers[12]) - (shifts[355])) *
       ((point_powers[12]) - (shifts[356])) * ((point_powers[12]) - (shifts[357])) *
       ((point_powers[12]) - (shifts[358])) * ((point_powers[12]) - (shifts[359])) *
@@ -15376,18 +16007,18 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[12]) - (shifts[368])) * ((point_powers[12]) - (shifts[369])) *
       ((point_powers[12]) - (shifts[370])) * ((point_powers[12]) - (shifts[371])) *
       ((point_powers[12]) - (shifts[372])) * ((point_powers[12]) - (shifts[373])) *
-      ((point_powers[12]) - (shifts[374])) * ((point_powers[12]) - (shifts[375])) * (domain28);
-  const FieldElementT& domain30 = (point_powers[13]) - (shifts[1]);
-  const FieldElementT& domain31 = (point_powers[13]) - (shifts[376]);
-  const FieldElementT& domain32 = (point_powers[13]) - (FieldElementT::One());
-  const FieldElementT& domain33 = (point_powers[13]) - (shifts[2]);
-  const FieldElementT& domain34 = (point_powers[14]) - (shifts[1]);
-  const FieldElementT& domain35 = (point_powers[14]) - (shifts[376]);
-  const FieldElementT& domain36 = (point_powers[14]) - (FieldElementT::One());
-  const FieldElementT& domain37 = (point_powers[15]) - (shifts[2]);
-  const FieldElementT& domain38 =
-      ((point_powers[12]) - (shifts[10])) * ((point_powers[12]) - (shifts[11])) *
-      ((point_powers[12]) - (shifts[6])) * ((point_powers[12]) - (shifts[12])) *
+      ((point_powers[12]) - (shifts[374])) * ((point_powers[12]) - (shifts[375])) * (domain25);
+  const FieldElementT& domain27 = (point_powers[13]) - (shifts[1]);
+  const FieldElementT& domain28 = (point_powers[13]) - (shifts[376]);
+  const FieldElementT& domain29 = (point_powers[13]) - (FieldElementT::One());
+  const FieldElementT& domain30 = (point_powers[13]) - (shifts[2]);
+  const FieldElementT& domain31 = (point_powers[14]) - (shifts[1]);
+  const FieldElementT& domain32 = (point_powers[14]) - (shifts[376]);
+  const FieldElementT& domain33 = (point_powers[14]) - (FieldElementT::One());
+  const FieldElementT& domain34 = (point_powers[15]) - (shifts[2]);
+  const FieldElementT& domain35 =
+      ((point_powers[12]) - (shifts[9])) * ((point_powers[12]) - (shifts[10])) *
+      ((point_powers[12]) - (shifts[11])) * ((point_powers[12]) - (shifts[12])) *
       ((point_powers[12]) - (shifts[0])) * ((point_powers[12]) - (shifts[5])) *
       ((point_powers[15]) - (shifts[377])) * ((point_powers[15]) - (shifts[378])) *
       ((point_powers[15]) - (shifts[379])) * ((point_powers[15]) - (shifts[380])) *
@@ -15400,9 +16031,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[393])) * ((point_powers[15]) - (shifts[394])) *
       ((point_powers[15]) - (shifts[395])) * ((point_powers[15]) - (shifts[396])) *
       ((point_powers[15]) - (shifts[397])) * ((point_powers[15]) - (shifts[398])) *
-      ((point_powers[15]) - (shifts[399])) * ((point_powers[15]) - (shifts[1])) * (domain37);
-  const FieldElementT& domain39 = (point_powers[15]) - (shifts[400]);
-  const FieldElementT& domain40 =
+      ((point_powers[15]) - (shifts[399])) * ((point_powers[15]) - (shifts[1])) * (domain34);
+  const FieldElementT& domain36 = (point_powers[15]) - (shifts[400]);
+  const FieldElementT& domain37 =
       ((point_powers[12]) - (shifts[401])) * ((point_powers[12]) - (shifts[402])) *
       ((point_powers[12]) - (shifts[403])) * ((point_powers[12]) - (shifts[404])) *
       ((point_powers[12]) - (shifts[405])) * ((point_powers[12]) - (shifts[406])) *
@@ -15418,13 +16049,13 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[425])) * ((point_powers[15]) - (shifts[426])) *
       ((point_powers[15]) - (shifts[427])) * ((point_powers[15]) - (shifts[428])) *
       ((point_powers[15]) - (shifts[429])) * ((point_powers[15]) - (shifts[430])) *
-      ((point_powers[15]) - (shifts[431])) * ((point_powers[15]) - (shifts[432])) * (domain38) *
-      (domain39);
-  const FieldElementT& domain41 =
+      ((point_powers[15]) - (shifts[431])) * ((point_powers[15]) - (shifts[432])) * (domain35) *
+      (domain36);
+  const FieldElementT& domain38 =
       ((point_powers[15]) - (shifts[433])) * ((point_powers[15]) - (shifts[434])) *
       ((point_powers[15]) - (shifts[435])) * ((point_powers[15]) - (shifts[436])) *
       ((point_powers[15]) - (shifts[437])) * ((point_powers[15]) - (shifts[438]));
-  const FieldElementT& domain42 =
+  const FieldElementT& domain39 =
       ((point_powers[15]) - (shifts[439])) * ((point_powers[15]) - (shifts[440])) *
       ((point_powers[15]) - (shifts[441])) * ((point_powers[15]) - (shifts[442])) *
       ((point_powers[15]) - (shifts[443])) * ((point_powers[15]) - (shifts[444])) *
@@ -15432,8 +16063,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[447])) * ((point_powers[15]) - (shifts[448])) *
       ((point_powers[15]) - (shifts[449])) * ((point_powers[15]) - (shifts[450])) *
       ((point_powers[15]) - (shifts[451])) * ((point_powers[15]) - (shifts[452])) *
-      ((point_powers[15]) - (shifts[453])) * ((point_powers[15]) - (shifts[454])) * (domain41);
-  const FieldElementT& domain43 =
+      ((point_powers[15]) - (shifts[453])) * ((point_powers[15]) - (shifts[454])) * (domain38);
+  const FieldElementT& domain40 =
       ((point_powers[8]) - (shifts[0])) * ((point_powers[8]) - (shifts[5])) *
       ((point_powers[12]) - (shifts[455])) * ((point_powers[12]) - (shifts[456])) *
       ((point_powers[12]) - (shifts[457])) * ((point_powers[12]) - (shifts[458])) *
@@ -15871,24 +16502,24 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[1306])) * ((point_powers[15]) - (shifts[1307])) *
       ((point_powers[15]) - (shifts[1308])) * ((point_powers[15]) - (shifts[1309])) *
       ((point_powers[15]) - (shifts[1310])) * ((point_powers[15]) - (shifts[1311])) *
-      ((point_powers[15]) - (shifts[1312])) * ((point_powers[15]) - (shifts[1313])) * (domain40) *
-      (domain42);
-  const FieldElementT& domain44 = ((point_powers[12]) - (shifts[9])) * (domain38);
-  const FieldElementT& domain45 = (point_powers[15]) - (FieldElementT::One());
-  const FieldElementT& domain46 = ((point_powers[15]) - (shifts[1314])) * (domain45);
-  const FieldElementT& domain47 =
+      ((point_powers[15]) - (shifts[1312])) * ((point_powers[15]) - (shifts[1313])) * (domain37) *
+      (domain39);
+  const FieldElementT& domain41 = ((point_powers[12]) - (shifts[8])) * (domain35);
+  const FieldElementT& domain42 = (point_powers[15]) - (FieldElementT::One());
+  const FieldElementT& domain43 = ((point_powers[15]) - (shifts[1314])) * (domain42);
+  const FieldElementT& domain44 =
       ((point_powers[15]) - (shifts[1315])) * ((point_powers[15]) - (shifts[1316])) *
       ((point_powers[15]) - (shifts[1317])) * ((point_powers[15]) - (shifts[1318])) *
       ((point_powers[15]) - (shifts[1319])) * ((point_powers[15]) - (shifts[1320])) *
       ((point_powers[15]) - (shifts[1321])) * ((point_powers[15]) - (shifts[1322])) *
       ((point_powers[15]) - (shifts[1323])) * ((point_powers[15]) - (shifts[1324])) *
       ((point_powers[15]) - (shifts[1325])) * ((point_powers[15]) - (shifts[1326])) *
-      ((point_powers[15]) - (shifts[1327])) * ((point_powers[15]) - (shifts[1328])) * (domain46);
-  const FieldElementT& domain48 =
+      ((point_powers[15]) - (shifts[1327])) * ((point_powers[15]) - (shifts[1328])) * (domain43);
+  const FieldElementT& domain45 =
       ((point_powers[15]) - (shifts[1329])) * ((point_powers[15]) - (shifts[1330])) *
       ((point_powers[15]) - (shifts[1331])) * ((point_powers[15]) - (shifts[1332])) *
-      ((point_powers[15]) - (shifts[1333])) * ((point_powers[15]) - (shifts[1334])) * (domain46);
-  const FieldElementT& domain49 =
+      ((point_powers[15]) - (shifts[1333])) * ((point_powers[15]) - (shifts[1334])) * (domain43);
+  const FieldElementT& domain46 =
       ((point_powers[15]) - (shifts[1335])) * ((point_powers[15]) - (shifts[1336])) *
       ((point_powers[15]) - (shifts[1337])) * ((point_powers[15]) - (shifts[1338])) *
       ((point_powers[15]) - (shifts[1339])) * ((point_powers[15]) - (shifts[1340])) *
@@ -15896,14 +16527,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[1343])) * ((point_powers[15]) - (shifts[1344])) *
       ((point_powers[15]) - (shifts[1345])) * ((point_powers[15]) - (shifts[1346])) *
       ((point_powers[15]) - (shifts[1347])) * ((point_powers[15]) - (shifts[1348])) *
-      ((point_powers[15]) - (shifts[1349])) * ((point_powers[15]) - (shifts[1350])) * (domain48);
-  const FieldElementT& domain50 =
+      ((point_powers[15]) - (shifts[1349])) * ((point_powers[15]) - (shifts[1350])) * (domain45);
+  const FieldElementT& domain47 =
       ((point_powers[15]) - (shifts[1351])) * ((point_powers[15]) - (shifts[1352])) *
       ((point_powers[15]) - (shifts[1353])) * ((point_powers[15]) - (shifts[1354])) *
-      ((point_powers[15]) - (shifts[1355])) * ((point_powers[15]) - (shifts[1356])) * (domain49);
-  const FieldElementT& domain51 =
-      ((point_powers[15]) - (shifts[1357])) * ((point_powers[15]) - (shifts[1358])) * (domain50);
-  const FieldElementT& domain52 =
+      ((point_powers[15]) - (shifts[1355])) * ((point_powers[15]) - (shifts[1356])) * (domain46);
+  const FieldElementT& domain48 =
+      ((point_powers[15]) - (shifts[1357])) * ((point_powers[15]) - (shifts[1358])) * (domain47);
+  const FieldElementT& domain49 =
       ((point_powers[15]) - (shifts[1359])) * ((point_powers[15]) - (shifts[32])) *
       ((point_powers[15]) - (shifts[1360])) * ((point_powers[15]) - (shifts[33])) *
       ((point_powers[15]) - (shifts[1361])) * ((point_powers[15]) - (shifts[34])) *
@@ -15916,7 +16547,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[1368])) * ((point_powers[15]) - (shifts[41])) *
       ((point_powers[15]) - (shifts[1369])) * ((point_powers[15]) - (shifts[42])) *
       ((point_powers[15]) - (shifts[1370])) * ((point_powers[15]) - (shifts[43]));
-  const FieldElementT& domain53 =
+  const FieldElementT& domain50 =
       ((point_powers[15]) - (shifts[1371])) * ((point_powers[15]) - (shifts[1372])) *
       ((point_powers[15]) - (shifts[1373])) * ((point_powers[15]) - (shifts[1374])) *
       ((point_powers[15]) - (shifts[1375])) * ((point_powers[15]) - (shifts[1376])) *
@@ -15928,9 +16559,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[1387])) * ((point_powers[15]) - (shifts[1388])) *
       ((point_powers[15]) - (shifts[1389])) * ((point_powers[15]) - (shifts[1390])) *
       ((point_powers[15]) - (shifts[1391])) * ((point_powers[15]) - (shifts[1392])) *
-      ((point_powers[15]) - (shifts[1393])) * ((point_powers[15]) - (shifts[1394])) * (domain52);
-  const FieldElementT& domain54 = (domain46) * (domain53);
-  const FieldElementT& domain55 =
+      ((point_powers[15]) - (shifts[1393])) * ((point_powers[15]) - (shifts[1394])) * (domain49);
+  const FieldElementT& domain51 = (domain43) * (domain50);
+  const FieldElementT& domain52 =
       ((point_powers[15]) - (shifts[1395])) * ((point_powers[15]) - (shifts[1396])) *
       ((point_powers[15]) - (shifts[1397])) * ((point_powers[15]) - (shifts[1398])) *
       ((point_powers[15]) - (shifts[1399])) * ((point_powers[15]) - (shifts[1400])) *
@@ -16266,17 +16897,17 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2059])) * ((point_powers[15]) - (shifts[2060])) *
       ((point_powers[15]) - (shifts[2061])) * ((point_powers[15]) - (shifts[2062])) *
       ((point_powers[15]) - (shifts[2063])) * ((point_powers[15]) - (shifts[2064])) *
-      ((point_powers[15]) - (shifts[2065])) * ((point_powers[15]) - (shifts[2066])) * (domain50) *
-      (domain53);
-  const FieldElementT& domain56 = (domain45) * (domain52);
-  const FieldElementT& domain57 = (domain37) * (domain39);
-  const FieldElementT& domain58 = (domain42) * (domain57);
-  const FieldElementT& domain59 =
+      ((point_powers[15]) - (shifts[2065])) * ((point_powers[15]) - (shifts[2066])) * (domain47) *
+      (domain50);
+  const FieldElementT& domain53 = (domain42) * (domain49);
+  const FieldElementT& domain54 = (domain34) * (domain36);
+  const FieldElementT& domain55 = (domain39) * (domain54);
+  const FieldElementT& domain56 =
       ((point_powers[15]) - (shifts[5])) * ((point_powers[15]) - (shifts[2067])) *
       ((point_powers[15]) - (shifts[2068])) * ((point_powers[15]) - (shifts[2069])) *
       ((point_powers[15]) - (shifts[2070])) * ((point_powers[15]) - (shifts[2071])) *
       ((point_powers[15]) - (shifts[2072])) * ((point_powers[15]) - (shifts[2073]));
-  const FieldElementT& domain60 =
+  const FieldElementT& domain57 =
       ((point_powers[15]) - (shifts[2074])) * ((point_powers[15]) - (shifts[2075])) *
       ((point_powers[15]) - (shifts[2076])) * ((point_powers[15]) - (shifts[2077])) *
       ((point_powers[15]) - (shifts[2078])) * ((point_powers[15]) - (shifts[2079])) *
@@ -16284,14 +16915,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2082])) * ((point_powers[15]) - (shifts[2083])) *
       ((point_powers[15]) - (shifts[2084])) * ((point_powers[15]) - (shifts[2085])) *
       ((point_powers[15]) - (shifts[2086])) * ((point_powers[15]) - (shifts[2087])) *
-      ((point_powers[15]) - (shifts[2088])) * ((point_powers[15]) - (shifts[2089])) * (domain58) *
-      (domain59);
-  const FieldElementT& domain61 =
+      ((point_powers[15]) - (shifts[2088])) * ((point_powers[15]) - (shifts[2089])) * (domain55) *
+      (domain56);
+  const FieldElementT& domain58 =
       ((point_powers[15]) - (shifts[16])) * ((point_powers[15]) - (shifts[2090])) *
       ((point_powers[15]) - (shifts[2091])) * ((point_powers[15]) - (shifts[2092])) *
       ((point_powers[15]) - (shifts[2093])) * ((point_powers[15]) - (shifts[2094])) *
       ((point_powers[15]) - (shifts[2095])) * ((point_powers[15]) - (shifts[2096]));
-  const FieldElementT& domain62 =
+  const FieldElementT& domain59 =
       ((point_powers[15]) - (shifts[2097])) * ((point_powers[15]) - (shifts[2098])) *
       ((point_powers[15]) - (shifts[2099])) * ((point_powers[15]) - (shifts[2100])) *
       ((point_powers[15]) - (shifts[2101])) * ((point_powers[15]) - (shifts[2102])) *
@@ -16299,9 +16930,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2105])) * ((point_powers[15]) - (shifts[2106])) *
       ((point_powers[15]) - (shifts[2107])) * ((point_powers[15]) - (shifts[2108])) *
       ((point_powers[15]) - (shifts[2109])) * ((point_powers[15]) - (shifts[2110])) *
-      ((point_powers[15]) - (shifts[2111])) * ((point_powers[15]) - (shifts[2112])) * (domain60) *
-      (domain61);
-  const FieldElementT& domain63 =
+      ((point_powers[15]) - (shifts[2111])) * ((point_powers[15]) - (shifts[2112])) * (domain57) *
+      (domain58);
+  const FieldElementT& domain60 =
       ((point_powers[15]) - (shifts[12])) * ((point_powers[15]) - (shifts[2113])) *
       ((point_powers[15]) - (shifts[2114])) * ((point_powers[15]) - (shifts[2115])) *
       ((point_powers[15]) - (shifts[2116])) * ((point_powers[15]) - (shifts[2117])) *
@@ -16314,7 +16945,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2128])) * ((point_powers[15]) - (shifts[2129])) *
       ((point_powers[15]) - (shifts[2130])) * ((point_powers[15]) - (shifts[2131])) *
       ((point_powers[15]) - (shifts[2132])) * ((point_powers[15]) - (shifts[2133]));
-  const FieldElementT& domain64 =
+  const FieldElementT& domain61 =
       ((point_powers[15]) - (shifts[2134])) * ((point_powers[15]) - (shifts[2135])) *
       ((point_powers[15]) - (shifts[2136])) * ((point_powers[15]) - (shifts[2137])) *
       ((point_powers[15]) - (shifts[2138])) * ((point_powers[15]) - (shifts[2139])) *
@@ -16338,10 +16969,10 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2174])) * ((point_powers[15]) - (shifts[2175])) *
       ((point_powers[15]) - (shifts[2176])) * ((point_powers[15]) - (shifts[2177])) *
       ((point_powers[15]) - (shifts[2178])) * ((point_powers[15]) - (shifts[2179])) *
-      ((point_powers[15]) - (shifts[2180])) * ((point_powers[15]) - (shifts[2181])) * (domain62) *
-      (domain63);
-  const FieldElementT& domain65 =
-      ((point_powers[15]) - (shifts[6])) * ((point_powers[15]) - (shifts[2182])) *
+      ((point_powers[15]) - (shifts[2180])) * ((point_powers[15]) - (shifts[2181])) * (domain59) *
+      (domain60);
+  const FieldElementT& domain62 =
+      ((point_powers[15]) - (shifts[11])) * ((point_powers[15]) - (shifts[2182])) *
       ((point_powers[15]) - (shifts[2183])) * ((point_powers[15]) - (shifts[2184])) *
       ((point_powers[15]) - (shifts[2185])) * ((point_powers[15]) - (shifts[2186])) *
       ((point_powers[15]) - (shifts[2187])) * ((point_powers[15]) - (shifts[2188])) *
@@ -16349,7 +16980,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2190])) * ((point_powers[15]) - (shifts[2191])) *
       ((point_powers[15]) - (shifts[2192])) * ((point_powers[15]) - (shifts[2193])) *
       ((point_powers[15]) - (shifts[2194])) * ((point_powers[15]) - (shifts[2195]));
-  const FieldElementT& domain66 =
+  const FieldElementT& domain63 =
       ((point_powers[15]) - (shifts[2196])) * ((point_powers[15]) - (shifts[2197])) *
       ((point_powers[15]) - (shifts[2198])) * ((point_powers[15]) - (shifts[2199])) *
       ((point_powers[15]) - (shifts[2200])) * ((point_powers[15]) - (shifts[2201])) *
@@ -16365,19 +16996,19 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2220])) * ((point_powers[15]) - (shifts[2221])) *
       ((point_powers[15]) - (shifts[2222])) * ((point_powers[15]) - (shifts[2223])) *
       ((point_powers[15]) - (shifts[2224])) * ((point_powers[15]) - (shifts[2225])) *
-      ((point_powers[15]) - (shifts[2226])) * ((point_powers[15]) - (shifts[2227])) * (domain64) *
-      (domain65);
-  const FieldElementT& domain67 =
+      ((point_powers[15]) - (shifts[2226])) * ((point_powers[15]) - (shifts[2227])) * (domain61) *
+      (domain62);
+  const FieldElementT& domain64 =
       ((point_powers[15]) - (shifts[497])) * ((point_powers[15]) - (shifts[2228])) *
       ((point_powers[15]) - (shifts[2229])) * ((point_powers[15]) - (shifts[2230])) *
       ((point_powers[15]) - (shifts[2231])) * ((point_powers[15]) - (shifts[2232])) *
       ((point_powers[15]) - (shifts[2233])) * ((point_powers[15]) - (shifts[2234]));
-  const FieldElementT& domain68 =
-      ((point_powers[15]) - (shifts[11])) * ((point_powers[15]) - (shifts[2235])) *
+  const FieldElementT& domain65 =
+      ((point_powers[15]) - (shifts[10])) * ((point_powers[15]) - (shifts[2235])) *
       ((point_powers[15]) - (shifts[2236])) * ((point_powers[15]) - (shifts[2237])) *
       ((point_powers[15]) - (shifts[2238])) * ((point_powers[15]) - (shifts[2239])) *
-      ((point_powers[15]) - (shifts[2240])) * ((point_powers[15]) - (shifts[2241])) * (domain67);
-  const FieldElementT& domain69 =
+      ((point_powers[15]) - (shifts[2240])) * ((point_powers[15]) - (shifts[2241])) * (domain64);
+  const FieldElementT& domain66 =
       ((point_powers[15]) - (shifts[2242])) * ((point_powers[15]) - (shifts[2243])) *
       ((point_powers[15]) - (shifts[2244])) * ((point_powers[15]) - (shifts[2245])) *
       ((point_powers[15]) - (shifts[2246])) * ((point_powers[15]) - (shifts[2247])) *
@@ -16393,10 +17024,10 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2266])) * ((point_powers[15]) - (shifts[2267])) *
       ((point_powers[15]) - (shifts[2268])) * ((point_powers[15]) - (shifts[2269])) *
       ((point_powers[15]) - (shifts[2270])) * ((point_powers[15]) - (shifts[2271])) *
-      ((point_powers[15]) - (shifts[2272])) * ((point_powers[15]) - (shifts[2273])) * (domain66) *
-      (domain68);
-  const FieldElementT& domain70 =
-      ((point_powers[15]) - (shifts[9])) * ((point_powers[15]) - (shifts[2274])) *
+      ((point_powers[15]) - (shifts[2272])) * ((point_powers[15]) - (shifts[2273])) * (domain63) *
+      (domain65);
+  const FieldElementT& domain67 =
+      ((point_powers[15]) - (shifts[8])) * ((point_powers[15]) - (shifts[2274])) *
       ((point_powers[15]) - (shifts[2275])) * ((point_powers[15]) - (shifts[2276])) *
       ((point_powers[15]) - (shifts[2277])) * ((point_powers[15]) - (shifts[2278])) *
       ((point_powers[15]) - (shifts[2279])) * ((point_powers[15]) - (shifts[2280])) *
@@ -16404,7 +17035,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2283])) * ((point_powers[15]) - (shifts[2284])) *
       ((point_powers[15]) - (shifts[2285])) * ((point_powers[15]) - (shifts[2286])) *
       ((point_powers[15]) - (shifts[2287])) * ((point_powers[15]) - (shifts[2288])) *
-      ((point_powers[15]) - (shifts[10])) * ((point_powers[15]) - (shifts[2289])) *
+      ((point_powers[15]) - (shifts[9])) * ((point_powers[15]) - (shifts[2289])) *
       ((point_powers[15]) - (shifts[2290])) * ((point_powers[15]) - (shifts[2291])) *
       ((point_powers[15]) - (shifts[2292])) * ((point_powers[15]) - (shifts[2293])) *
       ((point_powers[15]) - (shifts[2294])) * ((point_powers[15]) - (shifts[2295])) *
@@ -16412,7 +17043,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2297])) * ((point_powers[15]) - (shifts[2298])) *
       ((point_powers[15]) - (shifts[2299])) * ((point_powers[15]) - (shifts[2300])) *
       ((point_powers[15]) - (shifts[2301])) * ((point_powers[15]) - (shifts[2302]));
-  const FieldElementT& domain71 =
+  const FieldElementT& domain68 =
       ((point_powers[15]) - (shifts[2303])) * ((point_powers[15]) - (shifts[2304])) *
       ((point_powers[15]) - (shifts[2305])) * ((point_powers[15]) - (shifts[2306])) *
       ((point_powers[15]) - (shifts[2307])) * ((point_powers[15]) - (shifts[2308])) *
@@ -16444,14 +17075,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2359])) * ((point_powers[15]) - (shifts[2360])) *
       ((point_powers[15]) - (shifts[2361])) * ((point_powers[15]) - (shifts[2362])) *
       ((point_powers[15]) - (shifts[2363])) * ((point_powers[15]) - (shifts[2364])) *
-      ((point_powers[15]) - (shifts[2365])) * ((point_powers[15]) - (shifts[2366])) * (domain69) *
-      (domain70);
-  const FieldElementT& domain72 =
+      ((point_powers[15]) - (shifts[2365])) * ((point_powers[15]) - (shifts[2366])) * (domain66) *
+      (domain67);
+  const FieldElementT& domain69 =
       ((point_powers[15]) - (shifts[2367])) * ((point_powers[15]) - (shifts[2368])) *
       ((point_powers[15]) - (shifts[2369])) * ((point_powers[15]) - (shifts[2370])) *
       ((point_powers[15]) - (shifts[2371])) * ((point_powers[15]) - (shifts[2372])) *
       ((point_powers[15]) - (shifts[2373])) * ((point_powers[15]) - (shifts[2374]));
-  const FieldElementT& domain73 =
+  const FieldElementT& domain70 =
       ((point_powers[15]) - (shifts[2375])) * ((point_powers[15]) - (shifts[2376])) *
       ((point_powers[15]) - (shifts[2377])) * ((point_powers[15]) - (shifts[2378])) *
       ((point_powers[15]) - (shifts[2379])) * ((point_powers[15]) - (shifts[2380])) *
@@ -16459,10 +17090,10 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2383])) * ((point_powers[15]) - (shifts[2384])) *
       ((point_powers[15]) - (shifts[2385])) * ((point_powers[15]) - (shifts[2386])) *
       ((point_powers[15]) - (shifts[2387])) * ((point_powers[15]) - (shifts[2388])) *
-      ((point_powers[15]) - (shifts[2389])) * ((point_powers[15]) - (shifts[2390])) * (domain71) *
-      (domain72);
-  const FieldElementT& domain74 =
-      ((point_powers[15]) - (shifts[8])) * ((point_powers[15]) - (shifts[2391])) *
+      ((point_powers[15]) - (shifts[2389])) * ((point_powers[15]) - (shifts[2390])) * (domain68) *
+      (domain69);
+  const FieldElementT& domain71 =
+      ((point_powers[15]) - (shifts[7])) * ((point_powers[15]) - (shifts[2391])) *
       ((point_powers[15]) - (shifts[2392])) * ((point_powers[15]) - (shifts[2393])) *
       ((point_powers[15]) - (shifts[2394])) * ((point_powers[15]) - (shifts[2395])) *
       ((point_powers[15]) - (shifts[2396])) * ((point_powers[15]) - (shifts[2397])) *
@@ -16474,7 +17105,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2407])) * ((point_powers[15]) - (shifts[2408])) *
       ((point_powers[15]) - (shifts[2409])) * ((point_powers[15]) - (shifts[2410])) *
       ((point_powers[15]) - (shifts[2411])) * ((point_powers[15]) - (shifts[2412]));
-  const FieldElementT& domain75 =
+  const FieldElementT& domain72 =
       ((point_powers[15]) - (shifts[2413])) * ((point_powers[15]) - (shifts[2414])) *
       ((point_powers[15]) - (shifts[2415])) * ((point_powers[15]) - (shifts[2416])) *
       ((point_powers[15]) - (shifts[2417])) * ((point_powers[15]) - (shifts[2418])) *
@@ -16498,14 +17129,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2453])) * ((point_powers[15]) - (shifts[2454])) *
       ((point_powers[15]) - (shifts[2455])) * ((point_powers[15]) - (shifts[2456])) *
       ((point_powers[15]) - (shifts[2457])) * ((point_powers[15]) - (shifts[2458])) *
-      ((point_powers[15]) - (shifts[2459])) * ((point_powers[15]) - (shifts[2460])) * (domain73) *
-      (domain74);
-  const FieldElementT& domain76 =
+      ((point_powers[15]) - (shifts[2459])) * ((point_powers[15]) - (shifts[2460])) * (domain70) *
+      (domain71);
+  const FieldElementT& domain73 =
       ((point_powers[15]) - (shifts[368])) * ((point_powers[15]) - (shifts[2461])) *
       ((point_powers[15]) - (shifts[2462])) * ((point_powers[15]) - (shifts[2463])) *
       ((point_powers[15]) - (shifts[2464])) * ((point_powers[15]) - (shifts[2465])) *
       ((point_powers[15]) - (shifts[2466])) * ((point_powers[15]) - (shifts[2467]));
-  const FieldElementT& domain77 =
+  const FieldElementT& domain74 =
       ((point_powers[15]) - (shifts[2468])) * ((point_powers[15]) - (shifts[2469])) *
       ((point_powers[15]) - (shifts[2470])) * ((point_powers[15]) - (shifts[2471])) *
       ((point_powers[15]) - (shifts[2472])) * ((point_powers[15]) - (shifts[2473])) *
@@ -16513,14 +17144,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2476])) * ((point_powers[15]) - (shifts[2477])) *
       ((point_powers[15]) - (shifts[2478])) * ((point_powers[15]) - (shifts[2479])) *
       ((point_powers[15]) - (shifts[2480])) * ((point_powers[15]) - (shifts[2481])) *
-      ((point_powers[15]) - (shifts[2482])) * ((point_powers[15]) - (shifts[2483])) * (domain75) *
-      (domain76);
-  const FieldElementT& domain78 =
-      ((point_powers[15]) - (shifts[7])) * ((point_powers[15]) - (shifts[2484])) *
+      ((point_powers[15]) - (shifts[2482])) * ((point_powers[15]) - (shifts[2483])) * (domain72) *
+      (domain73);
+  const FieldElementT& domain75 =
+      ((point_powers[15]) - (shifts[6])) * ((point_powers[15]) - (shifts[2484])) *
       ((point_powers[15]) - (shifts[2485])) * ((point_powers[15]) - (shifts[2486])) *
       ((point_powers[15]) - (shifts[2487])) * ((point_powers[15]) - (shifts[2488])) *
       ((point_powers[15]) - (shifts[2489])) * ((point_powers[15]) - (shifts[2490]));
-  const FieldElementT& domain79 =
+  const FieldElementT& domain76 =
       ((point_powers[15]) - (shifts[2491])) * ((point_powers[15]) - (shifts[2492])) *
       ((point_powers[15]) - (shifts[2493])) * ((point_powers[15]) - (shifts[2494])) *
       ((point_powers[15]) - (shifts[2495])) * ((point_powers[15]) - (shifts[2496])) *
@@ -16528,14 +17159,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2499])) * ((point_powers[15]) - (shifts[2500])) *
       ((point_powers[15]) - (shifts[2501])) * ((point_powers[15]) - (shifts[2502])) *
       ((point_powers[15]) - (shifts[2503])) * ((point_powers[15]) - (shifts[2504])) *
-      ((point_powers[15]) - (shifts[2505])) * ((point_powers[15]) - (shifts[2506])) * (domain77) *
-      (domain78);
-  const FieldElementT& domain80 =
+      ((point_powers[15]) - (shifts[2505])) * ((point_powers[15]) - (shifts[2506])) * (domain74) *
+      (domain75);
+  const FieldElementT& domain77 =
       ((point_powers[15]) - (shifts[345])) * ((point_powers[15]) - (shifts[2507])) *
       ((point_powers[15]) - (shifts[2508])) * ((point_powers[15]) - (shifts[2509])) *
       ((point_powers[15]) - (shifts[2510])) * ((point_powers[15]) - (shifts[2511])) *
       ((point_powers[15]) - (shifts[2512])) * ((point_powers[15]) - (shifts[2513]));
-  const FieldElementT& domain81 =
+  const FieldElementT& domain78 =
       ((point_powers[15]) - (shifts[2514])) * ((point_powers[15]) - (shifts[2515])) *
       ((point_powers[15]) - (shifts[2516])) * ((point_powers[15]) - (shifts[2517])) *
       ((point_powers[15]) - (shifts[2518])) * ((point_powers[15]) - (shifts[2519])) *
@@ -16543,9 +17174,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2522])) * ((point_powers[15]) - (shifts[2523])) *
       ((point_powers[15]) - (shifts[2524])) * ((point_powers[15]) - (shifts[2525])) *
       ((point_powers[15]) - (shifts[2526])) * ((point_powers[15]) - (shifts[2527])) *
-      ((point_powers[15]) - (shifts[2528])) * ((point_powers[15]) - (shifts[2529])) * (domain79) *
-      (domain80);
-  const FieldElementT& domain82 =
+      ((point_powers[15]) - (shifts[2528])) * ((point_powers[15]) - (shifts[2529])) * (domain76) *
+      (domain77);
+  const FieldElementT& domain79 =
       ((point_powers[15]) - (shifts[139])) * ((point_powers[15]) - (shifts[2530])) *
       ((point_powers[15]) - (shifts[2531])) * ((point_powers[15]) - (shifts[2532])) *
       ((point_powers[15]) - (shifts[2533])) * ((point_powers[15]) - (shifts[2534])) *
@@ -16554,16 +17185,16 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2538])) * ((point_powers[15]) - (shifts[2539])) *
       ((point_powers[15]) - (shifts[2540])) * ((point_powers[15]) - (shifts[2541])) *
       ((point_powers[15]) - (shifts[2542])) * ((point_powers[15]) - (shifts[2543]));
-  const FieldElementT& domain83 =
+  const FieldElementT& domain80 =
       ((point_powers[15]) - (shifts[2544])) * ((point_powers[15]) - (shifts[2545])) *
       ((point_powers[15]) - (shifts[2546])) * ((point_powers[15]) - (shifts[2547])) *
       ((point_powers[15]) - (shifts[2548])) * ((point_powers[15]) - (shifts[2549])) *
       ((point_powers[15]) - (shifts[2550])) * ((point_powers[15]) - (shifts[2551])) *
-      ((point_powers[15]) - (shifts[13])) * ((point_powers[15]) - (shifts[2552])) *
+      ((point_powers[15]) - (shifts[14])) * ((point_powers[15]) - (shifts[2552])) *
       ((point_powers[15]) - (shifts[2553])) * ((point_powers[15]) - (shifts[2554])) *
       ((point_powers[15]) - (shifts[2555])) * ((point_powers[15]) - (shifts[2556])) *
-      ((point_powers[15]) - (shifts[2557])) * ((point_powers[15]) - (shifts[2558])) * (domain82);
-  const FieldElementT& domain84 =
+      ((point_powers[15]) - (shifts[2557])) * ((point_powers[15]) - (shifts[2558])) * (domain79);
+  const FieldElementT& domain81 =
       ((point_powers[15]) - (shifts[2559])) * ((point_powers[15]) - (shifts[2560])) *
       ((point_powers[15]) - (shifts[2561])) * ((point_powers[15]) - (shifts[2562])) *
       ((point_powers[15]) - (shifts[2563])) * ((point_powers[15]) - (shifts[2564])) *
@@ -16595,9 +17226,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2615])) * ((point_powers[15]) - (shifts[2616])) *
       ((point_powers[15]) - (shifts[2617])) * ((point_powers[15]) - (shifts[2618])) *
       ((point_powers[15]) - (shifts[2619])) * ((point_powers[15]) - (shifts[2620])) *
-      ((point_powers[15]) - (shifts[2621])) * ((point_powers[15]) - (shifts[2622])) * (domain81) *
-      (domain83);
-  const FieldElementT& domain85 =
+      ((point_powers[15]) - (shifts[2621])) * ((point_powers[15]) - (shifts[2622])) * (domain78) *
+      (domain80);
+  const FieldElementT& domain82 =
       ((point_powers[15]) - (shifts[2623])) * ((point_powers[15]) - (shifts[2624])) *
       ((point_powers[15]) - (shifts[2625])) * ((point_powers[15]) - (shifts[2626])) *
       ((point_powers[15]) - (shifts[2627])) * ((point_powers[15]) - (shifts[2628])) *
@@ -16610,7 +17241,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2641])) * ((point_powers[15]) - (shifts[2642])) *
       ((point_powers[15]) - (shifts[2643])) * ((point_powers[15]) - (shifts[2644])) *
       ((point_powers[15]) - (shifts[2645])) * ((point_powers[15]) - (shifts[2646])) *
-      ((point_powers[15]) - (shifts[14])) * ((point_powers[15]) - (shifts[2647])) *
+      ((point_powers[15]) - (shifts[13])) * ((point_powers[15]) - (shifts[2647])) *
       ((point_powers[15]) - (shifts[2648])) * ((point_powers[15]) - (shifts[2649])) *
       ((point_powers[15]) - (shifts[2650])) * ((point_powers[15]) - (shifts[2651])) *
       ((point_powers[15]) - (shifts[2652])) * ((point_powers[15]) - (shifts[2653])) *
@@ -16621,8 +17252,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2662])) * ((point_powers[15]) - (shifts[2663])) *
       ((point_powers[15]) - (shifts[2664])) * ((point_powers[15]) - (shifts[2665])) *
       ((point_powers[15]) - (shifts[2666])) * ((point_powers[15]) - (shifts[2667])) *
-      ((point_powers[15]) - (shifts[2668])) * ((point_powers[15]) - (shifts[2669])) * (domain84);
-  const FieldElementT& domain86 =
+      ((point_powers[15]) - (shifts[2668])) * ((point_powers[15]) - (shifts[2669])) * (domain81);
+  const FieldElementT& domain83 =
       ((point_powers[15]) - (shifts[2670])) * ((point_powers[15]) - (shifts[2671])) *
       ((point_powers[15]) - (shifts[2672])) * ((point_powers[15]) - (shifts[2673])) *
       ((point_powers[15]) - (shifts[2674])) * ((point_powers[15]) - (shifts[2675])) *
@@ -16634,13 +17265,13 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2686])) * ((point_powers[15]) - (shifts[2687])) *
       ((point_powers[15]) - (shifts[2688])) * ((point_powers[15]) - (shifts[2689])) *
       ((point_powers[15]) - (shifts[2690])) * ((point_powers[15]) - (shifts[2691])) *
-      ((point_powers[15]) - (shifts[2692])) * ((point_powers[15]) - (shifts[2693])) * (domain85);
-  const FieldElementT& domain87 =
+      ((point_powers[15]) - (shifts[2692])) * ((point_powers[15]) - (shifts[2693])) * (domain82);
+  const FieldElementT& domain84 =
       ((point_powers[15]) - (shifts[18])) * ((point_powers[15]) - (shifts[2694])) *
       ((point_powers[15]) - (shifts[2695])) * ((point_powers[15]) - (shifts[2696])) *
       ((point_powers[15]) - (shifts[2697])) * ((point_powers[15]) - (shifts[2698])) *
       ((point_powers[15]) - (shifts[2699])) * ((point_powers[15]) - (shifts[2700]));
-  const FieldElementT& domain88 =
+  const FieldElementT& domain85 =
       ((point_powers[15]) - (shifts[2701])) * ((point_powers[15]) - (shifts[2702])) *
       ((point_powers[15]) - (shifts[2703])) * ((point_powers[15]) - (shifts[2704])) *
       ((point_powers[15]) - (shifts[2705])) * ((point_powers[15]) - (shifts[2706])) *
@@ -16648,19 +17279,19 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2709])) * ((point_powers[15]) - (shifts[2710])) *
       ((point_powers[15]) - (shifts[2711])) * ((point_powers[15]) - (shifts[2712])) *
       ((point_powers[15]) - (shifts[2713])) * ((point_powers[15]) - (shifts[2714])) *
-      ((point_powers[15]) - (shifts[2715])) * ((point_powers[15]) - (shifts[2716])) * (domain49) *
-      (domain87);
-  const FieldElementT& domain89 =
+      ((point_powers[15]) - (shifts[2715])) * ((point_powers[15]) - (shifts[2716])) * (domain46) *
+      (domain84);
+  const FieldElementT& domain86 =
       ((point_powers[15]) - (shifts[4])) * ((point_powers[15]) - (shifts[2717])) *
       ((point_powers[15]) - (shifts[2718])) * ((point_powers[15]) - (shifts[2719])) *
       ((point_powers[15]) - (shifts[2720])) * ((point_powers[15]) - (shifts[2721])) *
       ((point_powers[15]) - (shifts[2722])) * ((point_powers[15]) - (shifts[2723]));
-  const FieldElementT& domain90 =
+  const FieldElementT& domain87 =
       ((point_powers[15]) - (shifts[19])) * ((point_powers[15]) - (shifts[2724])) *
       ((point_powers[15]) - (shifts[2725])) * ((point_powers[15]) - (shifts[2726])) *
       ((point_powers[15]) - (shifts[2727])) * ((point_powers[15]) - (shifts[2728])) *
       ((point_powers[15]) - (shifts[2729])) * ((point_powers[15]) - (shifts[2730]));
-  const FieldElementT& domain91 =
+  const FieldElementT& domain88 =
       ((point_powers[15]) - (shifts[20])) * ((point_powers[15]) - (shifts[2731])) *
       ((point_powers[15]) - (shifts[2732])) * ((point_powers[15]) - (shifts[2733])) *
       ((point_powers[15]) - (shifts[2734])) * ((point_powers[15]) - (shifts[2735])) *
@@ -16668,9 +17299,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[21])) * ((point_powers[15]) - (shifts[2738])) *
       ((point_powers[15]) - (shifts[2739])) * ((point_powers[15]) - (shifts[2740])) *
       ((point_powers[15]) - (shifts[2741])) * ((point_powers[15]) - (shifts[2742])) *
-      ((point_powers[15]) - (shifts[2743])) * ((point_powers[15]) - (shifts[2744])) * (domain89) *
-      (domain90);
-  const FieldElementT& domain92 =
+      ((point_powers[15]) - (shifts[2743])) * ((point_powers[15]) - (shifts[2744])) * (domain86) *
+      (domain87);
+  const FieldElementT& domain89 =
       ((point_powers[15]) - (shifts[2745])) * ((point_powers[15]) - (shifts[2746])) *
       ((point_powers[15]) - (shifts[2747])) * ((point_powers[15]) - (shifts[2748])) *
       ((point_powers[15]) - (shifts[2749])) * ((point_powers[15]) - (shifts[2750])) *
@@ -16678,8 +17309,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2753])) * ((point_powers[15]) - (shifts[2754])) *
       ((point_powers[15]) - (shifts[2755])) * ((point_powers[15]) - (shifts[2756])) *
       ((point_powers[15]) - (shifts[2757])) * ((point_powers[15]) - (shifts[2758])) *
-      ((point_powers[15]) - (shifts[2759])) * ((point_powers[15]) - (shifts[2760])) * (domain88);
-  const FieldElementT& domain93 =
+      ((point_powers[15]) - (shifts[2759])) * ((point_powers[15]) - (shifts[2760])) * (domain85);
+  const FieldElementT& domain90 =
       ((point_powers[15]) - (shifts[2761])) * ((point_powers[15]) - (shifts[2762])) *
       ((point_powers[15]) - (shifts[2763])) * ((point_powers[15]) - (shifts[2764])) *
       ((point_powers[15]) - (shifts[2765])) * ((point_powers[15]) - (shifts[2766])) *
@@ -16688,7 +17319,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2771])) * ((point_powers[15]) - (shifts[2772])) *
       ((point_powers[15]) - (shifts[2773])) * ((point_powers[15]) - (shifts[2774])) *
       ((point_powers[15]) - (shifts[2775])) * ((point_powers[15]) - (shifts[2776]));
-  const FieldElementT& domain94 =
+  const FieldElementT& domain91 =
       ((point_powers[15]) - (shifts[2777])) * ((point_powers[15]) - (shifts[2778])) *
       ((point_powers[15]) - (shifts[2779])) * ((point_powers[15]) - (shifts[2780])) *
       ((point_powers[15]) - (shifts[2781])) * ((point_powers[15]) - (shifts[2782])) *
@@ -16704,29 +17335,29 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2801])) * ((point_powers[15]) - (shifts[2802])) *
       ((point_powers[15]) - (shifts[2803])) * ((point_powers[15]) - (shifts[2804])) *
       ((point_powers[15]) - (shifts[2805])) * ((point_powers[15]) - (shifts[2806])) *
-      ((point_powers[15]) - (shifts[2807])) * ((point_powers[15]) - (shifts[2808])) * (domain91) *
-      (domain92) * (domain93);
-  const FieldElementT& domain95 =
+      ((point_powers[15]) - (shifts[2807])) * ((point_powers[15]) - (shifts[2808])) * (domain88) *
+      (domain89) * (domain90);
+  const FieldElementT& domain92 =
       ((point_powers[15]) - (shifts[23])) * ((point_powers[15]) - (shifts[2809])) *
       ((point_powers[15]) - (shifts[2810])) * ((point_powers[15]) - (shifts[2811])) *
       ((point_powers[15]) - (shifts[2812])) * ((point_powers[15]) - (shifts[2813])) *
       ((point_powers[15]) - (shifts[2814])) * ((point_powers[15]) - (shifts[2815]));
-  const FieldElementT& domain96 =
+  const FieldElementT& domain93 =
       ((point_powers[15]) - (shifts[22])) * ((point_powers[15]) - (shifts[2816])) *
       ((point_powers[15]) - (shifts[2817])) * ((point_powers[15]) - (shifts[2818])) *
       ((point_powers[15]) - (shifts[2819])) * ((point_powers[15]) - (shifts[2820])) *
-      ((point_powers[15]) - (shifts[2821])) * ((point_powers[15]) - (shifts[2822])) * (domain95);
-  const FieldElementT& domain97 =
+      ((point_powers[15]) - (shifts[2821])) * ((point_powers[15]) - (shifts[2822])) * (domain92);
+  const FieldElementT& domain94 =
       ((point_powers[15]) - (shifts[24])) * ((point_powers[15]) - (shifts[2823])) *
       ((point_powers[15]) - (shifts[2824])) * ((point_powers[15]) - (shifts[2825])) *
       ((point_powers[15]) - (shifts[2826])) * ((point_powers[15]) - (shifts[2827])) *
-      ((point_powers[15]) - (shifts[2828])) * ((point_powers[15]) - (shifts[2829])) * (domain96);
-  const FieldElementT& domain98 =
+      ((point_powers[15]) - (shifts[2828])) * ((point_powers[15]) - (shifts[2829])) * (domain93);
+  const FieldElementT& domain95 =
       ((point_powers[15]) - (shifts[25])) * ((point_powers[15]) - (shifts[2830])) *
       ((point_powers[15]) - (shifts[2831])) * ((point_powers[15]) - (shifts[2832])) *
       ((point_powers[15]) - (shifts[2833])) * ((point_powers[15]) - (shifts[2834])) *
-      ((point_powers[15]) - (shifts[2835])) * ((point_powers[15]) - (shifts[2836])) * (domain97);
-  const FieldElementT& domain99 =
+      ((point_powers[15]) - (shifts[2835])) * ((point_powers[15]) - (shifts[2836])) * (domain94);
+  const FieldElementT& domain96 =
       ((point_powers[15]) - (shifts[2837])) * ((point_powers[15]) - (shifts[2838])) *
       ((point_powers[15]) - (shifts[2839])) * ((point_powers[15]) - (shifts[2840])) *
       ((point_powers[15]) - (shifts[2841])) * ((point_powers[15]) - (shifts[2842])) *
@@ -16735,7 +17366,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2847])) * ((point_powers[15]) - (shifts[2848])) *
       ((point_powers[15]) - (shifts[2849])) * ((point_powers[15]) - (shifts[2850])) *
       ((point_powers[15]) - (shifts[2851])) * ((point_powers[15]) - (shifts[2852]));
-  const FieldElementT& domain100 =
+  const FieldElementT& domain97 =
       ((point_powers[15]) - (shifts[2853])) * ((point_powers[15]) - (shifts[2854])) *
       ((point_powers[15]) - (shifts[2855])) * ((point_powers[15]) - (shifts[2856])) *
       ((point_powers[15]) - (shifts[2857])) * ((point_powers[15]) - (shifts[2858])) *
@@ -16743,9 +17374,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2861])) * ((point_powers[15]) - (shifts[2862])) *
       ((point_powers[15]) - (shifts[2863])) * ((point_powers[15]) - (shifts[2864])) *
       ((point_powers[15]) - (shifts[2865])) * ((point_powers[15]) - (shifts[2866])) *
-      ((point_powers[15]) - (shifts[2867])) * ((point_powers[15]) - (shifts[2868])) * (domain94) *
-      (domain99);
-  const FieldElementT& domain101 =
+      ((point_powers[15]) - (shifts[2867])) * ((point_powers[15]) - (shifts[2868])) * (domain91) *
+      (domain96);
+  const FieldElementT& domain98 =
       ((point_powers[15]) - (shifts[2869])) * ((point_powers[15]) - (shifts[2870])) *
       ((point_powers[15]) - (shifts[2871])) * ((point_powers[15]) - (shifts[2872])) *
       ((point_powers[15]) - (shifts[2873])) * ((point_powers[15]) - (shifts[2874])) *
@@ -16761,9 +17392,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2893])) * ((point_powers[15]) - (shifts[2894])) *
       ((point_powers[15]) - (shifts[2895])) * ((point_powers[15]) - (shifts[2896])) *
       ((point_powers[15]) - (shifts[2897])) * ((point_powers[15]) - (shifts[2898])) *
-      ((point_powers[15]) - (shifts[2899])) * ((point_powers[15]) - (shifts[2900])) * (domain98) *
-      (domain100);
-  const FieldElementT& domain102 =
+      ((point_powers[15]) - (shifts[2899])) * ((point_powers[15]) - (shifts[2900])) * (domain95) *
+      (domain97);
+  const FieldElementT& domain99 =
       ((point_powers[15]) - (shifts[26])) * ((point_powers[15]) - (shifts[2901])) *
       ((point_powers[15]) - (shifts[2902])) * ((point_powers[15]) - (shifts[2903])) *
       ((point_powers[15]) - (shifts[2904])) * ((point_powers[15]) - (shifts[2905])) *
@@ -16780,17 +17411,17 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2923])) * ((point_powers[15]) - (shifts[2924])) *
       ((point_powers[15]) - (shifts[2925])) * ((point_powers[15]) - (shifts[2926])) *
       ((point_powers[15]) - (shifts[2927])) * ((point_powers[15]) - (shifts[2928]));
-  const FieldElementT& domain103 =
+  const FieldElementT& domain100 =
       ((point_powers[15]) - (shifts[30])) * ((point_powers[15]) - (shifts[2929])) *
       ((point_powers[15]) - (shifts[2930])) * ((point_powers[15]) - (shifts[2931])) *
       ((point_powers[15]) - (shifts[2932])) * ((point_powers[15]) - (shifts[2933])) *
-      ((point_powers[15]) - (shifts[2934])) * ((point_powers[15]) - (shifts[2935])) * (domain102);
-  const FieldElementT& domain104 =
+      ((point_powers[15]) - (shifts[2934])) * ((point_powers[15]) - (shifts[2935])) * (domain99);
+  const FieldElementT& domain101 =
       ((point_powers[15]) - (shifts[31])) * ((point_powers[15]) - (shifts[2936])) *
       ((point_powers[15]) - (shifts[2937])) * ((point_powers[15]) - (shifts[2938])) *
       ((point_powers[15]) - (shifts[2939])) * ((point_powers[15]) - (shifts[2940])) *
       ((point_powers[15]) - (shifts[2941])) * ((point_powers[15]) - (shifts[2942]));
-  const FieldElementT& domain105 =
+  const FieldElementT& domain102 =
       ((point_powers[15]) - (shifts[2943])) * ((point_powers[15]) - (shifts[2944])) *
       ((point_powers[15]) - (shifts[2945])) * ((point_powers[15]) - (shifts[2946])) *
       ((point_powers[15]) - (shifts[2947])) * ((point_powers[15]) - (shifts[2948])) *
@@ -16798,19 +17429,19 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[2951])) * ((point_powers[15]) - (shifts[2952])) *
       ((point_powers[15]) - (shifts[2953])) * ((point_powers[15]) - (shifts[2954])) *
       ((point_powers[15]) - (shifts[2955])) * ((point_powers[15]) - (shifts[2956])) *
-      ((point_powers[15]) - (shifts[2957])) * ((point_powers[15]) - (shifts[2958])) * (domain103) *
-      (domain104);
-  const FieldElementT& domain106 =
+      ((point_powers[15]) - (shifts[2957])) * ((point_powers[15]) - (shifts[2958])) * (domain100) *
+      (domain101);
+  const FieldElementT& domain103 =
       ((point_powers[15]) - (shifts[2959])) * ((point_powers[15]) - (shifts[2960])) *
       ((point_powers[15]) - (shifts[2961])) * ((point_powers[15]) - (shifts[2962])) *
       ((point_powers[15]) - (shifts[2963])) * ((point_powers[15]) - (shifts[2964])) *
-      ((point_powers[15]) - (shifts[2965])) * ((point_powers[15]) - (shifts[2966])) * (domain105);
-  const FieldElementT& domain107 =
+      ((point_powers[15]) - (shifts[2965])) * ((point_powers[15]) - (shifts[2966])) * (domain102);
+  const FieldElementT& domain104 =
       ((point_powers[15]) - (shifts[2967])) * ((point_powers[15]) - (shifts[2968])) *
       ((point_powers[15]) - (shifts[2969])) * ((point_powers[15]) - (shifts[2970])) *
       ((point_powers[15]) - (shifts[2971])) * ((point_powers[15]) - (shifts[2972])) *
-      ((point_powers[15]) - (shifts[2973])) * ((point_powers[15]) - (shifts[2974])) * (domain106);
-  const FieldElementT& domain108 =
+      ((point_powers[15]) - (shifts[2973])) * ((point_powers[15]) - (shifts[2974])) * (domain103);
+  const FieldElementT& domain105 =
       ((point_powers[15]) - (shifts[2975])) * ((point_powers[15]) - (shifts[2976])) *
       ((point_powers[15]) - (shifts[2977])) * ((point_powers[15]) - (shifts[2978])) *
       ((point_powers[15]) - (shifts[2979])) * ((point_powers[15]) - (shifts[2980])) *
@@ -16842,8 +17473,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3031])) * ((point_powers[15]) - (shifts[3032])) *
       ((point_powers[15]) - (shifts[3033])) * ((point_powers[15]) - (shifts[3034])) *
       ((point_powers[15]) - (shifts[3035])) * ((point_powers[15]) - (shifts[3036])) *
-      ((point_powers[15]) - (shifts[3037])) * ((point_powers[15]) - (shifts[3038])) * (domain101);
-  const FieldElementT& domain109 =
+      ((point_powers[15]) - (shifts[3037])) * ((point_powers[15]) - (shifts[3038])) * (domain98);
+  const FieldElementT& domain106 =
       ((point_powers[15]) - (shifts[3039])) * ((point_powers[15]) - (shifts[3040])) *
       ((point_powers[15]) - (shifts[3041])) * ((point_powers[15]) - (shifts[3042])) *
       ((point_powers[15]) - (shifts[3043])) * ((point_powers[15]) - (shifts[3044])) *
@@ -16851,8 +17482,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3047])) * ((point_powers[15]) - (shifts[3048])) *
       ((point_powers[15]) - (shifts[3049])) * ((point_powers[15]) - (shifts[3050])) *
       ((point_powers[15]) - (shifts[3051])) * ((point_powers[15]) - (shifts[3052])) *
-      ((point_powers[15]) - (shifts[3053])) * ((point_powers[15]) - (shifts[3054])) * (domain108);
-  const FieldElementT& domain110 =
+      ((point_powers[15]) - (shifts[3053])) * ((point_powers[15]) - (shifts[3054])) * (domain105);
+  const FieldElementT& domain107 =
       ((point_powers[15]) - (shifts[3055])) * ((point_powers[15]) - (shifts[3056])) *
       ((point_powers[15]) - (shifts[3057])) * ((point_powers[15]) - (shifts[3058])) *
       ((point_powers[15]) - (shifts[3059])) * ((point_powers[15]) - (shifts[3060])) *
@@ -16861,7 +17492,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3065])) * ((point_powers[15]) - (shifts[3066])) *
       ((point_powers[15]) - (shifts[3067])) * ((point_powers[15]) - (shifts[3068])) *
       ((point_powers[15]) - (shifts[3069])) * ((point_powers[15]) - (shifts[3070]));
-  const FieldElementT& domain111 =
+  const FieldElementT& domain108 =
       ((point_powers[15]) - (shifts[3071])) * ((point_powers[15]) - (shifts[3072])) *
       ((point_powers[15]) - (shifts[3073])) * ((point_powers[15]) - (shifts[3074])) *
       ((point_powers[15]) - (shifts[3075])) * ((point_powers[15]) - (shifts[3076])) *
@@ -16877,9 +17508,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3095])) * ((point_powers[15]) - (shifts[3096])) *
       ((point_powers[15]) - (shifts[3097])) * ((point_powers[15]) - (shifts[3098])) *
       ((point_powers[15]) - (shifts[3099])) * ((point_powers[15]) - (shifts[3100])) *
-      ((point_powers[15]) - (shifts[3101])) * ((point_powers[15]) - (shifts[3102])) * (domain109) *
-      (domain110);
-  const FieldElementT& domain112 =
+      ((point_powers[15]) - (shifts[3101])) * ((point_powers[15]) - (shifts[3102])) * (domain106) *
+      (domain107);
+  const FieldElementT& domain109 =
       ((point_powers[15]) - (shifts[3103])) * ((point_powers[15]) - (shifts[3104])) *
       ((point_powers[15]) - (shifts[3105])) * ((point_powers[15]) - (shifts[3106])) *
       ((point_powers[15]) - (shifts[3107])) * ((point_powers[15]) - (shifts[3108])) *
@@ -16887,8 +17518,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3111])) * ((point_powers[15]) - (shifts[3112])) *
       ((point_powers[15]) - (shifts[3113])) * ((point_powers[15]) - (shifts[3114])) *
       ((point_powers[15]) - (shifts[3115])) * ((point_powers[15]) - (shifts[3116])) *
-      ((point_powers[15]) - (shifts[3117])) * ((point_powers[15]) - (shifts[3118])) * (domain111);
-  const FieldElementT& domain113 =
+      ((point_powers[15]) - (shifts[3117])) * ((point_powers[15]) - (shifts[3118])) * (domain108);
+  const FieldElementT& domain110 =
       ((point_powers[15]) - (shifts[3119])) * ((point_powers[15]) - (shifts[3120])) *
       ((point_powers[15]) - (shifts[3121])) * ((point_powers[15]) - (shifts[3122])) *
       ((point_powers[15]) - (shifts[3123])) * ((point_powers[15]) - (shifts[3124])) *
@@ -16896,14 +17527,14 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3127])) * ((point_powers[15]) - (shifts[3128])) *
       ((point_powers[15]) - (shifts[3129])) * ((point_powers[15]) - (shifts[3130])) *
       ((point_powers[15]) - (shifts[3131])) * ((point_powers[15]) - (shifts[3132])) *
-      ((point_powers[15]) - (shifts[3133])) * ((point_powers[15]) - (shifts[3134])) * (domain107) *
-      (domain112);
-  const FieldElementT& domain114 =
+      ((point_powers[15]) - (shifts[3133])) * ((point_powers[15]) - (shifts[3134])) * (domain104) *
+      (domain109);
+  const FieldElementT& domain111 =
       ((point_powers[15]) - (shifts[76])) * ((point_powers[15]) - (shifts[3135])) *
       ((point_powers[15]) - (shifts[3136])) * ((point_powers[15]) - (shifts[3137])) *
       ((point_powers[15]) - (shifts[3138])) * ((point_powers[15]) - (shifts[3139])) *
       ((point_powers[15]) - (shifts[3140])) * ((point_powers[15]) - (shifts[3141]));
-  const FieldElementT& domain115 =
+  const FieldElementT& domain112 =
       ((point_powers[15]) - (shifts[3142])) * ((point_powers[15]) - (shifts[3143])) *
       ((point_powers[15]) - (shifts[3144])) * ((point_powers[15]) - (shifts[3145])) *
       ((point_powers[15]) - (shifts[3146])) * ((point_powers[15]) - (shifts[3147])) *
@@ -16911,9 +17542,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3150])) * ((point_powers[15]) - (shifts[3151])) *
       ((point_powers[15]) - (shifts[3152])) * ((point_powers[15]) - (shifts[3153])) *
       ((point_powers[15]) - (shifts[3154])) * ((point_powers[15]) - (shifts[3155])) *
-      ((point_powers[15]) - (shifts[3156])) * ((point_powers[15]) - (shifts[3157])) * (domain113) *
-      (domain114);
-  const FieldElementT& domain116 =
+      ((point_powers[15]) - (shifts[3156])) * ((point_powers[15]) - (shifts[3157])) * (domain110) *
+      (domain111);
+  const FieldElementT& domain113 =
       ((point_powers[15]) - (shifts[92])) * ((point_powers[15]) - (shifts[3158])) *
       ((point_powers[15]) - (shifts[3159])) * ((point_powers[15]) - (shifts[3160])) *
       ((point_powers[15]) - (shifts[3161])) * ((point_powers[15]) - (shifts[3162])) *
@@ -16922,7 +17553,7 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3166])) * ((point_powers[15]) - (shifts[3167])) *
       ((point_powers[15]) - (shifts[3168])) * ((point_powers[15]) - (shifts[3169])) *
       ((point_powers[15]) - (shifts[3170])) * ((point_powers[15]) - (shifts[3171]));
-  const FieldElementT& domain117 =
+  const FieldElementT& domain114 =
       ((point_powers[15]) - (shifts[251])) * ((point_powers[15]) - (shifts[3172])) *
       ((point_powers[15]) - (shifts[3173])) * ((point_powers[15]) - (shifts[3174])) *
       ((point_powers[15]) - (shifts[3175])) * ((point_powers[15]) - (shifts[3176])) *
@@ -16930,8 +17561,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[259])) * ((point_powers[15]) - (shifts[3179])) *
       ((point_powers[15]) - (shifts[3180])) * ((point_powers[15]) - (shifts[3181])) *
       ((point_powers[15]) - (shifts[3182])) * ((point_powers[15]) - (shifts[3183])) *
-      ((point_powers[15]) - (shifts[3184])) * ((point_powers[15]) - (shifts[3185])) * (domain116);
-  const FieldElementT& domain118 =
+      ((point_powers[15]) - (shifts[3184])) * ((point_powers[15]) - (shifts[3185])) * (domain113);
+  const FieldElementT& domain115 =
       ((point_powers[15]) - (shifts[3186])) * ((point_powers[15]) - (shifts[3187])) *
       ((point_powers[15]) - (shifts[3188])) * ((point_powers[15]) - (shifts[3189])) *
       ((point_powers[15]) - (shifts[3190])) * ((point_powers[15]) - (shifts[3191])) *
@@ -16963,9 +17594,9 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3242])) * ((point_powers[15]) - (shifts[3243])) *
       ((point_powers[15]) - (shifts[3244])) * ((point_powers[15]) - (shifts[3245])) *
       ((point_powers[15]) - (shifts[3246])) * ((point_powers[15]) - (shifts[3247])) *
-      ((point_powers[15]) - (shifts[3248])) * ((point_powers[15]) - (shifts[3249])) * (domain115) *
-      (domain117);
-  const FieldElementT& domain119 =
+      ((point_powers[15]) - (shifts[3248])) * ((point_powers[15]) - (shifts[3249])) * (domain112) *
+      (domain114);
+  const FieldElementT& domain116 =
       ((point_powers[15]) - (shifts[275])) * ((point_powers[15]) - (shifts[3250])) *
       ((point_powers[15]) - (shifts[3251])) * ((point_powers[15]) - (shifts[3252])) *
       ((point_powers[15]) - (shifts[3253])) * ((point_powers[15]) - (shifts[3254])) *
@@ -16989,8 +17620,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3289])) * ((point_powers[15]) - (shifts[3290])) *
       ((point_powers[15]) - (shifts[3291])) * ((point_powers[15]) - (shifts[3292])) *
       ((point_powers[15]) - (shifts[3293])) * ((point_powers[15]) - (shifts[3294])) *
-      ((point_powers[15]) - (shifts[3295])) * ((point_powers[15]) - (shifts[3296])) * (domain118);
-  const FieldElementT& domain120 =
+      ((point_powers[15]) - (shifts[3295])) * ((point_powers[15]) - (shifts[3296])) * (domain115);
+  const FieldElementT& domain117 =
       ((point_powers[15]) - (shifts[3297])) * ((point_powers[15]) - (shifts[3298])) *
       ((point_powers[15]) - (shifts[3299])) * ((point_powers[15]) - (shifts[3300])) *
       ((point_powers[15]) - (shifts[3301])) * ((point_powers[15]) - (shifts[3302])) *
@@ -17002,27 +17633,27 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3313])) * ((point_powers[15]) - (shifts[3314])) *
       ((point_powers[15]) - (shifts[3315])) * ((point_powers[15]) - (shifts[3316])) *
       ((point_powers[15]) - (shifts[3317])) * ((point_powers[15]) - (shifts[3318])) *
-      ((point_powers[15]) - (shifts[3319])) * ((point_powers[15]) - (shifts[3320])) * (domain119);
-  const FieldElementT& domain121 = (domain48) * (domain87);
-  const FieldElementT& domain122 = (domain91) * (domain121);
-  const FieldElementT& domain123 = (domain97) * (domain122);
-  const FieldElementT& domain124 = (domain41) * (domain57) * (domain59);
-  const FieldElementT& domain125 = (domain61) * (domain63) * (domain65) * (domain124);
-  const FieldElementT& domain126 = (domain67) * (domain125);
-  const FieldElementT& domain127 = (domain68) * (domain70) * (domain72) * (domain74) * (domain76) *
-                                   (domain78) * (domain80) * (domain125);
-  const FieldElementT& domain128 = (domain83) * (domain127);
-  const FieldElementT& domain129 = (domain82) * (domain127);
-  const FieldElementT& domain130 = (domain89) * (domain92);
-  const FieldElementT& domain131 = (domain98) * (domain107) * (domain114) * (domain122);
-  const FieldElementT& domain132 = (domain117) * (domain131);
-  const FieldElementT& domain133 = (domain116) * (domain131);
-  const FieldElementT& domain134 = (domain106) * (domain112);
-  const FieldElementT& domain135 = (domain103) * (domain109);
-  const FieldElementT& domain136 = (domain96) * (domain100);
-  const FieldElementT& domain137 = (domain105) * (domain111);
-  const FieldElementT& domain138 = (domain102) * (domain108);
-  const FieldElementT& domain139 =
+      ((point_powers[15]) - (shifts[3319])) * ((point_powers[15]) - (shifts[3320])) * (domain116);
+  const FieldElementT& domain118 = (domain45) * (domain84);
+  const FieldElementT& domain119 = (domain88) * (domain118);
+  const FieldElementT& domain120 = (domain94) * (domain119);
+  const FieldElementT& domain121 = (domain38) * (domain54) * (domain56);
+  const FieldElementT& domain122 = (domain58) * (domain60) * (domain62) * (domain121);
+  const FieldElementT& domain123 = (domain64) * (domain122);
+  const FieldElementT& domain124 = (domain65) * (domain67) * (domain69) * (domain71) * (domain73) *
+                                   (domain75) * (domain77) * (domain122);
+  const FieldElementT& domain125 = (domain80) * (domain124);
+  const FieldElementT& domain126 = (domain79) * (domain124);
+  const FieldElementT& domain127 = (domain86) * (domain89);
+  const FieldElementT& domain128 = (domain95) * (domain104) * (domain111) * (domain119);
+  const FieldElementT& domain129 = (domain114) * (domain128);
+  const FieldElementT& domain130 = (domain113) * (domain128);
+  const FieldElementT& domain131 = (domain103) * (domain109);
+  const FieldElementT& domain132 = (domain100) * (domain106);
+  const FieldElementT& domain133 = (domain93) * (domain97);
+  const FieldElementT& domain134 = (domain102) * (domain108);
+  const FieldElementT& domain135 = (domain99) * (domain105);
+  const FieldElementT& domain136 =
       ((point_powers[15]) - (shifts[116])) * ((point_powers[15]) - (shifts[3321])) *
       ((point_powers[15]) - (shifts[3322])) * ((point_powers[15]) - (shifts[3323])) *
       ((point_powers[15]) - (shifts[3324])) * ((point_powers[15]) - (shifts[3325])) *
@@ -17034,8 +17665,8 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       ((point_powers[15]) - (shifts[3336])) * ((point_powers[15]) - (shifts[3337])) *
       ((point_powers[15]) - (shifts[3338])) * ((point_powers[15]) - (shifts[3339])) *
       ((point_powers[15]) - (shifts[3340])) * ((point_powers[15]) - (shifts[3341])) *
-      ((point_powers[15]) - (shifts[3342])) * ((point_powers[15]) - (shifts[3343])) * (domain58) *
-      (domain88) * (domain90) * (domain93) * (domain95) * (domain99) * (domain104) * (domain110);
+      ((point_powers[15]) - (shifts[3342])) * ((point_powers[15]) - (shifts[3343])) * (domain55) *
+      (domain85) * (domain87) * (domain90) * (domain92) * (domain96) * (domain101) * (domain107);
   return {
       domain0,   domain1,   domain2,   domain3,   domain4,   domain5,   domain6,   domain7,
       domain8,   domain9,   domain10,  domain11,  domain12,  domain13,  domain14,  domain15,
@@ -17054,8 +17685,18 @@ std::vector<FieldElementT> CpuAirDefinition<FieldElementT, 8>::DomainEvalsAtPoin
       domain112, domain113, domain114, domain115, domain116, domain117, domain118, domain119,
       domain120, domain121, domain122, domain123, domain124, domain125, domain126, domain127,
       domain128, domain129, domain130, domain131, domain132, domain133, domain134, domain135,
-      domain136, domain137, domain138, domain139,
+      domain136,
   };
+}
+
+template <typename FieldElementT>
+std::vector<uint64_t> CpuAirDefinition<FieldElementT, 8>::ParseDynamicParams(
+    [[maybe_unused]] const std::map<std::string, uint64_t>& params) const {
+  std::vector<uint64_t> result;
+
+  ASSERT_RELEASE(params.size() == kNumDynamicParams, "Inconsistent dynamic data.");
+  result.reserve(kNumDynamicParams);
+  return result;
 }
 
 template <typename FieldElementT>
@@ -17064,173 +17705,53 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 512)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 512)), "step must not exceed dimension.");
+  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 256)), "Dimension should be a power of 2.");
+
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 256)) - (1)) >= (0), "step must not exceed dimension.");
+
+  ASSERT_RELEASE((SafeDiv(trace_length_, 256)) >= (0), "Index should be non negative.");
 
   ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 512)) - (1)) <= (SafeDiv(trace_length_, 512)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 512)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 512)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 512)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 512)) <= (SafeDiv(trace_length_, 512)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 512)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 512)), "Index out of range.");
+      IsPowerOfTwo(trace_length_),
+      "Coset step (MemberExpression(trace_length)) must be a power of two");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 524288)), "Dimension should be a power of 2.");
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 2048)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 2048)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2048)) - (1)) <= (SafeDiv(trace_length_, 2048)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2048)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 2048)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 2048)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 2048)) <= (SafeDiv(trace_length_, 2048)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 2048)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 2048)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 2048)), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16384)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16384)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16384)) - (1)) <= (SafeDiv(trace_length_, 16384)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16384)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16384)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16384)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16384)) <= (SafeDiv(trace_length_, 16384)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16384)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 16384)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16384)), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 1024)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 1024)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 1024)) - (1)) <= (SafeDiv(trace_length_, 1024)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 1024)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 1024)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 1024)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 1024)) <= (SafeDiv(trace_length_, 1024)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 1024)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 1024)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 1024)), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 32768)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 32768)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 32768)) <= (SafeDiv(trace_length_, 32768)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 32768)) - (1)) >= (0), "step must not exceed dimension.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 32768)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 32768)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 512)) - (1)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 32768)) - (1)) <= (SafeDiv(trace_length_, 32768)),
-      "Index out of range.");
+  ASSERT_RELEASE((SafeDiv(trace_length_, 512)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 32768)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 32768)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 32768)), "Index out of range.");
-
-  ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 256)), "Dimension should be a power of 2.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 256)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 256)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 256)) - (1)) <= (SafeDiv(trace_length_, 256)),
-      "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 256)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 256)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 256)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 256)) <= (SafeDiv(trace_length_, 256)), "Index out of range.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 256)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE(((trace_length_) + (-1)) < (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE(((trace_length_) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((1) <= (trace_length_), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (trace_length_), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((trace_length_) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((trace_length_) <= (trace_length_), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((trace_length_) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE((0) < (trace_length_), "Index out of range.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 4)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) + (-1)) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) + (-1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 4)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 4)) - (1)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 4)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 4)) <= (SafeDiv(trace_length_, 4)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 4)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 4)) >= (0), "Index should be non negative.");
 
@@ -17238,268 +17759,123 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
 
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 2)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 2)), "step must not exceed dimension.");
-
-  ASSERT_RELEASE((SafeDiv(trace_length_, 2)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index out of range.");
 
   ASSERT_RELEASE((SafeDiv(trace_length_, 2)) >= (0), "Index should be non negative.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) - (1)) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) - (1)) >= (0), "Index should be non negative.");
-
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 2)) - (1)), "start must not exceed stop.");
-
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 2)) + (-1)) < (SafeDiv(trace_length_, 2)), "Index out of range.");
-
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 2)) + (-1)) >= (0), "Index should be non negative.");
-
   ASSERT_RELEASE(IsPowerOfTwo(SafeDiv(trace_length_, 16)), "Dimension should be a power of 2.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) + (-1)) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "step must not exceed dimension.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) + (-1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index out of range.");
 
-  ASSERT_RELEASE((0) < (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (16145)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((1) <= (SafeDiv(trace_length_, 16)), "step must not exceed dimension.");
+  ASSERT_RELEASE(((trace_length_) - (2)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      (SafeDiv(trace_length_, 16)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (3)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((SafeDiv(trace_length_, 16)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (6)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(
-      ((SafeDiv(trace_length_, 16)) - (1)) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (4)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE(((SafeDiv(trace_length_, 16)) - (1)) >= (0), "Index should be non negative.");
+  ASSERT_RELEASE(((trace_length_) - (8)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= (SafeDiv(trace_length_, 16)), "Index out of range.");
+  ASSERT_RELEASE(((trace_length_) - (8004)) >= (0), "Offset must be smaller than trace length.");
 
-  ASSERT_RELEASE((0) <= ((SafeDiv(trace_length_, 16)) - (1)), "start must not exceed stop.");
+  ASSERT_RELEASE(((trace_length_) - (4104)) >= (0), "Offset must be smaller than trace length.");
 
-  ctx.AddVirtualColumn(
-      "cpu/decode/opcode_rc/column",
-      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "diluted_pool", VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "diluted_check/permuted_values",
-      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn5Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn6Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/parse_to_diluted/reshaped_intermediate",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/parse_to_diluted/final_reshaped_input",
-      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/16144));
+  ASSERT_RELEASE(((trace_length_) - (7812)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (2056)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (9)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (5)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (13)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (11)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (7)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (15)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (34)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (18)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (50)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (10)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (42)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (26)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (58)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (38)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (22)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (54)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (14)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (46)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (30)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (62)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (36)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (20)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (52)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (12)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (44)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (28)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (92)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (60)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (124)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (256)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (72)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16356)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16340)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16372)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32764)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32648)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16332)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32716)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (16364)) >= (0), "Offset must be smaller than trace length.");
+
+  ASSERT_RELEASE(((trace_length_) - (32748)) >= (0), "Offset must be smaller than trace length.");
+
   ctx.AddVirtualColumn(
       "mem_pool/addr", VirtualColumn(/*column=*/kColumn8Column, /*step=*/2, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "mem_pool/value", VirtualColumn(/*column=*/kColumn8Column, /*step=*/2, /*row_offset=*/1));
   ctx.AddVirtualColumn(
-      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn9Column, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/sorted/value",
-      VirtualColumn(/*column=*/kColumn9Column, /*step=*/2, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "rc16_pool", VirtualColumn(/*column=*/kColumn10Column, /*step=*/4, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/sorted", VirtualColumn(/*column=*/kColumn10Column, /*step=*/4, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state0",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state0_squared",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/5));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/parse_to_diluted/cumulative_sum",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/rotated_parity0",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/7));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/rotated_parity1",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/8003));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/rotated_parity2",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/4103));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/rotated_parity3",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/7811));
-  ctx.AddVirtualColumn(
-      "keccak/keccak/rotated_parity4",
-      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/2055));
-  ctx.AddVirtualColumn(
-      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/8));
-  ctx.AddVirtualColumn(
-      "cpu/operands/ops_mul",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/4));
-  ctx.AddVirtualColumn(
-      "cpu/operands/res",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/12));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp0",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/2));
-  ctx.AddVirtualColumn(
-      "cpu/update_registers/update_pc/tmp1",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/10));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state1",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/6));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/partial_rounds_state1_squared",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/14));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/x",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/1));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/key_points/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/33));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/17));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/49));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/selector",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/9));
-  ctx.AddVirtualColumn(
-      "ec_op/doubled_points/x",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/41));
-  ctx.AddVirtualColumn(
-      "ec_op/doubled_points/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/25));
-  ctx.AddVirtualColumn(
-      "ec_op/doubling_slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/57));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/5));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/37));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/selector",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/21));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state0",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/53));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state1",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/13));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state2",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/45));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state0_squared",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/29));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state1_squared",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/61));
-  ctx.AddVirtualColumn(
-      "poseidon/poseidon/full_rounds_state2_squared",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/3));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/doubling_slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/35));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/19));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_key/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/51));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/11));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/43));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/27));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/91));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/selector",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/59));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/123));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/7));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn6Column, /*step=*/256, /*row_offset=*/255));
-  ctx.AddVirtualColumn(
-      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/256, /*row_offset=*/71));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/r_w_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16355));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/bit_unpacking/prod_ones196",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16339));
-  ctx.AddVirtualColumn(
-      "ec_op/ec_subset_sum/bit_unpacking/prod_ones192",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16371));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32763));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/add_results_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32647));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_slope",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/16331));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/extract_r_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32715));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/z_inv",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/16363));
-  ctx.AddVirtualColumn(
-      "ecdsa/signature0/q_x_squared",
-      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32747));
-  ctx.AddVirtualColumn(
-      "diluted_check/cumulative_value",
-      VirtualColumn(
-          /*column=*/kColumn12Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "diluted_check/permutation/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn13Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "memory/multi_column_perm/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn14Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
-  ctx.AddVirtualColumn(
-      "rc16/perm/cum_prod0",
-      VirtualColumn(
-          /*column=*/kColumn14Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
+      "range_check16_pool",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/4, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/mem_inst/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/0));
@@ -17512,11 +17888,18 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "cpu/decode/instruction",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/1));
   ctx.AddVirtualColumn(
+      "cpu/decode/opcode_range_check/column",
+      VirtualColumn(/*column=*/kColumn0Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "cpu/decode/off0", VirtualColumn(/*column=*/kColumn10Column, /*step=*/16, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "cpu/decode/off1", VirtualColumn(/*column=*/kColumn10Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/decode/off2", VirtualColumn(/*column=*/kColumn10Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/registers/ap", VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "cpu/registers/fp", VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/8));
   ctx.AddVirtualColumn(
       "cpu/operands/mem_dst/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/8));
@@ -17536,11 +17919,52 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "cpu/operands/mem_op1/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/16, /*row_offset=*/13));
   ctx.AddVirtualColumn(
+      "cpu/operands/ops_mul",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/4));
+  ctx.AddVirtualColumn(
+      "cpu/operands/res",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/12));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp0",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "cpu/update_registers/update_pc/tmp1",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/10));
+  ctx.AddVirtualColumn(
+      "memory/sorted/addr", VirtualColumn(/*column=*/kColumn9Column, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "memory/sorted/value",
+      VirtualColumn(/*column=*/kColumn9Column, /*step=*/2, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "memory/multi_column_perm/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn14Inter1Column - kNumColumnsFirst, /*step=*/2, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
       "orig/public_memory/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/8, /*row_offset=*/2));
   ctx.AddVirtualColumn(
       "orig/public_memory/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "range_check16/sorted",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/4, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "range_check16/perm/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn14Inter1Column - kNumColumnsFirst, /*step=*/4, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "diluted_pool", VirtualColumn(/*column=*/kColumn1Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "diluted_check/permuted_values",
+      VirtualColumn(/*column=*/kColumn2Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "diluted_check/cumulative_value",
+      VirtualColumn(
+          /*column=*/kColumn12Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "diluted_check/permutation/cum_prod0",
+      VirtualColumn(
+          /*column=*/kColumn13Inter1Column - kNumColumnsFirst, /*step=*/1, /*row_offset=*/0));
   ctx.AddVirtualColumn(
       "pedersen/input0/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/512, /*row_offset=*/6));
@@ -17560,13 +17984,31 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "pedersen/output/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/512, /*row_offset=*/135));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/addr",
+      "pedersen/hash0/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn3Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn4Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn6Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn5Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn6Column, /*step=*/256, /*row_offset=*/255));
+  ctx.AddVirtualColumn(
+      "pedersen/hash0/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/256, /*row_offset=*/71));
+  ctx.AddVirtualColumn(
+      "range_check_builtin/mem/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/70));
   ctx.AddVirtualColumn(
-      "rc_builtin/mem/value",
+      "range_check_builtin/mem/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/71));
   ctx.AddVirtualColumn(
-      "rc_builtin/inner_rc",
+      "range_check_builtin/inner_range_check",
       VirtualColumn(/*column=*/kColumn10Column, /*step=*/32, /*row_offset=*/12));
   ctx.AddVirtualColumn(
       "ecdsa/pubkey/addr",
@@ -17580,6 +18022,72 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
   ctx.AddVirtualColumn(
       "ecdsa/message/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/32768, /*row_offset=*/16775));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/x",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/key_points/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/33));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/doubling_slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/35));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/27));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/91));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/123));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/selector",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/59));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_generator/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/128, /*row_offset=*/7));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/17));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/49));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/19));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/selector",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/9));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/exponentiate_key/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/51));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32763));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/add_results_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32647));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/16331));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/extract_r_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32715));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/z_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/16363));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/r_w_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16355));
+  ctx.AddVirtualColumn(
+      "ecdsa/signature0/q_x_squared",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/32768, /*row_offset=*/32747));
+  ctx.AddVirtualColumn(
+      "bitwise/var_pool/addr",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/198));
+  ctx.AddVirtualColumn(
+      "bitwise/var_pool/value",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/199));
   ctx.AddVirtualColumn(
       "bitwise/x/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/1024, /*row_offset=*/198));
@@ -17676,11 +18184,44 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "ec_op/r_y/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/16384, /*row_offset=*/14727));
   ctx.AddVirtualColumn(
+      "ec_op/doubled_points/x",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/41));
+  ctx.AddVirtualColumn(
+      "ec_op/doubled_points/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/25));
+  ctx.AddVirtualColumn(
+      "ec_op/doubling_slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/57));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/partial_sum/x",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/5));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/partial_sum/y",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/37));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/slope",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/11));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/selector",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/21));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/x_diff_inv",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/43));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/bit_unpacking/prod_ones196",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16339));
+  ctx.AddVirtualColumn(
+      "ec_op/ec_subset_sum/bit_unpacking/prod_ones192",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16384, /*row_offset=*/16371));
+  ctx.AddVirtualColumn(
       "keccak/input_output/addr",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/2048, /*row_offset=*/1414));
   ctx.AddVirtualColumn(
       "keccak/input_output/value",
       VirtualColumn(/*column=*/kColumn8Column, /*step=*/2048, /*row_offset=*/1415));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/diluted_column0",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/4));
   ctx.AddVirtualColumn(
       "keccak/keccak/state",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/4));
@@ -17691,8 +18232,23 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "keccak/keccak/state_end",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/256, /*row_offset=*/196));
   ctx.AddVirtualColumn(
+      "keccak/keccak/parse_to_diluted/reshaped_intermediate",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/0));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/parse_to_diluted/final_reshaped_input",
+      VirtualColumn(/*column=*/kColumn7Column, /*step=*/1, /*row_offset=*/16144));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/parse_to_diluted/cumulative_sum",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/diluted_column1",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
       "keccak/keccak/chi_iota_aux0",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/2));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/diluted_column2",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/6));
   ctx.AddVirtualColumn(
       "keccak/keccak/chi_iota_aux2",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/6));
@@ -17742,8 +18298,26 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "keccak/keccak/parity2_4",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/7174));
   ctx.AddVirtualColumn(
+      "keccak/keccak/diluted_column3",
+      VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
       "keccak/keccak/after_theta_rho_pi",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/rotated_parity0",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/7));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/rotated_parity1",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/8003));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/rotated_parity2",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/4103));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/rotated_parity3",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/7811));
+  ctx.AddVirtualColumn(
+      "keccak/keccak/rotated_parity4",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/2055));
   ctx.AddVirtualColumn(
       "keccak/keccak/theta_aux_i0_j0",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/7364));
@@ -17844,11 +18418,53 @@ TraceGenerationContext CpuAirDefinition<FieldElementT, 8>::GetTraceGenerationCon
       "keccak/keccak/theta_aux_i4_j4_start16_stop24",
       VirtualColumn(/*column=*/kColumn1Column, /*step=*/8, /*row_offset=*/3009));
   ctx.AddVirtualColumn(
-      "poseidon/input_output/addr",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/38));
+      "poseidon/param_0/input_output/addr",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/38));
   ctx.AddVirtualColumn(
-      "poseidon/input_output/value",
-      VirtualColumn(/*column=*/kColumn8Column, /*step=*/64, /*row_offset=*/39));
+      "poseidon/param_0/input_output/value",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/39));
+  ctx.AddVirtualColumn(
+      "poseidon/param_1/input_output/addr",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/166));
+  ctx.AddVirtualColumn(
+      "poseidon/param_1/input_output/value",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/167));
+  ctx.AddVirtualColumn(
+      "poseidon/param_2/input_output/addr",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/102));
+  ctx.AddVirtualColumn(
+      "poseidon/param_2/input_output/value",
+      VirtualColumn(/*column=*/kColumn8Column, /*step=*/256, /*row_offset=*/103));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state0",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/53));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state1",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/13));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state2",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/45));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state0_squared",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/29));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state1_squared",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/61));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/full_rounds_state2_squared",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/64, /*row_offset=*/3));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state0",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/1));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state1",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/6));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state0_squared",
+      VirtualColumn(/*column=*/kColumn10Column, /*step=*/8, /*row_offset=*/5));
+  ctx.AddVirtualColumn(
+      "poseidon/poseidon/partial_rounds_state1_squared",
+      VirtualColumn(/*column=*/kColumn11Column, /*step=*/16, /*row_offset=*/14));
 
   ctx.AddPeriodicColumn(
       "pedersen/points/x",
@@ -17933,7 +18549,7 @@ template <typename FieldElementT>
 std::vector<std::pair<int64_t, uint64_t>> CpuAirDefinition<FieldElementT, 8>::GetMask() const {
   std::vector<std::pair<int64_t, uint64_t>> mask;
 
-  mask.reserve(732);
+  mask.reserve(734);
   mask.emplace_back(0, kColumn0Column);
   mask.emplace_back(1, kColumn0Column);
   mask.emplace_back(2, kColumn0Column);
@@ -18387,21 +19003,23 @@ std::vector<std::pair<int64_t, uint64_t>> CpuAirDefinition<FieldElementT, 8>::Ge
   mask.emplace_back(103, kColumn8Column);
   mask.emplace_back(134, kColumn8Column);
   mask.emplace_back(135, kColumn8Column);
+  mask.emplace_back(166, kColumn8Column);
   mask.emplace_back(167, kColumn8Column);
   mask.emplace_back(198, kColumn8Column);
   mask.emplace_back(199, kColumn8Column);
-  mask.emplace_back(231, kColumn8Column);
   mask.emplace_back(262, kColumn8Column);
   mask.emplace_back(263, kColumn8Column);
+  mask.emplace_back(294, kColumn8Column);
   mask.emplace_back(295, kColumn8Column);
   mask.emplace_back(326, kColumn8Column);
   mask.emplace_back(358, kColumn8Column);
   mask.emplace_back(359, kColumn8Column);
   mask.emplace_back(390, kColumn8Column);
   mask.emplace_back(391, kColumn8Column);
+  mask.emplace_back(422, kColumn8Column);
+  mask.emplace_back(423, kColumn8Column);
   mask.emplace_back(454, kColumn8Column);
   mask.emplace_back(518, kColumn8Column);
-  mask.emplace_back(550, kColumn8Column);
   mask.emplace_back(711, kColumn8Column);
   mask.emplace_back(902, kColumn8Column);
   mask.emplace_back(903, kColumn8Column);

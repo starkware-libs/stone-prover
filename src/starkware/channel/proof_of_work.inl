@@ -76,7 +76,8 @@ std::vector<std::byte> ProofOfWorkProver<HashT>::Prove(
 
   const HashT init_hash = proof_of_work::details::InitHash<HashT>(seed, work_bits);
   std::array<std::byte, HashT::kDigestNumBytes + sizeof(uint64_t)> bytes{};
-  std::copy(init_hash.GetDigest().begin(), init_hash.GetDigest().end(), bytes.begin());
+  auto digest = init_hash.GetDigest();
+  std::copy(digest.begin(), digest.end(), bytes.begin());
 
   const uint64_t work_limit = Pow2(64 - work_bits);
   const uint64_t chunk_size = Pow2(log_chunk_size);
@@ -127,7 +128,8 @@ bool ProofOfWorkVerifier<HashT>::Verify(
 
   const HashT init_hash = proof_of_work::details::InitHash<HashT>(seed, work_bits);
   std::array<std::byte, HashT::kDigestNumBytes + sizeof(uint64_t)> bytes{};
-  std::copy(init_hash.GetDigest().begin(), init_hash.GetDigest().end(), bytes.begin());
+  auto digest = init_hash.GetDigest();
+  std::copy(digest.begin(), digest.end(), bytes.begin());
   std::copy(nonce_bytes.begin(), nonce_bytes.end(), bytes.begin() + HashT::kDigestNumBytes);
   const uint64_t work_limit = Pow2(64 - work_bits);
 
