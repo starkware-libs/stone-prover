@@ -1,40 +1,17 @@
-# Overview
-
-[STARK](https://starkware.co/stark/) is a proof system. It uses cutting-edge cryptography to
-provide poly-logarithmic verification resources and proof size, with minimal and
-post-quantum-secure assumptions.
-
-This repository contains a prover and a verifier for STARKs, and in particular for the CPU AIR
-underlying the CairoZero programming language.
-
-# Installation instructions
-
-## Building using the dockerfile
-
-The root directory contains a dedicated Dockerfile which automatically builds the package and
-runs the unit tests on a simulated machine.
-You should have docker installed (see https://docs.docker.com/get-docker/).
-
-Clone the repository:
-
 ```bash
-git clone https://github.com/starkware-libs/stone-prover.git
+podman build -t fibonacci-prover -f prover.dockerfile .
 ```
 
-Build the docker image:
-
 ```bash
-cd stone-prover
-docker build --tag prover .
+podman run -i --rm fibonacci-prover < program_input.json > proof.json
 ```
 
-This will run an end-to-end test with an example cairo program.
-Once the docker image is built, you can fetch the prover and verifier executables using:
+```bash
+podman build -t verifier -f verifier.dockerfile .
+```
 
 ```bash
-container_id=$(docker create prover)
-docker cp -L ${container_id}:/bin/cpu_air_prover .
-docker cp -L ${container_id}:/bin/cpu_air_verifier .
+podman run -i --rm verifier < proof.json
 ```
 
 ## Creating and verifying a proof of a Cairo program

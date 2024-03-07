@@ -1,0 +1,23 @@
+{
+  "field": "PrimeField0",
+  "channel_hash": "poseidon3",
+  "commitment_hash": "blake256_masked160_lsb",
+  "n_verifier_friendly_commitment_layers": 100,
+  "pow_hash": "blake256",
+  "statement": {
+    "page_hash": "pedersen"
+  },
+  "stark": {
+    "fri": {
+      "fri_step_list": [0, 4, 3, 2, 2],
+      "last_layer_degree_bound": 128,
+      "n_queries": 18,
+      "proof_of_work_bits": 30
+    },
+    "log_n_cosets": 4
+  },
+
+  "use_extension_field": false,
+  "verifier_friendly_channel_updates": true,
+  "verifier_friendly_commitment_hash": "poseidon3"
+}
