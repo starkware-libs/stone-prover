@@ -3,11 +3,6 @@
 # Read from stdin
 cat > program_input.json && \
 
-cairo-compile \
-    program.cairo \
-    --output program_compiled.json \
-    --proof_mode && \
-
 cairo-run \
     --program program_compiled.json \
     --layout recursive \
@@ -27,5 +22,4 @@ cpu_air_prover \
     --parameter_file=cpu_air_params.json \
     -generate_annotations && \
 
-sed -i '/Warning: There are only [0-9]\+ cells to fill the diluted check holes, but potentially [0-9]\+ are required. Increasing number of steps./d' program_proof.json && \
 cat program_proof.json

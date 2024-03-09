@@ -45,5 +45,9 @@ WORKDIR /tmp/workspace
 COPY cpu_air_params.json .
 COPY cpu_air_prover_config.json .
 COPY program.cairo .
+RUN cairo-compile \
+    --proof_mode \
+    --output program_compiled.json \
+    program.cairo
 
 ENTRYPOINT [ "prover-entrypoint.sh" ]
