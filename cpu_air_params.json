@@ -1,7 +1,7 @@
 {
   "field": "PrimeField0",
   "channel_hash": "poseidon3",
-  "commitment_hash": "blake256_masked160_lsb",
+  "commitment_hash": "keccak256_masked160_lsb",
   "n_verifier_friendly_commitment_layers": 100,
   "pow_hash": "blake256",
   "statement": {
