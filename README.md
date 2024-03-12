@@ -1,9 +1,9 @@
 ```bash
-podman build -t fibonacci-prover -f prover.dockerfile .
+podman build -t prover -f prover.dockerfile .
 ```
 
 ```bash
-podman run -i --rm fibonacci-prover < program_input.json > proof.json
+podman run -i --rm prover < program_input.json > proof.json
 ```
 
 ```bash
