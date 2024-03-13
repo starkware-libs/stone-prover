@@ -3,14 +3,14 @@
   "channel_hash": "poseidon3",
   "commitment_hash": "blake256_masked160_lsb",
   "n_verifier_friendly_commitment_layers": 9999,
-  "pow_hash": "blake256",
+  "pow_hash": "keccak256",
   "statement": {
     "page_hash": "pedersen"
   },
   "stark": {
     "fri": {
-      "fri_step_list": [0, 4, 4, 2],
-      "last_layer_degree_bound": 64,
+      "fri_step_list": [0, 4, 4, 3],
+      "last_layer_degree_bound": 128,
       "n_queries": 16,
       "proof_of_work_bits": 30
     },
