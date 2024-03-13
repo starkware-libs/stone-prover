@@ -1,13 +1,17 @@
 ```bash
-podman build -t prover -f prover.dockerfile .
+podman build -t stone5-poseidon -f prover.dockerfile .
 ```
 
 ```bash
-podman run -i --rm prover < program_input.json > proof.json
+podman run -i --rm stone5-poseidon < program_input.json > proof.json
 ```
 
 ```bash
-podman build -t verifier -f verifier.dockerfile .
+podman build -t example-program -f example-program.dockerfile .
+```
+
+```bash
+podman run -i --rm example-program < program_input.json > proof.json
 ```
 
 ```bash

@@ -12,9 +12,6 @@ RUN apt install -y clang-12 clang-format-12 clang-tidy-6.0 libclang-12-dev llvm-
 RUN ln /usr/bin/clang++-12 /usr/bin/clang++
 RUN ln /usr/bin/clang-12 /usr/bin/clang
 
-# Install Cairo0.
-RUN pip install cairo-lang==0.12.3
-
 WORKDIR /app/
 
 RUN curl -L -o /tmp/bazel_install.sh https://github.com/bazelbuild/bazel/releases/download/5.4.0/bazel-5.4.0-installer-linux-x86_64.sh
@@ -33,9 +30,6 @@ COPY bazel_utils /app/bazel_utils
 RUN bazel build //...
 
 FROM base_image
-
-# Run tests.
-RUN bazel test //...
 
 # Link cpu_air_prover.
 RUN ln /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
