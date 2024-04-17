@@ -1,6 +1,6 @@
-FROM neotheprogramist/stone5-poseidon3:latest
+FROM localhost/stone5-poseidon3:recursive
 
-RUN pip install cairo-lang==0.12.3
+RUN pip install cairo-lang==0.13.1
 
 COPY program.cairo .
 RUN cairo-compile \

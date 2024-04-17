@@ -6,7 +6,7 @@ cat > program_input.json && \
 cairo-run \
     --program program_compiled.json \
     --layout recursive \
-    --steps 524288 \
+    --steps 32768 \
     --program_input program_input.json \
     --air_public_input program_public_input.json \
     --air_private_input program_private_input.json \
