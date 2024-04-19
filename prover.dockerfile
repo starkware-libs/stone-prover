@@ -33,8 +33,8 @@ FROM base_image
 
 # Link cpu_air_prover.
 RUN ln /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
+COPY config-generator.py /bin/
 COPY prover-entrypoint.sh /bin/
 
 WORKDIR /tmp/workspace
-COPY cpu_air_params.json .
 COPY cpu_air_prover_config.json .

@@ -6,7 +6,6 @@ cat > program_input.json && \
 cairo-run \
     --program program_compiled.json \
     --layout recursive \
-    --steps 32768 \
     --program_input program_input.json \
     --air_public_input program_public_input.json \
     --air_private_input program_private_input.json \
@@ -14,6 +13,8 @@ cairo-run \
     --memory_file program_memory.bin \
     --proof_mode \
     2>&1 > /dev/null && \
+
+config-generator.py < program_public_input.json > cpu_air_params.json && \
 
 cpu_air_prover \
     --out_file program_proof.json \
