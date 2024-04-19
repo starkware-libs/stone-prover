@@ -39,7 +39,7 @@ def read_json_from_stdin() -> Dict:
 def calculate_fri_step_list(n_steps: int, degree_bound: int) -> List[int]:
     """Calculate the FRI step list based on the number of steps and the degree bound."""
     fri_degree = round(math.log(n_steps / degree_bound, 2)) + 4
-    return [1] * fri_degree
+    return [0, *[4 for _ in range(fri_degree // 4)], fri_degree % 4]
 
 def update_template_and_output(template: Dict, fri_step_list: List[int]):
     """Update the template with the new FRI step list and output to standard output."""
