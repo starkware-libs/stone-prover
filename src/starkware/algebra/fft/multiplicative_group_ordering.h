@@ -22,11 +22,11 @@ namespace starkware {
   For our purpose the interesting ones are NaturalOrder - [1, w, w^2, w^3, ...] and
   BitReversedOrder [1, -1, w^{N/4}, -w^{N/4} ...] = [w^{bitrev(0)}, w^{bitrev(1)},w^{ bitrev(2), ..]
 
-  Diffrent FFT implementations have diffrent ordering requirements on the polynomial evaluations.
+  Different FFT implementations have different ordering requirements on the polynomial evaluations.
   This enum can be used to indicate which one is expected.
 
   Note that a polynomial evaluation is the output of and FFT and the input to the IFFT.
-  Since in-place radix2 fft implemenations have the side effect of BitReversal Permuation,
+  Since in-place radix2 fft implemenations have the side effect of BitReversal Permutation,
   The order of polynomial coefficents (== ifft output) will typically be the mirror order
   to the order of the evaluation.
   However in some cases we might prefer some other ordering, so one should look at the specific
