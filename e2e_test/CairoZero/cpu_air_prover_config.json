@@ -1,0 +1,9 @@
+{
+    "cached_lde_config": {
+        "store_full_lde": false,
+        "use_fft_for_eval": false
+    },
+    "constraint_polynomial_task_size": 256,
+    "n_out_of_memory_merkle_layers": 1,
+    "table_prover_n_tasks_per_segment": 32
+}

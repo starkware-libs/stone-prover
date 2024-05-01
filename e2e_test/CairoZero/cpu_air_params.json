@@ -1,0 +1,17 @@
+{
+    "field": "PrimeField0",
+    "stark": {
+        "fri": {
+            "fri_step_list": [
+                0,
+                4,
+                3
+            ],
+            "last_layer_degree_bound": 64,
+            "n_queries": 18,
+            "proof_of_work_bits": 24
+        },
+        "log_n_cosets": 4
+    },
+    "use_extension_field": false
+}

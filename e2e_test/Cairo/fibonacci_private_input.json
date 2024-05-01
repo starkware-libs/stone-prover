@@ -1,0 +1,7 @@
+{
+  "trace_path": "../../fibonacci_trace.json",
+  "memory_path": "../../fibonacci_memory.json",
+  "pedersen": [],
+  "range_check": [],
+  "ecdsa": []
+}

@@ -37,6 +37,62 @@ docker cp -L ${container_id}:/bin/cpu_air_prover .
 docker cp -L ${container_id}:/bin/cpu_air_verifier .
 ```
 
+## Creating and verifying a proof of a Cairo program
+
+To run and prove the example Cairo program `fibonacci.cairo`,
+install `cairo-vm` (see further instructions in the
+[cairo-vm repository](https://github.com/lambdaclass/cairo-vm)):
+
+```bash
+git clone https://github.com/lambdaclass/cairo-vm.git
+cp -a cairo-vm/cairo1-run/. ./
+make deps
+```
+
+Navigate to the example test directory (`e2e_test/Cairo`):
+
+```bash
+cd e2e_test/Cairo
+```
+
+Install `cairo-vm` (see further instructions in the
+[cairo-vm repository](https://github.com/lambdaclass/cairo-vm)):
+
+```bash
+git clone https://github.com/lambdaclass/cairo-vm.git
+cd cairo-vm/cairo1-run
+make deps
+```
+
+Compile and run the program to generate the prover input files:
+
+```bash
+cargo run ../../fibonacci.cairo \
+    --layout=small \
+    --air_public_input=fibonacci_public_input.json \
+    --air_private_input=fibonacci_private_input.json \
+    --trace_file=fibonacci_trace.json \
+    --memory_file=fibonacci_memory.json \
+    --proof_mode
+```
+
+Run the prover:
+```bash
+cpu_air_prover \
+    --out_file=fibonacci_proof.json \
+    --private_input_file=fibonacci_private_input.json \
+    --public_input_file=fibonacci_public_input.json \
+    --prover_config_file=../../cpu_air_prover_config.json \
+    --parameter_file=../../cpu_air_params.json
+```
+
+**Note**: The verifier only checks that the proof is consistent with
+the public input section that appears in the proof file.
+The public input section itself is not checked.
+For example, the verifier does not check what Cairo program is being proved,
+or that the builtins memory segments are of valid size.
+These things need to be checked externally.
+
 ## Creating and verifying a proof of a CairoZero program
 
 To run and prove the example program `fibonacci.cairo`,
@@ -47,10 +103,10 @@ install `cairo-lang` version 0.12.0 (see further instructions in the
 pip install cairo-lang==0.12.0
 ```
 
-Navigate to the example test directory (`e2e_test`):
+Navigate to the example test directory (`e2e_test/CairoZero`):
 
 ```bash
-cd e2e_test
+cd e2e_test/CairoZero
 ```
 
 Compile `fibonacci.cairo`:
