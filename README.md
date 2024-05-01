@@ -77,6 +77,13 @@ cpu_air_prover \
     --parameter_file=../../cpu_air_params.json
 ```
 
+The proof is now available in the file `fibonacci_proof.json`.
+
+Finally, run the verifier to verify the proof:
+```bash
+cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
+```
+
 **Note**: The verifier only checks that the proof is consistent with
 the public input section that appears in the proof file.
 The public input section itself is not checked.
