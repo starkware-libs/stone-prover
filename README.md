@@ -39,15 +39,6 @@ docker cp -L ${container_id}:/bin/cpu_air_verifier .
 
 ## Creating and verifying a proof of a Cairo program
 
-To run and prove the example Cairo program `fibonacci.cairo`,
-install `cairo-vm` (see further instructions in the
-[cairo-vm repository](https://github.com/lambdaclass/cairo-vm)):
-
-```bash
-git clone https://github.com/lambdaclass/cairo-vm.git
-cp -a cairo-vm/cairo1-run/. ./
-make deps
-```
 
 Navigate to the example test directory (`e2e_test/Cairo`):
 
@@ -55,7 +46,7 @@ Navigate to the example test directory (`e2e_test/Cairo`):
 cd e2e_test/Cairo
 ```
 
-Install `cairo-vm` (see further instructions in the
+Install `cairo-vm/cairo1-run` (see further instructions in the
 [cairo-vm repository](https://github.com/lambdaclass/cairo-vm)):
 
 ```bash
