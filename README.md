@@ -1,9 +1,9 @@
 ```bash
-podman build -t stone5-poseidon3 -f prover.dockerfile .
+podman build -t stone5-cairo1 -f prover.dockerfile .
 ```
 
 ```bash
-podman push localhost/stone5-poseidon3:latest docker.io/username/stone5-poseidon3:latest
+podman push localhost/stone5-cairo1:latest docker.io/username/stone5-cairo1:latest
 ```
 
 ```bash

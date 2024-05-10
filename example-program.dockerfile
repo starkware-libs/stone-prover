@@ -1,11 +1,6 @@
-FROM localhost/stone5-poseidon3:recursive
+FROM localhost/stone5-cairo1
 
-RUN pip install cairo-lang==0.13.1
-
-COPY program.cairo .
-RUN cairo-compile \
-    --proof_mode \
-    --output program_compiled.json \
-    program.cairo
+COPY cairo1.cairo .
+COPY config-generator.py .
 
 ENTRYPOINT [ "prover-entrypoint.sh" ]

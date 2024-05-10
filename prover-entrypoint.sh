@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 # Read from stdin
-cat > program_input.json && \
+cat > args.txt && \
 
-cairo-run \
-    --program program_compiled.json \
+cairo1-run \
+    cairo1.cairo \
     --layout recursive \
-    --program_input program_input.json \
-    --air_public_input program_public_input.json \
-    --air_private_input program_private_input.json \
+    --args_file args.txt \
     --trace_file program_trace.bin \
     --memory_file program_memory.bin \
     --proof_mode \
+    --air_public_input program_public_input.json \
+    --air_private_input program_private_input.json 
     2>&1 > /dev/null && \
 
-config-generator.py < program_public_input.json > cpu_air_params.json && \
+python3 config-generator.py < program_public_input.json > cpu_air_params.json && \
 
 cpu_air_prover \
     --out_file program_proof.json \

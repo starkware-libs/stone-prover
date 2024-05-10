@@ -29,7 +29,35 @@ COPY bazel_utils /app/bazel_utils
 # Build.
 RUN bazel build //...
 
-FROM base_image
+FROM base_image as intermediate_image
+
+# Install rust
+RUN apt install -y unzip
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Clone cairo-vm
+WORKDIR /cairo-vm
+RUN wget https://github.com/lambdaclass/cairo-vm/archive/main.zip -O cairo-vm.zip
+RUN unzip cairo-vm.zip && mv cairo-vm-main/* . && rm -r cairo-vm-main cairo-vm.zip
+
+# Install cairo-vm
+WORKDIR /cairo-vm/cairo1-run
+RUN cargo build --release
+WORKDIR /cairo-vm-bin
+RUN mv /cairo-vm/target/release/cairo1-run .
+
+# "Link" the cairo corelib
+RUN wget https://github.com/starkware-libs/cairo/archive/refs/tags/v2.5.3.zip -O cairo.zip
+RUN unzip cairo.zip && mv cairo-2.5.3/corelib . && rm -r cairo-2.5.3 cairo.zip
+
+ENV PATH="/cairo-vm-bin:${PATH}"
+
+RUN which cairo1-run
+RUN pwd
+RUN ls
+
+FROM intermediate_image
 
 # Link cpu_air_prover.
 RUN ln /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
@@ -38,3 +66,4 @@ COPY prover-entrypoint.sh /bin/
 
 WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json .
+RUN mv /cairo-vm-bin/corelib . 
