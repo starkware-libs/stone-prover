@@ -48,8 +48,8 @@ WORKDIR /cairo-vm-bin
 RUN mv /cairo-vm/target/release/cairo1-run .
 
 # "Link" the cairo corelib
-RUN wget https://github.com/starkware-libs/cairo/archive/refs/tags/v2.5.3.zip -O cairo.zip
-RUN unzip cairo.zip && mv cairo-2.5.3/corelib . && rm -r cairo-2.5.3 cairo.zip
+RUN wget https://github.com/starkware-libs/cairo/archive/refs/tags/v2.6.3.zip -O cairo.zip
+RUN unzip cairo.zip && mv cairo-2.6.3/corelib . && rm -r cairo-2.6.3 cairo.zip
 
 ENV PATH="/cairo-vm-bin:${PATH}"
 
@@ -67,3 +67,4 @@ COPY prover-entrypoint.sh /bin/
 WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json .
 RUN mv /cairo-vm-bin/corelib . 
+COPY config-generator.py .
