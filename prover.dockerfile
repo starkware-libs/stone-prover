@@ -53,10 +53,6 @@ RUN unzip cairo.zip && mv cairo-2.6.3/corelib . && rm -r cairo-2.6.3 cairo.zip
 
 ENV PATH="/cairo-vm-bin:${PATH}"
 
-RUN which cairo1-run
-RUN pwd
-RUN ls
-
 RUN apt install -y jq
 
 FROM intermediate_image
