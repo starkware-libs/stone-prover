@@ -1,0 +1,8 @@
+[workspace]
+members = ["example"]
+
+[workspace.package]
+edition = "2023_10"
+version = "0.1.0"
+
+[workspace.dependencies]

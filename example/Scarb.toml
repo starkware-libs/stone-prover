@@ -1,0 +1,8 @@
+[package]
+name = "example"
+version.workspace = true
+edition.workspace = true
+
+# See more keys and their definitions at https://docs.swmansion.com/scarb/docs/reference/manifest.html
+
+[dependencies]
