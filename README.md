@@ -7,11 +7,17 @@ podman push localhost/stone5-cairo1:latest docker.io/username/stone5-cairo1:late
 ```
 
 ```bash
-podman build -t example-program -f example-program.dockerfile .
+cd example_project
+scarb build
+cd ..
 ```
 
 ```bash
-podman run -i --rm example-program < program_input.json > proof.json
+jq --slurpfile text args.txt '{ "program": ., "program_input": $text }' example_project/target/dev/example.sierra.json > args.json
+```
+
+```bash
+podman run -i --rm stone5-cairo1 < args.json > proof.json
 ```
 
 ```bash

@@ -57,6 +57,8 @@ RUN which cairo1-run
 RUN pwd
 RUN ls
 
+RUN apt install -y jq
+
 FROM intermediate_image
 
 # Link cpu_air_prover.
@@ -68,3 +70,5 @@ WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json .
 RUN mv /cairo-vm-bin/corelib . 
 COPY config-generator.py .
+
+ENTRYPOINT [ "prover-entrypoint.sh" ]

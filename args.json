@@ -1,0 +1,329 @@
+{
+  "program": {
+    "version": 1,
+    "type_declarations": [
+      {
+        "id": {
+          "id": 1,
+          "debug_name": "u32"
+        },
+        "long_id": {
+          "generic_id": "u32",
+          "generic_args": []
+        },
+        "declared_type_info": {
+          "storable": true,
+          "droppable": true,
+          "duplicatable": true,
+          "zero_sized": false
+        }
+      },
+      {
+        "id": {
+          "id": 0,
+          "debug_name": "felt252"
+        },
+        "long_id": {
+          "generic_id": "felt252",
+          "generic_args": []
+        },
+        "declared_type_info": {
+          "storable": true,
+          "droppable": true,
+          "duplicatable": true,
+          "zero_sized": false
+        }
+      }
+    ],
+    "libfunc_declarations": [
+      {
+        "id": {
+          "id": 1,
+          "debug_name": "u32_to_felt252"
+        },
+        "long_id": {
+          "generic_id": "u32_to_felt252",
+          "generic_args": []
+        }
+      },
+      {
+        "id": {
+          "id": 0,
+          "debug_name": "felt252_add"
+        },
+        "long_id": {
+          "generic_id": "felt252_add",
+          "generic_args": []
+        }
+      },
+      {
+        "id": {
+          "id": 3,
+          "debug_name": "store_temp<felt252>"
+        },
+        "long_id": {
+          "generic_id": "store_temp",
+          "generic_args": [
+            {
+              "Type": {
+                "id": 0,
+                "debug_name": "felt252"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "statements": [
+      {
+        "Invocation": {
+          "libfunc_id": {
+            "id": 1,
+            "debug_name": "u32_to_felt252"
+          },
+          "args": [
+            {
+              "id": 1,
+              "debug_name": null
+            }
+          ],
+          "branches": [
+            {
+              "target": "Fallthrough",
+              "results": [
+                {
+                  "id": 2,
+                  "debug_name": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Invocation": {
+          "libfunc_id": {
+            "id": 0,
+            "debug_name": "felt252_add"
+          },
+          "args": [
+            {
+              "id": 0,
+              "debug_name": null
+            },
+            {
+              "id": 2,
+              "debug_name": null
+            }
+          ],
+          "branches": [
+            {
+              "target": "Fallthrough",
+              "results": [
+                {
+                  "id": 3,
+                  "debug_name": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Invocation": {
+          "libfunc_id": {
+            "id": 3,
+            "debug_name": "store_temp<felt252>"
+          },
+          "args": [
+            {
+              "id": 3,
+              "debug_name": null
+            }
+          ],
+          "branches": [
+            {
+              "target": "Fallthrough",
+              "results": [
+                {
+                  "id": 3,
+                  "debug_name": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Return": [
+          {
+            "id": 3,
+            "debug_name": null
+          }
+        ]
+      },
+      {
+        "Invocation": {
+          "libfunc_id": {
+            "id": 0,
+            "debug_name": "felt252_add"
+          },
+          "args": [
+            {
+              "id": 0,
+              "debug_name": null
+            },
+            {
+              "id": 1,
+              "debug_name": null
+            }
+          ],
+          "branches": [
+            {
+              "target": "Fallthrough",
+              "results": [
+                {
+                  "id": 2,
+                  "debug_name": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Invocation": {
+          "libfunc_id": {
+            "id": 3,
+            "debug_name": "store_temp<felt252>"
+          },
+          "args": [
+            {
+              "id": 2,
+              "debug_name": null
+            }
+          ],
+          "branches": [
+            {
+              "target": "Fallthrough",
+              "results": [
+                {
+                  "id": 2,
+                  "debug_name": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Return": [
+          {
+            "id": 2,
+            "debug_name": null
+          }
+        ]
+      }
+    ],
+    "funcs": [
+      {
+        "id": {
+          "id": 0,
+          "debug_name": "example::main"
+        },
+        "signature": {
+          "param_types": [
+            {
+              "id": 0,
+              "debug_name": "felt252"
+            },
+            {
+              "id": 1,
+              "debug_name": "u32"
+            }
+          ],
+          "ret_types": [
+            {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          ]
+        },
+        "params": [
+          {
+            "id": {
+              "id": 0,
+              "debug_name": null
+            },
+            "ty": {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          },
+          {
+            "id": {
+              "id": 1,
+              "debug_name": null
+            },
+            "ty": {
+              "id": 1,
+              "debug_name": "u32"
+            }
+          }
+        ],
+        "entry_point": 0
+      },
+      {
+        "id": {
+          "id": 1,
+          "debug_name": "example::add_two"
+        },
+        "signature": {
+          "param_types": [
+            {
+              "id": 0,
+              "debug_name": "felt252"
+            },
+            {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          ],
+          "ret_types": [
+            {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          ]
+        },
+        "params": [
+          {
+            "id": {
+              "id": 0,
+              "debug_name": null
+            },
+            "ty": {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          },
+          {
+            "id": {
+              "id": 1,
+              "debug_name": null
+            },
+            "ty": {
+              "id": 0,
+              "debug_name": "felt252"
+            }
+          }
+        ],
+        "entry_point": 4
+      }
+    ]
+  },
+  "program_input": [
+    1,
+    2
+  ]
+}
