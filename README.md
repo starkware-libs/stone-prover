@@ -12,7 +12,7 @@ Install the `sierra_compile_sdk`:
 cargo install --path sierra_compile_sdk
 ```
 
-For the compilation to work, the `cairo` corelib folder is required. The easiest way is to have it in your home folder:
+For the compilation to work, the `cairo` corelib folder is required. A couple of paths are permitted but the easiest way is to have it in your home folder:
 
 ```bash
 git clone https://github.com/starkware-libs/cairo.git && 
