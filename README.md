@@ -1,25 +1,46 @@
+Build the docker image:
 ```bash
 podman build -t stone5-cairo1 -f prover.dockerfile .
 ```
-
+Push the image to registry (optional):
 ```bash
 podman push localhost/stone5-cairo1:latest docker.io/username/stone5-cairo1:latest
 ```
 
+Install the `sierra_compile_sdk`: 
 ```bash
-cd example_project
-scarb build
-cd ..
+cargo install --path sierra_compile_sdk
 ```
 
-```bash
-jq --slurpfile text args.txt '{ "program": ., "program_input": $text }' example_project/target/dev/example.sierra.json > args.json
-```
+For the compilation to work, the `cairo` corelib folder is required. The easiest way is to have it in your home folder:
 
 ```bash
-podman run -i --rm stone5-cairo1 < args.json > proof.json
+git clone https://github.com/starkware-libs/cairo.git && 
+mv cairo/corelib ~/ && 
+rm -rf cairo
 ```
 
+The example directory showcases the workflow of using the image to proof arbitrary cairo1 progams.
+```bash
+cd example
+```
+
+Compile the cairo program:
+```bash
+sierra_compile_sdk compile lib.cairo -o program.sierra.json
+```
+
+Merge the program with the input:
+```bash
+sierra_compile_sdk merge program.sierra.json input.json -o merged.json
+```
+
+Compute the proof:
+```bash
+podman run -i --rm stone5-cairo1 < merged.json > proof.json
+```
+
+Verify
 ```bash
 podman run -i --rm verifier < proof.json
 ```
