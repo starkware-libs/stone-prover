@@ -2,6 +2,7 @@
 /target
 proof.json
 Scarb.lock
+Cargo.lock
 
 example/program.sierra.json
 example/merged.json
