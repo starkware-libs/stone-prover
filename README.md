@@ -1,13 +1,17 @@
 Build the docker image:
+
 ```bash
 podman build -t stone5-cairo1 -f prover.dockerfile .
 ```
+
 Push the image to registry (optional):
+
 ```bash
 podman push localhost/stone5-cairo1:latest docker.io/username/stone5-cairo1:latest
 ```
 
-Install the `sierra_compile_sdk`: 
+Install the `sierra_compile_sdk`:
+
 ```bash
 cargo install --path sierra_compile_sdk
 ```
@@ -15,38 +19,42 @@ cargo install --path sierra_compile_sdk
 For the compilation to work, the `cairo` corelib folder is required. A couple of paths are permitted but the easiest way is to have it in your home folder:
 
 ```bash
-git clone https://github.com/starkware-libs/cairo.git && 
-mv cairo/corelib ~/ && 
+git clone https://github.com/starkware-libs/cairo.git &&
+mv cairo/corelib ~/ &&
 rm -rf cairo
 ```
 
 The example directory showcases the workflow of using the image to proof arbitrary cairo1 progams.
+
 ```bash
 cd example
 ```
 
 Compile the cairo program:
+
 ```bash
 sierra_compile_sdk compile lib.cairo -o program.sierra.json
 ```
 
 Merge the program with the input:
+
 ```bash
 sierra_compile_sdk merge program.sierra.json input.json -o merged.json
 ```
 
 Compute the proof:
+
 ```bash
 podman run -i --rm stone5-cairo1 < merged.json > proof.json
 ```
 
 Verify
+
 ```bash
 podman run -i --rm verifier < proof.json
 ```
 
 ## Creating and verifying a proof of a Cairo program
-
 
 Navigate to the example test directory (`e2e_test/Cairo`):
 
@@ -76,6 +84,7 @@ cargo run ../../fibonacci.cairo \
 ```
 
 Run the prover:
+
 ```bash
 cpu_air_prover \
     --out_file=fibonacci_proof.json \
@@ -88,6 +97,7 @@ cpu_air_prover \
 The proof is now available in the file `fibonacci_proof.json`.
 
 Finally, run the verifier to verify the proof:
+
 ```bash
 cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
 ```
@@ -137,6 +147,7 @@ cairo-run \
 ```
 
 Run the prover:
+
 ```bash
 cpu_air_prover \
     --out_file=fibonacci_proof.json \
@@ -149,6 +160,7 @@ cpu_air_prover \
 The proof is now available in the file `fibonacci_proof.json`.
 
 Finally, run the verifier to verify the proof:
+
 ```bash
 cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
 ```
@@ -165,9 +177,11 @@ These things need to be checked externally.
 The number of steps affects the size of the trace.
 Such changes may require modification of `cpu_air_params.json`.
 Specifically, the following equation must be satisfied.
+
 ```
 log₂(last_layer_degree_bound) + ∑fri_step_list = log₂(#steps) + 4
 ```
+
 For instance, assuming a fixed `last_layer_degree_bound`,
 a larger number of steps requires changes to the `fri_step_list`
 to maintain the equality.
@@ -176,3 +190,8 @@ FRI steps should typically be in the range 2-4;
 the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
+
+`cargo run -- compile example/lib.cairo > resources/compiled.sierra.json`
+`cargo run -- merge resources/compiled.sierra.json example/input.json > resources/prover_input.json`
+`podman run -i stone-prover-cairo1:recursive < resources/prover_input.json > resources/proof.json`
+`cairo-proof-parser-output < resources/proof.json`
