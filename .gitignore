@@ -7,3 +7,4 @@ Cargo.lock
 example/program.sierra.json
 example/merged.json
 example/proof.json
+/resources
