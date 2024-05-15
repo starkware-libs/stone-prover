@@ -191,7 +191,7 @@ the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
 
-`cargo run -- compile example/lib.cairo > resources/compiled.sierra.json`
-`cargo run -- merge resources/compiled.sierra.json example/input.json > resources/prover_input.json`
+`cargo run -r -- compile example/lib.cairo > resources/compiled.sierra.json`
+`cargo run -r -- merge resources/compiled.sierra.json example/input.json > resources/prover_input.json`
 `podman run -i stone-prover-cairo1:recursive < resources/prover_input.json > resources/proof.json`
 `cairo-proof-parser-output < resources/proof.json`

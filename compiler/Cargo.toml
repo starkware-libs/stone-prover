@@ -1,5 +1,5 @@
 [package]
-name = "sierra_compile_sdk"
+name = "compiler"
 version.workspace = true
 edition.workspace = true
 

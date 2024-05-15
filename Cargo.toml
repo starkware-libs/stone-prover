@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["sierra_compile_sdk"]
+members = ["compiler"]
 
 [workspace.package]
 version = "0.1.0"
