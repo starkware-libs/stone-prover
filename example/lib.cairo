@@ -1,5 +1,5 @@
-fn main(n: felt252) -> felt252 {
-    fib(n)
+fn main(n: felt252) -> (felt252, felt252) {
+    (n, fib(n))
 }
 
 fn fib(mut n: felt252) -> felt252 {
