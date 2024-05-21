@@ -30,7 +30,7 @@ RUN ln -s /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air
 RUN ln -s /app/build/bazelbin/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
 
 # End to end test.
-WORKDIR /app/e2e_test
+WORKDIR /app/e2e_test/CairoZero
 
 RUN cairo-compile fibonacci.cairo --output fibonacci_compiled.json --proof_mode
 
