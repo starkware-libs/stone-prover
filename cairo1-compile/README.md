@@ -22,3 +22,5 @@ cargo install --git https://github.com/lambdaclass/cairo-vm cairo1-run
 
 `cairo1-compile compile --output resources/fibonacci_compiled.sierra.json e2e_test/Cairo/fibonacci.cairo`
 `cairo1-compile merge -o resources/fibonacci_prover_input.json resources/fibonacci_compiled.sierra.json e2e_test/Cairo/input.json`
+`podman build -t stone5-cairo1:recursive -f Dockerfile .`
+`podman run -i --rm stone5-cairo1:recursive < resources/fibonacci_prover_input.json > resources/proof.json`
