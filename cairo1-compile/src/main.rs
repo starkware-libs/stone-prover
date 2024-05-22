@@ -1,11 +1,11 @@
 use std::{
     fs::File,
     io::{BufReader, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 use cairo_lang_compiler::{
-    compile_prepared_db_program, db::RootDatabase, project::setup_project, CompilerConfig
+    compile_prepared_db_program, db::RootDatabase, project::setup_project, CompilerConfig,
 };
 use cairo_lang_sierra::program::Program;
 use clap::{Parser, ValueHint};
@@ -15,7 +15,7 @@ use serde::Serialize;
 struct CompileArgs {
     #[clap(value_parser, value_hint=ValueHint::FilePath, value_name = "FILE")]
     program: PathBuf,
-    #[clap(short, long = "output_file", value_name = "FILE")]
+    #[clap(short, long, value_name = "FILE")]
     output: Option<PathBuf>,
 }
 
@@ -25,7 +25,7 @@ struct MergeArgs {
     sierra: PathBuf,
     #[clap(value_parser, value_hint=ValueHint::FilePath, value_name = "FILE")]
     input: PathBuf,
-    #[clap(short, long = "output_file", value_name = "FILE")]
+    #[clap(short, long, value_name = "FILE")]
     output: Option<PathBuf>,
 }
 
@@ -84,7 +84,7 @@ fn compile(args: CompileArgs) {
     }
 }
 
-fn compile_sierra(filename: &PathBuf) -> Program {
+fn compile_sierra(filename: &Path) -> Program {
     let compiler_config = CompilerConfig {
         replace_ids: true,
         ..CompilerConfig::default()

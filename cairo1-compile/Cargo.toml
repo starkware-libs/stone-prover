@@ -1,5 +1,5 @@
 [package]
-name = "compiler"
+name = "cairo1-compile"
 version.workspace = true
 edition.workspace = true
 

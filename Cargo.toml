@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["compiler"]
+members = ["cairo1-compile"]
 
 [workspace.package]
 version = "0.1.0"

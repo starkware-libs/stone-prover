@@ -1,7 +1,6 @@
 use core::felt252;
 
-fn main() -> felt252 {
-    let n = 10;
+fn main(n: felt252) -> felt252 {
     let result = fib(1, 1, n);
     result
 }
