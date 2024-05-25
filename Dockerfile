@@ -32,7 +32,9 @@ RUN bazel build //...
 RUN cargo install --git https://github.com/lambdaclass/cairo-vm --rev f4a22140018f62309ade09ecd517b40e915031b1 cairo1-run
 
 
-FROM python:3.12.3 as final
+FROM python:3.12.3-slim-bookworm as final
+RUN apt update && apt install -y elfutils jq
+
 COPY --from=build /root/.cargo/bin/cairo1-run /usr/local/bin/cairo1-run
 COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /usr/local/bin/stone
 

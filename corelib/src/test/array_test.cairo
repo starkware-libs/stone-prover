@@ -46,26 +46,31 @@ fn test_span() {
 
 #[test]
 fn test_slice() {
-    let span = [10, 11, 12].span();
-    assert_eq!(span.slice(0, 3), span);
-    assert_eq!(span.slice(0, 2), [10, 11].span());
-    assert_eq!(span.slice(0, 1), [10].span());
-    assert!(span.slice(0, 0).is_empty());
-    assert_eq!(span.slice(1, 2), [11, 12].span());
-    assert_eq!(span.slice(1, 1), [11].span());
-    assert!(span.slice(1, 0).is_empty());
+    let span = array![10, 11, 12].span();
+    assert_eq(@span.slice(0, 3).len(), @3, 'Unexpected span length.');
+    assert_eq(span.slice(0, 3)[0], @10, 'Unexpected Element.');
+    assert_eq(@span.slice(0, 2).len(), @2, 'Unexpected span length.');
+    assert_eq(span.slice(0, 2)[0], @10, 'Unexpected Element.');
+    assert_eq(@span.slice(0, 1).len(), @1, 'Unexpected span length.');
+    assert_eq(span.slice(0, 1)[0], @10, 'Unexpected Element.');
+    assert_eq(@span.slice(0, 0).len(), @0, 'Unexpected span length.');
+    assert_eq(@span.slice(1, 2).len(), @2, 'Unexpected span length.');
+    assert_eq(span.slice(1, 2)[0], @11, 'Unexpected Element.');
+    assert_eq(@span.slice(1, 1).len(), @1, 'Unexpected span length.');
+    assert_eq(span.slice(1, 1)[0], @11, 'Unexpected Element.');
+    assert_eq(@span.slice(1, 0).len(), @0, 'Unexpected span length.');
 }
 
 #[test]
 #[should_panic]
 fn test_slice_out_of_bound_1() {
-    [10, 11, 12].span().slice(3, 1);
+    array![10, 11, 12].span().slice(3, 1);
 }
 
 #[test]
 #[should_panic]
 fn test_slice_out_of_bound_2() {
-    [10, 11, 12].span().slice(0, 4);
+    array![10, 11, 12].span().slice(0, 4);
 }
 
 #[test]
@@ -112,9 +117,19 @@ fn test_append_span() {
     assert_eq(arr[5], @12, 'Unexpected element');
 }
 
+mod felt252_span_from_tuple {
+    pub extern fn span_from_tuple<T>(struct_like: Box<@T>) -> @Array<felt252> nopanic;
+}
+
+mod tuple_span_from_tuple {
+    pub extern fn span_from_tuple<T>(
+        struct_like: Box<@T>
+    ) -> @Array<(felt252, felt252, felt252)> nopanic;
+}
+
 #[test]
 fn test_felt252_span_from_tuple() {
-    let span: Span<felt252> = [10, 20, 30].span();
+    let span = felt252_span_from_tuple::span_from_tuple(BoxTrait::new(@(10, 20, 30)));
     assert!(*span[0] == 10);
     assert!(*span[1] == 20);
     assert!(*span[2] == 30);
@@ -122,7 +137,8 @@ fn test_felt252_span_from_tuple() {
 
 #[test]
 fn test_tuple_span_from_tuple() {
-    let span: Span<(felt252, felt252, felt252)> = [(10, 20, 30), (40, 50, 60), (70, 80, 90)].span();
+    let multi_tuple = ((10, 20, 30), (40, 50, 60), (70, 80, 90));
+    let span = tuple_span_from_tuple::span_from_tuple(BoxTrait::new(@multi_tuple));
     assert!(*span[0] == (10, 20, 30));
     assert!(*span[1] == (40, 50, 60));
     assert!(*span[2] == (70, 80, 90));
@@ -135,44 +151,4 @@ fn test_fixed_size_array() {
     assert_eq!(x, 10);
     assert_eq!(y, 11);
     assert_eq!(z, 12);
-}
-
-fn consume<const N: usize>(_arr: [felt252; N]) {}
-
-#[test]
-fn test_fixed_size_array_copy() {
-    let arr = [10, 11, 12];
-    consume(arr);
-    consume(arr);
-}
-
-/// Helper for tests removing the box wrapping a fixed sized array wrapped by an option.
-fn debox<T, const SIZE: usize>(value: Option<@Box<[T; SIZE]>>) -> Option<@[T; SIZE]> {
-    Option::Some(value?.as_snapshot().unbox())
-}
-
-#[test]
-fn test_span_into_fixed_size_array() {
-    assert!(debox::<felt252, 2>([10, 11, 12].span().try_into()).is_none());
-    assert!(debox::<felt252, 3>([10, 11, 12].span().try_into()) == Option::Some(@[10, 11, 12]));
-    assert!(debox::<felt252, 4>([10, 11, 12].span().try_into()).is_none());
-    assert!(debox::<u256, 2>([10, 11, 12].span().try_into()).is_none());
-    assert!(debox::<u256, 3>([10, 11, 12].span().try_into()) == Option::Some(@[10, 11, 12]));
-    assert!(debox::<u256, 4>([10, 11, 12].span().try_into()).is_none());
-    assert!(debox::<felt252, 1>([].span().try_into()).is_none());
-    assert!(debox::<felt252, 0>([].span().try_into()) == Option::Some(@[]));
-}
-
-#[test]
-fn test_span_multi_pop() {
-    let mut span = array![10, 11, 12, 13].span();
-    assert!(span.multi_pop_front::<5>().is_none());
-    assert!(debox(span.multi_pop_front::<4>()) == Option::Some(@[10, 11, 12, 13]));
-    let mut span = array![10, 11, 12, 13].span();
-    assert!(debox(span.multi_pop_front::<3>()) == Option::Some(@[10, 11, 12]));
-    let mut span = array![10, 11, 12, 13].span();
-    assert!(span.multi_pop_back::<5>().is_none());
-    assert!(debox(span.multi_pop_back::<4>()) == Option::Some(@[10, 11, 12, 13]));
-    let mut span = array![10, 11, 12, 13].span();
-    assert!(debox(span.multi_pop_back::<3>()) == Option::Some(@[11, 12, 13]));
 }

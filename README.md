@@ -10,12 +10,6 @@ Push the image to registry (optional):
 podman push localhost/stone-cairo1:recursive docker.io/username/stone-cairo1:recursive
 ```
 
-Install the `cairo1-compile`:
-
-```bash
-cargo install --path cairo1-compile
-```
-
 For the compilation to work, the `cairo` corelib folder is required. A couple of paths are permitted but the easiest way is to have it in your home folder:
 
 ```bash
@@ -26,28 +20,22 @@ cd cairo && git pull && cd ..
 rm -rf corelib && cp -r cairo/corelib corelib
 ```
 
-The example directory showcases the workflow of using the image to proof arbitrary cairo1 progams.
-
-```bash
-cd example
-```
-
 Compile the cairo program:
 
 ```bash
-sierra_compile_sdk compile lib.cairo -o program.sierra.json
+cargo run -r -- compile example/src/lib.cairo > resources/example.sierra.json
 ```
 
 Merge the program with the input:
 
 ```bash
-sierra_compile_sdk merge program.sierra.json input.json -o merged.json
+cargo run -r -- merge resources/example.sierra.json example/input.json > resources/example.json
 ```
 
 Compute the proof:
 
 ```bash
-podman run -i --rm stone5-cairo1 < merged.json > proof.json
+podman run -i --rm localhost/stone-cairo1:recursive < resources/example.json > resources/proof.json
 ```
 
 Verify

@@ -5,7 +5,7 @@ pub(crate) impl Felt252Zero of core::num::traits::Zero<felt252> {
 
     #[inline(always)]
     fn is_zero(self: @felt252) -> bool {
-        *self == Self::zero()
+        *self == Felt252Zero::zero()
     }
 
     #[inline(always)]
@@ -21,7 +21,7 @@ pub(crate) impl Felt252One of core::num::traits::One<felt252> {
 
     #[inline(always)]
     fn is_one(self: @felt252) -> bool {
-        *self == Self::one()
+        *self == Felt252One::one()
     }
 
     #[inline(always)]

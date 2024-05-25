@@ -10,8 +10,6 @@ use starknet::{
 };
 use core::serde::Serde;
 
-/// Represents the address of a storage value in a Starknet contract.
-/// The value range of this type is `[0, 2**251)`.
 #[derive(Copy, Drop)]
 pub extern type StorageAddress;
 
@@ -54,12 +52,6 @@ impl StorageAddressSerde of Serde<StorageAddress> {
         Option::Some(
             storage_address_try_from_felt252(Serde::<felt252>::deserialize(ref serialized)?)?
         )
-    }
-}
-
-impl StorageBaseAddressIntoFelt252 of Into<StorageBaseAddress, felt252> {
-    fn into(self: StorageBaseAddress) -> felt252 {
-        storage_address_to_felt252(storage_address_from_base(self))
     }
 }
 

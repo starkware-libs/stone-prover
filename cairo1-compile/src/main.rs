@@ -5,7 +5,7 @@ use std::{
 };
 
 use cairo_lang_compiler::{
-    compile_prepared_db_program, db::RootDatabase, project::setup_project, CompilerConfig,
+    compile_prepared_db, db::RootDatabase, project::setup_project, CompilerConfig,
 };
 use cairo_lang_sierra::program::Program;
 use clap::{Parser, ValueHint};
@@ -95,5 +95,5 @@ fn compile_sierra(filename: &Path) -> Program {
         .build()
         .unwrap();
     let main_crate_ids = setup_project(&mut db, filename).unwrap();
-    compile_prepared_db_program(&mut db, main_crate_ids, compiler_config).unwrap()
+    compile_prepared_db(&mut db, main_crate_ids, compiler_config).unwrap()
 }

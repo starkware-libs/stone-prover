@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[derive(Drop, Copy, Serde, Debug)]
+#[derive(Drop, Serde, Debug)]
 pub struct Call {
     pub to: ContractAddress,
     pub selector: felt252,
