@@ -1,7 +1,7 @@
 Build the docker image:
 
 ```bash
-podman build -t stone-cairo1:recursive .
+podman build -t stone-cairo1:recursive -f cairo1.dockerfile .
 ```
 
 Push the image to registry (optional):
