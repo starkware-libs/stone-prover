@@ -7,21 +7,23 @@ podman build -t stone-cairo1:recursive .
 Push the image to registry (optional):
 
 ```bash
-podman push localhost/stone-cairo1:latest docker.io/username/stone-cairo1:latest
+podman push localhost/stone-cairo1:recursive docker.io/username/stone-cairo1:recursive
 ```
 
-Install the `sierra_compile_sdk`:
+Install the `cairo1-compile`:
 
 ```bash
-cargo install --path sierra_compile_sdk
+cargo install --path cairo1-compile
 ```
 
 For the compilation to work, the `cairo` corelib folder is required. A couple of paths are permitted but the easiest way is to have it in your home folder:
 
 ```bash
-git clone https://github.com/starkware-libs/cairo.git &&
-mv cairo/corelib ~/ &&
-rm -rf cairo
+cd cairo && git pull && cd ..
+```
+
+```bash
+rm -rf corelib && cp -r cairo/corelib corelib
 ```
 
 The example directory showcases the workflow of using the image to proof arbitrary cairo1 progams.

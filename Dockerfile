@@ -41,7 +41,6 @@ COPY prover-entrypoint.sh /usr/local/bin/prover-entrypoint.sh
 
 WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json cpu_air_prover_config.json
-RUN git clone https://github.com/starkware-libs/cairo.git && cd cairo && git checkout 68b7072783c7963e4ca17c88d9928dd5dc12db96
-RUN cp -r ./cairo/corelib ./corelib
+COPY corelib corelib
 
 ENTRYPOINT [ "prover-entrypoint.sh" ]
