@@ -1,13 +1,13 @@
 Build the docker image:
 
 ```bash
-podman build -t stone5-cairo1 -f prover.dockerfile .
+podman build -t stone-cairo1:recursive .
 ```
 
 Push the image to registry (optional):
 
 ```bash
-podman push localhost/stone5-cairo1:latest docker.io/username/stone5-cairo1:latest
+podman push localhost/stone-cairo1:latest docker.io/username/stone-cairo1:latest
 ```
 
 Install the `sierra_compile_sdk`:

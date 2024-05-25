@@ -1,4 +1,4 @@
-FROM ciimage/python:3.9 as base_image
+FROM ciimage/python:3.9 as base
 
 # Show executed shell commands
 RUN set -o xtrace
@@ -11,60 +11,37 @@ RUN pip install cpplint pytest numpy
 RUN apt install -y clang-12 clang-format-12 clang-tidy-6.0 libclang-12-dev llvm-12
 RUN ln /usr/bin/clang++-12 /usr/bin/clang++
 RUN ln /usr/bin/clang-12 /usr/bin/clang
-
-WORKDIR /app/
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN curl -L -o /tmp/bazel_install.sh https://github.com/bazelbuild/bazel/releases/download/5.4.0/bazel-5.4.0-installer-linux-x86_64.sh
 RUN chmod +x /tmp/bazel_install.sh
 RUN /tmp/bazel_install.sh
-RUN groupadd -g 1234 starkware && useradd -m starkware -u 1234 -g 1234
 
-RUN chown -R starkware:starkware /app
-
+WORKDIR /app/
 COPY WORKSPACE /app/
 COPY .bazelrc /app/
 COPY src /app/src
 COPY bazel_utils /app/bazel_utils
 
+
+FROM base as build
 # Build.
+WORKDIR /app/
 RUN bazel build //...
+RUN cargo install --git https://github.com/lambdaclass/cairo-vm --rev f4a22140018f62309ade09ecd517b40e915031b1 cairo1-run
 
-FROM base_image as intermediate_image
 
-# Install rust
-RUN apt install -y unzip
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+FROM python:3.12.3 as final
+COPY --from=build /root/.cargo/bin/cairo1-run /usr/local/bin/cairo1-run
+COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /usr/local/bin/stone
 
-# Clone cairo-vm
-WORKDIR /cairo-vm
-RUN wget https://github.com/lambdaclass/cairo-vm/archive/main.zip -O cairo-vm.zip
-RUN unzip cairo-vm.zip && mv cairo-vm-main/* . && rm -r cairo-vm-main cairo-vm.zip
-
-# Install cairo-vm
-WORKDIR /cairo-vm/cairo1-run
-RUN cargo build --release
-WORKDIR /cairo-vm-bin
-RUN mv /cairo-vm/target/release/cairo1-run .
-
-# "Link" the cairo corelib
-RUN wget https://github.com/starkware-libs/cairo/archive/refs/tags/v2.6.3.zip -O cairo.zip
-RUN unzip cairo.zip && mv cairo-2.6.3/corelib . && rm -r cairo-2.6.3 cairo.zip
-
-ENV PATH="/cairo-vm-bin:${PATH}"
-
-RUN apt install -y jq
-
-FROM intermediate_image
-
-# Link cpu_air_prover.
-RUN ln /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /bin/cpu_air_prover
-COPY config-generator.py /bin/
-COPY prover-entrypoint.sh /bin/
+COPY config-generator.py /usr/local/bin/config-generator.py
+COPY prover-entrypoint.sh /usr/local/bin/prover-entrypoint.sh
 
 WORKDIR /tmp/workspace
-COPY cpu_air_prover_config.json .
-RUN mv /cairo-vm-bin/corelib . 
-COPY config-generator.py .
+COPY cpu_air_prover_config.json cpu_air_prover_config.json
+RUN git clone https://github.com/starkware-libs/cairo.git && cd cairo && git checkout 68b7072783c7963e4ca17c88d9928dd5dc12db96
+RUN cp -r ./cairo/corelib ./corelib
 
 ENTRYPOINT [ "prover-entrypoint.sh" ]

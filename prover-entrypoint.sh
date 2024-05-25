@@ -19,7 +19,7 @@ cairo1-run \
 
 python3 config-generator.py < program_public_input.json > cpu_air_params.json && \
 
-cpu_air_prover \
+stone \
     --out_file program_proof.json \
     --private_input_file program_private_input.json \
     --public_input_file program_public_input.json \
