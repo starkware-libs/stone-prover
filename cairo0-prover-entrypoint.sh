@@ -3,7 +3,7 @@
 # Read from stdin
 cat > input.json && \
 
-jq -r '.program_input | join(" ")' input.json | tr -d '\n' > program_input.json && \
+jq -r '.program_input' input.json > program_input.json && \
 jq '.program' input.json > program.json && \
 
 cairo-run \

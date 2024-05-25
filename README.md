@@ -1,13 +1,13 @@
 Build the docker image:
 
 ```bash
-podman build -t stone-cairo1:recursive -f cairo1.dockerfile .
+podman build -t stone-cairo:recursive -f cairo.dockerfile .
 ```
 
 Push the image to registry (optional):
 
 ```bash
-podman push localhost/stone-cairo1:recursive docker.io/username/stone-cairo1:recursive
+podman push localhost/stone-cairo:recursive docker.io/username/stone-cairo:recursive
 ```
 
 For the compilation to work, the `cairo` corelib folder is required. A couple of paths are permitted but the easiest way is to have it in your home folder:

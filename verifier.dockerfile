@@ -1,4 +1,4 @@
-FROM ciimage/python:3.9 as base_image
+FROM ciimage/python:3.9 as base
 
 # Show executed shell commands
 RUN set -o xtrace
@@ -12,34 +12,29 @@ RUN apt install -y clang-12 clang-format-12 clang-tidy-6.0 libclang-12-dev llvm-
 RUN ln /usr/bin/clang++-12 /usr/bin/clang++
 RUN ln /usr/bin/clang-12 /usr/bin/clang
 
-# Install Cairo0.
-RUN pip install cairo-lang==0.12.3
-
-WORKDIR /app/
-
 RUN curl -L -o /tmp/bazel_install.sh https://github.com/bazelbuild/bazel/releases/download/5.4.0/bazel-5.4.0-installer-linux-x86_64.sh
 RUN chmod +x /tmp/bazel_install.sh
 RUN /tmp/bazel_install.sh
-RUN groupadd -g 1234 starkware && useradd -m starkware -u 1234 -g 1234
 
-RUN chown -R starkware:starkware /app
-
+WORKDIR /app/
 COPY WORKSPACE /app/
 COPY .bazelrc /app/
 COPY src /app/src
 COPY bazel_utils /app/bazel_utils
 
+
+FROM base as build
 # Build.
+WORKDIR /app/
 RUN bazel build //...
 
-FROM base_image
 
-# Run tests.
-RUN bazel test //...
+FROM python:3.9.18-slim-bookworm as final
+RUN apt update && apt install -y elfutils
 
-# Link cpu_air_verifier.
-RUN ln /app/build/bazelbin/src/starkware/main/cpu/cpu_air_verifier /bin/cpu_air_verifier
-COPY verifier-entrypoint.sh /bin/
+COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_verifier /usr/local/bin/verifier
+
+COPY verifier-entrypoint.sh /usr/local/bin/verifier-entrypoint.sh
 
 WORKDIR /tmp/workspace
 

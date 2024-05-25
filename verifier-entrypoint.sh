@@ -3,5 +3,5 @@
 # Read from stdin
 cat > proof.json && \
 
-cpu_air_verifier --in_file=proof.json && \
+verifier --in_file=proof.json && \
 echo "Successfully verified example proof."

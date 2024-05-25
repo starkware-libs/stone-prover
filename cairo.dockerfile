@@ -39,7 +39,7 @@ COPY --from=build /root/.cargo/bin/cairo1-run /usr/local/bin/cairo1-run
 COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /usr/local/bin/stone
 
 COPY config-generator.py /usr/local/bin/config-generator.py
-COPY cairo1-prover-entrypoint.sh /usr/local/bin/prover-entrypoint.sh
+COPY cairo-prover-entrypoint.sh /usr/local/bin/prover-entrypoint.sh
 
 WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json cpu_air_prover_config.json

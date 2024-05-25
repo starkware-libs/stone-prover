@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import json
 import math
@@ -27,7 +27,7 @@ TEMPLATE = {
   "verifier_friendly_commitment_hash": "poseidon3"
 }
 
-def read_json_from_stdin() -> dict:
+def read_json_from_stdin():
     """Read and return the JSON data from standard input."""
     try:
         return json.load(sys.stdin)
@@ -35,12 +35,12 @@ def read_json_from_stdin() -> dict:
         print("Error: Invalid JSON input.")
         raise
 
-def calculate_fri_step_list(n_steps: int, degree_bound: int) -> list[int]:
+def calculate_fri_step_list(n_steps, degree_bound):
     """Calculate the FRI step list based on the number of steps and the degree bound."""
     fri_degree = round(math.log(n_steps / degree_bound, 2)) + 4
     return [0, *[4 for _ in range(fri_degree // 4)], fri_degree % 4]
 
-def update_template_and_output(template: dict, fri_step_list: list[int]):
+def update_template_and_output(template, fri_step_list):
     """Update the template with the new FRI step list and output to standard output."""
     template["stark"]["fri"]["fri_step_list"] = fri_step_list
     json.dump(template, sys.stdout, indent=2)

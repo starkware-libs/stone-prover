@@ -30,7 +30,8 @@ RUN bazel build //...
 
 
 FROM python:3.9.18-slim-bookworm as final
-RUN apt update && apt install -y elfutils jq
+RUN apt update && apt install -y build-essential libgmp-dev elfutils jq
+RUN pip install --upgrade pip
 
 COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /usr/local/bin/stone
 
@@ -39,6 +40,7 @@ COPY cairo0-prover-entrypoint.sh /usr/local/bin/prover-entrypoint.sh
 
 WORKDIR /tmp/workspace
 COPY cpu_air_prover_config.json cpu_air_prover_config.json
-RUN pip install cairo-lang==0.13.1
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 ENTRYPOINT [ "prover-entrypoint.sh" ]
