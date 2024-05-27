@@ -254,7 +254,7 @@ void permutation_3_montgomery(felt_t state_in_montgomery_form[]) {
   }
 
   // Convert the state to reduced Montgomery form. If this is not done, values who are permutated
-  // multiple times might become numericly unstable and overflow from 256-bit, hence the transform
+  // multiple times might become numerically unstable and overflow from 256-bit, hence the transform
   // to the minimal representative.
   for (i = 0; i < 3; i++) {
     f251_final_reduce(state_in_montgomery_form[i], state_in_montgomery_form[i]);
