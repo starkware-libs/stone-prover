@@ -16,7 +16,7 @@ cairo1-run \
     --air_private_input program_private_input.json \
     --args_file program_input.txt \
     program.sierra.json \
-    2>&1 > /dev/null 
+    2>&1 > /dev/null && \
 
 config-generator.py < program_public_input.json > cpu_air_params.json && \
 
