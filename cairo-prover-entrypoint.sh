@@ -3,13 +3,14 @@
 # Read from stdin
 cat > input.json && \
 
+layout=$(jq -r '.layout' input.json) && \
 jq -r '.program_input | join(" ")' input.json | tr -d '\n' > program_input.txt && \
 jq '.program' input.json > program.sierra.json && \
 
 cairo1-run \
     --trace_file program_trace.trace \
     --memory_file program_memory.memory \
-    --layout recursive \
+    --layout $layout \
     --proof_mode \
     --air_public_input program_public_input.json \
     --air_private_input program_private_input.json \

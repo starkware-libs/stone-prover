@@ -3,7 +3,7 @@
 import argparse
 import json
 
-def merge_json_files(program_file, program_input_file):
+def merge_json_files(program_file, program_input_file, layout):
     try:
         # Open and load the JSON files
         with open(program_file, 'r') as pf, open(program_input_file, 'r') as pif:
@@ -14,6 +14,7 @@ def merge_json_files(program_file, program_input_file):
         merged_data = {
             "program": program_data,
             "program_input": program_input_data,
+            "layout": layout
         }
         
         # Print the merged JSON data to stdout
@@ -26,7 +27,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Merge two JSON files with different keys.")
     parser.add_argument('program_file', type=str, help='Program JSON file')
     parser.add_argument('program_input_file', type=str, help='Program Input JSON file')
+    parser.add_argument('layout', type=str, help="Layout of the proof (choose from 'plain', 'small', 'dex', 'recursive', 'starknet', 'recursive_large_output', 'all_solidity', 'starknet_with_keccak', 'dynamic', 'recursive_with_poseidon')")
 
     args = parser.parse_args()
 
-    print(merge_json_files(args.program_file, args.program_input_file))
+    print(merge_json_files(args.program_file, args.program_input_file, args.layout))

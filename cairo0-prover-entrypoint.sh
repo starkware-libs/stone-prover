@@ -5,11 +5,13 @@ cat > input.json && \
 
 jq -r '.program_input' input.json > program_input.json && \
 jq '.program' input.json > program.json && \
+layout=$(jq -r '.layout' input.json)
+
 
 cairo-run \
     --trace_file program_trace.trace \
     --memory_file program_memory.memory \
-    --layout recursive \
+    --layout $layout \
     --proof_mode \
     --air_public_input program_public_input.json \
     --air_private_input program_private_input.json \

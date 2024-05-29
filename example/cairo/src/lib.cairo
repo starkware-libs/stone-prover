@@ -1,7 +1,7 @@
 mod utils;
 
-fn main(n: felt252) -> Array<felt252> {
-    array![utils::factorial(n)]
+fn main(n: felt252, c: felt252) -> Array<felt252> {
+    array![utils::factorial(n) + c]
 }
 
 
