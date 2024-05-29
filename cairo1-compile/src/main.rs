@@ -1,4 +1,5 @@
 use std::{
+    fmt,
     fs::File,
     io::{BufReader, Write},
     path::{Path, PathBuf},
@@ -27,6 +28,14 @@ struct MergeArgs {
     input: PathBuf,
     #[clap(short, long, value_name = "FILE")]
     output: Option<PathBuf>,
+    #[clap(short, long, value_enum)]
+    layout: Option<Layout>,
+}
+
+#[derive(clap::ValueEnum, Clone, Debug, Default)]
+enum Layout {
+    #[default]
+    Recursive,
 }
 
 #[derive(Parser, Debug)]
@@ -47,6 +56,7 @@ fn main() {
 struct ProgramWithArgs {
     program: Program,
     program_input: serde_json::Value,
+    layout: String,
 }
 
 fn merge(args: MergeArgs) {
@@ -54,9 +64,12 @@ fn merge(args: MergeArgs) {
         serde_json::from_reader(BufReader::new(File::open(args.sierra).unwrap())).unwrap();
     let input: serde_json::Value =
         serde_json::from_reader(BufReader::new(File::open(args.input).unwrap())).unwrap();
+
+    let layout = args.layout.unwrap_or(Layout::Recursive);
     let merged = serde_json::to_string(&ProgramWithArgs {
         program: sierra_program,
         program_input: input,
+        layout: layout.to_string(),
     })
     .unwrap();
     match args.output {
@@ -96,4 +109,12 @@ fn compile_sierra(filename: &Path) -> Program {
         .unwrap();
     let main_crate_ids = setup_project(&mut db, filename).unwrap();
     compile_prepared_db(&mut db, main_crate_ids, compiler_config).unwrap()
+}
+
+impl fmt::Display for Layout {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Layout::Recursive => write!(f, "recursive"),
+        }
+    }
 }
