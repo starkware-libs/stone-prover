@@ -38,7 +38,7 @@ def read_json_from_stdin():
 def calculate_fri_step_list(n_steps, degree_bound):
     """Calculate the FRI step list based on the number of steps and the degree bound."""
     fri_degree = round(math.log(n_steps / degree_bound, 2)) + 4
-    return [0, *[4 for _ in range(fri_degree // 4)], fri_degree % 4]
+    return [0, *[4 for _ in range(fri_degree // 4)]] + ([fri_degree % 4] if fri_degree % 4 else [])
 
 def update_template_and_output(template, fri_step_list):
     """Update the template with the new FRI step list and output to standard output."""
