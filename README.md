@@ -39,7 +39,6 @@ docker cp -L ${container_id}:/bin/cpu_air_verifier .
 
 ## Creating and verifying a proof of a Cairo program
 
-
 Navigate to the example test directory (`e2e_test/Cairo`):
 
 ```bash
@@ -70,8 +69,9 @@ cargo run ../../fibonacci.cairo \
 ```
 
 Run the prover:
+
 ```bash
-cpu_air_prover \
+../../../../cpu_air_prover \
     --out_file=fibonacci_proof.json \
     --private_input_file=fibonacci_private_input.json \
     --public_input_file=fibonacci_public_input.json \
@@ -82,6 +82,7 @@ cpu_air_prover \
 The proof is now available in the file `fibonacci_proof.json`.
 
 Finally, run the verifier to verify the proof:
+
 ```bash
 cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
 ```
@@ -131,6 +132,7 @@ cairo-run \
 ```
 
 Run the prover:
+
 ```bash
 cpu_air_prover \
     --out_file=fibonacci_proof.json \
@@ -143,6 +145,7 @@ cpu_air_prover \
 The proof is now available in the file `fibonacci_proof.json`.
 
 Finally, run the verifier to verify the proof:
+
 ```bash
 cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
 ```
@@ -159,9 +162,11 @@ These things need to be checked externally.
 The number of steps affects the size of the trace.
 Such changes may require modification of `cpu_air_params.json`.
 Specifically, the following equation must be satisfied.
+
 ```
 log₂(last_layer_degree_bound) + ∑fri_step_list = log₂(#steps) + 4
 ```
+
 For instance, assuming a fixed `last_layer_degree_bound`,
 a larger number of steps requires changes to the `fri_step_list`
 to maintain the equality.
