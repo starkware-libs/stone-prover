@@ -84,7 +84,7 @@ The proof is now available in the file `fibonacci_proof.json`.
 Finally, run the verifier to verify the proof:
 
 ```bash
-cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
+../../../../cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
 ```
 
 **Note**: The verifier only checks that the proof is consistent with
