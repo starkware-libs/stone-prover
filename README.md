@@ -51,7 +51,9 @@ Install `cairo-vm/cairo1-run` (see further instructions in the
 
 ```bash
 git clone https://github.com/lambdaclass/cairo-vm.git
-cd cairo-vm/cairo1-run
+cd cairo-vm
+git checkout aecbb3f01dacb6d3f90256c808466c2c37606252
+cd cairo1-run
 make deps
 ```
 
