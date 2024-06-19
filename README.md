@@ -76,7 +76,8 @@ Run the prover:
     --private_input_file=fibonacci_private_input.json \
     --public_input_file=fibonacci_public_input.json \
     --prover_config_file=../../cpu_air_prover_config.json \
-    --parameter_file=../../cpu_air_params.json
+    --parameter_file=../../cpu_air_params.json \
+    --generate-annotations
 ```
 
 The proof is now available in the file `fibonacci_proof.json`.
