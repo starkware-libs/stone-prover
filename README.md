@@ -62,8 +62,8 @@ cargo run ../../fibonacci.cairo \
     --layout=small \
     --air_public_input=fibonacci_public_input.json \
     --air_private_input=fibonacci_private_input.json \
-    --trace_file=fibonacci_trace.json \
-    --memory_file=fibonacci_memory.json \
+    --trace_file=fibonacci_trace \
+    --memory_file=fibonacci_memory \
     --proof_mode
 ```
 
@@ -122,8 +122,8 @@ cairo-run \
     --program_input=fibonacci_input.json \
     --air_public_input=fibonacci_public_input.json \
     --air_private_input=fibonacci_private_input.json \
-    --trace_file=fibonacci_trace.json \
-    --memory_file=fibonacci_memory.json \
+    --trace_file=fibonacci_trace \
+    --memory_file=fibonacci_memory \
     --print_output \
     --proof_mode
 ```
