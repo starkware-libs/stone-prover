@@ -1,8 +1,9 @@
 use core::felt252;
 
-fn main() -> felt252 {
+fn main() -> Array<felt252> {
     let n = 10;
-    let result = fib(1, 1, n);
+    let mut result = array![];
+    result.append(fib(1, 1, n));
     result
 }
 
