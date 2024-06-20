@@ -10,7 +10,6 @@ public_input_file_path = sys.argv[1]
 cpu_air_params_destination_path = sys.argv[2]
 
 with open(public_input_file_path, 'r') as file:
-    # Step 2: Parse the JSON data into a Python dictionary or list
     public_input_file = json.load(file)
     program_n_steps = public_input_file['n_steps']
 
