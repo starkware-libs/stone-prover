@@ -9,8 +9,6 @@ if len(sys.argv) != 3:
 public_input_file_path = sys.argv[1]
 cpu_air_params_destination_path = sys.argv[2]
 
-print('Argv len : ' + str(len(sys.argv)))
-
 with open(public_input_file_path, 'r') as file:
     # Step 2: Parse the JSON data into a Python dictionary or list
     public_input_file = json.load(file)
