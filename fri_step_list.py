@@ -22,7 +22,7 @@ program_n_steps_log = math.ceil(math.log(program_n_steps, 2))
 sigma_fri_step_list = program_n_steps_log + 4 - last_layer_degree_bound_log
 
 (q, r) = divmod(sigma_fri_step_list, 4)
-fri_step_list = [4] * q
+fri_step_list = [0] + [4] * q
 if r > 0:
     fri_step_list.append(r)
 
