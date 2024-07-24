@@ -15,6 +15,6 @@ cc_library(
         "//src/starkware/crypt_tools:crypto_utils",
         "//src/starkware/randomness:prng",
         "//src/third_party",
-        "@com_github_gtest_gtest//:gtest",
+        "@googletest//:gtest",
     ],
 )

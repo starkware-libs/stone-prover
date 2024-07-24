@@ -6,8 +6,8 @@ cc_library(
     tags = ["external_prover"],
     deps = [
         "//src/third_party/jsoncpp:jsoncpp",
-        "@com_github_glog_glog//:glog",
-        "@com_github_gflags_gflags//:gflags",
+        "@glog//:glog",
+        "@gflags//:gflags",
     ],
     linkopts = ["-lpthread"],
 )

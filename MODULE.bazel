@@ -1,0 +1,86 @@
+module(
+    name = "stone_prover",
+    version = "2.0.0",
+    compatibility_level = 0,
+    bazel_compatibility = [">=7.0.0"],
+)
+
+bazel_dep(name = "gflags", version = "2.2.2")
+bazel_dep(name = "glog", version = "0.7.1")
+bazel_dep(name = "googletest", version = "1.15.0")
+bazel_dep(name = "toolchains_llvm", version = "1.0.0")
+
+git_override(
+  module_name = "gflags",
+  commit = "03a4842c9c6aaef438d7bf0c84e8a62c8064992b",
+  remote = "https://github.com/gflags/gflags",
+  patches = ["//src/third_party:gflags.patch"],
+  patch_strip = 1,
+)
+
+git_override(
+  module_name = "glog",
+  commit = "570c7e4e1dd197e9ae2777152b87a5ea9e06bcac",
+  remote = "https://github.com/google/glog",
+  patches = ["//src/third_party:glog.patch"],
+  patch_strip = 1,
+)
+
+git_override(
+  module_name = "toolchains_llvm",
+  commit = "329910897f3114f3f5d24407d9abf49b244056d2",
+  remote = "https://github.com/bazel-contrib/toolchains_llvm",
+  patches = ["//bazel_utils/patches:llvm_toolchain.patch"],
+  patch_strip = 1,
+)
+
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+
+llvm.toolchain(
+    compile_flags = {
+        "": [
+            "-DUSE_REGISTER_HINT",
+            "-fno-omit-frame-pointer",
+            "-fno-strict-aliasing",
+            "-fPIC",
+            "-Isrc",
+            "-maes",
+            "-mpclmul",
+            "-Wall",
+            "-Wextra",
+            "-Wno-mismatched-tags",
+        ],
+    },
+    cxx_flags = {
+        "": [
+            "-std=c++17",
+            "-fconstexpr-steps=20000000",
+        ],
+    },
+    link_flags = {
+        "": [
+            "-fuse-ld=gold",
+            "-Wl,-no-as-needed",
+            "-Wl,-z,relro,-z,now",
+            "-B/usr/bin",
+            "-lstdc++",
+            "-lm",
+        ],
+    },
+    llvm_version = "12.0.0",
+    opt_compile_flags = {
+        "": [
+            "-g0",
+            "-O3",
+            "-D_FORTIFY_SOURCE=1",
+            "-DNDEBUG",
+            "-ffunction-sections",
+            "-fdata-sections",
+        ],
+    },
+    stdlib = {"": "stdc++"},
+)
+
+use_repo(llvm, "llvm_toolchain")
+
+register_toolchains("@llvm_toolchain//:all")
