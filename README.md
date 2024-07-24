@@ -9,6 +9,8 @@ underlying the CairoZero programming language.
 
 # Installation instructions
 
+For now, only Linux platforms are supported.
+
 ## Building using the dockerfile
 
 The root directory contains a dedicated Dockerfile which automatically builds the package and
