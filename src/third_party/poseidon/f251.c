@@ -48,7 +48,7 @@ void sub64(uint64_t* z, uint64_t* out_b, uint64_t x, uint64_t y, uint64_t in_b) 
   *out_b ^= 1;
 }
 
-#ifndef ASSEMBLY
+#ifndef __x86_64__
 
 // 64-bit multiplication
 // (z[0], z[1]) = x * y
@@ -221,7 +221,7 @@ void f251_copy(felt_t z, const felt_t x) {
   z[3] = x[3];
 }
 
-#ifndef ASSEMBLY
+#ifndef __x86_64__
 
 // F251 addition
 // Computes z = x + y mod p, where

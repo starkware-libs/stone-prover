@@ -16,7 +16,7 @@
 
 namespace starkware {
 
-#ifndef NO_AVX
+#ifdef __x86_64__
 /*
   This function is implemented in assembly, in prime_field_elements.S .
 */
@@ -53,7 +53,6 @@ inline BigInt<4> PrimeFieldElement<252, 0>::UnreducedMontgomeryMul<false>(
     const BigInt<4>& x, const BigInt<4>& y) {
   return UnreducedMontMulPrime0(x, y);
 }
-
 #endif
 
 // Surpress instantiations outside of prime_field_element.cc.

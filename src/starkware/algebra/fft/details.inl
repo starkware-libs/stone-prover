@@ -347,8 +347,7 @@ ALWAYS_INLINE void FftNaturalToReverseLoop(
   }
 }
 
-#ifndef NO_AVX
-
+#ifdef __x86_64__
 template <>
 inline void FftNaturalToReverseLoop<PrimeFieldElement<252, 0>>(
     const PrimeFieldElement<252, 0>* src, size_t length,

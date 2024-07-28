@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "blake2-impl.h"
-#include "blake2.h"
+#include "../blake2-impl.h"
+#include "../blake2.h"
 
 #include "blake2-config.h"
 

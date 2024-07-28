@@ -25,7 +25,6 @@ cc_test(
         "//src/starkware/utils:to_from_string.h",
         "//src/third_party/gsl:gsl-lite.hpp",
     ],
-    copts = ["-UNDEBUG"],
     visibility = ["//visibility:public"],
     deps = [
         "fields",
@@ -37,9 +36,14 @@ cc_test(
 cc_library(
     name = "prime_field_element",
     srcs = [
-        "prime_field_element.S",
         "prime_field_element.cc",
-    ],
+    ] + select({
+        "@platforms//cpu:x86_64": [
+            "prime_field_element.S"
+        ],
+        "//conditions:default": [
+        ],
+    }),
     hdrs = [
         "big_prime_constants.h",
         "prime_field_element.h",
