@@ -43,7 +43,7 @@ void DilutedCheckCell<FieldElementT>::Finalize(gsl::span<const gsl::span<FieldEl
   // Fill missing values.
   // current_value refers to the maximum value in the range [0, 2^n_bits) for which we know that all
   // previous values appear in the trace in diluted form.
-  // At the beginnin, we know of no value, so we initialize it with 0.
+  // At the beginning, we know of no value, so we initialize it with 0.
   uint64_t current_value = 0;
   uint64_t filled_missings = 0;
   for (uint64_t i = 0; i < this->values_.size(); ++i) {
