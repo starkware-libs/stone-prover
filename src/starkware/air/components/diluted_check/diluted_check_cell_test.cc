@@ -91,7 +91,7 @@ TEST_F(DilutedCheckCellTest, AllInitialized) {
 
   EXPECT_ASSERT(
       diluted_cell.Finalize(SpanAdapter(trace)),
-      HasSubstr("Trace size is not large enough for dilluted-check values. Filled "
+      HasSubstr("Trace size is not large enough for diluted-check values. Filled "
                 "missing values: 32768. Remaining missing values: 8192."));
 }
 
