@@ -71,7 +71,7 @@ class BitUnpackingComponent {
   std::vector<size_t> bits_;
 
   /*
-    The columns representing the cumulative products of bits.
+    The columns represent the cumulative products of bits.
   */
   std::vector<VirtualColumn> cumulative_bit_columns_;
 };
