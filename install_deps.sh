@@ -5,14 +5,24 @@ set -o xtrace
 # Exit on error.
 set -e
 
-apt update
-apt install -y python3.9-dev git wget gnupg2 elfutils libdw-dev python3-pip libgmp3-dev unzip
+os=$(uname | sed 's/\(.*\)/\L\1/')
+arch=$(uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
 
-pip install --upgrade pip
-pip install cpplint pytest numpy
+if [ "$os" == "linux" ]; then
+    export DEBIAN_FRONTEND=noninteractive
 
-apt install -y clang-12 clang-format-12 clang-tidy-6.0 libclang-12-dev llvm-12
+    apt-get update
+    apt-get install -y git wget libtinfo5 libdw-dev libgmp3-dev python3 python3-pip
 
-ln -sf /usr/bin/clang++-12 /usr/bin/clang++
-ln -sf /usr/bin/clang-12 /usr/bin/clang
+    pip install --upgrade pip
+    pip install cpplint pytest numpy sympy==1.12.1 cairo-lang==0.12.0
 
+    wget "https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazelisk-$os-$arch"
+    chmod 755 "bazelisk-$os-$arch"
+    mv "bazelisk-$os-$arch" /bin/bazelisk
+
+else
+    echo "$os/$arch is not supported"
+    exit 1
+
+fi
