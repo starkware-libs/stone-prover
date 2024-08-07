@@ -36,8 +36,8 @@ class PoseidonComponent {
     See src/starkware/air/components/poseidon/poseidon.py for documentation.
   */
   PoseidonComponent(
-      const std::string& name, const TraceGenerationContext& ctx, size_t m, size_t rounds_full,
-      size_t rounds_partial, gsl::span<const size_t> partial_rounds_partition,
+      const std::string& name, const TraceGenerationContext& ctx, uint64_t m, uint64_t rounds_full,
+      uint64_t rounds_partial, gsl::span<const uint64_t> partial_rounds_partition,
       const ConstSpanAdapter<FieldElementT>& mds, const ConstSpanAdapter<FieldElementT>& ark)
       : m_(m),
         rounds_full_(rounds_full),
@@ -56,15 +56,15 @@ class PoseidonComponent {
         ark_(ark) {
     ASSERT_RELEASE(
         std::accumulate(
-            partial_rounds_partition.begin(), partial_rounds_partition.end(), size_t(0)) ==
+            partial_rounds_partition.begin(), partial_rounds_partition.end(), uint64_t(0)) ==
             rounds_partial + m * (partial_rounds_partition.size() - 1),
         "Incompatible partial rounds partition.");
     ASSERT_RELEASE(mds.Size() == m, "Incompatible MDS dimensions.");
-    for (size_t i = 0; i < m; ++i) {
+    for (uint64_t i = 0; i < m; ++i) {
       ASSERT_RELEASE(mds[i].size() == m, "Incompatible MDS dimensions.");
     }
     ASSERT_RELEASE(ark.Size() == rounds_full + rounds_partial, "Incompatible ARK dimensions.");
-    for (size_t i = 0; i < rounds_full + rounds_partial; ++i) {
+    for (uint64_t i = 0; i < rounds_full + rounds_partial; ++i) {
       ASSERT_RELEASE(ark[i].size() == m, "Incompatible ARK dimensions.");
     }
   }
@@ -79,11 +79,11 @@ class PoseidonComponent {
       gsl::span<const gsl::span<FieldElementT>> trace) const;
 
  private:
-  static const std::vector<size_t> InitRPCapacities(
-      gsl::span<const size_t> partial_rounds_partition) {
-    std::vector<size_t> capacities;
+  static const std::vector<uint64_t> InitRPCapacities(
+      gsl::span<const uint64_t> partial_rounds_partition) {
+    std::vector<uint64_t> capacities;
     capacities.reserve(partial_rounds_partition.size());
-    for (size_t size : partial_rounds_partition) {
+    for (uint64_t size : partial_rounds_partition) {
       capacities.push_back(Pow2(Log2Ceil(size)));
     }
     return capacities;
@@ -91,21 +91,21 @@ class PoseidonComponent {
 
   static const std::vector<VirtualColumn> GetStateColumns(
       const std::string& name, const TraceGenerationContext& ctx, const std::string& suffix,
-      size_t size) {
+      uint64_t size) {
     std::vector<VirtualColumn> state_columns;
     state_columns.reserve(size);
-    for (size_t i = 0; i < size; ++i) {
+    for (uint64_t i = 0; i < size; ++i) {
       state_columns.push_back(ctx.GetVirtualColumn((name + std::to_string(i)).append(suffix)));
     }
     return state_columns;
   }
 
-  const size_t m_;
-  const size_t rounds_full_;
-  const size_t rounds_full_capacity_;
-  const size_t rounds_full_half_capacity_;
-  const std::vector<size_t> partial_rounds_partition_;
-  const std::vector<size_t> r_p_capacities_;
+  const uint64_t m_;
+  const uint64_t rounds_full_;
+  const uint64_t rounds_full_capacity_;
+  const uint64_t rounds_full_half_capacity_;
+  const std::vector<uint64_t> partial_rounds_partition_;
+  const std::vector<uint64_t> r_p_capacities_;
 
   /*
     The virtual columns.

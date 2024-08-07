@@ -28,16 +28,16 @@ std::vector<FieldElementT> PoseidonComponent<FieldElementT>::WriteTrace(
   std::vector<FieldElementT> state_cubed = FieldElementT::UninitializedVector(m_);
 
   // First full rounds.
-  for (size_t round = 0; round < SafeDiv(rounds_full_, 2); ++round) {
+  for (uint64_t round = 0; round < SafeDiv(rounds_full_, 2); ++round) {
     // Add round key and cube state.
-    for (size_t i = 0; i < m_; ++i) {
+    for (uint64_t i = 0; i < m_; ++i) {
       state[i] += ark_[round][i];
       state_squared[i] = state[i] * state[i];
       state_cubed[i] = state[i] * state_squared[i];
     }
 
     // Store state and its squares in virtual columns.
-    for (size_t i = 0; i < m_; ++i) {
+    for (uint64_t i = 0; i < m_; ++i) {
       full_rounds_state_[i].SetCell(
           trace, round + rounds_full_capacity_ * component_index, state[i]);
       full_rounds_state_squared_[i].SetCell(
@@ -50,13 +50,13 @@ std::vector<FieldElementT> PoseidonComponent<FieldElementT>::WriteTrace(
 
   // Partial rounds.
   std::vector<FieldElementT> tmp_state = FieldElementT::UninitializedVector(m_);
-  size_t round_key_idx = SafeDiv(rounds_full_, 2);
-  for (size_t part = 0; part < partial_rounds_partition_.size(); ++part) {
-    size_t first_round = part == 0 ? 0 : m_;
-    for (size_t round = first_round; round < partial_rounds_partition_[part];
+  uint64_t round_key_idx = SafeDiv(rounds_full_, 2);
+  for (uint64_t part = 0; part < partial_rounds_partition_.size(); ++part) {
+    uint64_t first_round = part == 0 ? 0 : m_;
+    for (uint64_t round = first_round; round < partial_rounds_partition_[part];
          ++round, ++round_key_idx) {
       // Add round key and square last element.
-      for (size_t i = 0; i < m_; ++i) {
+      for (uint64_t i = 0; i < m_; ++i) {
         tmp_state[i] = state[i] + ark_[round_key_idx][i];
       }
       const FieldElementT last_element_squared = tmp_state.back() * tmp_state.back();
@@ -70,7 +70,7 @@ std::vector<FieldElementT> PoseidonComponent<FieldElementT>::WriteTrace(
       // In the last m_ rounds of each part, we write the first m_ rounds of the next part.
       if (part < partial_rounds_partition_.size() - 1 &&
           round >= partial_rounds_partition_[part] - m_) {
-        const size_t index = round - partial_rounds_partition_[part] + m_;
+        const uint64_t index = round - partial_rounds_partition_[part] + m_;
         partial_rounds_state_[part + 1].SetCell(
             trace, index + r_p_capacities_[part + 1] * component_index, tmp_state.back());
         partial_rounds_state_squared_[part + 1].SetCell(
@@ -86,16 +86,16 @@ std::vector<FieldElementT> PoseidonComponent<FieldElementT>::WriteTrace(
   }
 
   // Last full rounds.
-  for (size_t round = 0; round < SafeDiv(rounds_full_, 2); ++round, ++round_key_idx) {
+  for (uint64_t round = 0; round < SafeDiv(rounds_full_, 2); ++round, ++round_key_idx) {
     // Add round key and square state.
-    for (size_t i = 0; i < m_; ++i) {
+    for (uint64_t i = 0; i < m_; ++i) {
       state[i] += ark_[round_key_idx][i];
       state_squared[i] = state[i] * state[i];
       state_cubed[i] = state[i] * state_squared[i];
     }
 
     // Store state in virtual columns.
-    for (size_t i = 0; i < m_; ++i) {
+    for (uint64_t i = 0; i < m_; ++i) {
       full_rounds_state_[i].SetCell(
           trace, round + rounds_full_half_capacity_ + rounds_full_capacity_ * component_index,
           state[i]);

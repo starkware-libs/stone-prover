@@ -66,8 +66,18 @@ llvm.toolchain(
             "-lstdc++",
             "-lm",
         ],
+        "darwin-aarch64": [
+            "-B/usr/bin",
+            "-lstdc++",
+            "-lm",
+        ],
+        "darwin-x86_64": [
+            "-B/usr/bin",
+            "-lstdc++",
+            "-lm",
+        ],
     },
-    llvm_version = "12.0.0",
+    llvm_version = "17.0.6",
     opt_compile_flags = {
         "": [
             "-g0",

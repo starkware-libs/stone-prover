@@ -23,8 +23,8 @@ namespace starkware {
 namespace oods {
 
 std::pair<Trace, std::unique_ptr<FftBases>> BreakCompositionPolynomial(
-    const ConstFieldElementSpan& composition_evaluation, size_t n_breaks, const FftBases& bases) {
-  const size_t log_n_breaks = SafeLog2(n_breaks);
+    const ConstFieldElementSpan& composition_evaluation, uint64_t n_breaks, const FftBases& bases) {
+  const uint64_t log_n_breaks = SafeLog2(n_breaks);
   const std::unique_ptr<const PolynomialBreak> poly_break =
       MakePolynomialBreak(bases, log_n_breaks);
 
@@ -37,8 +37,8 @@ std::pair<Trace, std::unique_ptr<FftBases>> BreakCompositionPolynomial(
 }
 
 std::unique_ptr<Air> CreateBoundaryAir(
-    const Field& field, uint64_t trace_length, size_t n_columns,
-    std::vector<std::tuple<size_t, FieldElement, FieldElement>>&& boundary_constraints) {
+    const Field& field, uint64_t trace_length, uint64_t n_columns,
+    std::vector<std::tuple<uint64_t, FieldElement, FieldElement>>&& boundary_constraints) {
   auto boundary_air = InvokeFieldTemplateVersion(
       [&](auto field_tag) -> std::unique_ptr<Air> {
         using FieldElementT = typename decltype(field_tag)::type;
@@ -62,13 +62,13 @@ void SendElementsToChannel(
     channel->SendFieldElementSpan(values);
   } else {
     // Sending each element separately to the channel.
-    for (size_t i = 0; i < values.Size(); ++i) {
+    for (uint64_t i = 0; i < values.Size(); ++i) {
       channel->SendFieldElement(values[i], std::to_string(i));
     }
   }
 }
 
-std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
+std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> ProveOods(
     ProverChannel* channel, const CompositionOracleProver& original_oracle,
     const CommittedTraceProverBase& broken_trace, const bool use_extension_field,
     const bool verifier_friendly_channel_updates) {
@@ -78,7 +78,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
   if (use_extension_field) {
     ASSERT_RELEASE(GetFrobenius(trace_gen) == trace_gen, "trace_gen not in base field.");
   }
-  std::vector<std::tuple<size_t, FieldElement, FieldElement>> boundary_constraints;
+  std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> boundary_constraints;
   const FieldElement point = channel->GetRandomFieldElementFromVerifier(field, "Evaluation point");
   const std::optional<FieldElement> conj_point =
       use_extension_field ? std::make_optional(GetFrobenius(point)) : std::nullopt;
@@ -86,8 +86,8 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
   ProfilingBlock profiling_block("Eval at OODS point");
 
   const auto& mask = original_oracle.GetMask();
-  const size_t mask_size = mask.size();
-  const size_t n_breaks = broken_trace.NumColumns();
+  const uint64_t mask_size = mask.size();
+  const uint64_t n_breaks = broken_trace.NumColumns();
   FieldElementVector elements_to_send =
       FieldElementVector::MakeUninitialized(field, mask_size + n_breaks);
 
@@ -98,7 +98,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
     original_oracle.EvalMaskAtPoint(point, trace_evaluation_at_mask);
     std::vector<bool> cols_seen(original_oracle.Width(), false);
     // Creates the LHS of the boundary constraints to be returned.
-    for (size_t i = 0; i < trace_evaluation_at_mask.Size(); ++i) {
+    for (uint64_t i = 0; i < trace_evaluation_at_mask.Size(); ++i) {
       const auto& trace_eval_at_idx = trace_evaluation_at_mask[i];
       const auto& [row_offset, column_index] = mask[i];
       const auto& row_element = trace_gen.Pow(row_offset);
@@ -122,7 +122,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
     std::vector<std::pair<int64_t, uint64_t>> broken_eval_mask;
     broken_eval_mask.reserve(n_breaks);
 
-    for (size_t column_index = 0; column_index < n_breaks; ++column_index) {
+    for (uint64_t column_index = 0; column_index < n_breaks; ++column_index) {
       broken_eval_mask.emplace_back(0, column_index);
     }
 
@@ -132,7 +132,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
     broken_trace.EvalMaskAtPoint(broken_eval_mask, point_transformed, broken_evaluation);
 
     // Creates the RHS of the boundary constraints.
-    for (size_t i = 0; i < broken_evaluation.Size(); ++i) {
+    for (uint64_t i = 0; i < broken_evaluation.Size(); ++i) {
       // Assuming all broken_column appear right after trace columns.
       boundary_constraints.emplace_back(
           original_oracle.Width() + i, point_transformed, broken_evaluation[i]);
@@ -149,14 +149,14 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
   SendElementsToChannel function.
 */
 FieldElementVector ReceiveElementsFromChannel(
-    VerifierChannel* channel, const size_t n_values, Field field,
+    VerifierChannel* channel, const uint64_t n_values, Field field,
     const bool verifier_friendly_channel_updates) {
   FieldElementVector values_from_prover = FieldElementVector::MakeUninitialized(field, n_values);
   if (verifier_friendly_channel_updates) {
     channel->ReceiveFieldElementSpan(field, values_from_prover.AsSpan());
   } else {
     // Receiving each element separately.
-    for (size_t i = 0; i < n_values; ++i) {
+    for (uint64_t i = 0; i < n_values; ++i) {
       const FieldElement value = channel->ReceiveFieldElement(field, std::to_string(i));
       values_from_prover.Set(i, value);
     }
@@ -164,7 +164,7 @@ FieldElementVector ReceiveElementsFromChannel(
   return values_from_prover;
 }
 
-std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
+std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> VerifyOods(
     const ListOfCosets& evaluation_domain, VerifierChannel* channel,
     const CompositionOracleVerifier& original_oracle, const FftBases& composition_eval_bases,
     const bool use_extension_field, const bool verifier_friendly_channel_updates) {
@@ -174,17 +174,17 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
   if (use_extension_field) {
     ASSERT_RELEASE(GetFrobenius(trace_gen) == trace_gen, "trace_gen not in base field.");
   }
-  std::vector<std::tuple<size_t, FieldElement, FieldElement>> boundary_constraints;
+  std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> boundary_constraints;
   const FieldElement point = channel->GetRandomFieldElementFromVerifier(field, "Evaluation point");
   const std::optional<FieldElement> conj_point =
       use_extension_field ? std::make_optional(GetFrobenius(point)) : std::nullopt;
 
   const auto& mask = original_oracle.GetMask();
-  const size_t trace_mask_size = mask.size();
-  const size_t n_breaks = original_oracle.ConstraintsDegreeBound();
+  const uint64_t trace_mask_size = mask.size();
+  const uint64_t n_breaks = original_oracle.ConstraintsDegreeBound();
 
   // Receive values.
-  const size_t n_values_from_prover = trace_mask_size + n_breaks;
+  const uint64_t n_values_from_prover = trace_mask_size + n_breaks;
   FieldElementVector values_from_prover = ReceiveElementsFromChannel(
       channel, n_values_from_prover, field, verifier_friendly_channel_updates);
 
@@ -195,7 +195,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
   // polynomials.
   auto original_oracle_mask_evaluation =
       ConstFieldElementSpan(values_from_prover).SubSpan(0, trace_mask_size);
-  for (size_t i = 0; i < trace_mask_size; ++i) {
+  for (uint64_t i = 0; i < trace_mask_size; ++i) {
     const auto& [row_offset, column_index] = mask[i];
     const FieldElement value = original_oracle_mask_evaluation[i];
     boundary_constraints.emplace_back(column_index, point * trace_gen.Pow(row_offset), value);
@@ -223,7 +223,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
   // polynomials.
   auto broken_evaluation =
       ConstFieldElementSpan(values_from_prover).SubSpan(trace_mask_size, n_breaks);
-  for (size_t i = 0; i < n_breaks; ++i) {
+  for (uint64_t i = 0; i < n_breaks; ++i) {
     boundary_constraints.emplace_back(
         original_oracle.Width() + i, point_transformed, broken_evaluation[i]);
   }

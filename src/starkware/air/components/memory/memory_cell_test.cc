@@ -53,7 +53,7 @@ class MemoryCellTest : public ::testing::Test {
     then there will be too few slots to fill the address gaps.
   */
   void FinalizeTestFunc(
-      size_t used_slots_num, int64_t spare_slots_num, uint64_t address_lower_bd,
+      uint64_t used_slots_num, int64_t spare_slots_num, uint64_t address_lower_bd,
       uint64_t address_upper_bd, bool exact_range);
 };
 
@@ -116,7 +116,7 @@ TEST_F(MemoryCellTest, WriteTraceTest) {
 }
 
 void MemoryCellTest::FinalizeTestFunc(
-    size_t used_slots_num, int64_t spare_slots_num, uint64_t address_lower_bd,
+    uint64_t used_slots_num, int64_t spare_slots_num, uint64_t address_lower_bd,
     uint64_t address_upper_bd, bool exact_range) {
   Prng prng;
   const auto dummy_value = FieldElementT::RandomElement(&prng);
@@ -135,7 +135,7 @@ void MemoryCellTest::FinalizeTestFunc(
     address_min = address_lower_bd;
     address_max = address_upper_bd;
   }
-  for (size_t i = addresses.size(); i < used_slots_num; ++i) {
+  for (uint64_t i = addresses.size(); i < used_slots_num; ++i) {
     uint64_t address = prng.UniformInt<uint64_t>(address_lower_bd, address_upper_bd);
     addresses.push_back(address);
     address_min = std::min(address_min, address);
@@ -149,7 +149,7 @@ void MemoryCellTest::FinalizeTestFunc(
   const auto unused_addresses_num =
       std::count(orig_address_set.begin(), orig_address_set.end(), false);
   int64_t extra_slots = unused_addresses_num + spare_slots_num;
-  const size_t data_length = std::max(used_slots_num, used_slots_num + extra_slots);
+  const uint64_t data_length = std::max(used_slots_num, (uint64_t)(used_slots_num + extra_slots));
   ASSERT_GE(data_length, used_slots_num);
 
   MemoryCell<FieldElementT> memory_cell("test", ctx, data_length);
@@ -160,7 +160,7 @@ void MemoryCellTest::FinalizeTestFunc(
 
   // Uniform sampling without repetition.
   std::vector<uint64_t> indices;
-  for (size_t i = 0; i < data_length; ++i) {
+  for (uint64_t i = 0; i < data_length; ++i) {
     indices.push_back(i);
   }
   std::shuffle(
@@ -172,7 +172,7 @@ void MemoryCellTest::FinalizeTestFunc(
   // WriteTrace, or false if it is filled by Finalize.
   std::vector<bool> index_set(data_length);
 
-  for (size_t i = 0; i < used_slots_num; ++i) {
+  for (uint64_t i = 0; i < used_slots_num; ++i) {
     bool is_public = static_cast<bool>(prng.UniformInt<uint64_t>(0, 1));
     memory_cell.WriteTrace(indices[i], addresses[i], dummy_value, SpanAdapter(trace), is_public);
     index_set.at(indices[i]) = true;
@@ -189,11 +189,11 @@ void MemoryCellTest::FinalizeTestFunc(
   ASSERT_EQ(value_vec.size(), data_length);
   std::vector<bool> final_address_set(address_max - address_min + 2);
 
-  for (size_t i = 0; i < used_slots_num; ++i) {
+  for (uint64_t i = 0; i < used_slots_num; ++i) {
     ASSERT_EQ(addresses[i], address_vec[indices[i]]);
   }
 
-  for (size_t i = 0; i < data_length; ++i) {
+  for (uint64_t i = 0; i < data_length; ++i) {
     // Check that the value at i was either set to dummy_value by WriteTrace, or filled with 0 by
     // Finalize.
     if (index_set[i]) {
@@ -220,9 +220,9 @@ void MemoryCellTest::FinalizeTestFunc(
 */
 TEST_F(MemoryCellTest, FinalizeRandomParamTests) {
   Prng prng;
-  size_t used_slots_num = prng.UniformInt<size_t>(2, 32);
+  uint64_t used_slots_num = prng.UniformInt<uint64_t>(2, 32);
   int64_t spare_slots_num = prng.UniformInt<int64_t>(1, 96);
-  uint64_t address_lower_bd = prng.UniformInt<size_t>(0, Pow2(14));
+  uint64_t address_lower_bd = prng.UniformInt<uint64_t>(0, Pow2(14));
   uint64_t address_upper_bd = address_lower_bd + prng.UniformInt(8, 64);
 
   FinalizeTestFunc(used_slots_num, spare_slots_num, address_lower_bd, address_upper_bd, false);
@@ -254,9 +254,9 @@ TEST_F(MemoryCellTest, FinalizeNegativeSparesTests) {
   EXPECT_ASSERT(FinalizeTestFunc(2, -5, 17, 257, true), HasSubstr("Remaining holes: 5."));
 
   Prng prng;
-  size_t used_slots_num = prng.UniformInt<size_t>(2, 32);
+  uint64_t used_slots_num = prng.UniformInt<uint64_t>(2, 32);
   int64_t spare_slots_num = -prng.UniformInt<int64_t>(1, 32);
-  uint64_t address_lower_bd = prng.UniformInt<size_t>(0, 1 << 14);
+  uint64_t address_lower_bd = prng.UniformInt<uint64_t>(0, 1 << 14);
   uint64_t address_upper_bd = address_lower_bd + prng.UniformInt(64, 128);
   EXPECT_ASSERT(
       FinalizeTestFunc(used_slots_num, spare_slots_num, address_lower_bd, address_upper_bd, true),
@@ -278,7 +278,7 @@ TEST_F(MemoryCellTest, AllInitialized) {
       std::vector<FieldElementT>(trace_length, FieldElementT::One())};
 
   memory_cell.WriteTrace(0, 0, dummy_value, SpanAdapter(trace), false);
-  for (size_t i = 1; i < trace_length; ++i) {
+  for (uint64_t i = 1; i < trace_length; ++i) {
     bool is_public = static_cast<bool>(prng.UniformInt<uint64_t>(0, 1));
     memory_cell.WriteTrace(i, i + 1, dummy_value, SpanAdapter(trace), is_public);
   }

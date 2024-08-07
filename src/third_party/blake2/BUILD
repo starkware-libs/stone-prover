@@ -8,8 +8,11 @@ cc_library(
         "@platforms//cpu:x86_64": [
             "sse/blake2s.c",
         ],
-        "//conditions:default": [
+        "@platforms//cpu:aarch64": [
             "neon/blake2s.c",
+        ],
+        "//conditions:default": [
+            "reference/blake2s.c",
         ],
     }),
     hdrs = [

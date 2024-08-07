@@ -67,7 +67,7 @@ TEST(CachingCommitmentSchemeProverTest, CommitAndDecommit) {
 
   // Assumes inner layer packs 2 elements in each hash, hance for queries no. 1, 6 inner layer
   // needs elements no. 0, 1 for the first package and 6, 7 for the second package.
-  std::vector<size_t> expected_indices_to_inner_layer{0, 1, 6, 7};
+  std::vector<uint64_t> expected_indices_to_inner_layer{0, 1, 6, 7};
   std::vector<std::byte> queries_data;
   queries_data.reserve(expected_indices_to_inner_layer.size() * size_of_element);
   // Queries 0, 1 are the first 2 elements in segment_0. Queries 6,7 are the third and forth

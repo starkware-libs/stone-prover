@@ -39,8 +39,8 @@ class BoundaryAir : public Air {
   using Builder = typename CompositionPolynomialImpl<BoundaryAir<FieldElementT>>::Builder;
 
   struct ConstraintData {
-    size_t coeff_idx;
-    size_t column_index;
+    uint64_t coeff_idx;
+    uint64_t column_index;
     FieldElementT point_x;
     FieldElementT point_y;
   };
@@ -52,11 +52,11 @@ class BoundaryAir : public Air {
     - boundary_conditions, list of tuples (column, x, y) indicating the constraint that column(x)=y.
   */
   BoundaryAir(
-      uint64_t trace_length, size_t n_columns,
-      gsl::span<const std::tuple<size_t, FieldElement, FieldElement>> boundary_conditions)
+      uint64_t trace_length, uint64_t n_columns,
+      gsl::span<const std::tuple<uint64_t, FieldElement, FieldElement>> boundary_conditions)
       : Air(trace_length), trace_length_(trace_length), n_columns_(n_columns) {
     constraints_.reserve(boundary_conditions.size());
-    size_t coeff_idx = 0;
+    uint64_t coeff_idx = 0;
     // Group constrains by the point_x store them in constraints_.
     for (const auto& [column_index, point_x, point_y] : boundary_conditions) {
       auto x = point_x.template As<FieldElementT>();
@@ -72,7 +72,7 @@ class BoundaryAir : public Air {
     }
     // The mask touches each column once at the current row.
     mask_.reserve(n_columns_);
-    for (size_t i = 0; i < n_columns_; ++i) {
+    for (uint64_t i = 0; i < n_columns_; ++i) {
       mask_.emplace_back(0, i);
     }
   }
@@ -154,7 +154,7 @@ class BoundaryAir : public Air {
 
  private:
   uint64_t trace_length_;
-  size_t n_columns_;
+  uint64_t n_columns_;
   std::vector<ConstraintData> constraints_;
   std::vector<std::pair<int64_t, uint64_t>> mask_;
 };

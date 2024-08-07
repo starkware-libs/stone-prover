@@ -14,7 +14,6 @@
 
 #include "starkware/channel/noninteractive_verifier_felt_channel.h"
 
-#include <endian.h>
 #include <array>
 #include <string>
 #include <utility>

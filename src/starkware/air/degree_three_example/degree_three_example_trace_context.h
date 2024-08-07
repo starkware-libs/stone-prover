@@ -32,7 +32,7 @@ class DegreeThreeExampleTraceContext : public TraceContext {
   using AirT = DegreeThreeExampleAir<FieldElementT>;
 
   DegreeThreeExampleTraceContext(
-      MaybeOwnedPtr<AirT> air, const FieldElementT witness, const size_t res_claim_index)
+      MaybeOwnedPtr<AirT> air, const FieldElementT witness, const uint64_t res_claim_index)
       : air_(std::move(air)), witness_(witness), res_claim_index_(res_claim_index) {}
 
   Trace GetTrace() override {
@@ -49,7 +49,7 @@ class DegreeThreeExampleTraceContext : public TraceContext {
  private:
   MaybeOwnedPtr<AirT> air_;
   const FieldElementT witness_;
-  const size_t res_claim_index_;
+  const uint64_t res_claim_index_;
 };
 
 }  // namespace starkware

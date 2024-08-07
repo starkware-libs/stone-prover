@@ -50,7 +50,7 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   // point_powers[i][j] is the evaluation of the ith power at its jth point.
   // The index j runs until the order of the domain (beyond we'd cycle back to point_powers[i][0]).
   std::vector<std::vector<FieldElementT>> point_powers(point_exponents.size());
-  for (size_t i = 0; i < point_exponents.size(); ++i) {
+  for (uint64_t i = 0; i < point_exponents.size(); ++i) {
     uint64_t size = point_exponents[i] == 0 ? 0 : SafeDiv(trace_length_, point_exponents[i]);
     auto& vec = point_powers[i];
     auto power = strict_point_powers[i];
@@ -58,16 +58,16 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
     if (size > 0) {
       vec.push_back(power);
     }
-    for (size_t j = 1; j < size; ++j) {
+    for (uint64_t j = 1; j < size; ++j) {
       power *= gen_powers[i];
       vec.push_back(power);
     }
   }
 
   TaskManager& task_manager = TaskManager::GetInstance();
-  constexpr size_t kPeriodUpperBound = 4194305;
-  constexpr size_t kTaskSize = 1024;
-  size_t period;
+  constexpr uint64_t kPeriodUpperBound = 4194305;
+  constexpr uint64_t kTaskSize = 1024;
+  uint64_t period;
 
   std::vector<std::vector<FieldElementT>> precomp_domains = {
       FieldElementT::UninitializedVector(1),
@@ -78,7 +78,7 @@ DegreeThreeExampleAir<FieldElementT, 0>::PrecomputeDomainEvalsOnCoset(
   task_manager.ParallelFor(
       period,
       [&](const TaskInfo& task_info) {
-        for (size_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
+        for (uint64_t i = task_info.start_idx; i < task_info.end_idx; ++i) {
           precomp_domains[0][i] = (point_powers[0][i & (0)]) - (FieldElementT::One());
         }
       },
