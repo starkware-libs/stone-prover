@@ -7,7 +7,7 @@ use core::{
     felt252_div, felt252_is_zero, felt252_mul, felt252_sub, never, panic_with_felt252, usize
 };
 
-use core::{array, array::{Array, ArrayTrait, Span, SpanTrait}};
+use core::{array, array::{Array, ArrayTrait, Span, SpanTrait, ToSpanTrait}};
 use core::{box, box::{Box, BoxTrait}};
 use core::{
     bytes_31,
@@ -39,9 +39,12 @@ use core::{
         Felt252TryIntoU64, Felt252TryIntoU8, I128IntoFelt252, I16IntoFelt252, I32IntoFelt252,
         I64IntoFelt252, I8IntoFelt252, NumericLiteral, U128IntoFelt252, U16IntoFelt252,
         U32IntoFelt252, U64IntoFelt252, U8IntoFelt252, i128, i16, i32, i64, i8, u128, u128_is_zero,
-        u128_sqrt, u16, u256, u256_sqrt, u32, u64, u8
+        u16, u256, u32, u64, u8
     }
 };
+#[feature("corelib-internal-use")]
+#[deprecated(feature: "corelib-internal-use", note: "Use `core::num::traits::Sqrt` instead")]
+use core::integer::{u128_sqrt, u256_sqrt};
 use core::internal;
 use core::keccak;
 use core::math;
@@ -59,12 +62,49 @@ use core::to_byte_array;
 use core::{
     traits,
     traits::{
-        Add, AddEq, BitAnd, BitNot, BitOr, BitXor, Copy, Default, Destruct, Div, DivEq, DivRem,
-        Drop, Felt252DictValue, Index, IndexView, Into, Mul, MulEq, Neg, Not, PanicDestruct,
-        PartialEq, PartialOrd, Rem, RemEq, Sub, SubEq, TryInto, TupleSize0Copy, TupleSize0Drop
+        Add, BitAnd, BitNot, BitOr, BitXor, Copy, Default, Destruct, Div, DivRem, Drop,
+        Felt252DictValue, Into, Mul, Neg, Not, PanicDestruct, PartialEq, PartialOrd, Rem, Sub,
+        TryInto, TupleSize0Copy, TupleSize0Drop
     }
 };
+
+#[deprecated(
+    feature: "deprecated-op-assign-traits", note: "Use `core::ops::AddAssign`.", since: "2.7.0"
+)]
+#[feature("deprecated-op-assign-traits")]
+pub use core::traits::AddEq;
+#[deprecated(
+    feature: "deprecated-op-assign-traits", note: "Use `core::ops::SubAssign`.", since: "2.7.0"
+)]
+#[feature("deprecated-op-assign-traits")]
+pub use core::traits::SubEq;
+#[deprecated(
+    feature: "deprecated-op-assign-traits", note: "Use `core::ops::MulAssign`.", since: "2.7.0"
+)]
+#[feature("deprecated-op-assign-traits")]
+pub use core::traits::MulEq;
+#[deprecated(
+    feature: "deprecated-op-assign-traits", note: "Use `core::ops::DivAssign`.", since: "2.7.0"
+)]
+#[feature("deprecated-op-assign-traits")]
+pub use core::traits::DivEq;
+#[deprecated(
+    feature: "deprecated-op-assign-traits", note: "Use `core::ops::RemAssign`.", since: "2.7.0"
+)]
+#[feature("deprecated-op-assign-traits")]
+pub use core::traits::RemEq;
+
+#[feature("deprecated-index-traits")]
+use core::traits::Index;
+#[feature("deprecated-index-traits")]
+use core::traits::IndexView;
 use core::{zeroable, zeroable::{NonZero, Zeroable}};
 
 #[cfg(test)]
 use core::test;
+pub use core::ops::Deref;
+
+
+pub use starknet::storage::{
+    StorageMapReadAccess, StorageMapWriteAccess, StoragePointerReadAccess, StoragePointerWriteAccess
+};

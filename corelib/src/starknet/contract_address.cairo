@@ -1,7 +1,10 @@
 use core::zeroable::Zeroable;
 use core::serde::Serde;
 use core::hash::{Hash, HashStateTrait};
+use core::RangeCheck;
 
+/// Represents a Starknet contract address.
+/// The value range of this type is `[0, 2**251)`.
 #[derive(Copy, Drop)]
 pub extern type ContractAddress;
 
@@ -57,10 +60,6 @@ impl ContractAddressPartialEq of PartialEq<ContractAddress> {
     #[inline(always)]
     fn eq(lhs: @ContractAddress, rhs: @ContractAddress) -> bool {
         contract_address_to_felt252(*lhs) == contract_address_to_felt252(*rhs)
-    }
-    #[inline(always)]
-    fn ne(lhs: @ContractAddress, rhs: @ContractAddress) -> bool {
-        !(lhs == rhs)
     }
 }
 

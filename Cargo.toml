@@ -9,8 +9,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace.dependencies]
-cairo-lang-compiler = { git = "https://github.com/starkware-libs/cairo", tag = "v2.6.3", default-features = false }
-cairo-lang-sierra = { git = "https://github.com/starkware-libs/cairo", tag = "v2.6.3", default-features = false }
+cairo-lang-compiler = { git = "https://github.com/starkware-libs/cairo", tag = "v2.7.0-rc.3", default-features = false }
+cairo-lang-sierra = { git = "https://github.com/starkware-libs/cairo", tag = "v2.7.0-rc.3", default-features = false }
 clap = { version = "4.5.4", features = ["derive"] }
 serde = { version = "1.0.202", features = ["derive"] }
 serde_json = "1.0.117"

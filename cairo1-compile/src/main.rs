@@ -108,7 +108,7 @@ fn compile_sierra(filename: &Path) -> Program {
         .build()
         .unwrap();
     let main_crate_ids = setup_project(&mut db, filename).unwrap();
-    compile_prepared_db(&mut db, main_crate_ids, compiler_config).unwrap()
+    compile_prepared_db(&mut db, main_crate_ids, compiler_config).unwrap().program
 }
 
 impl fmt::Display for Layout {

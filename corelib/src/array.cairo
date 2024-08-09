@@ -1,3 +1,4 @@
+#[feature("deprecated-index-traits")]
 use core::traits::IndexView;
 
 use core::box::BoxTrait;
@@ -5,6 +6,8 @@ use core::gas::withdraw_gas;
 use core::option::OptionTrait;
 use core::serde::Serde;
 use core::metaprogramming::TypeEqual;
+use core::iter::Iterator;
+use core::RangeCheck;
 
 #[derive(Drop)]
 pub extern type Array<T>;
@@ -15,6 +18,12 @@ extern fn array_pop_front<T>(ref arr: Array<T>) -> Option<Box<T>> nopanic;
 extern fn array_pop_front_consume<T>(arr: Array<T>) -> Option<(Array<T>, Box<T>)> nopanic;
 pub(crate) extern fn array_snapshot_pop_front<T>(ref arr: @Array<T>) -> Option<Box<@T>> nopanic;
 extern fn array_snapshot_pop_back<T>(ref arr: @Array<T>) -> Option<Box<@T>> nopanic;
+extern fn array_snapshot_multi_pop_front<PoppedT, impl Info: FixedSizedArrayInfo<PoppedT>>(
+    ref arr: @Array<Info::Element>
+) -> Option<@Box<PoppedT>> implicits(RangeCheck) nopanic;
+extern fn array_snapshot_multi_pop_back<PoppedT, impl Info: FixedSizedArrayInfo<PoppedT>>(
+    ref arr: @Array<Info::Element>
+) -> Option<@Box<PoppedT>> implicits(RangeCheck) nopanic;
 #[panic_with('Index out of bounds', array_at)]
 extern fn array_get<T>(
     arr: @Array<T>, index: usize
@@ -80,8 +89,8 @@ pub impl ArrayImpl<T> of ArrayTrait<T> {
     }
     #[inline(always)]
     #[must_use]
-    fn span(self: @Array<T>) -> Span<T> {
-        Span { snapshot: self }
+    fn span(snapshot: @Array<T>) -> Span<T> {
+        Span { snapshot }
     }
 }
 
@@ -138,6 +147,26 @@ pub struct Span<T> {
 impl SpanCopy<T> of Copy<Span<T>>;
 impl SpanDrop<T> of Drop<Span<T>>;
 
+impl ArrayIntoSpan<T, +Drop<T>> of Into<Array<T>, Span<T>> {
+    fn into(self: Array<T>) -> Span<T> {
+        self.span()
+    }
+}
+
+impl SpanIntoArray<T, +Drop<T>, +Clone<T>> of Into<Span<T>, Array<T>> {
+    fn into(self: Span<T>) -> Array<T> {
+        let mut arr = array![];
+        arr.append_span(self);
+        arr
+    }
+}
+
+impl SpanIntoArraySnap<T> of Into<Span<T>, @Array<T>> {
+    fn into(self: Span<T>) -> @Array<T> {
+        self.snapshot
+    }
+}
+
 impl SpanFelt252Serde of Serde<Span<felt252>> {
     fn serialize(self: @Span<felt252>, ref output: Array<felt252>) {
         (*self).len().serialize(ref output);
@@ -187,6 +216,14 @@ pub impl SpanImpl<T> of SpanTrait<T> {
             Option::None => Option::None,
         }
     }
+    /// Pops multiple values from the front of the span.
+    fn multi_pop_front<const SIZE: usize>(ref self: Span<T>) -> Option<@Box<[T; SIZE]>> {
+        array_snapshot_multi_pop_front(ref self.snapshot)
+    }
+    /// Pops multiple values from the back of the span.
+    fn multi_pop_back<const SIZE: usize>(ref self: Span<T>) -> Option<@Box<[T; SIZE]>> {
+        array_snapshot_multi_pop_back(ref self.snapshot)
+    }
     #[inline(always)]
     fn get(self: Span<T>, index: usize) -> Option<Box<@T>> {
         array_get(self.snapshot, index)
@@ -222,6 +259,76 @@ pub impl SpanIndex<T> of IndexView<Span<T>, usize, @T> {
     }
 }
 
+pub trait ToSpanTrait<C, T> {
+    /// Returns a span pointing to the data in the input.
+    #[must_use]
+    fn span(self: @C) -> Span<T>;
+}
+
+impl ArrayToSpan<T> of ToSpanTrait<Array<T>, T> {
+    #[inline(always)]
+    fn span(self: @Array<T>) -> Span<T> {
+        ArrayTrait::span(self)
+    }
+}
+
+impl SnapIntoSpanWhereToSpanTrait<C, T, +ToSpanTrait<C, T>> of Into<@C, Span<T>> {
+    fn into(self: @C) -> Span<T> {
+        self.span()
+    }
+}
+
+/// Returns a span from a box of struct of members of the same type.
+/// The additional `+Copy<@T>` arg is to prevent later stages from propagating the `S` type Sierra
+/// level, where it is deduced by the `T` type.
+extern fn span_from_tuple<T, impl Info: FixedSizedArrayInfo<T>>(
+    struct_like: Box<@T>
+) -> @Array<Info::Element> nopanic;
+
+impl FixedSizeArrayToSpan<
+    T, const SIZE: usize, -TypeEqual<[T; SIZE], [T; 0]>
+> of ToSpanTrait<[T; SIZE], T> {
+    #[inline(always)]
+    fn span(self: @[T; SIZE]) -> Span<T> {
+        Span { snapshot: span_from_tuple(BoxTrait::new(self)) }
+    }
+}
+
+impl EmptyFixedSizeArrayImpl<T, +Drop<T>> of ToSpanTrait<[T; 0], T> {
+    #[inline(always)]
+    fn span(self: @[T; 0]) -> Span<T> {
+        array![].span()
+    }
+}
+
+/// Returns a box of struct of members of the same type from a span.
+/// The additional `+Copy<@T>` arg is to prevent later stages from propagating the `S` type Sierra
+/// level, where it is deduced by the `T` type.
+extern fn tuple_from_span<T, impl Info: FixedSizedArrayInfo<T>>(
+    span: @Array<Info::Element>
+) -> Option<@Box<T>> nopanic;
+
+/// Implements `TryInto` for only copyable types
+impl SpanTryIntoFixedSizedArray<
+    T, const SIZE: usize, -TypeEqual<[T; SIZE], [T; 0]>
+> of TryInto<Span<T>, @Box<[T; SIZE]>> {
+    #[inline(always)]
+    fn try_into(self: Span<T>) -> Option<@Box<[T; SIZE]>> {
+        tuple_from_span(self.snapshot)
+    }
+}
+
+impl SpanTryIntoEmptyFixedSizedArray<T, +Drop<T>> of TryInto<Span<T>, @Box<[T; 0]>> {
+    #[inline(always)]
+    fn try_into(self: Span<T>) -> Option<@Box<[T; 0]>> {
+        if self.is_empty() {
+            Option::Some(@BoxTrait::new([]))
+        } else {
+            Option::None
+        }
+    }
+}
+
 // TODO(spapini): Remove TDrop. It is necessary to get rid of response in case of panic.
 impl ArrayTCloneImpl<T, +Clone<T>, +Drop<T>> of Clone<Array<T>> {
     fn clone(self: @Array<T>) -> Array<T> {
@@ -240,9 +347,6 @@ impl ArrayTCloneImpl<T, +Clone<T>, +Drop<T>> of Clone<Array<T>> {
 impl ArrayPartialEq<T, +PartialEq<T>> of PartialEq<Array<T>> {
     fn eq(lhs: @Array<T>, rhs: @Array<T>) -> bool {
         lhs.span() == rhs.span()
-    }
-    fn ne(lhs: @Array<T>, rhs: @Array<T>) -> bool {
-        !(lhs == rhs)
     }
 }
 
@@ -264,7 +368,64 @@ impl SpanPartialEq<T, +PartialEq<T>> of PartialEq<Span<T>> {
             };
         }
     }
-    fn ne(lhs: @Span<T>, rhs: @Span<T>) -> bool {
-        !(lhs == rhs)
+}
+
+/// An iterator struct over a span collection.
+pub struct SpanIter<T> {
+    span: Span<T>,
+}
+
+impl SpanIterDrop<T> of Drop<SpanIter<T>>;
+impl SpanIterCopy<T> of Copy<SpanIter<T>>;
+
+impl SpanIterator<T> of Iterator<SpanIter<T>> {
+    type Item = @T;
+    fn next(ref self: SpanIter<T>) -> Option<@T> {
+        self.span.pop_front()
     }
+}
+
+impl SpanIntoIterator<T> of core::iter::IntoIterator<Span<T>> {
+    type IntoIter = SpanIter<T>;
+    fn into_iter(self: Span<T>) -> SpanIter<T> {
+        SpanIter { span: self }
+    }
+}
+
+/// An iterator struct over an array collection.
+#[derive(Drop)]
+pub struct ArrayIter<T> {
+    array: Array<T>,
+}
+
+impl ArrayIterClone<T, +core::clone::Clone<T>, +Drop<T>> of core::clone::Clone<ArrayIter<T>> {
+    fn clone(self: @ArrayIter<T>) -> ArrayIter<T> {
+        ArrayIter { array: core::clone::Clone::clone(self.array), }
+    }
+}
+
+impl ArrayIterator<T> of Iterator<ArrayIter<T>> {
+    type Item = T;
+    fn next(ref self: ArrayIter<T>) -> Option<T> {
+        self.array.pop_front()
+    }
+}
+
+impl ArrayIntoIterator<T> of core::iter::IntoIterator<Array<T>> {
+    type IntoIter = ArrayIter<T>;
+    fn into_iter(self: Array<T>) -> ArrayIter<T> {
+        ArrayIter { array: self }
+    }
+}
+
+/// Information about a fixed-sized array.
+trait FixedSizedArrayInfo<S> {
+    /// The type of the elements in the array.
+    type Element;
+    /// The size of the array.
+    const SIZE: usize;
+}
+impl FixedSizedArrayInfoImpl<T, const SIZE: usize> of FixedSizedArrayInfo<[T; SIZE]> {
+    type Element = T;
+    const SIZE: usize = SIZE;
 }

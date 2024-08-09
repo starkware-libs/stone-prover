@@ -4,6 +4,7 @@
 use core::array::ArrayTrait;
 use core::traits::{Into, TryInto};
 use core::zeroable::IsZeroResult;
+use core::RangeCheck;
 
 pub mod stark_curve {
     /// The STARK Curve is defined by the equation `y^2 = x^3 + ALPHA*x + BETA`.
@@ -124,7 +125,7 @@ pub impl EcPointImpl of EcPointTrait {
     /// Creates a new EC point from its (x, y) coordinates.
     #[inline(always)]
     fn new(x: felt252, y: felt252) -> Option<EcPoint> {
-        Option::Some(EcPointTrait::new_nz(:x, :y)?.into())
+        Option::Some(Self::new_nz(:x, :y)?.into())
     }
     /// Creates a new NonZero EC point from its (x, y) coordinates.
     #[inline(always)]
@@ -134,7 +135,7 @@ pub impl EcPointImpl of EcPointTrait {
     /// Creates a new EC point from its x coordinate.
     #[inline(always)]
     fn new_from_x(x: felt252) -> Option<EcPoint> {
-        Option::Some(EcPointTrait::new_nz_from_x(:x)?.into())
+        Option::Some(Self::new_nz_from_x(:x)?.into())
     }
     /// Creates a new NonZero EC point from its x coordinate.
     #[inline(always)]
@@ -142,9 +143,18 @@ pub impl EcPointImpl of EcPointTrait {
         ec_point_from_x_nz(:x)
     }
     /// Returns the coordinates of the EC point.
-    #[inline(always)]
     fn coordinates(self: NonZeroEcPoint) -> (felt252, felt252) {
         ec_point_unwrap(self)
+    }
+    /// Returns the x coordinate of the EC point.
+    fn x(self: NonZeroEcPoint) -> felt252 {
+        let (x, _) = self.coordinates();
+        x
+    }
+    /// Returns the y coordinate of the EC point.
+    fn y(self: NonZeroEcPoint) -> felt252 {
+        let (_, y) = self.coordinates();
+        y
     }
     /// Computes the product of an EC point `p` by the given scalar `scalar`.
     fn mul(self: EcPoint, scalar: felt252) -> EcPoint {
@@ -184,7 +194,8 @@ impl EcPointAdd of Add<EcPoint> {
     }
 }
 
-impl EcPointAddEq of AddEq<EcPoint> {
+#[feature("deprecated-op-assign-traits")]
+impl EcPointAddEq of core::traits::AddEq<EcPoint> {
     #[inline(always)]
     fn add_eq(ref self: EcPoint, other: EcPoint) {
         self = Add::add(self, other);
@@ -195,19 +206,17 @@ impl EcPointSub of Sub<EcPoint> {
     /// Computes the difference between two points on the curve.
     fn sub(lhs: EcPoint, rhs: EcPoint) -> EcPoint {
         let nz_point: Option<NonZero<EcPoint>> = rhs.try_into();
-        match nz_point {
-            Option::Some(_) => {},
-            Option::None => {
-                // lhs - 0 = lhs.
-                return lhs;
-            },
-        };
+        if nz_point.is_none() {
+            // lhs - 0 = lhs.
+            return lhs;
+        }
         // lhs - rhs = lhs + (-rhs).
         lhs + (-rhs)
     }
 }
 
-impl EcPointSubEq of SubEq<EcPoint> {
+#[feature("deprecated-op-assign-traits")]
+impl EcPointSubEq of core::traits::SubEq<EcPoint> {
     #[inline(always)]
     fn sub_eq(ref self: EcPoint, other: EcPoint) {
         self = Sub::sub(self, other);

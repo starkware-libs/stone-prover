@@ -13,6 +13,14 @@ fn test_format() {
     assert(format!("{{{{}}}}") == "{{}}", 'special cases bad formatting');
     let nz_value: NonZero<felt252> = 1.try_into().unwrap();
     assert(format!("{}", nz_value) == "1", 'non zero bad formatting');
+    assert(
+        format!("{}_{}_{}_{}_{}_{}", 0_i128, 1_i8, 2_i16, 3_i32, 4_i64, 5_i128) == "0_1_2_3_4_5",
+        'signed positive bad formatting'
+    );
+    assert(
+        format!("{}_{}_{}_{}_{}", -1_i8, -2_i16, -3_i32, -4_i64, -5_i128) == "-1_-2_-3_-4_-5",
+        'signed negative bad formatting'
+    );
 }
 
 #[derive(Debug, Drop)]
@@ -65,6 +73,11 @@ fn test_format_debug() {
     assert(
         format!("{:?}", ((), (1,), (2, 3), (4, 5, 6))) == "((), (1,), (2, 3), (4, 5, 6))",
         'bad tuple fmt'
+    );
+    let empty: [felt252; 0] = [];
+    assert(
+        format!("{:?}", (empty, [1], [2, 3], [4, 5, 6])) == "([], [1], [2, 3], [4, 5, 6])",
+        'bad fixed sized array fmt'
     );
     assert(format!("{:?}", core::box::BoxTrait::new(1)) == "&1", 'bad box fmt');
     assert(
