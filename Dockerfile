@@ -5,6 +5,7 @@ RUN /app/install_deps.sh
 
 # Install Cairo0 for end-to-end test.
 RUN pip install cairo-lang==0.12.0
+RUN pip install sympy==1.12.1
 
 COPY docker_common_deps.sh /app/
 WORKDIR /app/
