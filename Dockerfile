@@ -43,3 +43,12 @@ RUN cpu_air_prover \
     --parameter_file=cpu_air_params.json
 
 RUN cpu_air_verifier --in_file=fibonacci_proof.json && echo "Successfully verified example proof."
+
+# Stage 2: Target Image
+FROM debian:stable-slim AS target
+
+COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_prover /usr/bin/
+COPY --from=build /app/build/bazelbin/src/starkware/main/cpu/cpu_air_verifier /usr/bin/
+
+# Install the necessary runtime dependencies
+RUN apt update && apt install -y libdw1
