@@ -4,5 +4,11 @@ cc_library(
         "backward.hpp",
     ],
     visibility = ["//visibility:public"],
-    linkopts = ["-ldw"],
+    linkopts = select({
+        "@platforms//os:linux": [
+            "-ldw",
+        ],
+        "//conditions:default": [
+        ],
+    }),
 )

@@ -43,14 +43,7 @@ class PrimeFieldElement : public FieldElementBase<PrimeFieldElement<NBits, Index
  public:
   using ValueType = typename BigPrimeConstants<NBits, Index>::ValueType;
 
-#ifdef NDEBUG
-  // We allow the use of the default constructor only in Release builds in order to reduce
-  // memory allocation time for vectors of field elements.
   PrimeFieldElement() : value_(UninitializedTag()) {}
-#else
-  // In debug builds, we make sure that the default constructor is not called at all.
-  PrimeFieldElement() = delete;
-#endif
 
   explicit PrimeFieldElement(UninitializedTag /*tag*/) : value_(UninitializedTag()) {}
 

@@ -1,6 +1,8 @@
---- bazel/gflags.bzl	2022-11-15 14:34:48.847722308 +0200
-+++ bazel/gflags.bzl	2022-11-15 14:29:16.415184176 +0200
-@@ -77,6 +77,8 @@
+diff --git a/bazel/gflags.bzl b/bazel/gflags.bzl
+index 4199e31..176fcb3 100644
+--- a/bazel/gflags.bzl
++++ b/bazel/gflags.bzl
+@@ -77,6 +77,8 @@ def gflags_library(hdrs = [], srcs = [], threads = 1):
          "-DHAVE_STRTOLL",
          "-DHAVE_STRTOQ",
          "-DHAVE_RWLOCK",

@@ -34,14 +34,14 @@ namespace oods {
   new domain. Returns the evaluations and the new domain. See breaker.h for more details.
 */
 std::pair<Trace, std::unique_ptr<FftBases>> BreakCompositionPolynomial(
-    const ConstFieldElementSpan& composition_evaluation, size_t n_breaks, const FftBases& bases);
+    const ConstFieldElementSpan& composition_evaluation, uint64_t n_breaks, const FftBases& bases);
 
 /*
   Returns an AIR representing the given boundary constraints.
 */
 std::unique_ptr<Air> CreateBoundaryAir(
-    const Field& field, uint64_t trace_length, size_t n_columns,
-    std::vector<std::tuple<size_t, FieldElement, FieldElement>>&& boundary_constraints);
+    const Field& field, uint64_t trace_length, uint64_t n_columns,
+    std::vector<std::tuple<uint64_t, FieldElement, FieldElement>>&& boundary_constraints);
 
 /*
   Receives a random point from the verifier, z, and sends to the verifier the necessary values it
@@ -51,7 +51,7 @@ std::unique_ptr<Air> CreateBoundaryAir(
   oracle).
   Returns the boundary constraints needed for the rest of the proof.
 */
-std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
+std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> ProveOods(
     ProverChannel* channel, const CompositionOracleProver& original_oracle,
     const CommittedTraceProverBase& broken_trace, bool use_extension_field,
     bool verifier_friendly_channel_updates);
@@ -66,7 +66,7 @@ std::vector<std::tuple<size_t, FieldElement, FieldElement>> ProveOods(
   polynomial value, assembled from the broken trace values. Returns the boundary constraints needed
   for the rest of the proof.
 */
-std::vector<std::tuple<size_t, FieldElement, FieldElement>> VerifyOods(
+std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> VerifyOods(
     const ListOfCosets& evaluation_domain, VerifierChannel* channel,
     const CompositionOracleVerifier& original_oracle, const FftBases& composition_eval_bases,
     bool use_extension_field, bool verifier_friendly_channel_updates);

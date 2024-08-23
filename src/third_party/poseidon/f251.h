@@ -14,7 +14,7 @@ void f251_sub(felt_t z, const felt_t x, const felt_t y);
 ///  F251 "x +/- c*y" functions
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifdef ASSEMBLY
+#ifdef __x86_64__
 
 void f251_x_plus_c_times_y(felt_t z, const felt_t x, const uint32_t c, const felt_t y);
 void f251_x_minus_c_times_y(felt_t z, const felt_t x, const uint32_t c, const felt_t y);

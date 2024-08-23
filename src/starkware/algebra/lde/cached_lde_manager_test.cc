@@ -48,7 +48,7 @@ ACTION_P(SetEvaluation, mock_evaluation) {
   auto& result = arg1;
   ASSERT_EQ(result.size(), mock_evaluation.size());
 
-  for (size_t column_index = 0; column_index < result.size(); ++column_index) {
+  for (uint64_t column_index = 0; column_index < result.size(); ++column_index) {
     ASSERT_EQ(result[column_index].Size(), mock_evaluation[column_index].size());
     std::copy(
         mock_evaluation[column_index].begin(), mock_evaluation[column_index].end(),
@@ -85,9 +85,9 @@ class CachedLdeManagerTest : public ::testing::Test {
   }
 
  protected:
-  const size_t coset_size_ = 16;
-  const size_t n_cosets_ = 10;
-  const size_t n_columns_ = 3;
+  const uint64_t coset_size_ = 16;
+  const uint64_t n_cosets_ = 10;
+  const uint64_t n_columns_ = 3;
   Prng prng_;
   std::vector<TestFieldElement> offsets_;
   FftDomain<FftMultiplicativeGroup<TestFieldElement>> domain_;
@@ -102,7 +102,7 @@ class CachedLdeManagerTest : public ::testing::Test {
   void StartTest(bool store_full_lde, bool use_fft_for_eval);
 
   void TestEvalAtPointsResult(
-      const std::vector<std::pair<size_t, uint64_t>>& coset_point_indices,
+      const std::vector<std::pair<uint64_t, uint64_t>>& coset_point_indices,
       const std::vector<FieldElementVector>& outputs);
 
   /*
@@ -123,7 +123,7 @@ void CachedLdeManagerTest::StartTest(bool store_full_lde, bool use_fft_for_eval)
 
   // AddEvaluation FieldElementVector&& variant.
   EXPECT_CALL(lde_manager_, AddEvaluation_rvr(_, _)).Times(n_columns_);
-  for (size_t i = 0; i < n_columns_; ++i) {
+  for (uint64_t i = 0; i < n_columns_; ++i) {
     FieldElementVector evaluation =
         FieldElementVector::Make(prng_.RandomFieldElementVector<TestFieldElement>(coset_size_));
     cached_lde_manager_->AddEvaluation(std::move(evaluation));
@@ -132,12 +132,12 @@ void CachedLdeManagerTest::StartTest(bool store_full_lde, bool use_fft_for_eval)
 
   // Evaluate cosets once.
   auto storage = cached_lde_manager_->AllocateStorage();
-  for (size_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
+  for (uint64_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
     std::vector<std::vector<TestFieldElement>> coset_evaluation;
     FieldElement offset = FieldElement(offsets_[coset_index]);
 
     // Generate random coset values.
-    for (size_t column_index = 0; column_index < n_columns_; ++column_index) {
+    for (uint64_t column_index = 0; column_index < n_columns_; ++column_index) {
       coset_evaluation.push_back(prng_.RandomFieldElementVector<TestFieldElement>(coset_size_));
     }
     evaluations_.push_back(coset_evaluation);
@@ -148,7 +148,7 @@ void CachedLdeManagerTest::StartTest(bool store_full_lde, bool use_fft_for_eval)
 
     // Test that we got the correct evaluation.
     ASSERT_EQ(result->size(), n_columns_);
-    for (size_t column_index = 0; column_index < n_columns_; ++column_index) {
+    for (uint64_t column_index = 0; column_index < n_columns_; ++column_index) {
       ASSERT_EQ((*result)[column_index].As<TestFieldElement>(), coset_evaluation[column_index]);
     }
   }
@@ -190,11 +190,11 @@ TEST_F(CachedLdeManagerTest, EvalOnCoset_Cache) {
 
   // Evaluate again. Expect No additional computation, and same coset values as before.
   auto storage = cached_lde_manager_->AllocateStorage();
-  for (size_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
+  for (uint64_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
     EXPECT_CALL(lde_manager_, EvalOnCoset(FieldElement(offsets_[coset_index]), _, _)).Times(0);
     auto result = cached_lde_manager_->EvalOnCoset(coset_index, storage.get());
     ASSERT_EQ(result->size(), n_columns_);
-    for (size_t column_index = 0; column_index < n_columns_; ++column_index) {
+    for (uint64_t column_index = 0; column_index < n_columns_; ++column_index) {
       ASSERT_EQ(
           (*result)[column_index].As<TestFieldElement>(), evaluations_[coset_index][column_index]);
     }
@@ -206,13 +206,13 @@ TEST_F(CachedLdeManagerTest, EvalOnCoset_NoCache) {
 
   // Evaluate again. Expect recomputation.
   auto storage = cached_lde_manager_->AllocateStorage();
-  for (size_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
+  for (uint64_t coset_index = 0; coset_index < n_cosets_; ++coset_index) {
     EXPECT_CALL(lde_manager_, EvalOnCoset(FieldElement(offsets_[coset_index]), _, _))
         .WillOnce(SetEvaluation(evaluations_[coset_index]));
 
     auto result = cached_lde_manager_->EvalOnCoset(coset_index, storage.get());
     ASSERT_EQ(result->size(), n_columns_);
-    for (size_t column_index = 0; column_index < n_columns_; ++column_index) {
+    for (uint64_t column_index = 0; column_index < n_columns_; ++column_index) {
       ASSERT_EQ(
           (*result)[column_index].As<TestFieldElement>(), evaluations_[coset_index][column_index]);
     }
@@ -220,11 +220,11 @@ TEST_F(CachedLdeManagerTest, EvalOnCoset_NoCache) {
 }
 
 void CachedLdeManagerTest::TestEvalAtPointsResult(
-    const std::vector<std::pair<size_t, uint64_t>>& coset_point_indices,
+    const std::vector<std::pair<uint64_t, uint64_t>>& coset_point_indices,
     const std::vector<FieldElementVector>& outputs) {
   // Compare result.
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
-    for (size_t i = 0; i < coset_point_indices.size(); ++i) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
+    for (uint64_t i = 0; i < coset_point_indices.size(); ++i) {
       const auto& [coset_index, point_index] = coset_point_indices[i];
       ASSERT_EQ(
           outputs[column_index][i].As<TestFieldElement>(),
@@ -236,17 +236,17 @@ void CachedLdeManagerTest::TestEvalAtPointsResult(
 TEST_F(CachedLdeManagerTest, EvalAtPoints_Cache) {
   StartTest(/*store_full_lde=*/true, /*use_fft_for_eval=*/false);
 
-  const size_t n_points = 30;
-  std::vector<std::pair<size_t, uint64_t>> coset_point_indices;
+  const uint64_t n_points = 30;
+  std::vector<std::pair<uint64_t, uint64_t>> coset_point_indices;
   coset_point_indices.reserve(n_points);
-  for (size_t i = 0; i < n_points; ++i) {
+  for (uint64_t i = 0; i < n_points; ++i) {
     coset_point_indices.emplace_back(
         prng_.UniformInt(0, 4), prng_.UniformInt(0, static_cast<int>(coset_size_ - 1)));
   }
 
   // Allocate outputs.
   std::vector<FieldElementVector> outputs;
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
     outputs.push_back(
         FieldElementVector::MakeUninitialized(Field::Create<TestFieldElement>(), n_points));
   }
@@ -262,10 +262,10 @@ TEST_F(CachedLdeManagerTest, EvalAtPoints_Cache) {
 TEST_F(CachedLdeManagerTest, EvalAtPoints_NoCacheNoFft) {
   StartTest(/*store_full_lde=*/false, /*use_fft_for_eval=*/false);
 
-  const size_t n_points = 30;
-  std::vector<std::pair<size_t, uint64_t>> coset_point_indices;
+  const uint64_t n_points = 30;
+  std::vector<std::pair<uint64_t, uint64_t>> coset_point_indices;
   coset_point_indices.reserve(n_points);
-  for (size_t i = 0; i < n_points; ++i) {
+  for (uint64_t i = 0; i < n_points; ++i) {
     coset_point_indices.emplace_back(
         prng_.UniformInt(0, 4), prng_.UniformInt(0, static_cast<int>(coset_size_ - 1)));
   }
@@ -279,7 +279,7 @@ TEST_F(CachedLdeManagerTest, EvalAtPoints_NoCacheNoFft) {
 
   // Compute the expected evaluations at these points.
   std::vector<std::vector<TestFieldElement>> expected_outputs;
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
     std::vector<TestFieldElement> expected_eval;
     expected_eval.reserve(coset_point_indices.size());
     for (const auto& [coset_index, point_index] : coset_point_indices) {
@@ -290,13 +290,13 @@ TEST_F(CachedLdeManagerTest, EvalAtPoints_NoCacheNoFft) {
 
   // Allocate outputs.
   std::vector<FieldElementVector> outputs;
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
     outputs.push_back(
         FieldElementVector::MakeUninitialized(Field::Create<TestFieldElement>(), n_points));
   }
 
   // Evaluate points.
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
     EXPECT_CALL(
         lde_manager_,
         EvalAtPoints(
@@ -314,28 +314,28 @@ TEST_F(CachedLdeManagerTest, EvalAtPoints_NoCacheNoFft) {
 TEST_F(CachedLdeManagerTest, EvalAtPoints_NoCacheFft) {
   StartTest(/*store_full_lde=*/false, /*use_fft_for_eval=*/true);
 
-  const size_t n_points = 30;
-  std::vector<std::pair<size_t, uint64_t>> coset_point_indices;
+  const uint64_t n_points = 30;
+  std::vector<std::pair<uint64_t, uint64_t>> coset_point_indices;
   coset_point_indices.reserve(n_points);
-  for (size_t i = 0; i < n_points; ++i) {
+  for (uint64_t i = 0; i < n_points; ++i) {
     coset_point_indices.emplace_back(
         prng_.UniformInt(0, 4), prng_.UniformInt(0, static_cast<int>(coset_size_ - 1)));
   }
 
   // Allocate outputs.
   std::vector<FieldElementVector> outputs;
-  for (size_t column_index = 0; column_index < n_columns_; column_index++) {
+  for (uint64_t column_index = 0; column_index < n_columns_; column_index++) {
     outputs.push_back(
         FieldElementVector::MakeUninitialized(Field::Create<TestFieldElement>(), n_points));
   }
 
   // Expect calls.
-  std::set<size_t> unique_coset_indices;
+  std::set<uint64_t> unique_coset_indices;
   for (const auto& [coset_index, point_index] : coset_point_indices) {
     (void)point_index;  // Unused.
     unique_coset_indices.insert(coset_index);
   }
-  for (size_t coset_index : unique_coset_indices) {
+  for (uint64_t coset_index : unique_coset_indices) {
     EXPECT_CALL(lde_manager_, EvalOnCoset(FieldElement(offsets_[coset_index]), _, _))
         .WillOnce(SetEvaluation(evaluations_[coset_index]));
   }
@@ -376,10 +376,10 @@ TEST_F(CachedLdeManagerTest, AddAfterEvalAtPoints) {
   cached_lde_manager_->AddEvaluation(evaluation);
   cached_lde_manager_->FinalizeAdding();
 
-  const size_t n_points = 30;
-  std::vector<std::pair<size_t, uint64_t>> coset_point_indices;
+  const uint64_t n_points = 30;
+  std::vector<std::pair<uint64_t, uint64_t>> coset_point_indices;
   coset_point_indices.reserve(n_points);
-  for (size_t i = 0; i < n_points; ++i) {
+  for (uint64_t i = 0; i < n_points; ++i) {
     coset_point_indices.emplace_back(
         prng_.UniformInt(0, 4), prng_.UniformInt(0, static_cast<int>(coset_size_ - 1)));
   }
@@ -396,7 +396,7 @@ TEST_F(CachedLdeManagerTest, AddAfterEvalAtPoints) {
 TEST_F(CachedLdeManagerTest, ComputeAfterFinalizeEvaluations) {
   StartTest(/*store_full_lde=*/true, /*use_fft_for_eval=*/false);
 
-  const size_t n_points = 30;
+  const uint64_t n_points = 30;
   FieldElementVector points =
       FieldElementVector::Make(prng_.RandomFieldElementVector<TestFieldElement>(n_points));
   FieldElementVector output =

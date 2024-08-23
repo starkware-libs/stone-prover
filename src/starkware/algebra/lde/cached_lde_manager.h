@@ -105,7 +105,7 @@ class CachedLdeManager {
     Evaluates all columns at point. Not cached version, takes FieldElements.
   */
   void EvalAtPointsNotCached(
-      size_t column_index, const ConstFieldElementSpan& points, const FieldElementSpan& output);
+      uint64_t column_index, const ConstFieldElementSpan& points, const FieldElementSpan& output);
 
   /*
     Indicates no new computations will occur. If store_full_lde_ is true, that means we can release
@@ -129,7 +129,7 @@ class CachedLdeManager {
     Returns the number of columns in CachedLdeManager. Also, stops adding new evaluations, to make
     sure the number of columns won't change. This is why this is not const.
   */
-  size_t NumColumns() const {
+  uint64_t NumColumns() const {
     ASSERT_RELEASE(done_adding_, "NumColumns() must be called after calling FinalizeAdding().");
     return n_columns_;
   }
@@ -146,7 +146,7 @@ class CachedLdeManager {
   MaybeOwnedPtr<FieldElementVector> coset_offsets_;
   uint64_t domain_size_;
   bool done_adding_ = false;
-  size_t n_columns_ = 0;
+  uint64_t n_columns_ = 0;
   Config config_;
 
   /*

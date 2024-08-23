@@ -22,11 +22,7 @@
 namespace starkware {
 
 // On x86 we use an optimized implementation based on AVX2.
-#ifndef NO_AVX
-#define USE_AVX2
-#endif
-
-#ifdef USE_AVX2
+#if defined(__x86_64__) && !defined(NO_AVX)
 extern "C" void KeccakP1600_Permute_24rounds(std::byte* state);  // NOLINT
 #else
 extern "C" void KeccakF1600_StatePermute(std::byte* state);  // NOLINT
@@ -45,7 +41,7 @@ class alignas(32) Keccak256::keccak_state {
   static constexpr size_t kBlockBytes = (1600 - 512) / 8;
 
   static size_t AdjustedLaneOffset(uint64_t word_offset) {
-#ifdef USE_AVX2
+#if defined(__x86_64__) && !defined(NO_AVX)
     // The AVX2 implementation stores the state in a permutated order.
     // The mapState translates from normal order to the premutated order.
     static constexpr std::array<size_t, 25> kMapState = {
@@ -115,7 +111,7 @@ class alignas(32) Keccak256::keccak_state {
   }
 
   void ApplyPermutation() {
-#ifdef USE_AVX2
+#if defined(__x86_64__) && !defined(NO_AVX)
     KeccakP1600_Permute_24rounds(st.data());
 #else
     KeccakF1600_StatePermute(st.data());
@@ -129,8 +125,6 @@ class alignas(32) Keccak256::keccak_state {
 
   std::array<std::byte, kStateNumBytes> st{};
 };
-
-#undef USE_AVX2
 
 inline Keccak256::Keccak256(const gsl::span<const std::byte>& data)
     : buffer_(InitDigestFromSpan<Keccak256>(data)) {}

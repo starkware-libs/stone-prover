@@ -10,7 +10,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/starkware/crypt_tools/hash_context:pedersen_hash_context",
-        "//src/third_party/XKCP/KeccakP-1600-OptimizedAVX2:Keccak1600F",
+        "//src/third_party/XKCP:Keccak1600F",
         "//src/third_party/blake2:blake2s",
     ],
 )

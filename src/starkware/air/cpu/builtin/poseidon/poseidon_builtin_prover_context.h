@@ -27,7 +27,7 @@
 namespace starkware {
 namespace cpu {
 
-template <typename FieldElementT, size_t M>
+template <typename FieldElementT, uint64_t M>
 class PoseidonBuiltinProverContext {
  public:
   using Input = std::array<FieldElementT, M>;
@@ -35,8 +35,8 @@ class PoseidonBuiltinProverContext {
   PoseidonBuiltinProverContext(
       const std::string& name, const TraceGenerationContext& ctx,
       MemoryCell<FieldElementT>* memory_pool, const uint64_t begin_addr,
-      uint64_t n_component_instances, std::map<uint64_t, Input> inputs, size_t rounds_full,
-      size_t rounds_partial, gsl::span<const size_t> partial_rounds_partition,
+      uint64_t n_component_instances, std::map<uint64_t, Input> inputs, uint64_t rounds_full,
+      uint64_t rounds_partial, gsl::span<const uint64_t> partial_rounds_partition,
       const ConstSpanAdapter<FieldElementT>& mds, const ConstSpanAdapter<FieldElementT>& ark)
       : begin_addr_(begin_addr),
         n_component_instances_(n_component_instances),
@@ -62,7 +62,7 @@ class PoseidonBuiltinProverContext {
  private:
   static constexpr Input ZeroInput() {
     Input res = UninitializedFieldElementArray<FieldElementT, M>();
-    for (size_t i = 0; i < M; ++i) {
+    for (uint64_t i = 0; i < M; ++i) {
       res[i] = FieldElementT::Zero();
     }
     return res;
@@ -73,7 +73,7 @@ class PoseidonBuiltinProverContext {
       MemoryCell<FieldElementT>* memory_pool) {
     std::vector<MemoryCellView<FieldElementT>> res;
     res.reserve(M);
-    for (size_t i = 0; i < M; ++i) {
+    for (uint64_t i = 0; i < M; ++i) {
       res.push_back(MemoryCellView<FieldElementT>(
           memory_pool, name + "/param_" + std::to_string(i) + "/input_output", ctx));
     }

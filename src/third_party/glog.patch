@@ -1,10 +1,12 @@
---- bazel/glog.bzl	2022-11-15 14:38:16.178580411 +0200
-+++ bazel/glog.bzl	2022-11-15 14:38:04.698421767 +0200
-@@ -53,6 +53,7 @@
-             '-Wno-unused-function',
-             '-Wno-unused-local-typedefs',
-             '-Wno-unused-variable',
-+            "-Wno-unused-parameter",
-             "-DGLOG_BAZEL_BUILD",
-             # Inject a C++ namespace.
-             "-DGOOGLE_NAMESPACE='%s'" % namespace,
+diff --git a/bazel/glog.bzl b/bazel/glog.bzl
+index 286346b..9341486 100644
+--- a/bazel/glog.bzl
++++ b/bazel/glog.bzl
+@@ -57,6 +57,7 @@ def glog_library(with_gflags = 1, **kwargs):
+         "-Wno-unused-function",
+         "-Wno-unused-local-typedefs",
+         "-Wno-unused-variable",
++        "-Wno-unused-parameter",
+         # Allows src/logging.cc to determine the host name.
+         "-DHAVE_SYS_UTSNAME_H",
+         # For src/utilities.cc.

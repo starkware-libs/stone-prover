@@ -14,7 +14,6 @@
 
 #include "starkware/channel/noninteractive_prover_felt_channel.h"
 
-#include <endian.h>
 #include <array>
 #include <cstddef>
 #include <string>

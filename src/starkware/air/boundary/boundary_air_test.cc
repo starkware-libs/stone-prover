@@ -43,8 +43,8 @@ using FieldElementT = PrimeFieldElement<252, 0>;
 TEST(BoundaryAir, Correctness) {
   Prng prng;
 
-  const size_t n_columns = 10;
-  const size_t n_conditions = 20;
+  const uint64_t n_columns = 10;
+  const uint64_t n_conditions = 20;
   const uint64_t trace_length = 1024;
   std::vector<std::vector<FieldElementT>> trace;
 
@@ -55,15 +55,15 @@ TEST(BoundaryAir, Correctness) {
 
   // Generate random trace.
   trace.reserve(n_columns);
-  for (size_t i = 0; i < n_columns; ++i) {
+  for (uint64_t i = 0; i < n_columns; ++i) {
     trace.push_back(prng.RandomFieldElementVector<FieldElementT>(trace_length));
     lde_manager->AddEvaluation(FieldElementVector::CopyFrom(trace[i]));
   }
 
   // Compute correct boundary conditions.
-  std::vector<std::tuple<size_t, FieldElement, FieldElement>> boundary_conditions;
-  for (size_t condition_index = 0; condition_index < n_conditions; ++condition_index) {
-    const size_t column_index = prng.UniformInt<size_t>(0, n_columns - 1);
+  std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> boundary_conditions;
+  for (uint64_t condition_index = 0; condition_index < n_conditions; ++condition_index) {
+    const uint64_t column_index = prng.UniformInt<uint64_t>(0, n_columns - 1);
     FieldElementVector points_x =
         FieldElementVector::Make(prng.RandomFieldElementVector<FieldElementT>(1));
     FieldElementVector points_y =
@@ -94,21 +94,21 @@ TEST(BoundaryAir, Correctness) {
 TEST(BoundaryAir, Soundness) {
   Prng prng;
 
-  const size_t n_columns = 10;
-  const size_t n_conditions = 20;
+  const uint64_t n_columns = 10;
+  const uint64_t n_conditions = 20;
   const uint64_t trace_length = 1024;
   std::vector<std::vector<FieldElementT>> trace;
 
   // Generate random trace.
   trace.reserve(n_columns);
-  for (size_t i = 0; i < n_columns; ++i) {
+  for (uint64_t i = 0; i < n_columns; ++i) {
     trace.push_back(prng.RandomFieldElementVector<FieldElementT>(trace_length));
   }
 
   // Compute incorrect boundary conditions.
-  std::vector<std::tuple<size_t, FieldElement, FieldElement>> boundary_conditions;
-  for (size_t condition_index = 0; condition_index < n_conditions; ++condition_index) {
-    const size_t column_index = prng.UniformInt<size_t>(0, n_columns - 1);
+  std::vector<std::tuple<uint64_t, FieldElement, FieldElement>> boundary_conditions;
+  for (uint64_t condition_index = 0; condition_index < n_conditions; ++condition_index) {
+    const uint64_t column_index = prng.UniformInt<uint64_t>(0, n_columns - 1);
 
     boundary_conditions.emplace_back(
         column_index, FieldElementT::RandomElement(&prng), FieldElementT::RandomElement(&prng));
@@ -119,7 +119,7 @@ TEST(BoundaryAir, Soundness) {
   FieldElementVector random_coefficients = FieldElementVector::Make(
       prng.RandomFieldElementVector<FieldElementT>(air.NumRandomCoefficients()));
 
-  const size_t num_of_cosets = 2;
+  const uint64_t num_of_cosets = 2;
   const uint64_t actual_degree =
       ComputeCompositionDegree(air, Trace(std::move(trace)), random_coefficients, num_of_cosets);
 
