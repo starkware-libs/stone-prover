@@ -31,7 +31,7 @@ namespace starkware {
 
 using HashTypes = InvokedTypes<
     Blake2s256, Keccak256, Pedersen, Poseidon3, MaskedHash<Keccak256, 20, true>,
-    MaskedHash<Blake2s256, 20, true>, MaskedHash<Blake2s256, 20, false>,
+    MaskedHash<Blake2s256, 20, true>, MaskedHash<Blake2s256, 31, false>,
     MaskedHash<Keccak256, 20, false>>;
 
 template <typename Func>

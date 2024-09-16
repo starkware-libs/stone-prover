@@ -146,6 +146,13 @@ TEST(MaskedHashTest, MaskedMsbAndMaskedLsb) {
   const HashLsb hash_lsb = HashLsb::HashBytesWithLength(str_as_bytes);
   EXPECT_EQ(
       hash_lsb.ToString(), "0x00000000000000000000000000008941cc2b19c1bd836b3a53506489395aa54d");
+
+  // Big Masked Blake LSB.
+  using HashBigLsb = MaskedHash<Blake2s256, 31, false>;
+  const HashBigLsb hash_big_lsb = HashBigLsb::HashBytesWithLength(str_as_bytes);
+  EXPECT_EQ(
+      hash_big_lsb.ToString(),
+      "0x00ba38e4aea16a5f87e8b76039958941cc2b19c1bd836b3a53506489395aa54d");
 }
 
 }  // namespace

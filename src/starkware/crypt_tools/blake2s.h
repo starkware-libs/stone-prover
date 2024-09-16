@@ -69,7 +69,7 @@ class Blake2s {
   std::array<std::byte, kDigestNumBytes> buffer_;  // NOLINT
 };
 
-using Blake2s160 = Blake2s<160>;
+using Blake2s248 = Blake2s<248>;
 using Blake2s256 = Blake2s<256>;
 
 }  // namespace starkware

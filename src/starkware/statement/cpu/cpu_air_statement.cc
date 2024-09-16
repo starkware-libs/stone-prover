@@ -83,14 +83,18 @@ auto InvokeByLayout(const std::string& layout_name, Air* air_ptr, const Func& fu
 }  // namespace
 
 CpuAirStatement::CpuAirStatement(
-    const JsonValue& statement_parameters, const JsonValue& public_input,
+    const JsonValue& parameters, const JsonValue& public_input,
     std::optional<JsonValue> private_input)
     : Statement(std::move(private_input)),
       page_hash_(
-          statement_parameters.HasValue() && statement_parameters["page_hash"].HasValue()
-              ? statement_parameters["page_hash"].AsString()
+          parameters["statement"].HasValue() && parameters["statement"]["page_hash"].HasValue()
+              ? parameters["statement"]["page_hash"].AsString()
               : "keccak256"),
       layout_name_(public_input["layout"].AsString()),
+      n_verifier_friendly_commitment_layers_(
+          parameters["n_verifier_friendly_commitment_layers"].HasValue()
+              ? parameters["n_verifier_friendly_commitment_layers"].AsUint64()
+              : 0),
       n_steps_(public_input["n_steps"].AsUint64()),
       dynamic_params_(ReadDynamicParams(public_input["dynamic_params"])),
       rc_min_(public_input["rc_min"].AsUint64()),
@@ -136,7 +140,8 @@ const std::vector<std::byte> CpuAirStatement::GetInitialHashChainSeed() const {
       });
 
   PublicInputSerializer serializer(
-      (/*n_steps, rc_min, rc_max, layout_name*/ 4) * sizeof(BigInt<4>) +
+      (/*n_verifier_friendly_commitment_layers_, n_steps, rc_min, rc_max, layout_name*/ 5) *
+          sizeof(BigInt<4>) +
       (/*dynamic_params*/ dynamic_params_.size()) * sizeof(BigInt<4>) +
       segment_names.size() * (/*begin_addr, stop_ptr*/ 2) * sizeof(BigInt<4>) +
       (/*padding_address*/ sizeof(BigInt<4>) + /*padding_value*/ sizeof(FieldElementT)) +
@@ -146,6 +151,7 @@ const std::vector<std::byte> CpuAirStatement::GetInitialHashChainSeed() const {
       (page_sizes.size() - 1) * ((/*start_addr, size*/ 2) * sizeof(BigInt<4>) +
                                  /*hash*/ 1 * digest_num_bytes));
 
+  serializer.Append(BigInt<4>(n_verifier_friendly_commitment_layers_));
   serializer.Append(BigInt<4>(SafeLog2(n_steps_)));
   serializer.Append(BigInt<4>(rc_min_));
   serializer.Append(BigInt<4>(rc_max_));

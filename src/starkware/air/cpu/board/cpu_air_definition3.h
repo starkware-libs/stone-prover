@@ -117,6 +117,7 @@ class CpuAirDefinition<FieldElementT, 3> : public Air {
   static constexpr bool kHasPoseidonBuiltin = false;
   static constexpr bool kHasRangeCheck96Builtin = false;
   static constexpr bool kHasAddModBuiltin = false;
+  static constexpr bool kHasMulModBuiltin = false;
   static constexpr char kLayoutName[] = "all_solidity";
   static constexpr BigInt<4> kLayoutCode = 0x616c6c5f736f6c6964697479_Z;
   static constexpr uint64_t kConstraintDegree = 2;
@@ -736,6 +737,10 @@ class CpuAirDefinition<FieldElementT, 3> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
+        add_mod_begin_addr_(
+            kHasAddModBuiltin ? GetSegment(mem_segment_addresses, "add_mod").begin_addr : 0),
+        mul_mod_begin_addr_(
+            kHasMulModBuiltin ? GetSegment(mem_segment_addresses, "mul_mod").begin_addr : 0),
         dynamic_params_(ParseDynamicParams(dynamic_params)),
 
         range_check_min_(rc_min),
@@ -787,6 +792,14 @@ class CpuAirDefinition<FieldElementT, 3> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
+  const CompileTimeOptional<uint64_t, kHasAddModBuiltin> add_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(add_mod_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasMulModBuiltin> mul_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(mul_mod_begin_addr_));
+
   // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
   // See ParseDynamicParams.
   CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
@@ -806,6 +819,10 @@ class CpuAirDefinition<FieldElementT, 3> : public Air {
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_alpha_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__interaction_elm_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__interaction_elm_ =
       FieldElementT::Uninitialized();
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =
