@@ -139,12 +139,14 @@ class CpuAir : public CpuAirDefinition<FieldElementT, LayoutId> {
  private:
   constexpr uint64_t PedersenRatio() const;
   constexpr uint64_t RangeCheckRatio() const;
-  constexpr uint64_t RangeCheck96Ratio() const;
+  constexpr uint64_t RangeCheck96NInstances() const;
   constexpr uint64_t EcdsaRatio() const;
   constexpr uint64_t BitwiseRatio() const;
   constexpr uint64_t EcOpRatio() const;
   constexpr uint64_t KeccakRatio() const;
   constexpr uint64_t PoseidonRatio() const;
+  constexpr uint64_t AddModNInstances() const;
+  constexpr uint64_t MulModNInstances() const;
   constexpr bool UsesPedersenBuiltin() const;
   constexpr bool UsesRangeCheckBuiltin() const;
   constexpr bool UsesRangeCheck96Builtin() const;
@@ -153,6 +155,8 @@ class CpuAir : public CpuAirDefinition<FieldElementT, LayoutId> {
   constexpr bool UsesEcOpBuiltin() const;
   constexpr bool UsesKeccakBuiltin() const;
   constexpr bool UsesPoseidonBuiltin() const;
+  constexpr bool UsesAddModBuiltin() const;
+  constexpr bool UsesMulModBuiltin() const;
 
   /*
     Writes public_memory virtual column in the trace.

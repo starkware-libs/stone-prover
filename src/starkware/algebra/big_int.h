@@ -77,6 +77,7 @@ class BigInt {
   constexpr BigInt operator+(const BigInt& other) const { return Add(*this, other).first; }
   constexpr BigInt& operator+=(const BigInt& other) { return *this = *this + other; }
   constexpr BigInt operator-(const BigInt& other) const { return Sub(*this, other).first; }
+  constexpr BigInt& operator-=(const BigInt& other) { return *this = *this - other; }
   constexpr BigInt operator-() const { return Zero() - *this; }
 
   /*

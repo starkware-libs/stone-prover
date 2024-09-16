@@ -38,7 +38,7 @@ class CpuAirStatement : public Statement {
   using FieldElementT = PrimeFieldElement<252, 0>;
 
   explicit CpuAirStatement(
-      const JsonValue& statement_parameters, const JsonValue& public_input,
+      const JsonValue& parameters, const JsonValue& public_input,
       std::optional<JsonValue> private_input);
 
   const Air& GetAir() override;
@@ -106,6 +106,7 @@ class CpuAirStatement : public Statement {
   */
   const std::string page_hash_;
   const std::string layout_name_;
+  const uint64_t n_verifier_friendly_commitment_layers_;
   const uint64_t n_steps_;
   const std::map<std::string, uint64_t> dynamic_params_;
   const uint64_t rc_min_;

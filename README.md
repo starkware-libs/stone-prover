@@ -96,11 +96,11 @@ These things need to be checked externally.
 ## Creating and verifying a proof of a CairoZero program
 
 To run and prove the example program `fibonacci.cairo`,
-install `cairo-lang` version 0.12.0 (see further instructions in the
-[cairo-lang repository](https://github.com/starkware-libs/cairo-lang/tree/v0.12.0)):
+install `cairo-lang` version 0.13.2 (see further instructions in the
+[cairo-lang repository](https://github.com/starkware-libs/cairo-lang/tree/v0.13.2)):
 
 ```bash
-pip install cairo-lang==0.12.0
+pip install cairo-lang==0.13.2
 ```
 
 Navigate to the example test directory (`e2e_test/CairoZero`):

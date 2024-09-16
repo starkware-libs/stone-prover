@@ -44,6 +44,7 @@ def load_targets(
             "//src/starkware/air/cpu/builtin/ec",
             "//src/starkware/air/cpu/builtin/hash",
             "//src/starkware/air/cpu/builtin/keccak",
+            "//src/starkware/air/cpu/builtin/modulo",
             "//src/starkware/air/cpu/builtin/poseidon",
             "//src/starkware/air/cpu/builtin/range_check",
             "//src/starkware/air/cpu/builtin/signature",

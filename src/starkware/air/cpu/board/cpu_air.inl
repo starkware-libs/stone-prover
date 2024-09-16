@@ -17,6 +17,9 @@
 #include "starkware/air/cpu/builtin/ec/ec_op_builtin_prover_context.h"
 #include "starkware/air/cpu/builtin/hash/hash_builtin_prover_context.h"
 #include "starkware/air/cpu/builtin/keccak/keccak_builtin_prover_context.h"
+#include "starkware/air/cpu/builtin/modulo/add_mod_builtin_prover_context.h"
+#include "starkware/air/cpu/builtin/modulo/mod_builtin_prover_context.h"
+#include "starkware/air/cpu/builtin/modulo/mul_mod_builtin_prover_context.h"
 #include "starkware/air/cpu/builtin/poseidon/poseidon_builtin_prover_context.h"
 #include "starkware/air/cpu/builtin/range_check/range_check_builtin_prover_context.h"
 #include "starkware/air/cpu/builtin/signature/signature_builtin_prover_context.h"
@@ -57,18 +60,20 @@ constexpr uint64_t CpuAir<FieldElementT, LayoutId>::RangeCheckRatio() const {
 }
 
 template <typename FieldElementT, int LayoutId>
-constexpr uint64_t CpuAir<FieldElementT, LayoutId>::RangeCheck96Ratio() const {
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::RangeCheck96NInstances() const {
+  uint64_t row_ratio = 0, cpu_component_step = 0;
   if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
-    return SafeDiv(
-        this->dynamic_params_[CpuAir::kRangeCheck96RowRatioDynamicParam],
-        CpuAir::kCpuComponentHeight * this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam]);
-  } else {                                            // NOLINT: clang-tidy if constexpr bug.
+    row_ratio = this->dynamic_params_[CpuAir::kRangeCheck96BuiltinRowRatioDynamicParam];
+    cpu_component_step = this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam];
+  } else {
     if constexpr (CpuAir::kHasRangeCheck96Builtin) {  // NOLINT: clang-tidy if constexpr bug.
-      return CpuAir::kRangeCheck96BuiltinRatio;
+      row_ratio = CpuAir::kRangeCheck96BuiltinRowRatio;
+      cpu_component_step = CpuAir::kCpuComponentStep;
     } else {  // NOLINT: clang-tidy if constexpr bug.
       return 0;
     }
   }
+  return SafeDiv(n_steps_ * cpu_component_step * CpuAir::kCpuComponentHeight, row_ratio);
 }
 
 template <typename FieldElementT, int LayoutId>
@@ -147,6 +152,40 @@ constexpr uint64_t CpuAir<FieldElementT, LayoutId>::PoseidonRatio() const {
 }
 
 template <typename FieldElementT, int LayoutId>
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::AddModNInstances() const {
+  uint64_t row_ratio = 0, cpu_component_step = 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    row_ratio = this->dynamic_params_[CpuAir::kAddModRowRatioDynamicParam];
+    cpu_component_step = this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam];
+  } else {
+    if constexpr (CpuAir::kHasAddModBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      row_ratio = CpuAir::kAddModRowRatio;
+      cpu_component_step = CpuAir::kCpuComponentStep;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+  return SafeDiv(n_steps_ * cpu_component_step * CpuAir::kCpuComponentHeight, row_ratio);
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr uint64_t CpuAir<FieldElementT, LayoutId>::MulModNInstances() const {
+  uint64_t row_ratio = 0, cpu_component_step = 0;
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    row_ratio = this->dynamic_params_[CpuAir::kMulModRowRatioDynamicParam];
+    cpu_component_step = this->dynamic_params_[CpuAir::kCpuComponentStepDynamicParam];
+  } else {
+    if constexpr (CpuAir::kHasMulModBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+      row_ratio = CpuAir::kMulModRowRatio;
+      cpu_component_step = CpuAir::kCpuComponentStep;
+    } else {  // NOLINT: clang-tidy if constexpr bug.
+      return 0;
+    }
+  }
+  return SafeDiv(n_steps_ * cpu_component_step * CpuAir::kCpuComponentHeight, row_ratio);
+}
+
+template <typename FieldElementT, int LayoutId>
 constexpr bool CpuAir<FieldElementT, LayoutId>::UsesPedersenBuiltin() const {
   if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
     return this->dynamic_params_[CpuAir::kUsesPedersenBuiltinDynamicParam];
@@ -219,6 +258,24 @@ constexpr bool CpuAir<FieldElementT, LayoutId>::UsesPoseidonBuiltin() const {
 }
 
 template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesAddModBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesAddModBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasAddModBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
+constexpr bool CpuAir<FieldElementT, LayoutId>::UsesMulModBuiltin() const {
+  if constexpr (CpuAir::kIsDynamicAir) {  // NOLINT: clang-tidy if constexpr bug.
+    return this->dynamic_params_[CpuAir::kUsesMulModBuiltinDynamicParam];
+  } else {  // NOLINT: clang-tidy if constexpr bug.
+    return CpuAir::kHasMulModBuiltin;
+  }
+}
+
+template <typename FieldElementT, int LayoutId>
 void CpuAir<FieldElementT, LayoutId>::BuildPeriodicColumns(
     const FieldElementT& gen, Builder* builder) const {
   // Pedersen builtin.
@@ -286,22 +343,27 @@ template <typename FieldElementT, int LayoutId>
 CpuAir<FieldElementT, LayoutId> CpuAir<FieldElementT, LayoutId>::WithInteractionElementsImpl(
     gsl::span<const FieldElementT> interaction_elms) const {
   CpuAir new_air(*this);
-  ASSERT_RELEASE(
-      interaction_elms.size() == (CpuAir::kHasDilutedPool ? 6 : 3),
-      "Interaction element vector is of wrong size.");
-  new_air.memory__multi_column_perm__perm__interaction_elm_ = interaction_elms[0];
-  new_air.memory__multi_column_perm__hash_interaction_elm0_ = interaction_elms[1];
-  new_air.range_check16__perm__interaction_elm_ = interaction_elms[2];
+  unsigned int i = 0;
+  new_air.memory__multi_column_perm__perm__interaction_elm_ = interaction_elms[i++];
+  new_air.memory__multi_column_perm__hash_interaction_elm0_ = interaction_elms[i++];
+  new_air.range_check16__perm__interaction_elm_ = interaction_elms[i++];
   new_air.memory__multi_column_perm__perm__public_memory_prod_ = new_air.GetPublicMemoryProd();
   if constexpr (CpuAir::kHasDilutedPool) {  // NOLINT: clang-tidy if constexpr bug.
-    new_air.diluted_check__permutation__interaction_elm_ = interaction_elms[3];
-    new_air.diluted_check__interaction_z_ = interaction_elms[4];
-    new_air.diluted_check__interaction_alpha_ = interaction_elms[5];
+    new_air.diluted_check__permutation__interaction_elm_ = interaction_elms[i++];
+    new_air.diluted_check__interaction_z_ = interaction_elms[i++];
+    new_air.diluted_check__interaction_alpha_ = interaction_elms[i++];
     new_air.diluted_check__final_cum_val_ =
         DilutedCheckComponentProverContext1<FieldElementT>::ExpectedFinalCumulativeValue(
             CpuAir::kDilutedSpacing, CpuAir::kDilutedNBits, new_air.diluted_check__interaction_z_,
             new_air.diluted_check__interaction_alpha_);
   }
+  if constexpr (CpuAir::kHasAddModBuiltin) {
+    new_air.add_mod__interaction_elm_ = interaction_elms[i++];
+  }
+  if constexpr (CpuAir::kHasMulModBuiltin) {
+    new_air.mul_mod__interaction_elm_ = interaction_elms[i++];
+  }
+  ASSERT_RELEASE(interaction_elms.size() == i, "Interaction element vector is of wrong size.");
   return new_air;
 }
 
@@ -366,7 +428,7 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
     if (UsesRangeCheck96Builtin()) {
       rc96_prover.emplace(
           "range_check96_builtin", ctx_, &memory_pool, &rc16_pool, this->range_check96_begin_addr_,
-          SafeDiv(n_steps_, RangeCheck96Ratio()), CpuAir::kRangeCheck96NParts, CpuAir::kOffsetBits,
+          RangeCheck96NInstances(), CpuAir::kRangeCheck96NParts, CpuAir::kOffsetBits,
           RangeCheckBuiltinProverContext<FieldElementT>::ParsePrivateInput(
               private_input["range_check96"]));
 
@@ -454,6 +516,46 @@ std::pair<CpuAirProverContext1<FieldElementT>, Trace> CpuAir<FieldElementT, Layo
               private_input["poseidon"]),
           CpuAir::kPoseidonRoundsFull, CpuAir::kPoseidonRoundsPartial,
           CpuAir::kPoseidonPartialRoundsPartition, mds_spans, ark_spans)
+          .WriteTrace(trace_spans);
+    }
+  }
+
+  // AddMod builtin.
+  if constexpr (CpuAir::kHasAddModBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+    if (UsesAddModBuiltin()) {
+      ProfilingBlock add_mod_builtin_block("AddMod builtin");
+      AddModBuiltinProverContext<FieldElementT, CpuAir::kAddModNWords>(
+          /*name=*/"add_mod",
+          /*ctx=*/ctx_,
+          /*memory_pool=*/&memory_pool,
+          /*begin_addr=*/this->add_mod_begin_addr_,
+          /*n_instances=*/AddModNInstances(),
+          /*batch_size=*/CpuAir::kAddModBatchSize,
+          /*word_bit_len=*/CpuAir::kAddModWordBitLen,
+          /*inputs=*/
+          ModBuiltinProverContext<FieldElementT, CpuAir::kAddModNWords>::ParsePrivateInput(
+              private_input["add_mod"], CpuAir::kAddModBatchSize))
+          .WriteTrace(trace_spans);
+    }
+  }
+
+  // MulMod builtin.
+  if constexpr (CpuAir::kHasMulModBuiltin) {  // NOLINT: clang-tidy if constexpr bug.
+    if (UsesMulModBuiltin()) {
+      ProfilingBlock mul_mod_builtin_block("MulMod builtin");
+      MulModBuiltinProverContext<FieldElementT, CpuAir::kMulModNWords>(
+          /*name=*/"mul_mod",
+          /*ctx=*/ctx_,
+          /*memory_pool=*/&memory_pool,
+          /*rc_pool=*/&rc16_pool,
+          /*begin_addr=*/this->mul_mod_begin_addr_,
+          /*n_instances=*/MulModNInstances(),
+          /*batch_size=*/CpuAir::kMulModBatchSize,
+          /*word_bit_len=*/CpuAir::kMulModWordBitLen,
+          /*bits_per_part=*/16,
+          /*inputs=*/
+          ModBuiltinProverContext<FieldElementT, CpuAir::kMulModNWords>::ParsePrivateInput(
+              private_input["mul_mod"], CpuAir::kMulModBatchSize))
           .WriteTrace(trace_spans);
     }
   }

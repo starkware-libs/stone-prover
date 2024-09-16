@@ -4,7 +4,7 @@ COPY install_deps.sh /app/
 RUN /app/install_deps.sh
 
 # Install Cairo0 for end-to-end test.
-RUN pip install cairo-lang==0.12.0
+RUN pip install cairo-lang==0.13.2
 
 COPY docker_common_deps.sh /app/
 WORKDIR /app/
@@ -42,6 +42,7 @@ RUN cairo-run \
     --air_private_input=fibonacci_private_input.json \
     --trace_file=fibonacci_trace.json \
     --memory_file=fibonacci_memory.json \
+    --min_steps=512 \
     --print_output \
     --proof_mode
 

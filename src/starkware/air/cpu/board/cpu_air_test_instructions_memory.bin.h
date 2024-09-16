@@ -13,8 +13,8 @@
 // and limitations under the License.
 
 
-#ifndef BVNQNLEBPVMGUIZSZVTU_H_
-#define BVNQNLEBPVMGUIZSZVTU_H_
+#ifndef SJYOMIJCQPDGTDQQBRRT_H_
+#define SJYOMIJCQPDGTDQQBRRT_H_
 
 #include <sstream>
 
@@ -41,5 +41,5 @@ inline std::string GetCpuAirTestInstructionsMemoryString() {
 
 }  // namespace starkware
 
-#endif  // BVNQNLEBPVMGUIZSZVTU_H_
+#endif  // SJYOMIJCQPDGTDQQBRRT_H_
 
