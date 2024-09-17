@@ -170,3 +170,5 @@ FRI steps should typically be in the range 2-4;
 the degree bound should be in the range 4-7.
 
 The constant 4 that appears in the equation is hardcoded `log₂(trace_rows_per_step) = log₂(16) = 4`.
+
+A python script to compute the `fri_step_list` can be found [here](fri_step_list.py)
