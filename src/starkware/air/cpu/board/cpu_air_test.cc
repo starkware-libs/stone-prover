@@ -78,8 +78,8 @@ class CpuAirTest : public ::testing::Test {
     Generates the trace of the AIR.
   */
   Trace GenerateTrace(bool disable_assert_in_memory_write_trace = false) {
-    statement = std::make_unique<CpuAirStatement>(
-        GetParams()["statement"], public_input.Build(), GetPrivateInput());
+    statement =
+        std::make_unique<CpuAirStatement>(GetParams(), public_input.Build(), GetPrivateInput());
     statement->GetAir();
     if (disable_assert_in_memory_write_trace) {
       statement->DisableAssertsForTest();

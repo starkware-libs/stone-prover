@@ -34,7 +34,7 @@
   /* NOLINTNEXTLINE */                                                    \
   template class ClassName<starkware::MaskedHash<Blake2s256, 20, true>>;  \
   /* NOLINTNEXTLINE */                                                    \
-  template class ClassName<starkware::MaskedHash<Blake2s256, 20, false>>; \
+  template class ClassName<starkware::MaskedHash<Blake2s256, 31, false>>; \
   /* NOLINTNEXTLINE */                                                    \
   template class ClassName<starkware::MaskedHash<Keccak256, 20, true>>;   \
   /* NOLINTNEXTLINE */                                                    \

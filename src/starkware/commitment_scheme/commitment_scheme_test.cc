@@ -183,9 +183,9 @@ using TestTypesTwoHashes = ::testing::Types<
     PackagingCommitmentSchemePairTwoHashesT<
         MaskedHash<Blake2s256, 20, true>, MaskedHash<Keccak256, 20, true>>,
     PackagingCommitmentSchemePairTwoHashesT<
-        MaskedHash<Keccak256, 20, false>, MaskedHash<Blake2s256, 20, false>>,
-    PackagingCommitmentSchemePairTwoHashesT<Pedersen, MaskedHash<Blake2s256, 20, false>>,
-    PackagingCommitmentSchemePairTwoHashesT<Poseidon3, MaskedHash<Blake2s256, 20, false>>>;
+        MaskedHash<Keccak256, 20, false>, MaskedHash<Blake2s256, 31, false>>,
+    PackagingCommitmentSchemePairTwoHashesT<Pedersen, MaskedHash<Blake2s256, 31, false>>,
+    PackagingCommitmentSchemePairTwoHashesT<Poseidon3, MaskedHash<Blake2s256, 31, false>>>;
 
 /*
   Returns number of segments to use, N, such that:

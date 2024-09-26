@@ -30,8 +30,7 @@ int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);  // NOLINT
 
   auto factory = [](const JsonValue& public_input, const JsonValue& parameters) {
-    return std::unique_ptr<Statement>(
-        new CpuAirStatement(parameters["statement"], public_input, std::nullopt));
+    return std::unique_ptr<Statement>(new CpuAirStatement(parameters, public_input, std::nullopt));
   };
   bool result = starkware::VerifierMainHelper(factory);
 

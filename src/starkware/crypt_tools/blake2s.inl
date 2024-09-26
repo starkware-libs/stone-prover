@@ -114,7 +114,7 @@ std::string Blake2s<DigestNumBits>::ToString() const {
   return BytesToHexString(buffer_);
 }
 
-inline std::ostream& operator<<(std::ostream& out, const Blake2s160& hash) {
+inline std::ostream& operator<<(std::ostream& out, const Blake2s248& hash) {
   return out << hash.ToString();
 }
 

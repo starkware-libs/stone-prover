@@ -81,7 +81,7 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
 
   uint64_t NumColumns() const override { return kNumColumns; }
   std::optional<InteractionParams> GetInteractionParams() const override {
-    InteractionParams interaction_params{kNumColumnsFirst, kNumColumnsSecond, 6};
+    InteractionParams interaction_params{kNumColumnsFirst, kNumColumnsSecond, 8};
     return interaction_params;
   }
 
@@ -768,6 +768,14 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   static constexpr uint64_t kRangeCheck96BuiltinRatio = 8;
   static constexpr uint64_t kRangeCheck96BuiltinRowRatio = 128;
   static constexpr uint64_t kRangeCheck96NParts = 6;
+  static constexpr uint64_t kAddModRowRatio = 2048;
+  static constexpr uint64_t kAddModWordBitLen = 96;
+  static constexpr uint64_t kAddModNWords = 4;
+  static constexpr uint64_t kAddModBatchSize = 1;
+  static constexpr uint64_t kMulModRowRatio = 4096;
+  static constexpr uint64_t kMulModWordBitLen = 96;
+  static constexpr uint64_t kMulModNWords = 4;
+  static constexpr uint64_t kMulModBatchSize = 1;
   static constexpr bool kHasOutputBuiltin = true;
   static constexpr bool kHasPedersenBuiltin = true;
   static constexpr bool kHasRangeCheckBuiltin = true;
@@ -777,14 +785,15 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   static constexpr bool kHasKeccakBuiltin = true;
   static constexpr bool kHasPoseidonBuiltin = true;
   static constexpr bool kHasRangeCheck96Builtin = true;
-  static constexpr bool kHasAddModBuiltin = false;
+  static constexpr bool kHasAddModBuiltin = true;
+  static constexpr bool kHasMulModBuiltin = true;
   static constexpr char kLayoutName[] = "all_cairo";
   static constexpr BigInt<4> kLayoutCode = 0x616c6c5f636169726f_Z;
   static constexpr uint64_t kConstraintDegree = 2;
   static constexpr uint64_t kLogCpuComponentHeight = 4;
-  static constexpr std::array<std::string_view, 11> kSegmentNames = {
-      "program", "execution", "output", "pedersen", "range_check",  "ecdsa",
-      "bitwise", "ec_op",     "keccak", "poseidon", "range_check96"};
+  static constexpr std::array<std::string_view, 13> kSegmentNames = {
+      "program", "execution", "output",   "pedersen",      "range_check", "ecdsa",  "bitwise",
+      "ec_op",   "keccak",    "poseidon", "range_check96", "add_mod",     "mul_mod"};
   static constexpr uint64_t kNumColumnsFirst = 9;
   static constexpr uint64_t kNumColumnsSecond = 3;
   static constexpr bool kIsDynamicAir = false;
@@ -1262,48 +1271,152 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn4Row27Neighbor,
     kColumn4Row42Neighbor,
     kColumn4Row43Neighbor,
+    kColumn4Row58Neighbor,
+    kColumn4Row59Neighbor,
     kColumn4Row74Neighbor,
     kColumn4Row75Neighbor,
+    kColumn4Row90Neighbor,
+    kColumn4Row91Neighbor,
     kColumn4Row106Neighbor,
     kColumn4Row138Neighbor,
     kColumn4Row139Neighbor,
     kColumn4Row154Neighbor,
     kColumn4Row171Neighbor,
+    kColumn4Row186Neighbor,
+    kColumn4Row187Neighbor,
     kColumn4Row202Neighbor,
+    kColumn4Row218Neighbor,
+    kColumn4Row219Neighbor,
     kColumn4Row234Neighbor,
     kColumn4Row235Neighbor,
     kColumn4Row266Neighbor,
     kColumn4Row267Neighbor,
     kColumn4Row298Neighbor,
+    kColumn4Row314Neighbor,
+    kColumn4Row315Neighbor,
+    kColumn4Row346Neighbor,
+    kColumn4Row347Neighbor,
+    kColumn4Row442Neighbor,
+    kColumn4Row443Neighbor,
+    kColumn4Row474Neighbor,
+    kColumn4Row475Neighbor,
     kColumn4Row522Neighbor,
     kColumn4Row523Neighbor,
+    kColumn4Row570Neighbor,
+    kColumn4Row571Neighbor,
+    kColumn4Row602Neighbor,
+    kColumn4Row603Neighbor,
+    kColumn4Row698Neighbor,
+    kColumn4Row699Neighbor,
+    kColumn4Row730Neighbor,
+    kColumn4Row731Neighbor,
     kColumn4Row778Neighbor,
     kColumn4Row779Neighbor,
+    kColumn4Row826Neighbor,
+    kColumn4Row827Neighbor,
+    kColumn4Row858Neighbor,
+    kColumn4Row859Neighbor,
+    kColumn4Row954Neighbor,
+    kColumn4Row955Neighbor,
+    kColumn4Row986Neighbor,
+    kColumn4Row987Neighbor,
     kColumn4Row1034Neighbor,
     kColumn4Row1035Neighbor,
+    kColumn4Row1082Neighbor,
+    kColumn4Row1083Neighbor,
+    kColumn4Row1114Neighbor,
+    kColumn4Row1115Neighbor,
+    kColumn4Row1210Neighbor,
+    kColumn4Row1211Neighbor,
+    kColumn4Row1242Neighbor,
+    kColumn4Row1243Neighbor,
     kColumn4Row1290Neighbor,
     kColumn4Row1291Neighbor,
+    kColumn4Row1338Neighbor,
+    kColumn4Row1339Neighbor,
+    kColumn4Row1370Neighbor,
+    kColumn4Row1371Neighbor,
+    kColumn4Row1466Neighbor,
+    kColumn4Row1467Neighbor,
+    kColumn4Row1498Neighbor,
+    kColumn4Row1499Neighbor,
     kColumn4Row1546Neighbor,
     kColumn4Row1547Neighbor,
+    kColumn4Row1594Neighbor,
+    kColumn4Row1595Neighbor,
+    kColumn4Row1626Neighbor,
+    kColumn4Row1627Neighbor,
+    kColumn4Row1722Neighbor,
+    kColumn4Row1723Neighbor,
+    kColumn4Row1754Neighbor,
+    kColumn4Row1755Neighbor,
+    kColumn4Row1802Neighbor,
+    kColumn4Row1803Neighbor,
+    kColumn4Row1850Neighbor,
+    kColumn4Row1851Neighbor,
+    kColumn4Row1882Neighbor,
+    kColumn4Row1883Neighbor,
+    kColumn4Row1978Neighbor,
+    kColumn4Row1979Neighbor,
+    kColumn4Row2010Neighbor,
+    kColumn4Row2011Neighbor,
     kColumn4Row2058Neighbor,
     kColumn4Row2059Neighbor,
+    kColumn4Row2139Neighbor,
+    kColumn4Row2234Neighbor,
+    kColumn4Row2235Neighbor,
     kColumn4Row2314Neighbor,
     kColumn4Row2315Neighbor,
+    kColumn4Row2395Neighbor,
+    kColumn4Row2490Neighbor,
+    kColumn4Row2491Neighbor,
+    kColumn4Row2570Neighbor,
+    kColumn4Row2571Neighbor,
+    kColumn4Row2651Neighbor,
+    kColumn4Row2746Neighbor,
+    kColumn4Row2747Neighbor,
     kColumn4Row2826Neighbor,
     kColumn4Row2827Neighbor,
+    kColumn4Row2874Neighbor,
+    kColumn4Row2875Neighbor,
+    kColumn4Row3002Neighbor,
+    kColumn4Row3003Neighbor,
     kColumn4Row3082Neighbor,
     kColumn4Row3083Neighbor,
+    kColumn4Row3163Neighbor,
+    kColumn4Row3258Neighbor,
+    kColumn4Row3259Neighbor,
     kColumn4Row3338Neighbor,
     kColumn4Row3339Neighbor,
+    kColumn4Row3386Neighbor,
+    kColumn4Row3387Neighbor,
+    kColumn4Row3419Neighbor,
+    kColumn4Row3514Neighbor,
+    kColumn4Row3515Neighbor,
     kColumn4Row3594Neighbor,
     kColumn4Row3595Neighbor,
+    kColumn4Row3675Neighbor,
+    kColumn4Row3770Neighbor,
+    kColumn4Row3771Neighbor,
+    kColumn4Row3850Neighbor,
+    kColumn4Row3851Neighbor,
+    kColumn4Row3898Neighbor,
+    kColumn4Row3899Neighbor,
     kColumn4Row4106Neighbor,
     kColumn4Row4618Neighbor,
     kColumn4Row4619Neighbor,
+    kColumn4Row4923Neighbor,
+    kColumn4Row5435Neighbor,
     kColumn4Row5643Neighbor,
+    kColumn4Row5947Neighbor,
+    kColumn4Row6666Neighbor,
+    kColumn4Row6667Neighbor,
+    kColumn4Row6971Neighbor,
     kColumn4Row7178Neighbor,
     kColumn4Row7179Neighbor,
+    kColumn4Row7483Neighbor,
     kColumn4Row7691Neighbor,
+    kColumn4Row7995Neighbor,
     kColumn4Row8714Neighbor,
     kColumn4Row8715Neighbor,
     kColumn4Row9739Neighbor,
@@ -1334,11 +1447,13 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn5Row3Neighbor,
     kColumn5Row4Neighbor,
     kColumn5Row8Neighbor,
+    kColumn5Row10Neighbor,
     kColumn5Row12Neighbor,
     kColumn5Row18Neighbor,
     kColumn5Row28Neighbor,
     kColumn5Row34Neighbor,
     kColumn5Row44Neighbor,
+    kColumn5Row50Neighbor,
     kColumn5Row60Neighbor,
     kColumn5Row66Neighbor,
     kColumn5Row76Neighbor,
@@ -1346,7 +1461,71 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn5Row92Neighbor,
     kColumn5Row98Neighbor,
     kColumn5Row108Neighbor,
+    kColumn5Row114Neighbor,
     kColumn5Row124Neighbor,
+    kColumn5Row178Neighbor,
+    kColumn5Row242Neighbor,
+    kColumn5Row306Neighbor,
+    kColumn5Row370Neighbor,
+    kColumn5Row434Neighbor,
+    kColumn5Row498Neighbor,
+    kColumn5Row562Neighbor,
+    kColumn5Row626Neighbor,
+    kColumn5Row690Neighbor,
+    kColumn5Row754Neighbor,
+    kColumn5Row818Neighbor,
+    kColumn5Row882Neighbor,
+    kColumn5Row946Neighbor,
+    kColumn5Row1010Neighbor,
+    kColumn5Row1074Neighbor,
+    kColumn5Row1138Neighbor,
+    kColumn5Row1202Neighbor,
+    kColumn5Row1266Neighbor,
+    kColumn5Row1330Neighbor,
+    kColumn5Row1394Neighbor,
+    kColumn5Row1458Neighbor,
+    kColumn5Row1522Neighbor,
+    kColumn5Row1586Neighbor,
+    kColumn5Row1650Neighbor,
+    kColumn5Row1714Neighbor,
+    kColumn5Row1778Neighbor,
+    kColumn5Row1842Neighbor,
+    kColumn5Row1906Neighbor,
+    kColumn5Row1970Neighbor,
+    kColumn5Row2034Neighbor,
+    kColumn5Row2058Neighbor,
+    kColumn5Row2098Neighbor,
+    kColumn5Row2162Neighbor,
+    kColumn5Row2226Neighbor,
+    kColumn5Row2290Neighbor,
+    kColumn5Row2354Neighbor,
+    kColumn5Row2418Neighbor,
+    kColumn5Row2482Neighbor,
+    kColumn5Row2546Neighbor,
+    kColumn5Row2610Neighbor,
+    kColumn5Row2674Neighbor,
+    kColumn5Row2738Neighbor,
+    kColumn5Row2802Neighbor,
+    kColumn5Row2866Neighbor,
+    kColumn5Row2930Neighbor,
+    kColumn5Row2994Neighbor,
+    kColumn5Row3058Neighbor,
+    kColumn5Row3122Neighbor,
+    kColumn5Row3186Neighbor,
+    kColumn5Row3250Neighbor,
+    kColumn5Row3314Neighbor,
+    kColumn5Row3378Neighbor,
+    kColumn5Row3442Neighbor,
+    kColumn5Row3506Neighbor,
+    kColumn5Row3570Neighbor,
+    kColumn5Row3634Neighbor,
+    kColumn5Row3698Neighbor,
+    kColumn5Row3762Neighbor,
+    kColumn5Row3826Neighbor,
+    kColumn5Row3890Neighbor,
+    kColumn5Row3954Neighbor,
+    kColumn5Row4018Neighbor,
+    kColumn5Row4082Neighbor,
     kColumn6Row0Neighbor,
     kColumn6Row1Neighbor,
     kColumn6Row2Neighbor,
@@ -1514,16 +1693,23 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kColumn8Row302Neighbor,
     kColumn8Row334Neighbor,
     kColumn8Row366Neighbor,
+    kColumn8Row414Neighbor,
     kColumn8Row462Neighbor,
     kColumn8Row494Neighbor,
     kColumn8Row622Neighbor,
+    kColumn8Row670Neighbor,
     kColumn8Row750Neighbor,
     kColumn8Row878Neighbor,
+    kColumn8Row926Neighbor,
+    kColumn8Row1182Neighbor,
+    kColumn8Row1438Neighbor,
     kColumn8Row1566Neighbor,
     kColumn8Row1646Neighbor,
+    kColumn8Row1694Neighbor,
     kColumn8Row1774Neighbor,
     kColumn8Row1822Neighbor,
     kColumn8Row1902Neighbor,
+    kColumn8Row1950Neighbor,
     kColumn8Row2030Neighbor,
     kColumn8Row2158Neighbor,
     kColumn8Row2286Neighbor,
@@ -2402,6 +2588,75 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
     kRangeCheck96BuiltinValueCond,                                  // Constraint 347.
     kRangeCheck96BuiltinAddrStepCond,                               // Constraint 348.
     kRangeCheck96BuiltinInitAddrCond,                               // Constraint 349.
+    kAddModInitP0AddressCond,                                       // Constraint 350.
+    kAddModStepP1AddrCond,                                          // Constraint 351.
+    kAddModStepP2AddrCond,                                          // Constraint 352.
+    kAddModStepP3AddrCond,                                          // Constraint 353.
+    kAddModStepValuesPtrAddrCond,                                   // Constraint 354.
+    kAddModStepOffsetsPtrAddrCond,                                  // Constraint 355.
+    kAddModStepNAddrCond,                                           // Constraint 356.
+    kAddModStepP0AddrCond,                                          // Constraint 357.
+    kAddModStepP0ValueCond,                                         // Constraint 358.
+    kAddModStepP1ValueCond,                                         // Constraint 359.
+    kAddModStepP2ValueCond,                                         // Constraint 360.
+    kAddModStepP3ValueCond,                                         // Constraint 361.
+    kAddModStepValuesPtrValueCond,                                  // Constraint 362.
+    kAddModStepOffsetsPtrValueCond,                                 // Constraint 363.
+    kAddModStepNValueCond,                                          // Constraint 364.
+    kAddModAOffset0Cond,                                            // Constraint 365.
+    kAddModBOffsetCond,                                             // Constraint 366.
+    kAddModCOffsetCond,                                             // Constraint 367.
+    kAddModA0ValueInd0Cond,                                         // Constraint 368.
+    kAddModA1ValueCond,                                             // Constraint 369.
+    kAddModA2ValueCond,                                             // Constraint 370.
+    kAddModA3ValueCond,                                             // Constraint 371.
+    kAddModB0ValueInd0Cond,                                         // Constraint 372.
+    kAddModB1ValueCond,                                             // Constraint 373.
+    kAddModB2ValueCond,                                             // Constraint 374.
+    kAddModB3ValueCond,                                             // Constraint 375.
+    kAddModC0ValueInd0Cond,                                         // Constraint 376.
+    kAddModC1ValueCond,                                             // Constraint 377.
+    kAddModC2ValueCond,                                             // Constraint 378.
+    kAddModC3ValueCond,                                             // Constraint 379.
+    kAddModSubPBitCond,                                             // Constraint 380.
+    kAddModCarry1BitCond,                                           // Constraint 381.
+    kAddModCarry1SignCond,                                          // Constraint 382.
+    kAddModCarry2BitCond,                                           // Constraint 383.
+    kAddModCarry2SignCond,                                          // Constraint 384.
+    kAddModCarry3BitCond,                                           // Constraint 385.
+    kAddModCarry3SignCond,                                          // Constraint 386.
+    kAddModAdditionConstraint_0Cond,                                // Constraint 387.
+    kMulModInitP0AddressCond,                                       // Constraint 388.
+    kMulModStepP1AddrCond,                                          // Constraint 389.
+    kMulModStepP2AddrCond,                                          // Constraint 390.
+    kMulModStepP3AddrCond,                                          // Constraint 391.
+    kMulModStepValuesPtrAddrCond,                                   // Constraint 392.
+    kMulModStepOffsetsPtrAddrCond,                                  // Constraint 393.
+    kMulModStepNAddrCond,                                           // Constraint 394.
+    kMulModStepP0AddrCond,                                          // Constraint 395.
+    kMulModStepP0ValueCond,                                         // Constraint 396.
+    kMulModStepP1ValueCond,                                         // Constraint 397.
+    kMulModStepP2ValueCond,                                         // Constraint 398.
+    kMulModStepP3ValueCond,                                         // Constraint 399.
+    kMulModStepValuesPtrValueCond,                                  // Constraint 400.
+    kMulModStepOffsetsPtrValueCond,                                 // Constraint 401.
+    kMulModStepNValueCond,                                          // Constraint 402.
+    kMulModAOffset0Cond,                                            // Constraint 403.
+    kMulModBOffsetCond,                                             // Constraint 404.
+    kMulModCOffsetCond,                                             // Constraint 405.
+    kMulModA0ValueInd0Cond,                                         // Constraint 406.
+    kMulModA1ValueCond,                                             // Constraint 407.
+    kMulModA2ValueCond,                                             // Constraint 408.
+    kMulModA3ValueCond,                                             // Constraint 409.
+    kMulModB0ValueInd0Cond,                                         // Constraint 410.
+    kMulModB1ValueCond,                                             // Constraint 411.
+    kMulModB2ValueCond,                                             // Constraint 412.
+    kMulModB3ValueCond,                                             // Constraint 413.
+    kMulModC0ValueInd0Cond,                                         // Constraint 414.
+    kMulModC1ValueCond,                                             // Constraint 415.
+    kMulModC2ValueCond,                                             // Constraint 416.
+    kMulModC3ValueCond,                                             // Constraint 417.
+    kMulModMultiplicationConstraint_0Cond,                          // Constraint 418.
     kNumConstraints,                                                // Number of constraints.
   };
 
@@ -2440,6 +2695,10 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
+        add_mod_begin_addr_(
+            kHasAddModBuiltin ? GetSegment(mem_segment_addresses, "add_mod").begin_addr : 0),
+        mul_mod_begin_addr_(
+            kHasMulModBuiltin ? GetSegment(mem_segment_addresses, "mul_mod").begin_addr : 0),
         dynamic_params_(ParseDynamicParams(dynamic_params)),
 
         range_check_min_(rc_min),
@@ -2491,6 +2750,14 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
+  const CompileTimeOptional<uint64_t, kHasAddModBuiltin> add_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(add_mod_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasMulModBuiltin> mul_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(mul_mod_begin_addr_));
+
   // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
   // See ParseDynamicParams.
   CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
@@ -2510,6 +2777,10 @@ class CpuAirDefinition<FieldElementT, 9> : public Air {
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_alpha_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__interaction_elm_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__interaction_elm_ =
       FieldElementT::Uninitialized();
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =

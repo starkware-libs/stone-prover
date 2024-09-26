@@ -81,7 +81,7 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
 
   uint64_t NumColumns() const override { return num_columns_first + num_columns_second; }
   std::optional<InteractionParams> GetInteractionParams() const override {
-    InteractionParams interaction_params{num_columns_first, num_columns_second, 6};
+    InteractionParams interaction_params{num_columns_first, num_columns_second, 8};
     return interaction_params;
   }
 
@@ -750,6 +750,13 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
               0x51274d092db5099f180b1a8a13b7f2c7606836eabd8af54bf1d9ac2dc5717a5_Z),
           FieldElementT::ConstexprFromBigInt(
               0x61fc552b8eb75e17ad0fb7aaa4ca528f415e14f0d9cdbed861a8db0bfff0c5b_Z)}};
+  static constexpr uint64_t kRangeCheck96NParts = 6;
+  static constexpr uint64_t kAddModWordBitLen = 96;
+  static constexpr uint64_t kAddModNWords = 4;
+  static constexpr uint64_t kAddModBatchSize = 1;
+  static constexpr uint64_t kMulModWordBitLen = 96;
+  static constexpr uint64_t kMulModNWords = 4;
+  static constexpr uint64_t kMulModBatchSize = 1;
   static constexpr bool kHasOutputBuiltin = true;
   static constexpr bool kHasPedersenBuiltin = true;
   static constexpr bool kHasRangeCheckBuiltin = true;
@@ -758,14 +765,15 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   static constexpr bool kHasEcOpBuiltin = true;
   static constexpr bool kHasKeccakBuiltin = true;
   static constexpr bool kHasPoseidonBuiltin = true;
-  static constexpr bool kHasRangeCheck96Builtin = false;
-  static constexpr bool kHasAddModBuiltin = false;
+  static constexpr bool kHasRangeCheck96Builtin = true;
+  static constexpr bool kHasAddModBuiltin = true;
+  static constexpr bool kHasMulModBuiltin = true;
   static constexpr char kLayoutName[] = "dynamic";
   static constexpr BigInt<4> kLayoutCode = 0x64796e616d6963_Z;
   static constexpr uint64_t kConstraintDegree = 2;
-  static constexpr std::array<std::string_view, 10> kSegmentNames = {
-      "program", "execution", "output", "pedersen", "range_check",
-      "ecdsa",   "bitwise",   "ec_op",  "keccak",   "poseidon"};
+  static constexpr std::array<std::string_view, 13> kSegmentNames = {
+      "program", "execution", "output",   "pedersen",      "range_check", "ecdsa",  "bitwise",
+      "ec_op",   "keccak",    "poseidon", "range_check96", "add_mod",     "mul_mod"};
   static constexpr bool kIsDynamicAir = true;
 
   enum PeriodicColumns {
@@ -790,6 +798,43 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   };
 
   enum DynamicParams {
+    kAddModA0SuboffsetDynamicParam,
+    kAddModA1SuboffsetDynamicParam,
+    kAddModA2SuboffsetDynamicParam,
+    kAddModA3SuboffsetDynamicParam,
+    kAddModAOffsetSuboffsetDynamicParam,
+    kAddModB0SuboffsetDynamicParam,
+    kAddModB1SuboffsetDynamicParam,
+    kAddModB2SuboffsetDynamicParam,
+    kAddModB3SuboffsetDynamicParam,
+    kAddModBOffsetSuboffsetDynamicParam,
+    kAddModC0SuboffsetDynamicParam,
+    kAddModC1SuboffsetDynamicParam,
+    kAddModC2SuboffsetDynamicParam,
+    kAddModC3SuboffsetDynamicParam,
+    kAddModCOffsetSuboffsetDynamicParam,
+    kAddModCarry1BitColumnDynamicParam,
+    kAddModCarry1BitOffsetDynamicParam,
+    kAddModCarry1SignColumnDynamicParam,
+    kAddModCarry1SignOffsetDynamicParam,
+    kAddModCarry2BitColumnDynamicParam,
+    kAddModCarry2BitOffsetDynamicParam,
+    kAddModCarry2SignColumnDynamicParam,
+    kAddModCarry2SignOffsetDynamicParam,
+    kAddModCarry3BitColumnDynamicParam,
+    kAddModCarry3BitOffsetDynamicParam,
+    kAddModCarry3SignColumnDynamicParam,
+    kAddModCarry3SignOffsetDynamicParam,
+    kAddModNSuboffsetDynamicParam,
+    kAddModOffsetsPtrSuboffsetDynamicParam,
+    kAddModP0SuboffsetDynamicParam,
+    kAddModP1SuboffsetDynamicParam,
+    kAddModP2SuboffsetDynamicParam,
+    kAddModP3SuboffsetDynamicParam,
+    kAddModRowRatioDynamicParam,
+    kAddModSubPBitColumnDynamicParam,
+    kAddModSubPBitOffsetDynamicParam,
+    kAddModValuesPtrSuboffsetDynamicParam,
     kBitwiseDilutedVarPoolSuboffsetDynamicParam,
     kBitwiseRowRatioDynamicParam,
     kBitwiseTrimUnpacking192SuboffsetDynamicParam,
@@ -933,6 +978,95 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
     kMemorySortedValueColumnDynamicParam,
     kMemorySortedValueOffsetDynamicParam,
     kMemoryUnitsRowRatioDynamicParam,
+    kMulModA0SuboffsetDynamicParam,
+    kMulModA1SuboffsetDynamicParam,
+    kMulModA2SuboffsetDynamicParam,
+    kMulModA3SuboffsetDynamicParam,
+    kMulModAOffsetSuboffsetDynamicParam,
+    kMulModB0SuboffsetDynamicParam,
+    kMulModB1SuboffsetDynamicParam,
+    kMulModB2SuboffsetDynamicParam,
+    kMulModB3SuboffsetDynamicParam,
+    kMulModBOffsetSuboffsetDynamicParam,
+    kMulModC0SuboffsetDynamicParam,
+    kMulModC1SuboffsetDynamicParam,
+    kMulModC2SuboffsetDynamicParam,
+    kMulModC3SuboffsetDynamicParam,
+    kMulModCOffsetSuboffsetDynamicParam,
+    kMulModCarry0Part0SuboffsetDynamicParam,
+    kMulModCarry0Part1SuboffsetDynamicParam,
+    kMulModCarry0Part2SuboffsetDynamicParam,
+    kMulModCarry0Part3SuboffsetDynamicParam,
+    kMulModCarry0Part4SuboffsetDynamicParam,
+    kMulModCarry0Part5SuboffsetDynamicParam,
+    kMulModCarry0Part6SuboffsetDynamicParam,
+    kMulModCarry1Part0SuboffsetDynamicParam,
+    kMulModCarry1Part1SuboffsetDynamicParam,
+    kMulModCarry1Part2SuboffsetDynamicParam,
+    kMulModCarry1Part3SuboffsetDynamicParam,
+    kMulModCarry1Part4SuboffsetDynamicParam,
+    kMulModCarry1Part5SuboffsetDynamicParam,
+    kMulModCarry1Part6SuboffsetDynamicParam,
+    kMulModCarry2Part0SuboffsetDynamicParam,
+    kMulModCarry2Part1SuboffsetDynamicParam,
+    kMulModCarry2Part2SuboffsetDynamicParam,
+    kMulModCarry2Part3SuboffsetDynamicParam,
+    kMulModCarry2Part4SuboffsetDynamicParam,
+    kMulModCarry2Part5SuboffsetDynamicParam,
+    kMulModCarry2Part6SuboffsetDynamicParam,
+    kMulModCarry3Part0SuboffsetDynamicParam,
+    kMulModCarry3Part1SuboffsetDynamicParam,
+    kMulModCarry3Part2SuboffsetDynamicParam,
+    kMulModCarry3Part3SuboffsetDynamicParam,
+    kMulModCarry3Part4SuboffsetDynamicParam,
+    kMulModCarry3Part5SuboffsetDynamicParam,
+    kMulModCarry3Part6SuboffsetDynamicParam,
+    kMulModCarry4Part0SuboffsetDynamicParam,
+    kMulModCarry4Part1SuboffsetDynamicParam,
+    kMulModCarry4Part2SuboffsetDynamicParam,
+    kMulModCarry4Part3SuboffsetDynamicParam,
+    kMulModCarry4Part4SuboffsetDynamicParam,
+    kMulModCarry4Part5SuboffsetDynamicParam,
+    kMulModCarry4Part6SuboffsetDynamicParam,
+    kMulModCarry5Part0SuboffsetDynamicParam,
+    kMulModCarry5Part1SuboffsetDynamicParam,
+    kMulModCarry5Part2SuboffsetDynamicParam,
+    kMulModCarry5Part3SuboffsetDynamicParam,
+    kMulModCarry5Part4SuboffsetDynamicParam,
+    kMulModCarry5Part5SuboffsetDynamicParam,
+    kMulModCarry5Part6SuboffsetDynamicParam,
+    kMulModNSuboffsetDynamicParam,
+    kMulModOffsetsPtrSuboffsetDynamicParam,
+    kMulModP0SuboffsetDynamicParam,
+    kMulModP1SuboffsetDynamicParam,
+    kMulModP2SuboffsetDynamicParam,
+    kMulModP3SuboffsetDynamicParam,
+    kMulModPMultiplier0Part0SuboffsetDynamicParam,
+    kMulModPMultiplier0Part1SuboffsetDynamicParam,
+    kMulModPMultiplier0Part2SuboffsetDynamicParam,
+    kMulModPMultiplier0Part3SuboffsetDynamicParam,
+    kMulModPMultiplier0Part4SuboffsetDynamicParam,
+    kMulModPMultiplier0Part5SuboffsetDynamicParam,
+    kMulModPMultiplier1Part0SuboffsetDynamicParam,
+    kMulModPMultiplier1Part1SuboffsetDynamicParam,
+    kMulModPMultiplier1Part2SuboffsetDynamicParam,
+    kMulModPMultiplier1Part3SuboffsetDynamicParam,
+    kMulModPMultiplier1Part4SuboffsetDynamicParam,
+    kMulModPMultiplier1Part5SuboffsetDynamicParam,
+    kMulModPMultiplier2Part0SuboffsetDynamicParam,
+    kMulModPMultiplier2Part1SuboffsetDynamicParam,
+    kMulModPMultiplier2Part2SuboffsetDynamicParam,
+    kMulModPMultiplier2Part3SuboffsetDynamicParam,
+    kMulModPMultiplier2Part4SuboffsetDynamicParam,
+    kMulModPMultiplier2Part5SuboffsetDynamicParam,
+    kMulModPMultiplier3Part0SuboffsetDynamicParam,
+    kMulModPMultiplier3Part1SuboffsetDynamicParam,
+    kMulModPMultiplier3Part2SuboffsetDynamicParam,
+    kMulModPMultiplier3Part3SuboffsetDynamicParam,
+    kMulModPMultiplier3Part4SuboffsetDynamicParam,
+    kMulModPMultiplier3Part5SuboffsetDynamicParam,
+    kMulModRowRatioDynamicParam,
+    kMulModValuesPtrSuboffsetDynamicParam,
     kNumColumnsFirstDynamicParam,
     kNumColumnsSecondDynamicParam,
     kOrigPublicMemorySuboffsetDynamicParam,
@@ -982,16 +1116,27 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
     kRangeCheck16SortedOffsetDynamicParam,
     kRangeCheck16PoolColumnDynamicParam,
     kRangeCheck16PoolOffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck0SuboffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck1SuboffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck2SuboffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck3SuboffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck4SuboffsetDynamicParam,
+    kRangeCheck96BuiltinInnerRangeCheck5SuboffsetDynamicParam,
+    kRangeCheck96BuiltinMemSuboffsetDynamicParam,
+    kRangeCheck96BuiltinRowRatioDynamicParam,
     kRangeCheckBuiltinInnerRangeCheckSuboffsetDynamicParam,
     kRangeCheckBuiltinMemSuboffsetDynamicParam,
     kRangeCheckBuiltinRowRatioDynamicParam,
     kRangeCheckUnitsRowRatioDynamicParam,
+    kUsesAddModBuiltinDynamicParam,
     kUsesBitwiseBuiltinDynamicParam,
     kUsesEcOpBuiltinDynamicParam,
     kUsesEcdsaBuiltinDynamicParam,
     kUsesKeccakBuiltinDynamicParam,
+    kUsesMulModBuiltinDynamicParam,
     kUsesPedersenBuiltinDynamicParam,
     kUsesPoseidonBuiltinDynamicParam,
+    kUsesRangeCheck96BuiltinDynamicParam,
     kUsesRangeCheckBuiltinDynamicParam,
     // Number of dynamic params.
     kNumDynamicParams,
@@ -3330,22 +3475,484 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
     kPoseidon_Poseidon_FullRoundsState1ColumnRowExpr745Neighbor,
     // (SafeDiv(poseidon__row_ratio, 2)) + (poseidon__poseidon__full_rounds_state2_offset)
     kPoseidon_Poseidon_FullRoundsState2ColumnRowExpr746Neighbor,
+    // ((range_check96_builtin__mem_suboffset) * (memory_units_row_ratio)) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr747Neighbor,
+    // ((range_check96_builtin__inner_range_check0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr748Neighbor,
+    // ((range_check96_builtin__inner_range_check1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr749Neighbor,
+    // ((range_check96_builtin__inner_range_check2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr750Neighbor,
+    // ((range_check96_builtin__inner_range_check3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr751Neighbor,
+    // ((range_check96_builtin__inner_range_check4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr752Neighbor,
+    // ((range_check96_builtin__inner_range_check5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr753Neighbor,
+    // ((range_check96_builtin_row_ratio) + ((range_check96_builtin__mem_suboffset) *
+    // (memory_units_row_ratio))) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr754Neighbor,
+    // ((range_check96_builtin__mem_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr755Neighbor,
+    // ((add_mod__p0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr756Neighbor,
+    // ((add_mod__p1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr757Neighbor,
+    // ((add_mod__p2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr758Neighbor,
+    // ((add_mod__p3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr759Neighbor,
+    // ((add_mod__values_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr760Neighbor,
+    // ((add_mod__offsets_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr761Neighbor,
+    // ((add_mod__n_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr762Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__p0_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr763Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__p0_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr764Neighbor,
+    // ((add_mod__p0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr765Neighbor,
+    // ((add_mod__n_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr766Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__p1_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr767Neighbor,
+    // ((add_mod__p1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr768Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__p2_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr769Neighbor,
+    // ((add_mod__p2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr770Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__p3_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr771Neighbor,
+    // ((add_mod__p3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr772Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__values_ptr_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr773Neighbor,
+    // ((add_mod__values_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr774Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__offsets_ptr_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr775Neighbor,
+    // ((add_mod__offsets_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr776Neighbor,
+    // ((add_mod__row_ratio) + ((add_mod__n_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr777Neighbor,
+    // ((add_mod__a_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr778Neighbor,
+    // ((add_mod__b_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr779Neighbor,
+    // ((add_mod__c_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr780Neighbor,
+    // ((add_mod__a0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr781Neighbor,
+    // ((add_mod__a_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr782Neighbor,
+    // ((add_mod__a1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr783Neighbor,
+    // ((add_mod__a2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr784Neighbor,
+    // ((add_mod__a3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr785Neighbor,
+    // ((add_mod__b0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr786Neighbor,
+    // ((add_mod__b_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr787Neighbor,
+    // ((add_mod__b1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr788Neighbor,
+    // ((add_mod__b2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr789Neighbor,
+    // ((add_mod__b3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr790Neighbor,
+    // ((add_mod__c0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr791Neighbor,
+    // ((add_mod__c_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr792Neighbor,
+    // ((add_mod__c1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr793Neighbor,
+    // ((add_mod__c2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr794Neighbor,
+    // ((add_mod__c3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr795Neighbor,
+    // add_mod__sub_p_bit_offset
+    kAddMod_SubPBitColumnRowExpr796Neighbor,
+    // add_mod__carry1_bit_offset
+    kAddMod_Carry1BitColumnRowExpr797Neighbor,
+    // add_mod__carry1_sign_offset
+    kAddMod_Carry1SignColumnRowExpr798Neighbor,
+    // add_mod__carry2_bit_offset
+    kAddMod_Carry2BitColumnRowExpr799Neighbor,
+    // add_mod__carry2_sign_offset
+    kAddMod_Carry2SignColumnRowExpr800Neighbor,
+    // add_mod__carry3_bit_offset
+    kAddMod_Carry3BitColumnRowExpr801Neighbor,
+    // add_mod__carry3_sign_offset
+    kAddMod_Carry3SignColumnRowExpr802Neighbor,
+    // ((add_mod__a1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr803Neighbor,
+    // ((add_mod__a2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr804Neighbor,
+    // ((add_mod__a3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr805Neighbor,
+    // ((add_mod__a0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr806Neighbor,
+    // ((add_mod__b1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr807Neighbor,
+    // ((add_mod__b2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr808Neighbor,
+    // ((add_mod__b3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr809Neighbor,
+    // ((add_mod__b0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr810Neighbor,
+    // ((add_mod__c1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr811Neighbor,
+    // ((add_mod__c2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr812Neighbor,
+    // ((add_mod__c3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr813Neighbor,
+    // ((add_mod__c0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr814Neighbor,
+    // ((mul_mod__p0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr815Neighbor,
+    // ((mul_mod__p1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr816Neighbor,
+    // ((mul_mod__p2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr817Neighbor,
+    // ((mul_mod__p3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr818Neighbor,
+    // ((mul_mod__values_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr819Neighbor,
+    // ((mul_mod__offsets_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr820Neighbor,
+    // ((mul_mod__n_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr821Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__p0_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr822Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__p0_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr823Neighbor,
+    // ((mul_mod__p0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr824Neighbor,
+    // ((mul_mod__n_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr825Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__p1_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr826Neighbor,
+    // ((mul_mod__p1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr827Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__p2_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr828Neighbor,
+    // ((mul_mod__p2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr829Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__p3_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr830Neighbor,
+    // ((mul_mod__p3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr831Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__values_ptr_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr832Neighbor,
+    // ((mul_mod__values_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr833Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__offsets_ptr_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr834Neighbor,
+    // ((mul_mod__offsets_ptr_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr835Neighbor,
+    // ((mul_mod__row_ratio) + ((mul_mod__n_suboffset) * (memory_units_row_ratio))) +
+    // (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr836Neighbor,
+    // ((mul_mod__a_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr837Neighbor,
+    // ((mul_mod__b_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr838Neighbor,
+    // ((mul_mod__c_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr839Neighbor,
+    // ((mul_mod__a0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr840Neighbor,
+    // ((mul_mod__a_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr841Neighbor,
+    // ((mul_mod__a1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr842Neighbor,
+    // ((mul_mod__a2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr843Neighbor,
+    // ((mul_mod__a3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr844Neighbor,
+    // ((mul_mod__b0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr845Neighbor,
+    // ((mul_mod__b_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr846Neighbor,
+    // ((mul_mod__b1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr847Neighbor,
+    // ((mul_mod__b2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr848Neighbor,
+    // ((mul_mod__b3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr849Neighbor,
+    // ((mul_mod__c0_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr850Neighbor,
+    // ((mul_mod__c_offset_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr851Neighbor,
+    // ((mul_mod__c1_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr852Neighbor,
+    // ((mul_mod__c2_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr853Neighbor,
+    // ((mul_mod__c3_suboffset) * (memory_units_row_ratio)) + (mem_pool__addr_offset)
+    kMemPool_AddrColumnRowExpr854Neighbor,
+    // ((mul_mod__a1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr855Neighbor,
+    // ((mul_mod__a2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr856Neighbor,
+    // ((mul_mod__a3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr857Neighbor,
+    // ((mul_mod__a0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr858Neighbor,
+    // ((mul_mod__b1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr859Neighbor,
+    // ((mul_mod__b2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr860Neighbor,
+    // ((mul_mod__b3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr861Neighbor,
+    // ((mul_mod__b0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr862Neighbor,
+    // ((mul_mod__c1_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr863Neighbor,
+    // ((mul_mod__c2_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr864Neighbor,
+    // ((mul_mod__c3_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr865Neighbor,
+    // ((mul_mod__c0_suboffset) * (memory_units_row_ratio)) + (mem_pool__value_offset)
+    kMemPool_ValueColumnRowExpr866Neighbor,
+    // ((mul_mod__p_multiplier1__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr867Neighbor,
+    // ((mul_mod__p_multiplier1__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr868Neighbor,
+    // ((mul_mod__p_multiplier1__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr869Neighbor,
+    // ((mul_mod__p_multiplier1__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr870Neighbor,
+    // ((mul_mod__p_multiplier1__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr871Neighbor,
+    // ((mul_mod__p_multiplier1__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr872Neighbor,
+    // ((mul_mod__p_multiplier2__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr873Neighbor,
+    // ((mul_mod__p_multiplier2__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr874Neighbor,
+    // ((mul_mod__p_multiplier2__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr875Neighbor,
+    // ((mul_mod__p_multiplier2__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr876Neighbor,
+    // ((mul_mod__p_multiplier2__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr877Neighbor,
+    // ((mul_mod__p_multiplier2__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr878Neighbor,
+    // ((mul_mod__p_multiplier3__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr879Neighbor,
+    // ((mul_mod__p_multiplier3__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr880Neighbor,
+    // ((mul_mod__p_multiplier3__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr881Neighbor,
+    // ((mul_mod__p_multiplier3__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr882Neighbor,
+    // ((mul_mod__p_multiplier3__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr883Neighbor,
+    // ((mul_mod__p_multiplier3__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr884Neighbor,
+    // ((mul_mod__p_multiplier0__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr885Neighbor,
+    // ((mul_mod__p_multiplier0__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr886Neighbor,
+    // ((mul_mod__p_multiplier0__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr887Neighbor,
+    // ((mul_mod__p_multiplier0__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr888Neighbor,
+    // ((mul_mod__p_multiplier0__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr889Neighbor,
+    // ((mul_mod__p_multiplier0__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr890Neighbor,
+    // ((mul_mod__carry1__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr891Neighbor,
+    // ((mul_mod__carry1__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr892Neighbor,
+    // ((mul_mod__carry1__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr893Neighbor,
+    // ((mul_mod__carry1__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr894Neighbor,
+    // ((mul_mod__carry1__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr895Neighbor,
+    // ((mul_mod__carry1__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr896Neighbor,
+    // ((mul_mod__carry1__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr897Neighbor,
+    // ((mul_mod__carry2__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr898Neighbor,
+    // ((mul_mod__carry2__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr899Neighbor,
+    // ((mul_mod__carry2__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr900Neighbor,
+    // ((mul_mod__carry2__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr901Neighbor,
+    // ((mul_mod__carry2__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr902Neighbor,
+    // ((mul_mod__carry2__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr903Neighbor,
+    // ((mul_mod__carry2__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr904Neighbor,
+    // ((mul_mod__carry3__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr905Neighbor,
+    // ((mul_mod__carry3__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr906Neighbor,
+    // ((mul_mod__carry3__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr907Neighbor,
+    // ((mul_mod__carry3__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr908Neighbor,
+    // ((mul_mod__carry3__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr909Neighbor,
+    // ((mul_mod__carry3__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr910Neighbor,
+    // ((mul_mod__carry3__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr911Neighbor,
+    // ((mul_mod__carry4__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr912Neighbor,
+    // ((mul_mod__carry4__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr913Neighbor,
+    // ((mul_mod__carry4__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr914Neighbor,
+    // ((mul_mod__carry4__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr915Neighbor,
+    // ((mul_mod__carry4__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr916Neighbor,
+    // ((mul_mod__carry4__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr917Neighbor,
+    // ((mul_mod__carry4__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr918Neighbor,
+    // ((mul_mod__carry5__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr919Neighbor,
+    // ((mul_mod__carry5__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr920Neighbor,
+    // ((mul_mod__carry5__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr921Neighbor,
+    // ((mul_mod__carry5__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr922Neighbor,
+    // ((mul_mod__carry5__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr923Neighbor,
+    // ((mul_mod__carry5__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr924Neighbor,
+    // ((mul_mod__carry5__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr925Neighbor,
+    // ((mul_mod__carry0__part0_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr926Neighbor,
+    // ((mul_mod__carry0__part1_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr927Neighbor,
+    // ((mul_mod__carry0__part2_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr928Neighbor,
+    // ((mul_mod__carry0__part3_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr929Neighbor,
+    // ((mul_mod__carry0__part4_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr930Neighbor,
+    // ((mul_mod__carry0__part5_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr931Neighbor,
+    // ((mul_mod__carry0__part6_suboffset) * (range_check_units_row_ratio)) +
+    // (range_check16_pool_offset)
+    kRangeCheck16PoolColumnRowExpr932Neighbor,
     // memory__multi_column_perm__perm__cum_prod0_offset
-    kMemory_MultiColumnPerm_Perm_CumProd0ColumnRowExpr747Neighbor,
+    kMemory_MultiColumnPerm_Perm_CumProd0ColumnRowExpr933Neighbor,
     // (memory_units_row_ratio) + (memory__multi_column_perm__perm__cum_prod0_offset)
-    kMemory_MultiColumnPerm_Perm_CumProd0ColumnRowExpr748Neighbor,
+    kMemory_MultiColumnPerm_Perm_CumProd0ColumnRowExpr934Neighbor,
     // range_check16__perm__cum_prod0_offset
-    kRangeCheck16_Perm_CumProd0ColumnRowExpr749Neighbor,
+    kRangeCheck16_Perm_CumProd0ColumnRowExpr935Neighbor,
     // (range_check_units_row_ratio) + (range_check16__perm__cum_prod0_offset)
-    kRangeCheck16_Perm_CumProd0ColumnRowExpr750Neighbor,
+    kRangeCheck16_Perm_CumProd0ColumnRowExpr936Neighbor,
     // diluted_check__permutation__cum_prod0_offset
-    kDilutedCheck_Permutation_CumProd0ColumnRowExpr751Neighbor,
+    kDilutedCheck_Permutation_CumProd0ColumnRowExpr937Neighbor,
     // (diluted_units_row_ratio) + (diluted_check__permutation__cum_prod0_offset)
-    kDilutedCheck_Permutation_CumProd0ColumnRowExpr752Neighbor,
+    kDilutedCheck_Permutation_CumProd0ColumnRowExpr938Neighbor,
     // diluted_check__cumulative_value_offset
-    kDilutedCheck_CumulativeValueColumnRowExpr753Neighbor,
+    kDilutedCheck_CumulativeValueColumnRowExpr939Neighbor,
     // (diluted_units_row_ratio) + (diluted_check__cumulative_value_offset)
-    kDilutedCheck_CumulativeValueColumnRowExpr754Neighbor,
+    kDilutedCheck_CumulativeValueColumnRowExpr940Neighbor,
     // Number of neighbors.
     kNumNeighbors,
   };
@@ -4169,6 +4776,78 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
     kPoseidonPoseidonMarginPartialToFull0Cond,                      // Constraint 344.
     kPoseidonPoseidonMarginPartialToFull1Cond,                      // Constraint 345.
     kPoseidonPoseidonMarginPartialToFull2Cond,                      // Constraint 346.
+    kRangeCheck96BuiltinValueCond,                                  // Constraint 347.
+    kRangeCheck96BuiltinAddrStepCond,                               // Constraint 348.
+    kRangeCheck96BuiltinInitAddrCond,                               // Constraint 349.
+    kAddModInitP0AddressCond,                                       // Constraint 350.
+    kAddModStepP1AddrCond,                                          // Constraint 351.
+    kAddModStepP2AddrCond,                                          // Constraint 352.
+    kAddModStepP3AddrCond,                                          // Constraint 353.
+    kAddModStepValuesPtrAddrCond,                                   // Constraint 354.
+    kAddModStepOffsetsPtrAddrCond,                                  // Constraint 355.
+    kAddModStepNAddrCond,                                           // Constraint 356.
+    kAddModStepP0AddrCond,                                          // Constraint 357.
+    kAddModStepP0ValueCond,                                         // Constraint 358.
+    kAddModStepP1ValueCond,                                         // Constraint 359.
+    kAddModStepP2ValueCond,                                         // Constraint 360.
+    kAddModStepP3ValueCond,                                         // Constraint 361.
+    kAddModStepValuesPtrValueCond,                                  // Constraint 362.
+    kAddModStepOffsetsPtrValueCond,                                 // Constraint 363.
+    kAddModStepNValueCond,                                          // Constraint 364.
+    kAddModAOffset0Cond,                                            // Constraint 365.
+    kAddModBOffsetCond,                                             // Constraint 366.
+    kAddModCOffsetCond,                                             // Constraint 367.
+    kAddModA0ValueInd0Cond,                                         // Constraint 368.
+    kAddModA1ValueCond,                                             // Constraint 369.
+    kAddModA2ValueCond,                                             // Constraint 370.
+    kAddModA3ValueCond,                                             // Constraint 371.
+    kAddModB0ValueInd0Cond,                                         // Constraint 372.
+    kAddModB1ValueCond,                                             // Constraint 373.
+    kAddModB2ValueCond,                                             // Constraint 374.
+    kAddModB3ValueCond,                                             // Constraint 375.
+    kAddModC0ValueInd0Cond,                                         // Constraint 376.
+    kAddModC1ValueCond,                                             // Constraint 377.
+    kAddModC2ValueCond,                                             // Constraint 378.
+    kAddModC3ValueCond,                                             // Constraint 379.
+    kAddModSubPBitCond,                                             // Constraint 380.
+    kAddModCarry1BitCond,                                           // Constraint 381.
+    kAddModCarry1SignCond,                                          // Constraint 382.
+    kAddModCarry2BitCond,                                           // Constraint 383.
+    kAddModCarry2SignCond,                                          // Constraint 384.
+    kAddModCarry3BitCond,                                           // Constraint 385.
+    kAddModCarry3SignCond,                                          // Constraint 386.
+    kAddModAdditionConstraint_0Cond,                                // Constraint 387.
+    kMulModInitP0AddressCond,                                       // Constraint 388.
+    kMulModStepP1AddrCond,                                          // Constraint 389.
+    kMulModStepP2AddrCond,                                          // Constraint 390.
+    kMulModStepP3AddrCond,                                          // Constraint 391.
+    kMulModStepValuesPtrAddrCond,                                   // Constraint 392.
+    kMulModStepOffsetsPtrAddrCond,                                  // Constraint 393.
+    kMulModStepNAddrCond,                                           // Constraint 394.
+    kMulModStepP0AddrCond,                                          // Constraint 395.
+    kMulModStepP0ValueCond,                                         // Constraint 396.
+    kMulModStepP1ValueCond,                                         // Constraint 397.
+    kMulModStepP2ValueCond,                                         // Constraint 398.
+    kMulModStepP3ValueCond,                                         // Constraint 399.
+    kMulModStepValuesPtrValueCond,                                  // Constraint 400.
+    kMulModStepOffsetsPtrValueCond,                                 // Constraint 401.
+    kMulModStepNValueCond,                                          // Constraint 402.
+    kMulModAOffset0Cond,                                            // Constraint 403.
+    kMulModBOffsetCond,                                             // Constraint 404.
+    kMulModCOffsetCond,                                             // Constraint 405.
+    kMulModA0ValueInd0Cond,                                         // Constraint 406.
+    kMulModA1ValueCond,                                             // Constraint 407.
+    kMulModA2ValueCond,                                             // Constraint 408.
+    kMulModA3ValueCond,                                             // Constraint 409.
+    kMulModB0ValueInd0Cond,                                         // Constraint 410.
+    kMulModB1ValueCond,                                             // Constraint 411.
+    kMulModB2ValueCond,                                             // Constraint 412.
+    kMulModB3ValueCond,                                             // Constraint 413.
+    kMulModC0ValueInd0Cond,                                         // Constraint 414.
+    kMulModC1ValueCond,                                             // Constraint 415.
+    kMulModC2ValueCond,                                             // Constraint 416.
+    kMulModC3ValueCond,                                             // Constraint 417.
+    kMulModMultiplicationConstraint_0Cond,                          // Constraint 418.
     kNumConstraints,                                                // Number of constraints.
   };
 
@@ -4207,7 +4886,48 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
             kHasKeccakBuiltin ? GetSegment(mem_segment_addresses, "keccak").begin_addr : 0),
         poseidon_begin_addr_(
             kHasPoseidonBuiltin ? GetSegment(mem_segment_addresses, "poseidon").begin_addr : 0),
+        add_mod_begin_addr_(
+            kHasAddModBuiltin ? GetSegment(mem_segment_addresses, "add_mod").begin_addr : 0),
+        mul_mod_begin_addr_(
+            kHasMulModBuiltin ? GetSegment(mem_segment_addresses, "mul_mod").begin_addr : 0),
         dynamic_params_(ParseDynamicParams(dynamic_params)),
+        add_mod__a0_suboffset(dynamic_params_[kAddModA0SuboffsetDynamicParam]),
+        add_mod__a1_suboffset(dynamic_params_[kAddModA1SuboffsetDynamicParam]),
+        add_mod__a2_suboffset(dynamic_params_[kAddModA2SuboffsetDynamicParam]),
+        add_mod__a3_suboffset(dynamic_params_[kAddModA3SuboffsetDynamicParam]),
+        add_mod__a_offset_suboffset(dynamic_params_[kAddModAOffsetSuboffsetDynamicParam]),
+        add_mod__b0_suboffset(dynamic_params_[kAddModB0SuboffsetDynamicParam]),
+        add_mod__b1_suboffset(dynamic_params_[kAddModB1SuboffsetDynamicParam]),
+        add_mod__b2_suboffset(dynamic_params_[kAddModB2SuboffsetDynamicParam]),
+        add_mod__b3_suboffset(dynamic_params_[kAddModB3SuboffsetDynamicParam]),
+        add_mod__b_offset_suboffset(dynamic_params_[kAddModBOffsetSuboffsetDynamicParam]),
+        add_mod__c0_suboffset(dynamic_params_[kAddModC0SuboffsetDynamicParam]),
+        add_mod__c1_suboffset(dynamic_params_[kAddModC1SuboffsetDynamicParam]),
+        add_mod__c2_suboffset(dynamic_params_[kAddModC2SuboffsetDynamicParam]),
+        add_mod__c3_suboffset(dynamic_params_[kAddModC3SuboffsetDynamicParam]),
+        add_mod__c_offset_suboffset(dynamic_params_[kAddModCOffsetSuboffsetDynamicParam]),
+        add_mod__carry1_bit_column(dynamic_params_[kAddModCarry1BitColumnDynamicParam]),
+        add_mod__carry1_bit_offset(dynamic_params_[kAddModCarry1BitOffsetDynamicParam]),
+        add_mod__carry1_sign_column(dynamic_params_[kAddModCarry1SignColumnDynamicParam]),
+        add_mod__carry1_sign_offset(dynamic_params_[kAddModCarry1SignOffsetDynamicParam]),
+        add_mod__carry2_bit_column(dynamic_params_[kAddModCarry2BitColumnDynamicParam]),
+        add_mod__carry2_bit_offset(dynamic_params_[kAddModCarry2BitOffsetDynamicParam]),
+        add_mod__carry2_sign_column(dynamic_params_[kAddModCarry2SignColumnDynamicParam]),
+        add_mod__carry2_sign_offset(dynamic_params_[kAddModCarry2SignOffsetDynamicParam]),
+        add_mod__carry3_bit_column(dynamic_params_[kAddModCarry3BitColumnDynamicParam]),
+        add_mod__carry3_bit_offset(dynamic_params_[kAddModCarry3BitOffsetDynamicParam]),
+        add_mod__carry3_sign_column(dynamic_params_[kAddModCarry3SignColumnDynamicParam]),
+        add_mod__carry3_sign_offset(dynamic_params_[kAddModCarry3SignOffsetDynamicParam]),
+        add_mod__n_suboffset(dynamic_params_[kAddModNSuboffsetDynamicParam]),
+        add_mod__offsets_ptr_suboffset(dynamic_params_[kAddModOffsetsPtrSuboffsetDynamicParam]),
+        add_mod__p0_suboffset(dynamic_params_[kAddModP0SuboffsetDynamicParam]),
+        add_mod__p1_suboffset(dynamic_params_[kAddModP1SuboffsetDynamicParam]),
+        add_mod__p2_suboffset(dynamic_params_[kAddModP2SuboffsetDynamicParam]),
+        add_mod__p3_suboffset(dynamic_params_[kAddModP3SuboffsetDynamicParam]),
+        add_mod__row_ratio(dynamic_params_[kAddModRowRatioDynamicParam]),
+        add_mod__sub_p_bit_column(dynamic_params_[kAddModSubPBitColumnDynamicParam]),
+        add_mod__sub_p_bit_offset(dynamic_params_[kAddModSubPBitOffsetDynamicParam]),
+        add_mod__values_ptr_suboffset(dynamic_params_[kAddModValuesPtrSuboffsetDynamicParam]),
         bitwise__diluted_var_pool_suboffset(
             dynamic_params_[kBitwiseDilutedVarPoolSuboffsetDynamicParam]),
         bitwise__row_ratio(dynamic_params_[kBitwiseRowRatioDynamicParam]),
@@ -4440,6 +5160,119 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
         memory__sorted__value_column(dynamic_params_[kMemorySortedValueColumnDynamicParam]),
         memory__sorted__value_offset(dynamic_params_[kMemorySortedValueOffsetDynamicParam]),
         memory_units_row_ratio(dynamic_params_[kMemoryUnitsRowRatioDynamicParam]),
+        mul_mod__a0_suboffset(dynamic_params_[kMulModA0SuboffsetDynamicParam]),
+        mul_mod__a1_suboffset(dynamic_params_[kMulModA1SuboffsetDynamicParam]),
+        mul_mod__a2_suboffset(dynamic_params_[kMulModA2SuboffsetDynamicParam]),
+        mul_mod__a3_suboffset(dynamic_params_[kMulModA3SuboffsetDynamicParam]),
+        mul_mod__a_offset_suboffset(dynamic_params_[kMulModAOffsetSuboffsetDynamicParam]),
+        mul_mod__b0_suboffset(dynamic_params_[kMulModB0SuboffsetDynamicParam]),
+        mul_mod__b1_suboffset(dynamic_params_[kMulModB1SuboffsetDynamicParam]),
+        mul_mod__b2_suboffset(dynamic_params_[kMulModB2SuboffsetDynamicParam]),
+        mul_mod__b3_suboffset(dynamic_params_[kMulModB3SuboffsetDynamicParam]),
+        mul_mod__b_offset_suboffset(dynamic_params_[kMulModBOffsetSuboffsetDynamicParam]),
+        mul_mod__c0_suboffset(dynamic_params_[kMulModC0SuboffsetDynamicParam]),
+        mul_mod__c1_suboffset(dynamic_params_[kMulModC1SuboffsetDynamicParam]),
+        mul_mod__c2_suboffset(dynamic_params_[kMulModC2SuboffsetDynamicParam]),
+        mul_mod__c3_suboffset(dynamic_params_[kMulModC3SuboffsetDynamicParam]),
+        mul_mod__c_offset_suboffset(dynamic_params_[kMulModCOffsetSuboffsetDynamicParam]),
+        mul_mod__carry0__part0_suboffset(dynamic_params_[kMulModCarry0Part0SuboffsetDynamicParam]),
+        mul_mod__carry0__part1_suboffset(dynamic_params_[kMulModCarry0Part1SuboffsetDynamicParam]),
+        mul_mod__carry0__part2_suboffset(dynamic_params_[kMulModCarry0Part2SuboffsetDynamicParam]),
+        mul_mod__carry0__part3_suboffset(dynamic_params_[kMulModCarry0Part3SuboffsetDynamicParam]),
+        mul_mod__carry0__part4_suboffset(dynamic_params_[kMulModCarry0Part4SuboffsetDynamicParam]),
+        mul_mod__carry0__part5_suboffset(dynamic_params_[kMulModCarry0Part5SuboffsetDynamicParam]),
+        mul_mod__carry0__part6_suboffset(dynamic_params_[kMulModCarry0Part6SuboffsetDynamicParam]),
+        mul_mod__carry1__part0_suboffset(dynamic_params_[kMulModCarry1Part0SuboffsetDynamicParam]),
+        mul_mod__carry1__part1_suboffset(dynamic_params_[kMulModCarry1Part1SuboffsetDynamicParam]),
+        mul_mod__carry1__part2_suboffset(dynamic_params_[kMulModCarry1Part2SuboffsetDynamicParam]),
+        mul_mod__carry1__part3_suboffset(dynamic_params_[kMulModCarry1Part3SuboffsetDynamicParam]),
+        mul_mod__carry1__part4_suboffset(dynamic_params_[kMulModCarry1Part4SuboffsetDynamicParam]),
+        mul_mod__carry1__part5_suboffset(dynamic_params_[kMulModCarry1Part5SuboffsetDynamicParam]),
+        mul_mod__carry1__part6_suboffset(dynamic_params_[kMulModCarry1Part6SuboffsetDynamicParam]),
+        mul_mod__carry2__part0_suboffset(dynamic_params_[kMulModCarry2Part0SuboffsetDynamicParam]),
+        mul_mod__carry2__part1_suboffset(dynamic_params_[kMulModCarry2Part1SuboffsetDynamicParam]),
+        mul_mod__carry2__part2_suboffset(dynamic_params_[kMulModCarry2Part2SuboffsetDynamicParam]),
+        mul_mod__carry2__part3_suboffset(dynamic_params_[kMulModCarry2Part3SuboffsetDynamicParam]),
+        mul_mod__carry2__part4_suboffset(dynamic_params_[kMulModCarry2Part4SuboffsetDynamicParam]),
+        mul_mod__carry2__part5_suboffset(dynamic_params_[kMulModCarry2Part5SuboffsetDynamicParam]),
+        mul_mod__carry2__part6_suboffset(dynamic_params_[kMulModCarry2Part6SuboffsetDynamicParam]),
+        mul_mod__carry3__part0_suboffset(dynamic_params_[kMulModCarry3Part0SuboffsetDynamicParam]),
+        mul_mod__carry3__part1_suboffset(dynamic_params_[kMulModCarry3Part1SuboffsetDynamicParam]),
+        mul_mod__carry3__part2_suboffset(dynamic_params_[kMulModCarry3Part2SuboffsetDynamicParam]),
+        mul_mod__carry3__part3_suboffset(dynamic_params_[kMulModCarry3Part3SuboffsetDynamicParam]),
+        mul_mod__carry3__part4_suboffset(dynamic_params_[kMulModCarry3Part4SuboffsetDynamicParam]),
+        mul_mod__carry3__part5_suboffset(dynamic_params_[kMulModCarry3Part5SuboffsetDynamicParam]),
+        mul_mod__carry3__part6_suboffset(dynamic_params_[kMulModCarry3Part6SuboffsetDynamicParam]),
+        mul_mod__carry4__part0_suboffset(dynamic_params_[kMulModCarry4Part0SuboffsetDynamicParam]),
+        mul_mod__carry4__part1_suboffset(dynamic_params_[kMulModCarry4Part1SuboffsetDynamicParam]),
+        mul_mod__carry4__part2_suboffset(dynamic_params_[kMulModCarry4Part2SuboffsetDynamicParam]),
+        mul_mod__carry4__part3_suboffset(dynamic_params_[kMulModCarry4Part3SuboffsetDynamicParam]),
+        mul_mod__carry4__part4_suboffset(dynamic_params_[kMulModCarry4Part4SuboffsetDynamicParam]),
+        mul_mod__carry4__part5_suboffset(dynamic_params_[kMulModCarry4Part5SuboffsetDynamicParam]),
+        mul_mod__carry4__part6_suboffset(dynamic_params_[kMulModCarry4Part6SuboffsetDynamicParam]),
+        mul_mod__carry5__part0_suboffset(dynamic_params_[kMulModCarry5Part0SuboffsetDynamicParam]),
+        mul_mod__carry5__part1_suboffset(dynamic_params_[kMulModCarry5Part1SuboffsetDynamicParam]),
+        mul_mod__carry5__part2_suboffset(dynamic_params_[kMulModCarry5Part2SuboffsetDynamicParam]),
+        mul_mod__carry5__part3_suboffset(dynamic_params_[kMulModCarry5Part3SuboffsetDynamicParam]),
+        mul_mod__carry5__part4_suboffset(dynamic_params_[kMulModCarry5Part4SuboffsetDynamicParam]),
+        mul_mod__carry5__part5_suboffset(dynamic_params_[kMulModCarry5Part5SuboffsetDynamicParam]),
+        mul_mod__carry5__part6_suboffset(dynamic_params_[kMulModCarry5Part6SuboffsetDynamicParam]),
+        mul_mod__n_suboffset(dynamic_params_[kMulModNSuboffsetDynamicParam]),
+        mul_mod__offsets_ptr_suboffset(dynamic_params_[kMulModOffsetsPtrSuboffsetDynamicParam]),
+        mul_mod__p0_suboffset(dynamic_params_[kMulModP0SuboffsetDynamicParam]),
+        mul_mod__p1_suboffset(dynamic_params_[kMulModP1SuboffsetDynamicParam]),
+        mul_mod__p2_suboffset(dynamic_params_[kMulModP2SuboffsetDynamicParam]),
+        mul_mod__p3_suboffset(dynamic_params_[kMulModP3SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part0_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part0SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part1_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part1SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part2_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part2SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part3_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part3SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part4_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part4SuboffsetDynamicParam]),
+        mul_mod__p_multiplier0__part5_suboffset(
+            dynamic_params_[kMulModPMultiplier0Part5SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part0_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part0SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part1_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part1SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part2_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part2SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part3_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part3SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part4_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part4SuboffsetDynamicParam]),
+        mul_mod__p_multiplier1__part5_suboffset(
+            dynamic_params_[kMulModPMultiplier1Part5SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part0_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part0SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part1_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part1SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part2_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part2SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part3_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part3SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part4_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part4SuboffsetDynamicParam]),
+        mul_mod__p_multiplier2__part5_suboffset(
+            dynamic_params_[kMulModPMultiplier2Part5SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part0_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part0SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part1_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part1SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part2_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part2SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part3_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part3SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part4_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part4SuboffsetDynamicParam]),
+        mul_mod__p_multiplier3__part5_suboffset(
+            dynamic_params_[kMulModPMultiplier3Part5SuboffsetDynamicParam]),
+        mul_mod__row_ratio(dynamic_params_[kMulModRowRatioDynamicParam]),
+        mul_mod__values_ptr_suboffset(dynamic_params_[kMulModValuesPtrSuboffsetDynamicParam]),
         num_columns_first(dynamic_params_[kNumColumnsFirstDynamicParam]),
         num_columns_second(dynamic_params_[kNumColumnsSecondDynamicParam]),
         orig__public_memory_suboffset(dynamic_params_[kOrigPublicMemorySuboffsetDynamicParam]),
@@ -4526,18 +5359,36 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
         range_check16__sorted_offset(dynamic_params_[kRangeCheck16SortedOffsetDynamicParam]),
         range_check16_pool_column(dynamic_params_[kRangeCheck16PoolColumnDynamicParam]),
         range_check16_pool_offset(dynamic_params_[kRangeCheck16PoolOffsetDynamicParam]),
+        range_check96_builtin__inner_range_check0_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck0SuboffsetDynamicParam]),
+        range_check96_builtin__inner_range_check1_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck1SuboffsetDynamicParam]),
+        range_check96_builtin__inner_range_check2_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck2SuboffsetDynamicParam]),
+        range_check96_builtin__inner_range_check3_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck3SuboffsetDynamicParam]),
+        range_check96_builtin__inner_range_check4_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck4SuboffsetDynamicParam]),
+        range_check96_builtin__inner_range_check5_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinInnerRangeCheck5SuboffsetDynamicParam]),
+        range_check96_builtin__mem_suboffset(
+            dynamic_params_[kRangeCheck96BuiltinMemSuboffsetDynamicParam]),
+        range_check96_builtin_row_ratio(dynamic_params_[kRangeCheck96BuiltinRowRatioDynamicParam]),
         range_check_builtin__inner_range_check_suboffset(
             dynamic_params_[kRangeCheckBuiltinInnerRangeCheckSuboffsetDynamicParam]),
         range_check_builtin__mem_suboffset(
             dynamic_params_[kRangeCheckBuiltinMemSuboffsetDynamicParam]),
         range_check_builtin_row_ratio(dynamic_params_[kRangeCheckBuiltinRowRatioDynamicParam]),
         range_check_units_row_ratio(dynamic_params_[kRangeCheckUnitsRowRatioDynamicParam]),
+        uses_add_mod_builtin(dynamic_params_[kUsesAddModBuiltinDynamicParam]),
         uses_bitwise_builtin(dynamic_params_[kUsesBitwiseBuiltinDynamicParam]),
         uses_ec_op_builtin(dynamic_params_[kUsesEcOpBuiltinDynamicParam]),
         uses_ecdsa_builtin(dynamic_params_[kUsesEcdsaBuiltinDynamicParam]),
         uses_keccak_builtin(dynamic_params_[kUsesKeccakBuiltinDynamicParam]),
+        uses_mul_mod_builtin(dynamic_params_[kUsesMulModBuiltinDynamicParam]),
         uses_pedersen_builtin(dynamic_params_[kUsesPedersenBuiltinDynamicParam]),
         uses_poseidon_builtin(dynamic_params_[kUsesPoseidonBuiltinDynamicParam]),
+        uses_range_check96_builtin(dynamic_params_[kUsesRangeCheck96BuiltinDynamicParam]),
         uses_range_check_builtin(dynamic_params_[kUsesRangeCheckBuiltinDynamicParam]),
         range_check_min_(rc_min),
         range_check_max_(rc_max),
@@ -4588,9 +5439,54 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   const CompileTimeOptional<FieldElementT, kHasPoseidonBuiltin> initial_poseidon_addr_ =
       FieldElementT::FromUint(ExtractHiddenMemberValue(poseidon_begin_addr_));
 
+  const CompileTimeOptional<uint64_t, kHasAddModBuiltin> add_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(add_mod_begin_addr_));
+
+  const CompileTimeOptional<uint64_t, kHasMulModBuiltin> mul_mod_begin_addr_;
+  const CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__initial_mod_addr_ =
+      FieldElementT::FromUint(ExtractHiddenMemberValue(mul_mod_begin_addr_));
+
   // Flat vector of dynamic_params, used for efficient computation of the composition polynomial.
   // See ParseDynamicParams.
   CompileTimeOptional<std::vector<uint64_t>, kIsDynamicAir> dynamic_params_;
+  const uint64_t& add_mod__a0_suboffset;
+  const uint64_t& add_mod__a1_suboffset;
+  const uint64_t& add_mod__a2_suboffset;
+  const uint64_t& add_mod__a3_suboffset;
+  const uint64_t& add_mod__a_offset_suboffset;
+  const uint64_t& add_mod__b0_suboffset;
+  const uint64_t& add_mod__b1_suboffset;
+  const uint64_t& add_mod__b2_suboffset;
+  const uint64_t& add_mod__b3_suboffset;
+  const uint64_t& add_mod__b_offset_suboffset;
+  const uint64_t& add_mod__c0_suboffset;
+  const uint64_t& add_mod__c1_suboffset;
+  const uint64_t& add_mod__c2_suboffset;
+  const uint64_t& add_mod__c3_suboffset;
+  const uint64_t& add_mod__c_offset_suboffset;
+  const uint64_t& add_mod__carry1_bit_column;
+  const uint64_t& add_mod__carry1_bit_offset;
+  const uint64_t& add_mod__carry1_sign_column;
+  const uint64_t& add_mod__carry1_sign_offset;
+  const uint64_t& add_mod__carry2_bit_column;
+  const uint64_t& add_mod__carry2_bit_offset;
+  const uint64_t& add_mod__carry2_sign_column;
+  const uint64_t& add_mod__carry2_sign_offset;
+  const uint64_t& add_mod__carry3_bit_column;
+  const uint64_t& add_mod__carry3_bit_offset;
+  const uint64_t& add_mod__carry3_sign_column;
+  const uint64_t& add_mod__carry3_sign_offset;
+  const uint64_t& add_mod__n_suboffset;
+  const uint64_t& add_mod__offsets_ptr_suboffset;
+  const uint64_t& add_mod__p0_suboffset;
+  const uint64_t& add_mod__p1_suboffset;
+  const uint64_t& add_mod__p2_suboffset;
+  const uint64_t& add_mod__p3_suboffset;
+  const uint64_t& add_mod__row_ratio;
+  const uint64_t& add_mod__sub_p_bit_column;
+  const uint64_t& add_mod__sub_p_bit_offset;
+  const uint64_t& add_mod__values_ptr_suboffset;
   const uint64_t& bitwise__diluted_var_pool_suboffset;
   const uint64_t& bitwise__row_ratio;
   const uint64_t& bitwise__trim_unpacking192_suboffset;
@@ -4734,6 +5630,95 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   const uint64_t& memory__sorted__value_column;
   const uint64_t& memory__sorted__value_offset;
   const uint64_t& memory_units_row_ratio;
+  const uint64_t& mul_mod__a0_suboffset;
+  const uint64_t& mul_mod__a1_suboffset;
+  const uint64_t& mul_mod__a2_suboffset;
+  const uint64_t& mul_mod__a3_suboffset;
+  const uint64_t& mul_mod__a_offset_suboffset;
+  const uint64_t& mul_mod__b0_suboffset;
+  const uint64_t& mul_mod__b1_suboffset;
+  const uint64_t& mul_mod__b2_suboffset;
+  const uint64_t& mul_mod__b3_suboffset;
+  const uint64_t& mul_mod__b_offset_suboffset;
+  const uint64_t& mul_mod__c0_suboffset;
+  const uint64_t& mul_mod__c1_suboffset;
+  const uint64_t& mul_mod__c2_suboffset;
+  const uint64_t& mul_mod__c3_suboffset;
+  const uint64_t& mul_mod__c_offset_suboffset;
+  const uint64_t& mul_mod__carry0__part0_suboffset;
+  const uint64_t& mul_mod__carry0__part1_suboffset;
+  const uint64_t& mul_mod__carry0__part2_suboffset;
+  const uint64_t& mul_mod__carry0__part3_suboffset;
+  const uint64_t& mul_mod__carry0__part4_suboffset;
+  const uint64_t& mul_mod__carry0__part5_suboffset;
+  const uint64_t& mul_mod__carry0__part6_suboffset;
+  const uint64_t& mul_mod__carry1__part0_suboffset;
+  const uint64_t& mul_mod__carry1__part1_suboffset;
+  const uint64_t& mul_mod__carry1__part2_suboffset;
+  const uint64_t& mul_mod__carry1__part3_suboffset;
+  const uint64_t& mul_mod__carry1__part4_suboffset;
+  const uint64_t& mul_mod__carry1__part5_suboffset;
+  const uint64_t& mul_mod__carry1__part6_suboffset;
+  const uint64_t& mul_mod__carry2__part0_suboffset;
+  const uint64_t& mul_mod__carry2__part1_suboffset;
+  const uint64_t& mul_mod__carry2__part2_suboffset;
+  const uint64_t& mul_mod__carry2__part3_suboffset;
+  const uint64_t& mul_mod__carry2__part4_suboffset;
+  const uint64_t& mul_mod__carry2__part5_suboffset;
+  const uint64_t& mul_mod__carry2__part6_suboffset;
+  const uint64_t& mul_mod__carry3__part0_suboffset;
+  const uint64_t& mul_mod__carry3__part1_suboffset;
+  const uint64_t& mul_mod__carry3__part2_suboffset;
+  const uint64_t& mul_mod__carry3__part3_suboffset;
+  const uint64_t& mul_mod__carry3__part4_suboffset;
+  const uint64_t& mul_mod__carry3__part5_suboffset;
+  const uint64_t& mul_mod__carry3__part6_suboffset;
+  const uint64_t& mul_mod__carry4__part0_suboffset;
+  const uint64_t& mul_mod__carry4__part1_suboffset;
+  const uint64_t& mul_mod__carry4__part2_suboffset;
+  const uint64_t& mul_mod__carry4__part3_suboffset;
+  const uint64_t& mul_mod__carry4__part4_suboffset;
+  const uint64_t& mul_mod__carry4__part5_suboffset;
+  const uint64_t& mul_mod__carry4__part6_suboffset;
+  const uint64_t& mul_mod__carry5__part0_suboffset;
+  const uint64_t& mul_mod__carry5__part1_suboffset;
+  const uint64_t& mul_mod__carry5__part2_suboffset;
+  const uint64_t& mul_mod__carry5__part3_suboffset;
+  const uint64_t& mul_mod__carry5__part4_suboffset;
+  const uint64_t& mul_mod__carry5__part5_suboffset;
+  const uint64_t& mul_mod__carry5__part6_suboffset;
+  const uint64_t& mul_mod__n_suboffset;
+  const uint64_t& mul_mod__offsets_ptr_suboffset;
+  const uint64_t& mul_mod__p0_suboffset;
+  const uint64_t& mul_mod__p1_suboffset;
+  const uint64_t& mul_mod__p2_suboffset;
+  const uint64_t& mul_mod__p3_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part0_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part1_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part2_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part3_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part4_suboffset;
+  const uint64_t& mul_mod__p_multiplier0__part5_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part0_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part1_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part2_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part3_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part4_suboffset;
+  const uint64_t& mul_mod__p_multiplier1__part5_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part0_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part1_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part2_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part3_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part4_suboffset;
+  const uint64_t& mul_mod__p_multiplier2__part5_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part0_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part1_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part2_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part3_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part4_suboffset;
+  const uint64_t& mul_mod__p_multiplier3__part5_suboffset;
+  const uint64_t& mul_mod__row_ratio;
+  const uint64_t& mul_mod__values_ptr_suboffset;
   const uint64_t& num_columns_first;
   const uint64_t& num_columns_second;
   const uint64_t& orig__public_memory_suboffset;
@@ -4783,16 +5768,27 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   const uint64_t& range_check16__sorted_offset;
   const uint64_t& range_check16_pool_column;
   const uint64_t& range_check16_pool_offset;
+  const uint64_t& range_check96_builtin__inner_range_check0_suboffset;
+  const uint64_t& range_check96_builtin__inner_range_check1_suboffset;
+  const uint64_t& range_check96_builtin__inner_range_check2_suboffset;
+  const uint64_t& range_check96_builtin__inner_range_check3_suboffset;
+  const uint64_t& range_check96_builtin__inner_range_check4_suboffset;
+  const uint64_t& range_check96_builtin__inner_range_check5_suboffset;
+  const uint64_t& range_check96_builtin__mem_suboffset;
+  const uint64_t& range_check96_builtin_row_ratio;
   const uint64_t& range_check_builtin__inner_range_check_suboffset;
   const uint64_t& range_check_builtin__mem_suboffset;
   const uint64_t& range_check_builtin_row_ratio;
   const uint64_t& range_check_units_row_ratio;
+  const uint64_t& uses_add_mod_builtin;
   const uint64_t& uses_bitwise_builtin;
   const uint64_t& uses_ec_op_builtin;
   const uint64_t& uses_ecdsa_builtin;
   const uint64_t& uses_keccak_builtin;
+  const uint64_t& uses_mul_mod_builtin;
   const uint64_t& uses_pedersen_builtin;
   const uint64_t& uses_poseidon_builtin;
+  const uint64_t& uses_range_check96_builtin;
   const uint64_t& uses_range_check_builtin;
 
   const FieldElementT range_check_min_;
@@ -4810,6 +5806,10 @@ class CpuAirDefinition<FieldElementT, 11> : public Air {
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_z_ =
       FieldElementT::Uninitialized();
   CompileTimeOptional<FieldElementT, kHasDilutedPool> diluted_check__interaction_alpha_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasAddModBuiltin> add_mod__interaction_elm_ =
+      FieldElementT::Uninitialized();
+  CompileTimeOptional<FieldElementT, kHasMulModBuiltin> mul_mod__interaction_elm_ =
       FieldElementT::Uninitialized();
 
   FieldElementT memory__multi_column_perm__perm__public_memory_prod_ =

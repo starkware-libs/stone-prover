@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
   gflags::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);  // NOLINT
 
-  CpuAirStatement statement(GetParametersInput()["statement"], GetPublicInput(), GetPrivateInput());
+  CpuAirStatement statement(GetParametersInput(), GetPublicInput(), GetPrivateInput());
   ProfilingBlock profiling_block("Prover", 0);
   ProverMainHelper(&statement, GetProverVersion());
   WriteStats();

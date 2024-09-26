@@ -13,8 +13,8 @@
 // and limitations under the License.
 
 
-#ifndef CWBBKWBXFVCUHIPFBAIY_H_
-#define CWBBKWBXFVCUHIPFBAIY_H_
+#ifndef PVJNCVPAPZLSFWLKHAPI_H_
+#define PVJNCVPAPZLSFWLKHAPI_H_
 
 #include <sstream>
 
@@ -41,5 +41,5 @@ inline std::string GetCpuAirTestInstructionsPublicInputString() {
 
 }  // namespace starkware
 
-#endif  // CWBBKWBXFVCUHIPFBAIY_H_
+#endif  // PVJNCVPAPZLSFWLKHAPI_H_
 
