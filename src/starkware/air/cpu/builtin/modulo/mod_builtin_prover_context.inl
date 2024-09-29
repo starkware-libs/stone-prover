@@ -20,7 +20,7 @@ namespace cpu {
 
 template <typename FieldElementT, size_t NWords>
 auto ModBuiltinProverContext<FieldElementT, NWords>::ParsePrivateInput(
-    const JsonValue& private_input, const uint64_t batch_size) -> std::map<uint64_t, Input> {
+    const JsonValue& private_input, const size_t batch_size) -> std::map<uint64_t, Input> {
   std::map<uint64_t, Input> res;
   auto instances = private_input["instances"];
   auto private_input_len = instances.ArrayLength();
