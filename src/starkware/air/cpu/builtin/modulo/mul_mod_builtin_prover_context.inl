@@ -72,7 +72,7 @@ void MulModBuiltinProverContext<FieldElementT, NWords>::WriteTrace(
           carry += ValueType::FromBigInt(input.batch[ind].a[i] * input.batch[ind].b[word - i]);
           carry -= ValueType::FromBigInt(p_multiplier_vec[i] * input.p[word - i]);
         }
-        // The result c only contributes to the the first NWords terms, as it is generally shorter
+        // The result c only contributes to the first NWords terms, as it is generally shorter
         // than the full product.
         if (word < NWords) {
           carry -= input.batch[ind].c[word];
